@@ -23,6 +23,19 @@ const shadowSchema = z
     reasons: z.array(z.string()).optional(),
   })
   .passthrough()
+export const candidateSchema = z.object({
+  market: z.enum(["winner", "duration_over", "duration_under"]),
+  selection: z.string(),
+  odds: z
+    .union([z.string(), z.number()])
+    .transform(Number)
+    .refine((value) => Number.isFinite(value) && value > 1),
+  line_minutes: z
+    .union([z.string(), z.number()])
+    .nullable()
+    .transform((value) => (value === null ? null : Number(value))),
+})
+export type Candidate = z.infer<typeof candidateSchema>
 export const forecastSchema = z.object({
   map_id: z.number(),
   snapshot_id: z.union([z.number(), z.string()]),
@@ -52,7 +65,7 @@ export const forecastSchema = z.object({
     observed_at_utc: z.string().nullable(),
     phase: z.string().nullable(),
   }),
-  candidates: z.array(z.unknown()),
+  candidates: z.array(candidateSchema),
 })
 export type Forecast = z.infer<typeof forecastSchema>
 export const mapSchema = z.object({
@@ -90,6 +103,7 @@ export const scheduleSchema = z.object({
     z.object({
       series_id: z.string(),
       starts_at_utc: z.string(),
+      tournament_date: z.string().optional(),
       team_a: z.string(),
       team_b: z.string(),
       best_of: z.number(),

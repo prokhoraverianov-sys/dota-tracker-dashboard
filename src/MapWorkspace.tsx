@@ -1,6 +1,8 @@
-import { Radio, RotateCcw, Save } from "lucide-react"
+import { Radio, RotateCcw } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { type Api, ApiError } from "./api"
+import { CalculateBar } from "./CalculateBar"
+import { CurrentOdds } from "./CurrentOdds"
 import {
   type Catalog,
   type Draft,
@@ -15,7 +17,7 @@ import {
 import { DraftEditor } from "./DraftEditor"
 import { draftKey, initialDraft, loadDraft, mapPath, mapStatus, validatePost } from "./domain"
 import { Delta, ForecastCard } from "./ForecastCard"
-import { LiveReview } from "./LiveReview"
+import { draftCompleteness, LiveReview } from "./LiveReview"
 import { Quotes } from "./Quotes"
 import { ResultForm } from "./ResultForm"
 import { Back, Header, Notice } from "./ui"
@@ -144,6 +146,7 @@ export function MapWorkspace({
       </Header>
       {error && <Notice error>{error}</Notice>}
       {notice && <Notice>{notice}</Notice>}
+      <CurrentOdds map={map} api={api} />
       <div className="two-columns forecasts">
         <ForecastCard forecast={map.pre} stage="PRE" map={map} api={api} />
         <ForecastCard forecast={map.post} stage="POST" map={map} api={api} />
@@ -182,6 +185,7 @@ export function MapWorkspace({
       {proposal && (
         <LiveReview
           proposal={proposal}
+          current={draft}
           cancel={() => setProposal(null)}
           apply={() => {
             setDraft(proposal.input)
@@ -199,38 +203,15 @@ export function MapWorkspace({
       />
       <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
       {!locked && (
-        <section className="calculate-bar">
-          <div>
-            <strong>Сохранить прогноз</strong>
-            <p className="muted">
-              PRE не учитывает правки состава. POST требует 10 уникальных героев.
-            </p>
-          </div>
-          <div className="actions">
-            <button
-              type="button"
-              className="secondary"
-              disabled={!!map.pre || !!busy}
-              onClick={() => calculate("pre_match")}
-            >
-              <Save size={16} />
-              {busy === "pre_match" ? "Рассчитываем…" : map.pre ? "PRE сохранён" : "Рассчитать PRE"}
-            </button>
-            <button
-              type="button"
-              className="primary"
-              disabled={!!map.post || !!busy}
-              onClick={() => calculate("post_draft")}
-            >
-              <Save size={16} />
-              {busy === "post_draft"
-                ? "Рассчитываем…"
-                : map.post
-                  ? "POST сохранён"
-                  : "Рассчитать POST"}
-            </button>
-          </div>
-        </section>
+        <CalculateBar
+          pre={!!map.pre}
+          post={!!map.post}
+          busy={busy}
+          postProblem={validatePost(draft, catalog.heroes)}
+          picked={draftCompleteness(draft)}
+          onPre={() => calculate("pre_match")}
+          onPost={() => calculate("post_draft")}
+        />
       )}
       <ResultForm
         onRefresh={setMap}

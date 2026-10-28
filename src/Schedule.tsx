@@ -43,11 +43,11 @@ export function Schedule({
     <>
       <Header
         title="Расписание"
-        subtitle="Выберите серию и карту для анализа. Время: Бангкок, UTC+7."
+        subtitle="Даты сгруппированы по дню турнира. Время начала: Бангкок, UTC+7."
       />
       <section className="toolbar">
         <label>
-          Дата
+          День турнира
           <select value={date} onChange={(e) => setDate(e.target.value)}>
             <option value="">Все даты</option>
             {data?.dates.map((day) => (
@@ -94,6 +94,9 @@ export function Schedule({
             <div className="series-time">
               <strong>{time(series.starts_at_utc)}</strong>
               <span>BO{series.best_of}</span>
+              {series.tournament_date && (
+                <span>День турнира: {series.tournament_date.split("-").reverse().join(".")}</span>
+              )}
             </div>
             <div className="series-teams">
               <Swords size={18} />

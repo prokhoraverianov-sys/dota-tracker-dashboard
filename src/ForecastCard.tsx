@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import type { Api } from "./api"
 import { detailsSchema, type Forecast, type MapDTO, message } from "./contracts"
 import { percent, time } from "./domain"
+import { OddsTable } from "./OddsTable"
 import { Notice } from "./ui"
 export function ForecastCard({
   forecast,
@@ -73,9 +74,12 @@ export function ForecastCard({
               {forecast.analysis.metadata?.model_version ?? "версия в деталях"}
             </span>
           </p>
+          <OddsTable candidates={forecast.candidates} teamA={map.team_a} teamB={map.team_b} />
           <p className="quote-state">
-            Котировки: {forecast.odds.provider ?? "отсутствуют"} ·{" "}
-            {time(forecast.odds.observed_at_utc)} · фаза:{" "}
+            Котировки:{" "}
+            {forecast.odds.provider ??
+              (forecast.candidates.length ? "введены вручную" : "отсутствуют")}{" "}
+            · {time(forecast.odds.observed_at_utc)} · фаза:{" "}
             {forecast.odds.phase === "unknown"
               ? "неизвестна"
               : (forecast.odds.phase ?? "неизвестна")}

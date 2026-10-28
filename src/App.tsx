@@ -149,7 +149,7 @@ export function App() {
       ) : route === "/history" ? (
         <HistoryPage api={api} catalog={catalog} navigate={navigate} />
       ) : route === "/stats" ? (
-        <StatsPage api={api} />
+        <StatsPage api={api} catalog={catalog} />
       ) : (
         <Schedule api={api} catalog={catalog} navigate={navigate} />
       )}
