@@ -65,7 +65,7 @@ export function Shell({
 }: {
   readonly route: string
   readonly navigate: (route: string) => void
-  readonly logout: () => void
+  readonly logout?: (() => void) | undefined
   readonly children: ReactNode
 }) {
   const mainId = useId()
@@ -117,10 +117,12 @@ export function Shell({
             <br />
             Без исполнения ставок.
           </p>
-          <button type="button" className="nav-item" onClick={logout}>
-            <LogOut size={17} />
-            Выйти
-          </button>
+          {logout && (
+            <button type="button" className="nav-item" onClick={logout}>
+              <LogOut size={17} />
+              Выйти
+            </button>
+          )}
         </div>
       </aside>
       <main id={mainId} tabIndex={-1}>

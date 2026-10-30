@@ -69,6 +69,12 @@ export async function loadConfig(): Promise<string> {
   const data = await ky(`${import.meta.env.BASE_URL}config.json`, { retry: 0 }).json()
   return configSchema.parse(data).apiUrl.replace(/\/$/, "")
 }
+export async function loadPublicAccess(origin: string): Promise<boolean> {
+  const response = await ky(`${origin}/api/v1/auth/mode`, { retry: 0, throwHttpErrors: false })
+  if (response.status === 404) return false
+  if (!response.ok) throw new Error(`Сервер вернул ${response.status}`)
+  return z.object({ public_access: z.boolean() }).parse(await response.json()).public_access
+}
 export function readSession(): Session | null {
   const raw = sessionStorage.getItem("dota-session")
   if (!raw) return null

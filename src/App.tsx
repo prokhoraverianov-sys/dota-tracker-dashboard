@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Api, loadConfig, readSession, storeSession } from "./api"
+import { Api, loadConfig, loadPublicAccess, readSession, storeSession } from "./api"
 import { type Catalog, catalogSchema, message, type Session } from "./contracts"
 import { HistoryPage } from "./HistoryPage"
 import { Login } from "./Login"
@@ -9,6 +9,7 @@ import { SourceStatus } from "./SourceStatus"
 import { StatsPage } from "./StatsPage"
 import { Empty, Notice, Shell } from "./ui"
 export function App() {
+  const [publicAccess, setPublicAccess] = useState(false)
   const [origin, setOrigin] = useState("")
   const [configError, setConfigError] = useState("")
   const [session, setSession] = useState(readSession)
@@ -31,11 +32,20 @@ export function App() {
   const api = useMemo(() => new Api(origin, () => sessionRef.current, expire), [origin, expire])
   useEffect(() => {
     loadConfig()
-      .then(setOrigin)
+      .then(async (value) => {
+        const isPublic = await loadPublicAccess(value)
+        setPublicAccess(isPublic)
+        if (isPublic) {
+          sessionRef.current = null
+          storeSession(null)
+          setSession(null)
+        }
+        setOrigin(value)
+      })
       .catch((err) => setConfigError(message(err)))
   }, [])
   useEffect(() => {
-    if (!origin || !session) return
+    if (!origin || (!session && !publicAccess)) return
     let active = true
     setCatalogError("")
     api
@@ -49,7 +59,7 @@ export function App() {
     return () => {
       active = false
     }
-  }, [api, origin, session])
+  }, [api, origin, session, publicAccess])
   useEffect(() => {
     const unload = (event: BeforeUnloadEvent) => {
       if (dirty.current) {
@@ -124,9 +134,9 @@ export function App() {
         <Empty title="Подключаем рабочее пространство…" />
       </main>
     )
-  if (!session) return <Login api={api} onLogin={login} notice={notice} />
+  if (!session && !publicAccess) return <Login api={api} onLogin={login} notice={notice} />
   return (
-    <Shell route={route} navigate={navigate} logout={logout}>
+    <Shell route={route} navigate={navigate} logout={publicAccess ? undefined : logout}>
       <SourceStatus api={api} />
       {catalogError ? (
         <Notice error>
