@@ -95,7 +95,35 @@ export const catalogSchema = z.object({
   timezone: z.string(),
 })
 export type Catalog = z.infer<typeof catalogSchema>
+const eventOverviewSchema = z.object({
+  source_url: z.string(),
+  qualifier_url: z.string(),
+  qualifier_dates: z.tuple([z.string(), z.string()]),
+  qualifier_slots: z.number(),
+  teams: z.array(
+    z.object({
+      name: z.string(),
+      players: z.array(z.string()),
+      roster_source: z.string().nullable(),
+      model_supported: z.boolean(),
+    }),
+  ),
+  slots: z.array(
+    z.object({
+      series_id: z.string(),
+      starts_at_utc: z.string(),
+      tournament_date: z.string(),
+      phase: z.string(),
+      best_of: z.number(),
+      team_a: z.string().nullable(),
+      team_b: z.string().nullable(),
+    }),
+  ),
+})
+export type EventOverviewDTO = z.infer<typeof eventOverviewSchema>
 export const scheduleSchema = z.object({
+  tournaments: z.array(z.object({ key: z.string(), name: z.string() })).optional(),
+  event: eventOverviewSchema.nullish(),
   tournament: z.string().nullable(),
   refreshed_at_utc: z.string().nullable(),
   dates: z.array(z.string()),

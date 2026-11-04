@@ -1,13 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Api, loadConfig, loadPublicAccess, readSession, storeSession } from "./api"
 import { type Catalog, catalogSchema, message, type Session } from "./contracts"
-import { HistoryPage } from "./HistoryPage"
 import { Login } from "./Login"
 import { MapPage } from "./MapPage"
 import { Schedule } from "./Schedule"
 import { SourceStatus } from "./SourceStatus"
-import { StatsPage } from "./StatsPage"
 import { Empty, Notice, Shell } from "./ui"
+
+const HistoryPage = lazy(() =>
+  import("./HistoryPage").then(({ HistoryPage }) => ({ default: HistoryPage })),
+)
+const StatsPage = lazy(() =>
+  import("./StatsPage").then(({ StatsPage }) => ({ default: StatsPage })),
+)
+
 export function App() {
   const [publicAccess, setPublicAccess] = useState(false)
   const [origin, setOrigin] = useState("")
@@ -138,31 +144,45 @@ export function App() {
   return (
     <Shell route={route} navigate={navigate} logout={publicAccess ? undefined : logout}>
       <SourceStatus api={api} />
-      {catalogError ? (
-        <Notice error>
-          {catalogError}
-          <button type="button" onClick={() => window.location.reload()}>
-            Повторить подключение
-          </button>
-        </Notice>
-      ) : !catalog ? (
-        <Empty title="Загружаем каталог…" />
-      ) : route.startsWith("/maps/") || route.startsWith("/series/") ? (
-        <MapPage
-          key={route}
-          path={route}
-          api={api}
-          catalog={catalog}
-          navigate={navigate}
-          setDirty={setDirty}
-        />
-      ) : route === "/history" ? (
-        <HistoryPage api={api} catalog={catalog} navigate={navigate} />
-      ) : route === "/stats" ? (
-        <StatsPage api={api} catalog={catalog} />
-      ) : (
-        <Schedule api={api} catalog={catalog} navigate={navigate} />
-      )}
+      <Suspense fallback={<Empty title="Загружаем раздел…" />}>
+        {catalogError ? (
+          <Notice error>
+            {catalogError}
+            <button type="button" onClick={() => window.location.reload()}>
+              Повторить подключение
+            </button>
+          </Notice>
+        ) : !catalog ? (
+          <Empty title="Загружаем каталог…" />
+        ) : route.startsWith("/maps/") || route.startsWith("/series/") ? (
+          <MapPage
+            key={route}
+            path={route}
+            api={api}
+            catalog={catalog}
+            navigate={navigate}
+            setDirty={setDirty}
+          />
+        ) : route === "/history" || route.startsWith("/history?") ? (
+          <HistoryPage
+            key={route}
+            api={api}
+            catalog={catalog}
+            navigate={navigate}
+            initialSearch={new URLSearchParams(route.split("?")[1]).get("series") ?? ""}
+          />
+        ) : route === "/stats" ? (
+          <StatsPage api={api} catalog={catalog} />
+        ) : (
+          <Schedule
+            key={route}
+            api={api}
+            catalog={catalog}
+            navigate={navigate}
+            tournament={new URLSearchParams(route.split("?")[1]).get("tournament") ?? ""}
+          />
+        )}
+      </Suspense>
     </Shell>
   )
 }

@@ -10,7 +10,7 @@ export function StatsPage({ api, catalog }: { readonly api: Api; readonly catalo
     <>
       <Header
         title="Статистика"
-        subtitle="Сравнение до и после драфта по данным исходной Google-таблицы."
+        subtitle="Точность PRE и POST, длительность и разрезы турнира. Отдельно — статистика сохранённых прогнозов."
       />
       <fieldset className="view-tabs" aria-label="Выбор данных">
         <button
@@ -19,7 +19,7 @@ export function StatsPage({ api, catalog }: { readonly api: Api; readonly catalo
           aria-pressed={view === "tournament"}
           onClick={() => setView("tournament")}
         >
-          Турнир · как в таблице
+          PARI Universe · турнир
         </button>
         <button
           type="button"

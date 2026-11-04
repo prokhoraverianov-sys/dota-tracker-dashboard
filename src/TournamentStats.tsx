@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import type { z } from "zod"
+import { ArchiveStats } from "./ArchiveStats"
 import type { Api } from "./api"
 import { type Catalog, message } from "./contracts"
 import { query } from "./domain"
+import { ReportBreakdown } from "./ReportBreakdown"
 import { ReportProvenance, ReportToolbar } from "./ReportShared"
-import { emptyFilters, tournamentStatsSchema } from "./reporting"
+import { emptyFilters, tournamentHistorySchema, tournamentStatsSchema } from "./reporting"
 import { Empty, Notice } from "./ui"
 export function TournamentStats({
   api,
@@ -16,10 +18,17 @@ export function TournamentStats({
   const [filters, setFilters] = useState(emptyFilters)
   const [data, setData] = useState<z.infer<typeof tournamentStatsSchema> | null>(null)
   const [error, setError] = useState("")
+  const [history, setHistory] = useState<z.infer<typeof tournamentHistorySchema> | null>(null)
+  const [historyError, setHistoryError] = useState("")
+  const [retry, setRetry] = useState(0)
   const qs = query(filters)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Retry the request with the same filters.
   useEffect(() => {
     let active = true
     setError("")
+    setHistoryError("")
+    setHistory(null)
+    setData(null)
     api
       .request(`/tournament/stats?${qs}`, tournamentStatsSchema)
       .then((value) => {
@@ -28,14 +37,40 @@ export function TournamentStats({
       .catch((err) => {
         if (active) setError(message(err))
       })
+    api
+      .request(`/tournament/history?${qs}`, tournamentHistorySchema)
+      .then((value) => {
+        if (active) setHistory(value)
+      })
+      .catch((err) => {
+        if (active) setHistoryError(message(err))
+      })
     return () => {
       active = false
     }
-  }, [api, qs])
+  }, [api, qs, retry])
+  const details =
+    data &&
+    history &&
+    data.completed_maps === history.items.length &&
+    data.provenance.model_sha256 === history.provenance.model_sha256
+      ? history
+      : null
   return (
     <>
       <ReportToolbar catalog={catalog} filters={filters} onChange={setFilters} />
-      {error && <Notice error>{error}</Notice>}
+      {error && (
+        <Notice error>
+          {error}{" "}
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => setRetry((value) => value + 1)}
+          >
+            Повторить
+          </button>
+        </Notice>
+      )}
       {data ? (
         <>
           <div className="report-counts">
@@ -56,7 +91,7 @@ export function TournamentStats({
           <section className="panel">
             <div className="table-scroll">
               <table className="report-table">
-                <caption>PRE и POST на одной истории турнира</caption>
+                <caption>Точность и длительность</caption>
                 <thead>
                   <tr>
                     <th>Что сравниваем</th>
@@ -125,10 +160,36 @@ export function TournamentStats({
               </table>
             </div>
           </section>
-          <Notice>
-            Доходность здесь не рассчитывается: для всей выборки нет сопоставимого набора
-            подтверждённых коэффициентов.
-          </Notice>
+          {details && details.items.length > 0 && (
+            <>
+              <ReportBreakdown items={details.items} />
+              <ArchiveStats items={details.items} provenance={details.provenance} />
+            </>
+          )}
+          {historyError && (
+            <Notice error>
+              Не удалось загрузить разбивку по картам. {historyError}{" "}
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => setRetry((value) => value + 1)}
+              >
+                Повторить
+              </button>
+            </Notice>
+          )}
+          {history && !details && (
+            <Notice>
+              Отчёт обновился во время загрузки.{" "}
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => setRetry((value) => value + 1)}
+              >
+                Загрузить сводку заново
+              </button>
+            </Notice>
+          )}
         </>
       ) : (
         !error && <Empty title="Загружаем сравнение турнира…" />

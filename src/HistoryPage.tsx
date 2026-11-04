@@ -8,18 +8,17 @@ export function HistoryPage({
   api,
   catalog,
   navigate,
+  initialSearch,
 }: {
   readonly api: Api
   readonly catalog: Catalog
   readonly navigate: (path: string) => void
+  readonly initialSearch: string
 }) {
   const [view, setView] = useState<"matches" | "archive">("matches")
   return (
     <>
-      <Header
-        title="История"
-        subtitle="Завершённые матчи турнира и отдельный архив сохранённых прогнозов."
-      />
+      <Header title="История" subtitle="Отчёт PARI Universe и архив сохранённых прогнозов." />
       <fieldset className="view-tabs" aria-label="Вид истории">
         <button
           type="button"
@@ -39,7 +38,7 @@ export function HistoryPage({
         </button>
       </fieldset>
       {view === "matches" ? (
-        <CompletedHistory api={api} catalog={catalog} />
+        <CompletedHistory api={api} catalog={catalog} initialSearch={initialSearch} />
       ) : (
         <ForecastArchive api={api} catalog={catalog} navigate={navigate} />
       )}

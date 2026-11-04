@@ -1,23 +1,69 @@
-import { useEffect, useState } from "react"
+import { ChevronDown, Search } from "lucide-react"
+import { Fragment, useEffect, useState } from "react"
 import type { z } from "zod"
 import type { Api } from "./api"
+import { archiveMatch, formatPrice } from "./archive"
 import { type Catalog, message } from "./contracts"
 import { percent, query, time } from "./domain"
+import { HistoryMatchDetails } from "./HistoryMatchDetails"
 import { ReportProvenance, ReportToolbar } from "./ReportShared"
-import { emptyFilters, minutes, tournamentHistorySchema, winnerPrediction } from "./reporting"
+import {
+  type CompletedMatch,
+  emptyFilters,
+  minutes,
+  tournamentHistorySchema,
+  winnerPrediction,
+} from "./reporting"
 import { Empty, Notice } from "./ui"
+
+function StageCell({
+  match,
+  stage,
+}: {
+  readonly match: CompletedMatch
+  readonly stage: "pre" | "post"
+}) {
+  const forecast = match[stage]
+  if (!forecast) return <span className="muted">Нет расчёта</span>
+  const favorite = winnerPrediction(match, stage)
+  const p = forecast.probability_team_a
+  const outcome = match.winner === null ? null : favorite === match.winner
+  return (
+    <>
+      <strong>
+        {favorite} · {percent(Math.max(p, 1 - p))}
+      </strong>
+      <small className="metric-note">
+        {minutes(forecast.duration_seconds)}
+        {outcome !== null && (
+          <span className={outcome ? "hit-text" : "miss-text"}>
+            {" "}
+            · {outcome ? "Верно" : "Ошибка"}
+          </span>
+        )}
+      </small>
+    </>
+  )
+}
+
 export function CompletedHistory({
   api,
   catalog,
+  initialSearch,
 }: {
   readonly api: Api
   readonly catalog: Catalog
+  readonly initialSearch: string
 }) {
   const [filters, setFilters] = useState(emptyFilters)
   const [data, setData] = useState<z.infer<typeof tournamentHistorySchema> | null>(null)
   const [error, setError] = useState("")
-  const [busy, setBusy] = useState(false)
+  const [busy, setBusy] = useState(true)
+  const [search, setSearch] = useState(initialSearch)
+  const [openMatch, setOpenMatch] = useState<string | null>(null)
+  const [retry, setRetry] = useState(0)
   const qs = query(filters)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Retry the request with the same filters.
   useEffect(() => {
     let active = true
     setBusy(true)
@@ -36,102 +82,142 @@ export function CompletedHistory({
     return () => {
       active = false
     }
-  }, [api, qs])
+  }, [api, qs, retry])
+  const terms = search.toLocaleLowerCase("ru").trim().split(/\s+/).filter(Boolean)
+  const matches =
+    data?.items.filter((match) =>
+      terms.every((term) =>
+        `${match.team_a} ${match.team_b} ${match.match_id} ${match.series_id ?? ""}`
+          .toLocaleLowerCase("ru")
+          .includes(term),
+      ),
+    ) ?? []
   return (
     <>
-      <ReportToolbar catalog={catalog} filters={filters} onChange={setFilters} />
-      {error && <Notice error>{error}</Notice>}
+      <ReportToolbar catalog={catalog} filters={filters} onChange={setFilters}>
+        <label>
+          Поиск по картам
+          <span className="search-field">
+            <Search size={16} aria-hidden="true" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Команда или ID карты"
+            />
+          </span>
+        </label>
+      </ReportToolbar>
+      {error && (
+        <Notice error>
+          {error}{" "}
+          <button
+            className="secondary"
+            type="button"
+            onClick={() => setRetry((value) => value + 1)}
+          >
+            Повторить
+          </button>
+        </Notice>
+      )}
       {data && <ReportProvenance data={data.provenance} />}
-      <section className="panel">
+      <section className="panel history-panel" aria-busy={busy}>
         <div className="panel-heading">
-          <h2>
-            {busy ? "Загружаем завершённые карты…" : `${data?.items.length ?? 0} завершённых карт`}
-          </h2>
-          <span className="badge">Фактические результаты</span>
+          <div>
+            <h2>
+              {busy
+                ? "Загружаем завершённые карты…"
+                : terms.length > 0
+                  ? `${matches.length} из ${data?.items.length ?? 0} карт`
+                  : `${data?.items.length ?? 0} завершённых карт`}
+            </h2>
+            <p className="muted">
+              Факт, прогнозы и архивные цены. Откройте карту, чтобы увидеть пики, факторы и
+              источники цен.
+            </p>
+          </div>
+          <span className="badge">Ретроспектива</span>
         </div>
-        <p className="table-intro">
-          PRE и POST показывают вероятность победы первой команды и ожидаемую длительность. Для
-          новых карт без расчёта стоят пропуски.
-        </p>
-        <p className="table-intro">Прокрутите таблицу вправо, чтобы увидеть PRE / POST.</p>
-        <div className="table-scroll">
-          <table className="completed-table">
-            <thead>
-              <tr>
-                <th>Матч · карта</th>
-                <th>Факт</th>
-                <th>PRE · до драфта</th>
-                <th>POST · после драфта</th>
-                <th>Проверка победителя</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.items.map((match) => (
-                <tr key={match.match_id}>
-                  <td>
-                    <strong>
-                      {match.team_a} vs {match.team_b}
-                    </strong>
-                    <small className="metric-note">
-                      {time(match.starts_at_utc)} ·{" "}
-                      {match.map_number ? `Карта ${match.map_number}` : `Матч ${match.match_id}`}
-                    </small>
-                    {match.source_url.startsWith("https://") && (
-                      <a
-                        className="source-link"
-                        href={match.source_url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Источник результата ↗
-                      </a>
-                    )}
-                  </td>
-                  <td>
-                    {match.winner ?? "Не указан"}
-                    <small className="metric-note">{minutes(match.duration_seconds)}</small>
-                  </td>
-                  <td className="numeric">
-                    {percent(match.pre?.probability_team_a)}
-                    <small className="metric-note">
-                      {match.pre
-                        ? `${(match.pre.duration_seconds / 60).toFixed(1)} мин`
-                        : "Нет расчёта"}
-                    </small>
-                  </td>
-                  <td className="numeric">
-                    {percent(match.post?.probability_team_a)}
-                    <small className="metric-note">
-                      {match.post
-                        ? `${(match.post.duration_seconds / 60).toFixed(1)} мин`
-                        : "Нет расчёта"}
-                    </small>
-                  </td>
-                  <td>
-                    <span>
-                      PRE:{" "}
-                      {match.pre && match.winner
-                        ? winnerPrediction(match, "pre") === match.winner
-                          ? "верно"
-                          : "ошибка"
-                        : "—"}
-                    </span>
-                    <small className="metric-note">
-                      POST:{" "}
-                      {match.post && match.winner
-                        ? winnerPrediction(match, "post") === match.winner
-                          ? "верно"
-                          : "ошибка"
-                        : "—"}
-                    </small>
-                  </td>
+        {data && matches.length > 0 && (
+          <div className="history-table-wrap">
+            <table className="completed-table">
+              <thead>
+                <tr>
+                  <th scope="col">Матч</th>
+                  <th scope="col">Результат</th>
+                  <th scope="col">PRE · до драфта</th>
+                  <th scope="col">POST · после драфта</th>
+                  <th scope="col">Архив цен</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {!busy && data?.items.length === 0 && (
-          <Empty title="Завершённых карт по фильтру нет">Измените дату или команду.</Empty>
+              </thead>
+              <tbody>
+                {matches.map((match) => {
+                  const archive = archiveMatch(match, data.provenance)
+                  const expanded = openMatch === match.match_id
+                  const label = `${match.team_a} — ${match.team_b}`
+                  return (
+                    <Fragment key={match.match_id}>
+                      <tr className={expanded ? "history-row expanded" : "history-row"}>
+                        <td className="history-identity">
+                          <button
+                            type="button"
+                            className="history-open"
+                            aria-expanded={expanded}
+                            aria-controls={expanded ? `match-details-${match.match_id}` : undefined}
+                            onClick={() => setOpenMatch(expanded ? null : match.match_id)}
+                          >
+                            <strong>{label}</strong>
+                            <ChevronDown size={16} aria-hidden="true" />
+                          </button>
+                          <small className="metric-note">
+                            {time(match.starts_at_utc)} · Карта {match.map_number ?? "—"} · #
+                            {match.match_id}
+                          </small>
+                        </td>
+                        <td data-label="Результат">
+                          <strong>{match.winner ?? "Не указан"}</strong>
+                          <small className="metric-note">{minutes(match.duration_seconds)}</small>
+                        </td>
+                        <td data-label="PRE · до драфта">
+                          <StageCell match={match} stage="pre" />
+                        </td>
+                        <td data-label="POST · после драфта">
+                          <StageCell match={match} stage="post" />
+                        </td>
+                        <td data-label="Архив цен">
+                          {archive ? (
+                            <>
+                              <strong>
+                                Победа · {formatPrice(archive.priceA)} /{" "}
+                                {formatPrice(archive.priceB)}
+                              </strong>
+                              <small className="metric-note">
+                                {archive.line == null
+                                  ? "Тотал · нет линии"
+                                  : `${archive.line} мин · Б ${formatPrice(archive.over)} / М ${formatPrice(archive.under)}`}
+                              </small>
+                            </>
+                          ) : (
+                            <span className="muted">Нет данных</span>
+                          )}
+                        </td>
+                      </tr>
+                      {expanded && (
+                        <tr className="history-detail-row">
+                          <td colSpan={5}>
+                            <HistoryMatchDetails match={match} archive={archive} />
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {!busy && data && matches.length === 0 && (
+          <Empty title="Карт по этим условиям нет">Измените фильтры или поисковый запрос.</Empty>
         )}
         {!busy && !data && !error && <Empty title="История матчей пока недоступна" />}
       </section>

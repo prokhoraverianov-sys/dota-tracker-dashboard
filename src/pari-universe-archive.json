@@ -1,0 +1,2573 @@
+{
+  "asOf": "2026-11-02T09:34:15.733Z",
+  "modelSha": "8844fdf356b7be22c3c14213d5bfc80f0994c95deecbbd8446caf1811e8ed2c7",
+  "bank": [
+    {
+      "scenario": "winnerPOST125",
+      "bank": 147.87,
+      "profit": 47.87,
+      "won": 60,
+      "lost": 24,
+      "push": 0,
+      "skip": 0
+    },
+    {
+      "scenario": "winnerPRE",
+      "bank": 95.38,
+      "profit": -4.62,
+      "won": 59,
+      "lost": 25,
+      "push": 0,
+      "skip": 0
+    },
+    {
+      "scenario": "winnerPOST",
+      "bank": 95.38,
+      "profit": -4.62,
+      "won": 59,
+      "lost": 25,
+      "push": 0,
+      "skip": 0
+    },
+    {
+      "scenario": "totalPRE",
+      "bank": 26.34,
+      "profit": -73.66,
+      "won": 39,
+      "lost": 34,
+      "push": 1,
+      "skip": 10
+    },
+    {
+      "scenario": "totalPOST",
+      "bank": 10.39,
+      "profit": -89.61,
+      "won": 36,
+      "lost": 36,
+      "push": 1,
+      "skip": 11
+    }
+  ],
+  "matches": {
+    "9056215433": {
+      "a": "Team Yandex",
+      "b": "GamerLegion",
+      "picksA": [
+        ["watson", "templar-assassin"],
+        ["CHIRA_JUNIOR", "earth-spirit"],
+        ["Xibbe", "brewmaster"],
+        ["Saksa", "rubick"],
+        ["Malady", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Yuma", "lifestealer"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "necrophos"],
+        ["Bignum", "windranger"],
+        ["Speeed", "dazzle"]
+      ],
+      "priceA": 1.14,
+      "priceB": 5.46,
+      "line": 39,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-22-10-2026-86091359",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-22-10-2026-86091359",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056271057": {
+      "a": "Team Yandex",
+      "b": "GamerLegion",
+      "picksA": [
+        ["watson", "anti-mage"],
+        ["CHIRA_JUNIOR", "earth-spirit"],
+        ["Xibbe", "lycan"],
+        ["Saksa", "windranger"],
+        ["Malady", "techies"]
+      ],
+      "picksB": [
+        ["Yuma", "troll-warlord"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "pudge"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "winter-wyvern"]
+      ],
+      "priceA": 1.14,
+      "priceB": 5.46,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-22-10-2026-86091359",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-22-10-2026-86091359",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056353535": {
+      "a": "Team Spirit",
+      "b": "LEGION",
+      "picksA": [
+        ["Yatoro", "slark"],
+        ["Larl", "earth-spirit"],
+        ["Batyuk", "tidehunter"],
+        ["not me", "shadow-demon"],
+        ["rue", "witch-doctor"]
+      ],
+      "picksB": [
+        ["DarkLord^", "luna"],
+        ["4nalog丶01", "invoker"],
+        ["SabeRLight-", "dark-seer"],
+        ["xsvampire", "spirit-breaker"],
+        ["Kidaro", "disruptor"]
+      ],
+      "priceA": 1.12,
+      "priceB": 5.99,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-22-10-2026-86091360",
+      "totalUrl": null,
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056429802": {
+      "a": "Team Spirit",
+      "b": "LEGION",
+      "picksA": [
+        ["Yatoro", "slark"],
+        ["Larl", "earthshaker"],
+        ["Batyuk", "doom"],
+        ["not me", "hoodwink"],
+        ["rue", "dazzle"]
+      ],
+      "picksB": [
+        ["DarkLord^", "sven"],
+        ["4nalog丶01", "invoker"],
+        ["SabeRLight-", "primal-beast"],
+        ["xsvampire", "dark-willow"],
+        ["Kidaro", "witch-doctor"]
+      ],
+      "priceA": 1.12,
+      "priceB": 5.99,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-22-10-2026-86091360",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-22-10-2026-86091360",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056618744": {
+      "a": "Team Liquid",
+      "b": "1win",
+      "picksA": [
+        ["miCKe", "windranger"],
+        ["Malr1ne", "earthshaker"],
+        ["Wisper", "mars"],
+        ["Boxi", "techies"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Pure", "slark"],
+        ["bzm", "earth-spirit"],
+        ["33", "dark-seer"],
+        ["Ari", "nyx-assassin"],
+        ["Whitemon", "dazzle"]
+      ],
+      "priceA": 1.87,
+      "priceB": 1.91,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-1w-team-22-10-2026-86091361",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-1w-team-22-10-2026-86091361",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056794318": {
+      "a": "Team Liquid",
+      "b": "1win",
+      "picksA": [
+        ["miCKe", "lifestealer"],
+        ["Malr1ne", "earthshaker"],
+        ["Wisper", "batrider"],
+        ["Boxi", "spirit-breaker"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Pure", "kez"],
+        ["bzm", "earth-spirit"],
+        ["33", "beastmaster"],
+        ["Ari", "techies"],
+        ["Whitemon", "bane"]
+      ],
+      "priceA": 1.87,
+      "priceB": 1.91,
+      "line": 42,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-1w-team-22-10-2026-86091361",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-1w-team-22-10-2026-86091361",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9056907498": {
+      "a": "PARIVISION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Satanic", "kez"],
+        ["No[o]ne-", "slardar"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "skywrath-mage"],
+        ["Dukalis", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Nightfall", "lifestealer"],
+        ["lorenof", "ember-spirit"],
+        ["DM", "dragon-knight"],
+        ["OmaR", "hoodwink"],
+        ["GH", "dazzle"]
+      ],
+      "priceA": 1.26,
+      "priceB": 3.72,
+      "line": 42,
+      "under": 1.96,
+      "over": 1.79,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-astra-invicta-22-10-2026-86091365",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-astra-invicta-22-10-2026-86091365",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9057055798": {
+      "a": "PARIVISION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Satanic", "templar-assassin"],
+        ["No[o]ne-", "earth-spirit"],
+        ["Noticed", "doom"],
+        ["9Class", "io"],
+        ["Dukalis", "hoodwink"]
+      ],
+      "picksB": [
+        ["Nightfall", "ursa"],
+        ["lorenof", "dragon-knight"],
+        ["DM", "undying"],
+        ["OmaR", "shadow-demon"],
+        ["GH", "techies"]
+      ],
+      "priceA": 1.26,
+      "priceB": 3.72,
+      "line": 42,
+      "under": 1.96,
+      "over": 1.79,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-astra-invicta-22-10-2026-86091365",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-astra-invicta-22-10-2026-86091365",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9057627136": {
+      "a": "1win",
+      "b": "OG",
+      "picksA": [
+        ["Pure", "nature-s-prophet"],
+        ["Mikoto", "dragon-knight"],
+        ["33", "tidehunter"],
+        ["Ari", "windranger"],
+        ["Whitemon", "mirana"]
+      ],
+      "picksB": [
+        ["Natsumi", "terrorblade"],
+        ["Topson", "magnus"],
+        ["SSS", "bristleback"],
+        ["OneJey", "gyrocopter"],
+        ["skem", "dazzle"]
+      ],
+      "priceA": 1.78,
+      "priceB": 2.01,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-og-23-10-2026-86091362",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/1w-team-og-23-10-2026-86091362",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9057681759": {
+      "a": "1win",
+      "b": "OG",
+      "picksA": [
+        ["Pure", "luna"],
+        ["Mikoto", "earthshaker"],
+        ["33", "doom"],
+        ["Ari", "weaver"],
+        ["Whitemon", "techies"]
+      ],
+      "picksB": [
+        ["Natsumi", "lone-druid"],
+        ["Topson", "dragon-knight"],
+        ["SSS", "earth-spirit"],
+        ["OneJey", "keeper-of-the-light"],
+        ["skem", "witch-doctor"]
+      ],
+      "priceA": 1.78,
+      "priceB": 2.01,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-og-23-10-2026-86091362",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/1w-team-og-23-10-2026-86091362",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9057771854": {
+      "a": "Team Liquid",
+      "b": "GamerLegion",
+      "picksA": [
+        ["rincyq", "nature-s-prophet"],
+        ["Malr1ne", "pangolier"],
+        ["Wisper", "batrider"],
+        ["Boxi", "nyx-assassin"],
+        ["tOfu", "hoodwink"]
+      ],
+      "picksB": [
+        ["Yuma", "windranger"],
+        ["RCY", "earth-spirit"],
+        ["Fayde", "timbersaw"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "venomancer"]
+      ],
+      "priceA": 1.49,
+      "priceB": 2.56,
+      "line": 41,
+      "under": null,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-gamerlegion-23-10-2026-86091363",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-gamerlegion-23-10-2026-86091363",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9057872455": {
+      "a": "Team Liquid",
+      "b": "GamerLegion",
+      "picksA": [
+        ["rincyq", "windranger"],
+        ["Malr1ne", "earthshaker"],
+        ["Wisper", "timbersaw"],
+        ["Boxi", "hoodwink"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Yuma", "viper"],
+        ["RCY", "invoker"],
+        ["Fayde", "dragon-knight"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "mirana"]
+      ],
+      "priceA": 1.49,
+      "priceB": 2.56,
+      "line": 41,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-gamerlegion-23-10-2026-86091363",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-gamerlegion-23-10-2026-86091363",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9058056916": {
+      "a": "BetBoom Team",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Kiritych", "kez"],
+        ["Save-", "earth-spirit"],
+        ["MieRo`", "lycan"],
+        ["swedenstrong", "techies"],
+        ["Kataomi`", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Nightfall", "lifestealer"],
+        ["lorenof", "pangolier"],
+        ["DM", "enigma"],
+        ["OmaR", "clockwerk"],
+        ["GH", "io"]
+      ],
+      "priceA": 1.76,
+      "priceB": 2.04,
+      "line": 42,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/bb-team-astra-invicta-23-10-2026-86091366",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/bb-team-astra-invicta-23-10-2026-86091366",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9058178856": {
+      "a": "BetBoom Team",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Kiritych", "broodmother"],
+        ["Save-", "earth-spirit"],
+        ["MieRo`", "enigma"],
+        ["swedenstrong", "spirit-breaker"],
+        ["Kataomi`", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Nightfall", "lone-druid"],
+        ["lorenof", "dragon-knight"],
+        ["DM", "brewmaster"],
+        ["OmaR", "hoodwink"],
+        ["GH", "io"]
+      ],
+      "priceA": 1.76,
+      "priceB": 2.04,
+      "line": 42,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/bb-team-astra-invicta-23-10-2026-86091366",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/bb-team-astra-invicta-23-10-2026-86091366",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9058339315": {
+      "a": "PARIVISION",
+      "b": "LEGION",
+      "picksA": [
+        ["Satanic", "kez"],
+        ["No[o]ne-", "beastmaster"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["V-Tune", "luna"],
+        ["Stojkov", "outworld-devourer"],
+        ["SabeRLight-", "largo"],
+        ["xsvampire", "hoodwink"],
+        ["Kidaro", "mirana"]
+      ],
+      "priceA": 1.05,
+      "priceB": 9.25,
+      "line": 37,
+      "under": 1.92,
+      "over": 1.82,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-legion-23-10-2026-86091364",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-legion-23-10-2026-86091364",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9058456262": {
+      "a": "PARIVISION",
+      "b": "LEGION",
+      "picksA": [
+        ["Satanic", "io"],
+        ["No[o]ne-", "pangolier"],
+        ["Noticed", "dark-seer"],
+        ["9Class", "keeper-of-the-light"],
+        ["Dukalis", "witch-doctor"]
+      ],
+      "picksB": [
+        ["V-Tune", "terrorblade"],
+        ["Stojkov", "earthshaker"],
+        ["SabeRLight-", "timbersaw"],
+        ["xsvampire", "dark-willow"],
+        ["Kidaro", "winter-wyvern"]
+      ],
+      "priceA": 1.05,
+      "priceB": 9.25,
+      "line": 37,
+      "under": 1.92,
+      "over": 1.82,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-legion-23-10-2026-86091364",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-legion-23-10-2026-86091364",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059185615": {
+      "a": "1win",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Pure", "terrorblade"],
+        ["bzm", "puck"],
+        ["33", "death-prophet"],
+        ["Ari", "nyx-assassin"],
+        ["Whitemon", "dazzle"]
+      ],
+      "picksB": [
+        ["Yuma", "sven"],
+        ["RCY", "invoker"],
+        ["Fayde", "axe"],
+        ["Bignum", "techies"],
+        ["Speeed", "mirana"]
+      ],
+      "priceA": 1.47,
+      "priceB": 2.62,
+      "line": 42,
+      "under": 1.98,
+      "over": 1.81,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-gamerlegion-24-10-2026-86136500",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-gamerlegion-24-10-2026-86136500",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059262765": {
+      "a": "1win",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Pure", "terrorblade"],
+        ["bzm", "earthshaker"],
+        ["33", "brewmaster"],
+        ["Ari", "hoodwink"],
+        ["Whitemon", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Yuma", "sven"],
+        ["RCY", "pangolier"],
+        ["Fayde", "timbersaw"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "silencer"]
+      ],
+      "priceA": 1.47,
+      "priceB": 2.62,
+      "line": 42,
+      "under": 1.98,
+      "over": 1.81,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-gamerlegion-24-10-2026-86136500",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/1w-team-gamerlegion-24-10-2026-86136500",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059391986": {
+      "a": "Team Yandex",
+      "b": "OG",
+      "picksA": [
+        ["watson", "lone-druid"],
+        ["CHIRA_JUNIOR", "earth-spirit"],
+        ["ATF", "doom"],
+        ["Saksa", "rubick"],
+        ["Malady", "death-prophet"]
+      ],
+      "picksB": [
+        ["Natsumi", "clinkz"],
+        ["Topson", "invoker"],
+        ["SSS", "timbersaw"],
+        ["OneJey", "largo"],
+        ["skem", "techies"]
+      ],
+      "priceA": 1.35,
+      "priceB": 3.14,
+      "line": 42,
+      "under": 1.89,
+      "over": 1.89,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-og-24-10-2026-86136855",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-og-24-10-2026-86136855",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059530192": {
+      "a": "Team Yandex",
+      "b": "OG",
+      "picksA": [
+        ["watson", "ursa"],
+        ["CHIRA_JUNIOR", "pangolier"],
+        ["ATF", "magnus"],
+        ["Saksa", "windranger"],
+        ["Malady", "death-prophet"]
+      ],
+      "picksB": [
+        ["Natsumi", "terrorblade"],
+        ["Topson", "invoker"],
+        ["SSS", "timbersaw"],
+        ["OneJey", "shadow-demon"],
+        ["skem", "bane"]
+      ],
+      "priceA": 1.35,
+      "priceB": 3.14,
+      "line": 40,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-og-24-10-2026-86136855",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-og-24-10-2026-86136855",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059726836": {
+      "a": "Team Spirit",
+      "b": "BetBoom Team",
+      "picksA": [
+        ["Yatoro", "weaver"],
+        ["Larl", "pangolier"],
+        ["Batyuk", "mars"],
+        ["not me", "dark-willow"],
+        ["rue", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Kiritych", "sven"],
+        ["Save-", "keeper-of-the-light"],
+        ["MieRo`", "brewmaster"],
+        ["swedenstrong", "windranger"],
+        ["Kataomi`", "hoodwink"]
+      ],
+      "priceA": 1.29,
+      "priceB": 3.49,
+      "line": 42,
+      "under": 1.89,
+      "over": 1.89,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-bb-team-24-10-2026-86136856",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-bb-team-24-10-2026-86136856",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9059855376": {
+      "a": "Team Spirit",
+      "b": "BetBoom Team",
+      "picksA": [
+        ["Yatoro", "phantom-lancer"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "largo"],
+        ["not me", "hoodwink"],
+        ["rue", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Kiritych", "lifestealer"],
+        ["Save-", "keeper-of-the-light"],
+        ["MieRo`", "doom"],
+        ["swedenstrong", "windranger"],
+        ["Kataomi`", "bane"]
+      ],
+      "priceA": 1.29,
+      "priceB": 3.49,
+      "line": 42,
+      "under": 1.89,
+      "over": 1.89,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-bb-team-24-10-2026-86136856",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-bb-team-24-10-2026-86136856",
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Поисковая копия; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9060004236": {
+      "a": "LEGION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["DarkLord^", "lone-druid"],
+        ["Stojkov", "storm-spirit"],
+        ["SabeRLight-", "lycan"],
+        ["xsvampire", "dark-willow"],
+        ["Kidaro", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Nightfall", "nature-s-prophet"],
+        ["lorenof", "puck"],
+        ["DM", "centaur-warrunner"],
+        ["OmaR", "techies"],
+        ["GH", "witch-doctor"]
+      ],
+      "priceA": 3.37,
+      "priceB": 1.31,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/astra-invicta-legion-24-10-2026-86137345",
+      "totalUrl": null,
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9060102490": {
+      "a": "LEGION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["DarkLord^", "tiny"],
+        ["Stojkov", "slardar"],
+        ["SabeRLight-", "brewmaster"],
+        ["xsvampire", "hoodwink"],
+        ["Kidaro", "techies"]
+      ],
+      "picksB": [
+        ["Nightfall", "anti-mage"],
+        ["lorenof", "ember-spirit"],
+        ["DM", "underlord"],
+        ["OmaR", "windranger"],
+        ["GH", "witch-doctor"]
+      ],
+      "priceA": 3.37,
+      "priceB": 1.31,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/astra-invicta-legion-24-10-2026-86137345",
+      "totalUrl": null,
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9060239199": {
+      "a": "LEGION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["DarkLord^", "terrorblade"],
+        ["Stojkov", "storm-spirit"],
+        ["SabeRLight-", "largo"],
+        ["xsvampire", "lion"],
+        ["Kidaro", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Nightfall", "lifestealer"],
+        ["lorenof", "ember-spirit"],
+        ["DM", "centaur-warrunner"],
+        ["OmaR", "windranger"],
+        ["GH", "dazzle"]
+      ],
+      "priceA": 3.37,
+      "priceB": 1.31,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/astra-invicta-legion-24-10-2026-86137345",
+      "totalUrl": null,
+      "winnerSource": "Поисковая копия /line; время неизвестно",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9060951574": {
+      "a": "OG",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Natsumi", "windranger"],
+        ["Topson", "pugna"],
+        ["SSS", "enigma"],
+        ["OneJey", "spirit-breaker"],
+        ["skem", "techies"]
+      ],
+      "picksB": [
+        ["miCKe", "tiny"],
+        ["Malr1ne", "snapfire"],
+        ["Wisper", "timbersaw"],
+        ["Boxi", "bounty-hunter"],
+        ["tOfu", "hoodwink"]
+      ],
+      "priceA": 2.04,
+      "priceB": 1.76,
+      "line": 45,
+      "under": 1.84,
+      "over": 1.9,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-24T19:42:23.369024Z",
+      "totalTime": "2026-10-25T09:26:02.547228Z"
+    },
+    "9061057026": {
+      "a": "OG",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Natsumi", "kez"],
+        ["Topson", "mars"],
+        ["SSS", "enigma"],
+        ["OneJey", "nyx-assassin"],
+        ["skem", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["miCKe", "tiny"],
+        ["Malr1ne", "lina"],
+        ["Wisper", "dark-seer"],
+        ["Boxi", "bounty-hunter"],
+        ["tOfu", "warlock"]
+      ],
+      "priceA": 2.12,
+      "priceB": 1.67,
+      "line": 45,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T10:20:43.969568Z",
+      "totalTime": "2026-10-25T10:20:43.969568Z"
+    },
+    "9061129248": {
+      "a": "OG",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Natsumi", "sven"],
+        ["Topson", "outworld-devourer"],
+        ["SSS", "timbersaw"],
+        ["OneJey", "shadow-demon"],
+        ["skem", "windranger"]
+      ],
+      "picksB": [
+        ["miCKe", "necrophos"],
+        ["Malr1ne", "dragon-knight"],
+        ["Wisper", "doom"],
+        ["Boxi", "techies"],
+        ["tOfu", "largo"]
+      ],
+      "priceA": 2.46,
+      "priceB": 1.51,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-og-25-10-2026-86144395",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T11:19:45.533895Z",
+      "totalTime": "2026-10-25T11:19:45.533895Z"
+    },
+    "9061299814": {
+      "a": "Team Yandex",
+      "b": "1win",
+      "picksA": [
+        ["watson", "tiny"],
+        ["CHIRA_JUNIOR", "sand-king"],
+        ["ATF", "necrophos"],
+        ["Saksa", "grimstroke"],
+        ["Malady", "techies"]
+      ],
+      "picksB": [
+        ["Pure", "io"],
+        ["bzm", "slark"],
+        ["33", "dark-seer"],
+        ["Ari", "nyx-assassin"],
+        ["Whitemon", "witch-doctor"]
+      ],
+      "priceA": 1.17,
+      "priceB": 4.67,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-1w-team-25-10-2026-86144398",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-1w-team-25-10-2026-86144398",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T13:11:11.654566Z",
+      "totalTime": "2026-10-25T13:11:11.654566Z"
+    },
+    "9061429763": {
+      "a": "Team Yandex",
+      "b": "1win",
+      "picksA": [
+        ["watson", "naga-siren"],
+        ["CHIRA_JUNIOR", "ember-spirit"],
+        ["ATF", "centaur-warrunner"],
+        ["Saksa", "nature-s-prophet"],
+        ["Malady", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Pure", "luna"],
+        ["bzm", "dragon-knight"],
+        ["33", "lycan"],
+        ["Ari", "windranger"],
+        ["Whitemon", "dazzle"]
+      ],
+      "priceA": 1.17,
+      "priceB": 4.67,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-1w-team-25-10-2026-86144398",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-1w-team-25-10-2026-86144398",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T14:15:19.401740Z",
+      "totalTime": "2026-10-25T14:15:19.401740Z"
+    },
+    "9061551205": {
+      "a": "Team Spirit",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Yatoro", "gyrocopter"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "slardar"],
+        ["not me", "rubick"],
+        ["rue", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Nightfall", "lifestealer"],
+        ["lorenof", "storm-spirit"],
+        ["DM", "enigma"],
+        ["OmaR", "clockwerk"],
+        ["GH", "io"]
+      ],
+      "priceA": 1.24,
+      "priceB": 3.93,
+      "line": 43,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-astra-invicta-25-10-2026-86144399",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-astra-invicta-25-10-2026-86144399",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T15:23:10.215904Z",
+      "totalTime": "2026-10-25T15:31:12.059547Z"
+    },
+    "9061650142": {
+      "a": "Team Spirit",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Yatoro", "dragon-knight"],
+        ["Larl", "earth-spirit"],
+        ["Batyuk", "centaur-warrunner"],
+        ["not me", "hoodwink"],
+        ["rue", "techies"]
+      ],
+      "picksB": [
+        ["Nightfall", "sven"],
+        ["lorenof", "ember-spirit"],
+        ["DM", "doom"],
+        ["OmaR", "dark-willow"],
+        ["GH", "winter-wyvern"]
+      ],
+      "priceA": 1.26,
+      "priceB": 3.59,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-astra-invicta-25-10-2026-86144399",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-astra-invicta-25-10-2026-86144399",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T16:13:37.921721Z",
+      "totalTime": "2026-10-25T16:13:37.921721Z"
+    },
+    "9061829018": {
+      "a": "PARIVISION",
+      "b": "BetBoom Team",
+      "picksA": [
+        ["Satanic", "kez"],
+        ["No[o]ne-", "beastmaster"],
+        ["Noticed", "doom"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Kiritych", "phantom-lancer"],
+        ["Save-", "invoker"],
+        ["MieRo`", "centaur-warrunner"],
+        ["swedenstrong", "io"],
+        ["Kataomi`", "hoodwink"]
+      ],
+      "priceA": 1.18,
+      "priceB": 4.69,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-bb-team-25-10-2026-86144400",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T16:13:40.842642Z",
+      "totalTime": null
+    },
+    "9061909460": {
+      "a": "PARIVISION",
+      "b": "BetBoom Team",
+      "picksA": [
+        ["Satanic", "terrorblade"],
+        ["No[o]ne-", "earthshaker"],
+        ["Noticed", "dark-seer"],
+        ["9Class", "bounty-hunter"],
+        ["Dukalis", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Kiritych", "lone-druid"],
+        ["Save-", "outworld-devourer"],
+        ["MieRo`", "doom"],
+        ["swedenstrong", "dark-willow"],
+        ["Kataomi`", "tusk"]
+      ],
+      "priceA": 1.18,
+      "priceB": 4.68,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-bb-team-25-10-2026-86144400",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "Не найдено",
+      "phase": "unknown",
+      "winnerTime": "2026-10-25T16:13:40.842642Z",
+      "totalTime": null
+    },
+    "9062561406": {
+      "a": "OG",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Natsumi", "lone-druid"],
+        ["Topson", "silencer"],
+        ["SSS", "dark-seer"],
+        ["OneJey", "bounty-hunter"],
+        ["skem", "techies"]
+      ],
+      "picksB": [
+        ["Yuma", "tiny"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "dawnbreaker"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "dazzle"]
+      ],
+      "priceA": 1.68,
+      "priceB": 2.14,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T09:00:24.675932Z",
+      "totalTime": "2026-10-26T09:02:11.683704Z"
+    },
+    "9062644050": {
+      "a": "OG",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Natsumi", "naga-siren"],
+        ["Topson", "earth-spirit"],
+        ["SSS", "slardar"],
+        ["OneJey", "nature-s-prophet"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["Yuma", "lone-druid"],
+        ["RCY", "invoker"],
+        ["Fayde", "lycan"],
+        ["Bignum", "spirit-breaker"],
+        ["Speeed", "winter-wyvern"]
+      ],
+      "priceA": 1.67,
+      "priceB": 2.12,
+      "line": 43,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T10:31:53.546504Z",
+      "totalTime": "2026-10-26T10:31:53.546504Z"
+    },
+    "9062717661": {
+      "a": "OG",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Natsumi", "lifestealer"],
+        ["Topson", "sniper"],
+        ["SSS", "earth-spirit"],
+        ["OneJey", "bounty-hunter"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["Yuma", "windranger"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "largo"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "lich"]
+      ],
+      "priceA": 1.8,
+      "priceB": 1.95,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-26-10-2026-86154864",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T11:43:08.856839Z",
+      "totalTime": "2026-10-26T11:43:08.856839Z"
+    },
+    "9062824489": {
+      "a": "Team Yandex",
+      "b": "Team Liquid",
+      "picksA": [
+        ["watson", "kez"],
+        ["CHIRA_JUNIOR", "pangolier"],
+        ["ATF", "dawnbreaker"],
+        ["Saksa", "keeper-of-the-light"],
+        ["Malady", "techies"]
+      ],
+      "picksB": [
+        ["miCKe", "nature-s-prophet"],
+        ["Malr1ne", "sand-king"],
+        ["Wisper", "largo"],
+        ["Boxi", "hoodwink"],
+        ["tOfu", "mirana"]
+      ],
+      "priceA": 1.25,
+      "priceB": 3.83,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-liquid-26-10-2026-86154865",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "PARI: историческая линия не получена",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T12:39:16.426478Z",
+      "totalTime": null
+    },
+    "9062920598": {
+      "a": "Team Yandex",
+      "b": "Team Liquid",
+      "picksA": [
+        ["watson", "lone-druid"],
+        ["CHIRA_JUNIOR", "dragon-knight"],
+        ["ATF", "huskar"],
+        ["Saksa", "windranger"],
+        ["Malady", "bane"]
+      ],
+      "picksB": [
+        ["miCKe", "lifestealer"],
+        ["Malr1ne", "earthshaker"],
+        ["Wisper", "dark-seer"],
+        ["Boxi", "spirit-breaker"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "priceA": 1.25,
+      "priceB": 3.83,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-liquid-26-10-2026-86154865",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-liquid-26-10-2026-86154865",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T12:39:16.426478Z",
+      "totalTime": "2026-10-26T14:18:59.240755Z"
+    },
+    "9063026856": {
+      "a": "Team Yandex",
+      "b": "Team Liquid",
+      "picksA": [
+        ["watson", "tiny"],
+        ["CHIRA_JUNIOR", "invoker"],
+        ["ATF", "huskar"],
+        ["Saksa", "nature-s-prophet"],
+        ["Malady", "dark-willow"]
+      ],
+      "picksB": [
+        ["miCKe", "lifestealer"],
+        ["Malr1ne", "lina"],
+        ["Wisper", "dark-seer"],
+        ["Boxi", "spirit-breaker"],
+        ["tOfu", "techies"]
+      ],
+      "priceA": 1.3,
+      "priceB": 3.34,
+      "line": 41,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-liquid-26-10-2026-86154865",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-liquid-26-10-2026-86154865",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:32.763592Z",
+      "totalTime": "2026-10-26T15:21:32.763592Z"
+    },
+    "9063131170": {
+      "a": "Team Spirit",
+      "b": "PARIVISION",
+      "picksA": [
+        ["Yatoro", "slark"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "doom"],
+        ["not me", "hoodwink"],
+        ["rue", "warlock"]
+      ],
+      "picksB": [
+        ["Satanic", "terrorblade"],
+        ["No[o]ne-", "viper"],
+        ["Noticed", "beastmaster"],
+        ["9Class", "keeper-of-the-light"],
+        ["Dukalis", "witch-doctor"]
+      ],
+      "priceA": 2.3,
+      "priceB": 1.6,
+      "line": 45,
+      "under": null,
+      "over": 2.15,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-pvision-26-10-2026-86154866",
+      "totalUrl": "https://stavka.tv/sportsbooknews/pari/pari-parivision-team-spirit-2610",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "PARI: пресс-релиз26.10 14:25; >45 только OVER; UNDER не опубликован; время самой цены неизвестно",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:34.592510Z",
+      "totalTime": null
+    },
+    "9063230342": {
+      "a": "Team Spirit",
+      "b": "PARIVISION",
+      "picksA": [
+        ["Yatoro", "morphling"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "pangolier"],
+        ["not me", "techies"],
+        ["rue", "hoodwink"]
+      ],
+      "picksB": [
+        ["Satanic", "nature-s-prophet"],
+        ["No[o]ne-", "dragon-knight"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "rubick"],
+        ["Dukalis", "winter-wyvern"]
+      ],
+      "priceA": 2.3,
+      "priceB": 1.6,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-pvision-26-10-2026-86154866",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-pvision-26-10-2026-86154866",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET поисковая копия /live; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:34.592510Z",
+      "totalTime": null
+    },
+    "9063353533": {
+      "a": "Team Spirit",
+      "b": "PARIVISION",
+      "picksA": [
+        ["Yatoro", "outworld-devourer"],
+        ["Larl", "nature-s-prophet"],
+        ["Batyuk", "undying"],
+        ["not me", "dark-willow"],
+        ["rue", "dazzle"]
+      ],
+      "picksB": [
+        ["Satanic", "io"],
+        ["No[o]ne-", "earthshaker"],
+        ["Noticed", "timbersaw"],
+        ["9Class", "windranger"],
+        ["Dukalis", "witch-doctor"]
+      ],
+      "priceA": 2.3,
+      "priceB": 1.6,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-spirit-pvision-26-10-2026-86154866",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "PARI: историческая линия не получена",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:34.592510Z",
+      "totalTime": null
+    },
+    "9063430462": {
+      "a": "BetBoom Team",
+      "b": "LEGION",
+      "picksA": [
+        ["Kiritych", "terrorblade"],
+        ["Save-", "keeper-of-the-light"],
+        ["MieRo`", "brewmaster"],
+        ["swedenstrong", "techies"],
+        ["Kataomi`", "hoodwink"]
+      ],
+      "picksB": [
+        ["DarkLord^", "lone-druid"],
+        ["Stojkov", "invoker"],
+        ["SabeRLight-", "centaur-warrunner"],
+        ["xsvampire", "dark-willow"],
+        ["Kidaro", "disruptor"]
+      ],
+      "priceA": 1.47,
+      "priceB": 2.62,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/bb-team-legion-26-10-2026-86154867",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "PARI: историческая линия не получена",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:35.937903Z",
+      "totalTime": null
+    },
+    "9063495955": {
+      "a": "BetBoom Team",
+      "b": "LEGION",
+      "picksA": [
+        ["Kiritych", "slark"],
+        ["Save-", "invoker"],
+        ["MieRo`", "axe"],
+        ["swedenstrong", "dark-willow"],
+        ["Kataomi`", "witch-doctor"]
+      ],
+      "picksB": [
+        ["DarkLord^", "anti-mage"],
+        ["Stojkov", "dragon-knight"],
+        ["SabeRLight-", "dark-seer"],
+        ["xsvampire", "hoodwink"],
+        ["Kidaro", "techies"]
+      ],
+      "priceA": 1.47,
+      "priceB": 2.62,
+      "line": null,
+      "under": null,
+      "over": null,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/bb-team-legion-26-10-2026-86154867",
+      "totalUrl": null,
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "PARI: историческая линия не получена",
+      "phase": "unknown",
+      "winnerTime": "2026-10-26T15:21:35.937903Z",
+      "totalTime": null
+    },
+    "9065380598": {
+      "a": "PARIVISION",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Satanic", "kez"],
+        ["No[o]ne-", "ember-spirit"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "keeper-of-the-light"],
+        ["Dukalis", "hoodwink"]
+      ],
+      "picksB": [
+        ["miCKe", "lifestealer"],
+        ["Malr1ne", "pangolier"],
+        ["Wisper", "enigma"],
+        ["Boxi", "dark-willow"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "priceA": 1.32,
+      "priceB": 3.33,
+      "line": 42,
+      "under": 1.89,
+      "over": 1.89,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "winnerSource": "OLIMPBET поисковая копия /line; время неизвестно",
+      "totalSource": "OLIMPBET поисковая копия /line; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9065451128": {
+      "a": "PARIVISION",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Satanic", "templar-assassin"],
+        ["No[o]ne-", "slardar"],
+        ["Noticed", "tidehunter"],
+        ["9Class", "rubick"],
+        ["Dukalis", "dazzle"]
+      ],
+      "picksB": [
+        ["miCKe", "luna"],
+        ["Malr1ne", "pangolier"],
+        ["Wisper", "axe"],
+        ["Boxi", "windranger"],
+        ["tOfu", "techies"]
+      ],
+      "priceA": 1.35,
+      "priceB": 3.01,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T10:29:52.712058Z",
+      "totalTime": "2026-10-28T10:29:52.712058Z"
+    },
+    "9065511384": {
+      "a": "PARIVISION",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Satanic", "nature-s-prophet"],
+        ["No[o]ne-", "slardar"],
+        ["Noticed", "centaur-warrunner"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "bane"]
+      ],
+      "picksB": [
+        ["miCKe", "windranger"],
+        ["Malr1ne", "dragon-knight"],
+        ["Wisper", "dark-seer"],
+        ["Boxi", "hoodwink"],
+        ["tOfu", "dazzle"]
+      ],
+      "priceA": 1.25,
+      "priceB": 3.74,
+      "line": 40,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-liquid-28-10-2026-86176638",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T11:33:05.381161Z",
+      "totalTime": "2026-10-28T11:33:05.381161Z"
+    },
+    "9065653541": {
+      "a": "Astra Invicta",
+      "b": "Team Yandex",
+      "picksA": [
+        ["Nightfall", "clinkz"],
+        ["lorenof", "slark"],
+        ["DM", "dragon-knight"],
+        ["OmaR", "dark-willow"],
+        ["GH", "dazzle"]
+      ],
+      "picksB": [
+        ["watson", "terrorblade"],
+        ["CHIRA_JUNIOR", "earthshaker"],
+        ["ATF", "necrophos"],
+        ["Saksa", "hoodwink"],
+        ["Malady", "grimstroke"]
+      ],
+      "priceA": 4.92,
+      "priceB": 1.15,
+      "line": 38,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T13:22:08.432944Z",
+      "totalTime": "2026-10-28T13:22:08.432944Z"
+    },
+    "9065794389": {
+      "a": "Astra Invicta",
+      "b": "Team Yandex",
+      "picksA": [
+        ["Nightfall", "necrophos"],
+        ["lorenof", "earth-spirit"],
+        ["DM", "lycan"],
+        ["OmaR", "windranger"],
+        ["GH", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["watson", "lone-druid"],
+        ["CHIRA_JUNIOR", "invoker"],
+        ["ATF", "timbersaw"],
+        ["Saksa", "dark-willow"],
+        ["Malady", "hoodwink"]
+      ],
+      "priceA": 3.74,
+      "priceB": 1.25,
+      "line": 40,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T14:58:52.041223Z",
+      "totalTime": "2026-10-28T14:58:52.041223Z"
+    },
+    "9065883621": {
+      "a": "Astra Invicta",
+      "b": "Team Yandex",
+      "picksA": [
+        ["Nightfall", "lone-druid"],
+        ["lorenof", "viper"],
+        ["DM", "axe"],
+        ["OmaR", "hoodwink"],
+        ["GH", "keeper-of-the-light"]
+      ],
+      "picksB": [
+        ["watson", "tiny"],
+        ["CHIRA_JUNIOR", "sand-king"],
+        ["ATF", "huskar"],
+        ["Saksa", "windranger"],
+        ["Malady", "techies"]
+      ],
+      "priceA": 4.92,
+      "priceB": 1.15,
+      "line": 38,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-astra-invicta-28-10-2026-86176639",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T15:55:06.484135Z",
+      "totalTime": "2026-10-28T15:55:06.484135Z"
+    },
+    "9065986613": {
+      "a": "OG",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Natsumi", "sven"],
+        ["Topson", "dragon-knight"],
+        ["SSS", "timbersaw"],
+        ["OneJey", "keeper-of-the-light"],
+        ["skem", "death-prophet"]
+      ],
+      "picksB": [
+        ["Yatoro", "kez"],
+        ["Larl", "ember-spirit"],
+        ["Batyuk", "largo"],
+        ["not me", "dark-willow"],
+        ["rue", "techies"]
+      ],
+      "priceA": 3.98,
+      "priceB": 1.22,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T17:03:11.499066Z",
+      "totalTime": "2026-10-28T17:03:11.499066Z"
+    },
+    "9066084051": {
+      "a": "OG",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Natsumi", "sven"],
+        ["Topson", "magnus"],
+        ["SSS", "timbersaw"],
+        ["OneJey", "shadow-demon"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["Yatoro", "anti-mage"],
+        ["Larl", "storm-spirit"],
+        ["Batyuk", "largo"],
+        ["not me", "hoodwink"],
+        ["rue", "techies"]
+      ],
+      "priceA": 4.25,
+      "priceB": 1.2,
+      "line": 41,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T18:08:05.343271Z",
+      "totalTime": "2026-10-28T18:08:05.343271Z"
+    },
+    "9066180509": {
+      "a": "OG",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Natsumi", "terrorblade"],
+        ["Topson", "magnus"],
+        ["SSS", "bristleback"],
+        ["OneJey", "rubick"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["Yatoro", "outworld-devourer"],
+        ["Larl", "pangolier"],
+        ["Batyuk", "enigma"],
+        ["not me", "spirit-breaker"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 3.34,
+      "priceB": 1.3,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-og-28-10-2026-86176640",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T19:23:16.594449Z",
+      "totalTime": "2026-10-28T19:23:16.594449Z"
+    },
+    "9066273901": {
+      "a": "GamerLegion",
+      "b": "LEGION",
+      "picksA": [
+        ["Yuma", "slark"],
+        ["RCY", "earth-spirit"],
+        ["Fayde", "axe"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "silencer"]
+      ],
+      "picksB": [
+        ["DarkLord^", "terrorblade"],
+        ["Stojkov", "earthshaker"],
+        ["SabeRLight-", "brewmaster"],
+        ["xsvampire", "windranger"],
+        ["KingJungles", "hoodwink"]
+      ],
+      "priceA": 1.49,
+      "priceB": 2.51,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T20:31:32.619907Z",
+      "totalTime": "2026-10-28T20:31:32.619907Z"
+    },
+    "9066349307": {
+      "a": "GamerLegion",
+      "b": "LEGION",
+      "picksA": [
+        ["Yuma", "sven"],
+        ["RCY", "invoker"],
+        ["Fayde", "night-stalker"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["DarkLord^", "phantom-lancer"],
+        ["Stojkov", "void-spirit"],
+        ["SabeRLight-", "largo"],
+        ["xsvampire", "hoodwink"],
+        ["KingJungles", "witch-doctor"]
+      ],
+      "priceA": 1.51,
+      "priceB": 2.46,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T21:46:28.590228Z",
+      "totalTime": "2026-10-28T21:46:28.590228Z"
+    },
+    "9066391707": {
+      "a": "GamerLegion",
+      "b": "LEGION",
+      "picksA": [
+        ["Yuma", "ursa"],
+        ["RCY", "puck"],
+        ["Fayde", "dragon-knight"],
+        ["Bignum", "windranger"],
+        ["Speeed", "venomancer"]
+      ],
+      "picksB": [
+        ["DarkLord^", "lifestealer"],
+        ["Stojkov", "storm-spirit"],
+        ["SabeRLight-", "timbersaw"],
+        ["xsvampire", "dark-willow"],
+        ["KingJungles", "witch-doctor"]
+      ],
+      "priceA": 1.42,
+      "priceB": 2.75,
+      "line": 42,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/gamerlegion-legion-28-10-2026-86176641",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-28T22:49:07.575430Z",
+      "totalTime": "2026-10-28T22:49:07.575430Z"
+    },
+    "9066750920": {
+      "a": "Team Liquid",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["miCKe", "nature-s-prophet"],
+        ["Malr1ne", "death-prophet"],
+        ["Wisper", "mars"],
+        ["Boxi", "techies"],
+        ["tOfu", "dazzle"]
+      ],
+      "picksB": [
+        ["Nightfall", "slark"],
+        ["lorenof", "pangolier"],
+        ["DM", "dark-seer"],
+        ["OmaR", "windranger"],
+        ["GH", "winter-wyvern"]
+      ],
+      "priceA": 1.52,
+      "priceB": 2.48,
+      "line": 42,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-liquid-astra-invicta-29-10-2026-86184958",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-astra-invicta-29-10-2026-86184958",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T09:00:21.305709Z",
+      "totalTime": "2026-10-29T09:01:11.839852Z"
+    },
+    "9066833957": {
+      "a": "Team Liquid",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["miCKe", "kez"],
+        ["Malr1ne", "monkey-king"],
+        ["Wisper", "timbersaw"],
+        ["Boxi", "dark-willow"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Nightfall", "lone-druid"],
+        ["lorenof", "ember-spirit"],
+        ["DM", "death-prophet"],
+        ["OmaR", "hoodwink"],
+        ["GH", "dazzle"]
+      ],
+      "priceA": 1.53,
+      "priceB": 2.4,
+      "line": 43,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-astra-invicta-29-10-2026-86184958",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-astra-invicta-29-10-2026-86184958",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T10:36:06.479293Z",
+      "totalTime": "2026-10-29T10:36:06.479293Z"
+    },
+    "9066926114": {
+      "a": "Team Spirit",
+      "b": "LEGION",
+      "picksA": [
+        ["Yatoro", "kez"],
+        ["Larl", "earthshaker"],
+        ["Batyuk", "mars"],
+        ["not me", "dark-willow"],
+        ["rue", "techies"]
+      ],
+      "picksB": [
+        ["DarkLord^", "lifestealer"],
+        ["Stojkov", "lina"],
+        ["SabeRLight-", "brewmaster"],
+        ["xsvampire", "nyx-assassin"],
+        ["KingJungles", "hoodwink"]
+      ],
+      "priceA": 1.14,
+      "priceB": 5.19,
+      "line": 38,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-29-10-2026-86187217",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-29-10-2026-86187217",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T12:03:13.695191Z",
+      "totalTime": "2026-10-29T12:03:13.695191Z"
+    },
+    "9067019772": {
+      "a": "Team Spirit",
+      "b": "LEGION",
+      "picksA": [
+        ["Yatoro", "kez"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "tidehunter"],
+        ["not me", "hoodwink"],
+        ["rue", "witch-doctor"]
+      ],
+      "picksB": [
+        ["DarkLord^", "windranger"],
+        ["Stojkov", "ember-spirit"],
+        ["SabeRLight-", "largo"],
+        ["xsvampire", "dark-willow"],
+        ["KingJungles", "dazzle"]
+      ],
+      "priceA": 1.17,
+      "priceB": 4.67,
+      "line": 40,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-29-10-2026-86187217",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-spirit-legion-29-10-2026-86187217",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T13:14:54.766898Z",
+      "totalTime": "2026-10-29T13:14:54.766898Z"
+    },
+    "9067177642": {
+      "a": "Team Yandex",
+      "b": "PARIVISION",
+      "picksA": [
+        ["watson", "slark"],
+        ["CHIRA_JUNIOR", "invoker"],
+        ["ATF", "pangolier"],
+        ["Saksa", "windranger"],
+        ["Malady", "warlock"]
+      ],
+      "picksB": [
+        ["Satanic", "kez"],
+        ["No[o]ne-", "earthshaker"],
+        ["Noticed", "doom"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "disruptor"]
+      ],
+      "priceA": 1.7,
+      "priceB": 2.08,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T15:08:17.221430Z",
+      "totalTime": "2026-10-29T15:08:17.221430Z"
+    },
+    "9067346550": {
+      "a": "Team Yandex",
+      "b": "PARIVISION",
+      "picksA": [
+        ["watson", "lone-druid"],
+        ["CHIRA_JUNIOR", "slardar"],
+        ["ATF", "dawnbreaker"],
+        ["Saksa", "windranger"],
+        ["Malady", "techies"]
+      ],
+      "picksB": [
+        ["Satanic", "nature-s-prophet"],
+        ["No[o]ne-", "dragon-knight"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "winter-wyvern"]
+      ],
+      "priceA": 1.7,
+      "priceB": 2.08,
+      "line": 45,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T16:53:07.750042Z",
+      "totalTime": "2026-10-29T16:53:07.750042Z"
+    },
+    "9067412106": {
+      "a": "Team Yandex",
+      "b": "PARIVISION",
+      "picksA": [
+        ["watson", "slark"],
+        ["CHIRA_JUNIOR", "pangolier"],
+        ["ATF", "timbersaw"],
+        ["Saksa", "nature-s-prophet"],
+        ["Malady", "dazzle"]
+      ],
+      "picksB": [
+        ["Satanic", "templar-assassin"],
+        ["No[o]ne-", "earthshaker"],
+        ["Noticed", "dark-seer"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "techies"]
+      ],
+      "priceA": 1.87,
+      "priceB": 1.87,
+      "line": 43,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-yandex-29-10-2026-86184839",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T17:39:04.201130Z",
+      "totalTime": "2026-10-29T17:39:04.201130Z"
+    },
+    "9067529830": {
+      "a": "OG",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Natsumi", "io"],
+        ["Topson", "sand-king"],
+        ["SSS", "largo"],
+        ["OneJey", "keeper-of-the-light"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["Yuma", "sven"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "lycan"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "mirana"]
+      ],
+      "priceA": 1.75,
+      "priceB": 2.05,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-29-10-2026-86187218",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-29-10-2026-86187218",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T18:55:42.042953Z",
+      "totalTime": "2026-10-29T18:58:52.529073Z"
+    },
+    "9067617648": {
+      "a": "OG",
+      "b": "GamerLegion",
+      "picksA": [
+        ["Natsumi", "terrorblade"],
+        ["Topson", "storm-spirit"],
+        ["SSS", "underlord"],
+        ["OneJey", "dark-willow"],
+        ["skem", "techies"]
+      ],
+      "picksB": [
+        ["Yuma", "lone-druid"],
+        ["RCY", "snapfire"],
+        ["Fayde", "dawnbreaker"],
+        ["Bignum", "bounty-hunter"],
+        ["Speeed", "winter-wyvern"]
+      ],
+      "priceA": 1.76,
+      "priceB": 1.99,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-29-10-2026-86187218",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-gamerlegion-29-10-2026-86187218",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-29T20:05:12.863639Z",
+      "totalTime": "2026-10-29T20:05:12.863639Z"
+    },
+    "9064215798": {
+      "a": "LEGION",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["DarkLord^", "necrophos"],
+        ["Stojkov", "lina"],
+        ["SabeRLight-", "dark-seer"],
+        ["xsvampire", "nyx-assassin"],
+        ["KingJungles", "techies"]
+      ],
+      "picksB": [
+        ["Nightfall", "sven"],
+        ["lorenof", "pangolier"],
+        ["DM", "centaur-warrunner"],
+        ["OmaR", "dark-willow"],
+        ["GH", "witch-doctor"]
+      ],
+      "priceA": 2.9,
+      "priceB": 1.41,
+      "line": 40,
+      "under": 1.85,
+      "over": 1.85,
+      "winnerUrl": "https://pari.ru/esports/category/dota2/147876/69355509",
+      "totalUrl": "https://pari.ru/esports/category/dota2/147876/69355509",
+      "winnerSource": "PARI HTTP-архив Bo1; до старта; фаза драфта неизвестна",
+      "totalSource": "PARI HTTP-архив Bo1; factors10438> /10439≤; до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-27T07:03:57.488526Z",
+      "totalTime": "2026-10-27T07:03:14.544410Z"
+    },
+    "9064337890": {
+      "a": "BetBoom Team",
+      "b": "Astra Invicta",
+      "picksA": [
+        ["Kiritych", "bristleback"],
+        ["Save-", "invoker"],
+        ["MieRo`", "dragon-knight"],
+        ["swedenstrong", "dark-willow"],
+        ["Kataomi`", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Nightfall", "ursa"],
+        ["lorenof", "slark"],
+        ["DM", "enigma"],
+        ["OmaR", "clockwerk"],
+        ["GH", "techies"]
+      ],
+      "priceA": 1.75,
+      "priceB": 2.08,
+      "line": 41,
+      "under": 1.9,
+      "over": 1.8,
+      "winnerUrl": "https://pari.ru/esports/category/dota2/147876/69355539",
+      "totalUrl": "https://pari.ru/esports/category/dota2/147876/69355539",
+      "winnerSource": "PARI HTTP-архив Bo1; до старта; фаза драфта неизвестна",
+      "totalSource": "PARI HTTP-архив Bo1; factors10438> /10439≤; до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-27T14:29:44.615778Z",
+      "totalTime": "2026-10-27T07:03:16.732271Z"
+    },
+    "9064490683": {
+      "a": "LEGION",
+      "b": "BetBoom Team",
+      "picksA": [
+        ["DarkLord^", "lone-druid"],
+        ["Stojkov", "storm-spirit"],
+        ["SabeRLight-", "dawnbreaker"],
+        ["xsvampire", "nyx-assassin"],
+        ["KingJungles", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Kiritych", "nature-s-prophet"],
+        ["Save-", "windranger"],
+        ["MieRo`", "centaur-warrunner"],
+        ["swedenstrong", "techies"],
+        ["Kataomi`", "dazzle"]
+      ],
+      "priceA": 2.28,
+      "priceB": 1.63,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.83,
+      "winnerUrl": "https://pari.ru/esports/category/dota2/147876/69355536",
+      "totalUrl": "https://pari.ru/esports/category/dota2/147876/69355536",
+      "winnerSource": "PARI HTTP-архив Bo1; до старта; фаза драфта неизвестна",
+      "totalSource": "PARI HTTP-архив Bo1; factors10438> /10439≤; до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-27T15:59:58.819454Z",
+      "totalTime": "2026-10-27T07:00:40.557039Z"
+    },
+    "9068183471": {
+      "a": "PARIVISION",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Satanic", "nature-s-prophet"],
+        ["No[o]ne-", "dragon-knight"],
+        ["Noticed", "enigma"],
+        ["9Class", "rubick"],
+        ["Dukalis", "venomancer"]
+      ],
+      "picksB": [
+        ["Yatoro", "gyrocopter"],
+        ["Larl", "earthshaker"],
+        ["Batyuk", "largo"],
+        ["not me", "dark-willow"],
+        ["rue", "techies"]
+      ],
+      "priceA": 1.76,
+      "priceB": 1.99,
+      "line": 44,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T10:03:34.500019Z",
+      "totalTime": "2026-10-30T10:03:34.500019Z"
+    },
+    "9068257334": {
+      "a": "PARIVISION",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Satanic", "slark"],
+        ["No[o]ne-", "invoker"],
+        ["Noticed", "brewmaster"],
+        ["9Class", "hoodwink"],
+        ["Dukalis", "warlock"]
+      ],
+      "picksB": [
+        ["Yatoro", "weaver"],
+        ["Larl", "earthshaker"],
+        ["Batyuk", "mars"],
+        ["not me", "dark-willow"],
+        ["rue", "techies"]
+      ],
+      "priceA": 1.7,
+      "priceB": 2.08,
+      "line": 44,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T11:17:00.088269Z",
+      "totalTime": "2026-10-30T11:17:00.088269Z"
+    },
+    "9068332041": {
+      "a": "PARIVISION",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Satanic", "slark"],
+        ["No[o]ne-", "pangolier"],
+        ["Noticed", "tidehunter"],
+        ["9Class", "dark-willow"],
+        ["Dukalis", "venomancer"]
+      ],
+      "picksB": [
+        ["Yatoro", "bloodseeker"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "doom"],
+        ["not me", "clockwerk"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 1.87,
+      "priceB": 1.87,
+      "line": 43,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/pvision-team-spirit-30-10-2026-86193838",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T12:22:57.656793Z",
+      "totalTime": "2026-10-30T12:22:57.656793Z"
+    },
+    "9068455299": {
+      "a": "OG",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Natsumi", "terrorblade"],
+        ["Topson", "invoker"],
+        ["SSS", "doom"],
+        ["OneJey", "techies"],
+        ["skem", "warlock"]
+      ],
+      "picksB": [
+        ["miCKe", "windranger"],
+        ["Malr1ne", "snapfire"],
+        ["Wisper", "enigma"],
+        ["Boxi", "hoodwink"],
+        ["tOfu", "winter-wyvern"]
+      ],
+      "priceA": 2.42,
+      "priceB": 1.55,
+      "line": 43,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/og-team-liquid-30-10-2026-86194817",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-team-liquid-30-10-2026-86194817",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T13:48:12.249532Z",
+      "totalTime": "2026-10-30T13:52:57.920667Z"
+    },
+    "9068605888": {
+      "a": "OG",
+      "b": "Team Liquid",
+      "picksA": [
+        ["Natsumi", "sven"],
+        ["Topson", "zeus"],
+        ["SSS", "dark-seer"],
+        ["OneJey", "gyrocopter"],
+        ["skem", "dazzle"]
+      ],
+      "picksB": [
+        ["miCKe", "nature-s-prophet"],
+        ["Malr1ne", "snapfire"],
+        ["Wisper", "axe"],
+        ["Boxi", "dark-willow"],
+        ["tOfu", "largo"]
+      ],
+      "priceA": 2.46,
+      "priceB": 1.51,
+      "line": 44,
+      "under": 1.9,
+      "over": 1.84,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-team-liquid-30-10-2026-86194817",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/og-team-liquid-30-10-2026-86194817",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T15:25:41.248871Z",
+      "totalTime": "2026-10-30T15:25:41.248871Z"
+    },
+    "9068795274": {
+      "a": "Team Liquid",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Timado", "windranger"],
+        ["Malr1ne", "pangolier"],
+        ["Wisper", "axe"],
+        ["Boxi", "hoodwink"],
+        ["tOfu", "dazzle"]
+      ],
+      "picksB": [
+        ["Yatoro", "sven"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "centaur-warrunner"],
+        ["not me", "dark-willow"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 2.67,
+      "priceB": 1.51,
+      "line": 43,
+      "under": 1.92,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T17:23:19.558258Z",
+      "totalTime": "2026-10-30T17:23:19.558258Z"
+    },
+    "9068910292": {
+      "a": "Team Liquid",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Timado", "dragon-knight"],
+        ["Malr1ne", "batrider"],
+        ["Wisper", "timbersaw"],
+        ["Boxi", "dark-willow"],
+        ["tOfu", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Yatoro", "kez"],
+        ["Larl", "ember-spirit"],
+        ["Batyuk", "lycan"],
+        ["not me", "hoodwink"],
+        ["rue", "techies"]
+      ],
+      "priceA": 3.46,
+      "priceB": 1.28,
+      "line": 43,
+      "under": 1.82,
+      "over": 1.92,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T18:37:50.683902Z",
+      "totalTime": "2026-10-30T18:37:50.683902Z"
+    },
+    "9069021061": {
+      "a": "Team Liquid",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Timado", "luna"],
+        ["Malr1ne", "timbersaw"],
+        ["Wisper", "mars"],
+        ["Boxi", "dark-willow"],
+        ["tOfu", "undying"]
+      ],
+      "picksB": [
+        ["Yatoro", "ursa"],
+        ["Larl", "snapfire"],
+        ["Batyuk", "doom"],
+        ["not me", "hoodwink"],
+        ["rue", "techies"]
+      ],
+      "priceA": 2.92,
+      "priceB": 1.37,
+      "line": 45,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-liquid-team-spirit-30-10-2026-86201090",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-30T19:52:48.222569Z",
+      "totalTime": "2026-10-30T19:52:48.222569Z"
+    },
+    "9069952836": {
+      "a": "Team Yandex",
+      "b": "GamerLegion",
+      "picksA": [
+        ["watson", "lone-druid"],
+        ["CHIRA_JUNIOR", "storm-spirit"],
+        ["ATF", "magnus"],
+        ["Saksa", "shadow-demon"],
+        ["Malady", "dark-willow"]
+      ],
+      "picksB": [
+        ["Yuma", "viper"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "dawnbreaker"],
+        ["Bignum", "techies"],
+        ["Speeed", "winter-wyvern"]
+      ],
+      "priceA": 1.25,
+      "priceB": 3.74,
+      "line": 41,
+      "under": 1.92,
+      "over": 1.82,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-31-10-2026-86194818",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-31-10-2026-86194818",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-31T13:00:12.792168Z",
+      "totalTime": "2026-10-31T13:00:12.792168Z"
+    },
+    "9070062078": {
+      "a": "Team Yandex",
+      "b": "GamerLegion",
+      "picksA": [
+        ["watson", "naga-siren"],
+        ["CHIRA_JUNIOR", "sand-king"],
+        ["ATF", "timbersaw"],
+        ["Saksa", "shadow-demon"],
+        ["Malady", "techies"]
+      ],
+      "picksB": [
+        ["Yuma", "windranger"],
+        ["RCY", "earthshaker"],
+        ["Fayde", "night-stalker"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "silencer"]
+      ],
+      "priceA": 1.25,
+      "priceB": 3.74,
+      "line": 39,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-31-10-2026-86194818",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-gamerlegion-31-10-2026-86194818",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-31T14:10:50.594947Z",
+      "totalTime": "2026-10-31T14:10:50.594947Z"
+    },
+    "9070392472": {
+      "a": "GamerLegion",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Yuma", "sven"],
+        ["RCY", "dragon-knight"],
+        ["Fayde", "timbersaw"],
+        ["Bignum", "windranger"],
+        ["Speeed", "mirana"]
+      ],
+      "picksB": [
+        ["Yatoro", "outworld-devourer"],
+        ["Larl", "earth-spirit"],
+        ["Batyuk", "brewmaster"],
+        ["not me", "shadow-demon"],
+        ["rue", "hoodwink"]
+      ],
+      "priceA": 3.4,
+      "priceB": 1.32,
+      "line": 42,
+      "under": 1.9,
+      "over": 1.8,
+      "winnerUrl": "https://pari.ru/esports/category/dota2/147876/69512622",
+      "totalUrl": "https://pari.ru/esports/category/dota2/147876/69512622",
+      "winnerSource": "PARI HTTP-архив; дочернее событие карты, factors921/923; до старта; фаза драфта неизвестна",
+      "totalSource": "PARI HTTP-архив; карта 1; factors10438> /10439≤; до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-31T17:26:53.053948Z",
+      "totalTime": "2026-10-31T17:26:53.053948Z"
+    },
+    "9070527945": {
+      "a": "GamerLegion",
+      "b": "Team Spirit",
+      "picksA": [
+        ["Yuma", "viper"],
+        ["RCY", "pangolier"],
+        ["Fayde", "brewmaster"],
+        ["Bignum", "dark-willow"],
+        ["Speeed", "windranger"]
+      ],
+      "picksB": [
+        ["Yatoro", "anti-mage"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "tidehunter"],
+        ["not me", "hoodwink"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 3.25,
+      "priceB": 1.3,
+      "line": 44,
+      "under": 1.9,
+      "over": 1.8,
+      "winnerUrl": "https://pari.ru/esports/category/dota2/147876/69512622",
+      "totalUrl": "https://pari.ru/esports/category/dota2/147876/69512622",
+      "winnerSource": "PARI HTTP-архив; дочернее событие карты, factors921/923; до старта; фаза драфта неизвестна",
+      "totalSource": "PARI HTTP-архив; карта 2; factors10438> /10439≤; до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-10-31T18:50:15.635666Z",
+      "totalTime": "2026-10-31T18:50:15.635666Z"
+    },
+    "9071596005": {
+      "a": "Team Yandex",
+      "b": "Team Spirit",
+      "picksA": [
+        ["watson", "necrophos"],
+        ["CHIRA_JUNIOR", "sand-king"],
+        ["ATF", "legion-commander"],
+        ["Saksa", "nature-s-prophet"],
+        ["Malady", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Yatoro", "anti-mage"],
+        ["Larl", "earthshaker"],
+        ["Batyuk", "mars"],
+        ["not me", "hoodwink"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 1.6,
+      "priceB": 2.3,
+      "line": 44,
+      "under": 1.89,
+      "over": 1.89,
+      "winnerUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "totalUrl": "https://www.olimp.bet/line/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "winnerSource": "OLIMPBET поисковая копия /line; время неизвестно",
+      "totalSource": "OLIMPBET поисковая копия /line; время неизвестно",
+      "phase": "unknown",
+      "winnerTime": null,
+      "totalTime": null
+    },
+    "9071689576": {
+      "a": "Team Yandex",
+      "b": "Team Spirit",
+      "picksA": [
+        ["watson", "gyrocopter"],
+        ["CHIRA_JUNIOR", "slark"],
+        ["ATF", "timbersaw"],
+        ["Saksa", "windranger"],
+        ["Malady", "witch-doctor"]
+      ],
+      "picksB": [
+        ["Yatoro", "outworld-devourer"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "enigma"],
+        ["not me", "clockwerk"],
+        ["rue", "techies"]
+      ],
+      "priceA": 1.7,
+      "priceB": 2.08,
+      "line": 45,
+      "under": 1.84,
+      "over": 1.9,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "winnerSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; поздний снимок; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-11-01T14:20:46.031276Z",
+      "totalTime": "2026-11-01T14:26:10.306094Z"
+    },
+    "9071885340": {
+      "a": "Team Yandex",
+      "b": "Team Spirit",
+      "picksA": [
+        ["watson", "nature-s-prophet"],
+        ["CHIRA_JUNIOR", "earthshaker"],
+        ["ATF", "viper"],
+        ["Saksa", "dark-willow"],
+        ["Malady", "winter-wyvern"]
+      ],
+      "picksB": [
+        ["Yatoro", "clinkz"],
+        ["Larl", "sand-king"],
+        ["Batyuk", "timbersaw"],
+        ["not me", "hoodwink"],
+        ["rue", "witch-doctor"]
+      ],
+      "priceA": 1.76,
+      "priceB": 1.99,
+      "line": 44,
+      "under": 1.87,
+      "over": 1.87,
+      "winnerUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "totalUrl": "https://www.olimp.bet/live/kibersport-112/dota-2-pr-universe-8355309/team-yandex-team-spirit-01-11-2026-86210829",
+      "winnerSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "totalSource": "OLIMPBET HTTP-архив; наблюдение до старта; фаза драфта неизвестна",
+      "phase": "unknown",
+      "winnerTime": "2026-11-01T15:49:10.668772Z",
+      "totalTime": "2026-11-01T15:25:29.247993Z"
+    }
+  }
+}

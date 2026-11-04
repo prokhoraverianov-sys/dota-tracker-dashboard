@@ -1,4 +1,4 @@
-import { Radio, RotateCcw } from "lucide-react"
+import { ArrowDown, Radio, RotateCcw } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { type Api, ApiError } from "./api"
 import { CalculateBar } from "./CalculateBar"
@@ -41,6 +41,9 @@ export function MapWorkspace({
   const [error, setError] = useState("")
   const [notice, setNotice] = useState("")
   const [proposal, setProposal] = useState<LiveProposal | null>(null)
+  const forecastSectionRef = useRef<HTMLElement>(null)
+  const calculationRef = useRef<HTMLFieldSetElement>(null)
+  const oddsSectionRef = useRef<HTMLDivElement>(null)
   const retry = useRef<{ body: string; key: string } | null>(null)
   const dirty = JSON.stringify(draft) !== JSON.stringify(initialDraft(map))
   const locked = !!map.result
@@ -87,6 +90,7 @@ export function MapWorkspace({
       setMap(result.map)
       if (stage === "post_draft") setDraft(initialDraft(result.map))
       retry.current = null
+      window.requestAnimationFrame(() => forecastSectionRef.current?.scrollIntoView())
       setNotice(
         result.replayed
           ? "Подтверждено ранее выполненное сохранение."
@@ -135,84 +139,157 @@ export function MapWorkspace({
       localStorage.removeItem(key)
     }
   }
+  function showCalculation() {
+    const section = calculationRef.current
+    section?.focus({ preventScroll: true })
+    section?.scrollIntoView()
+  }
+  const forecastSection = (
+    <section ref={forecastSectionRef} className="workspace-section" aria-label="Прогнозы карты">
+      <div className="workspace-heading">
+        <h2>Прогнозы карты</h2>
+        <p className="muted">Вероятности, длительность, цены и данные расчёта для каждого этапа.</p>
+      </div>
+      {(map.pre || map.post) && <Delta map={map} />}
+      <div className="two-columns forecasts">
+        <ForecastCard forecast={map.pre} stage="PRE" map={map} />
+        <ForecastCard forecast={map.post} stage="POST" map={map} />
+      </div>
+    </section>
+  )
+  const prepareFirst = !locked && !map.post
   return (
     <>
-      <Back onClick={() => navigate("/schedule")} />
+      <Back
+        onClick={() =>
+          navigate(
+            map.tournament === "1win Essence III"
+              ? "/schedule?tournament=1win-essence-3"
+              : "/schedule",
+          )
+        }
+      />
       <Header
-        title={`${map.team_a} vs ${map.team_b}`}
-        subtitle={`${map.tournament} · Карта ${map.map_number ?? map.map_id} · ${mapStatus(map)}`}
+        title={`${map.team_a} — ${map.team_b}`}
+        subtitle={
+          (map.tournament ?? "Матч") +
+          " · Карта " +
+          (map.map_number ?? map.map_id) +
+          " · " +
+          mapStatus(map)
+        }
       >
-        <span className="badge">{map.result ? "Только чтение" : "Shadow only"}</span>
+        <span className="badge">{locked ? "Карта завершена" : "Режим наблюдения"}</span>
       </Header>
       {error && <Notice error>{error}</Notice>}
       {notice && <Notice>{notice}</Notice>}
-      <CurrentOdds map={map} api={api} />
-      <div className="two-columns forecasts">
-        <ForecastCard forecast={map.pre} stage="PRE" map={map} api={api} />
-        <ForecastCard forecast={map.post} stage="POST" map={map} api={api} />
-      </div>
-      <Delta map={map} />
-      <div className="editor-toolbar">
-        <div>
-          <h2>Подготовка карты</h2>
-          <p className="muted">
-            {dirty && !locked
-              ? "Несохранённый черновик хранится в этом браузере"
-              : "Состав по фиксированным позициям"}
-          </p>
-        </div>
-        <div className="actions">
-          <button
-            type="button"
-            className="secondary"
-            disabled={editorLocked || !!busy}
-            onClick={live}
-          >
-            <Radio size={16} />
-            {busy === "live" ? "Проверяем…" : "Получить данные источника"}
+      <nav className="workspace-nav" aria-label="Разделы карты">
+        <span>
+          <strong>PRE</strong> {map.pre ? "сохранён" : "до драфта"}
+        </span>
+        <span>
+          <strong>POST</strong> {map.post ? "сохранён" : `${draftCompleteness(draft)}/10 героев`}
+        </span>
+        <button
+          type="button"
+          className="text-button"
+          onClick={() => forecastSectionRef.current?.scrollIntoView()}
+        >
+          <ArrowDown size={15} /> Прогнозы
+        </button>
+        {!locked && (!map.pre || !map.post) && (
+          <button type="button" className="text-button" onClick={showCalculation}>
+            <ArrowDown size={15} /> К расчёту
           </button>
+        )}
+        {map.series_id && (
           <button
             type="button"
             className="text-button"
-            disabled={editorLocked || !dirty || !!busy}
-            onClick={discard}
+            onClick={() => oddsSectionRef.current?.scrollIntoView()}
           >
-            <RotateCcw size={16} />
-            Сбросить
+            <ArrowDown size={15} /> Текущие цены
           </button>
+        )}
+      </nav>
+      {!prepareFirst && forecastSection}
+      <section className="workspace-section draft-section" aria-label="Подготовка карты">
+        <div className="editor-toolbar">
+          <div>
+            <h2>Подготовка карты</h2>
+            <p className="muted">
+              {dirty && !locked
+                ? "Черновик сохранён в браузере. Проверьте состав и пики перед POST."
+                : "Загрузите пики из источника или заполните 10 фиксированных позиций вручную."}
+            </p>
+          </div>
+          <div className="actions">
+            <button
+              type="button"
+              className="primary"
+              disabled={editorLocked || !!busy}
+              onClick={live}
+            >
+              <Radio size={16} />
+              {busy === "live" ? "Проверяем…" : "Получить данные источника"}
+            </button>
+            <button
+              type="button"
+              className="text-button"
+              disabled={editorLocked || !dirty || !!busy}
+              onClick={discard}
+            >
+              <RotateCcw size={16} />
+              Сбросить
+            </button>
+          </div>
         </div>
+        {proposal && (
+          <LiveReview
+            proposal={proposal}
+            current={draft}
+            cancel={() => setProposal(null)}
+            apply={() => {
+              setDraft(proposal.input)
+              setProposal(null)
+              setNotice("Предложение применено к черновику. Проверьте позиции перед POST.")
+              if (!validatePost(proposal.input, catalog.heroes)) {
+                window.requestAnimationFrame(showCalculation)
+              }
+            }}
+          />
+        )}
+        <DraftEditor
+          map={map}
+          draft={draft}
+          catalog={catalog}
+          onChange={edit}
+          disabled={locked || !!busy || !!map.post}
+        />
+        <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
+        {!locked && (
+          <fieldset
+            ref={calculationRef}
+            className="workspace-anchor"
+            aria-label="Расчёт PRE и POST"
+            tabIndex={-1}
+          >
+            <CalculateBar
+              pre={!!map.pre}
+              post={!!map.post}
+              busy={busy}
+              postProblem={validatePost(draft, catalog.heroes)}
+              picked={draftCompleteness(draft)}
+              onPre={() => calculate("pre_match")}
+              onPost={() => calculate("post_draft")}
+            />
+          </fieldset>
+        )}
+      </section>
+      <div ref={oddsSectionRef} className="workspace-anchor">
+        <CurrentOdds map={map} api={api} />
       </div>
-      {proposal && (
-        <LiveReview
-          proposal={proposal}
-          current={draft}
-          cancel={() => setProposal(null)}
-          apply={() => {
-            setDraft(proposal.input)
-            setProposal(null)
-            setNotice("Предложение применено к черновику. Проверьте позиции перед POST.")
-          }}
-        />
-      )}
-      <DraftEditor
-        map={map}
-        draft={draft}
-        catalog={catalog}
-        onChange={edit}
-        disabled={locked || !!busy || !!map.post}
-      />
-      <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
-      {!locked && (
-        <CalculateBar
-          pre={!!map.pre}
-          post={!!map.post}
-          busy={busy}
-          postProblem={validatePost(draft, catalog.heroes)}
-          picked={draftCompleteness(draft)}
-          onPre={() => calculate("pre_match")}
-          onPost={() => calculate("post_draft")}
-        />
-      )}
+      {prepareFirst && forecastSection}
       <ResultForm
         onRefresh={setMap}
         map={map}

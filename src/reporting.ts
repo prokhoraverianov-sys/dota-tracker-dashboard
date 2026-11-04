@@ -60,9 +60,9 @@ export type ReportFilters = {
 }
 export const emptyFilters: ReportFilters = { team: "", date_from: "", date_to: "" }
 export function minutes(seconds: number | null): string {
-  return seconds === null
-    ? "Нет данных"
-    : `${Math.floor(seconds / 60)}:${String(Math.round(seconds % 60)).padStart(2, "0")}`
+  if (seconds === null) return "Нет данных"
+  const rounded = Math.round(seconds)
+  return `${String(Math.floor(rounded / 60))}:${String(rounded % 60).padStart(2, "0")}`
 }
 export function winnerPrediction(match: CompletedMatch, stage: "pre" | "post"): string {
   const value = match[stage]?.probability_team_a

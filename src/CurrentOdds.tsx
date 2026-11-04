@@ -18,16 +18,50 @@ const oddsSchema = z.object({
   ),
   notice: z.string(),
 })
+type Odds = z.infer<typeof oddsSchema>
+
+function QuoteSource({ odds }: { readonly odds: Odds }) {
+  const provider = odds.provider ?? "Источник не указан"
+  const sourceUrl = odds.source_url?.startsWith("https://") ? odds.source_url : null
+  const phase =
+    odds.phase === "pre_map"
+      ? "До карты"
+      : odds.phase === "live" || odds.phase === "in_play"
+        ? "Во время карты"
+        : "Фаза неизвестна"
+  return (
+    <div className="quote-summary">
+      <span className="badge">
+        {odds.status === "fresh" ? "Свежий снимок" : "Устаревший снимок"}
+      </span>
+      <span>
+        {sourceUrl ? (
+          <a href={sourceUrl} target="_blank" rel="noreferrer">
+            {provider}
+          </a>
+        ) : (
+          provider
+        )}
+        {" · "}
+        {time(odds.observed_at_utc)}
+      </span>
+      <span>{phase}</span>
+    </div>
+  )
+}
+
 export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: Api }) {
-  const [data, setData] = useState<z.infer<typeof oddsSchema> | null>(null)
+  const [data, setData] = useState<Odds | null>(null)
   const [error, setError] = useState("")
   const [refresh, setRefresh] = useState(0)
   const [busy, setBusy] = useState(false)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: The refresh button triggers a new request.
   useEffect(() => {
     if (!map.series_id || !map.map_number) return
-    let active = refresh >= 0
+    let active = true
     setBusy(true)
     setError("")
+    setData(null)
     api
       .request(
         `/series/${encodeURIComponent(map.series_id)}/maps/${map.map_number}/odds`,
@@ -51,9 +85,10 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
     <section className="panel current-odds">
       <div className="panel-heading">
         <div>
-          <h2>Коэффициенты букмекера</h2>
+          <h2>Коэффициенты карты</h2>
           <p className="muted">
-            Последние доступные цены из кэша. Сохранённые PRE / POST не изменяются.
+            Последний доступный снимок по каждому рынку. Цены сохранённых расчётов указаны в PRE и
+            POST.
           </p>
         </div>
         <button
@@ -63,74 +98,63 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
           onClick={() => setRefresh((x) => x + 1)}
         >
           <RefreshCw size={16} />
-          {busy ? "Загружаем…" : "Обновить цены"}
+          {busy ? "Загружаем…" : "Проверить новые цены"}
         </button>
       </div>
       {error && <Notice error>{error}</Notice>}
       {data && (
-        <>
-          <div className="quote-summary">
-            <span className="badge">
-              {data.status === "fresh"
-                ? "Свежий снимок"
-                : data.status === "stale"
-                  ? "Устаревший снимок"
-                  : "Цен нет"}
-            </span>
-            <span>
-              {data.provider ?? "Источник не указан"} · {time(data.observed_at_utc)}
-            </span>
-            <span>
-              Фаза:{" "}
-              {data.phase === "pre_map"
-                ? "до карты"
-                : data.phase === "live" || data.phase === "in_play"
-                  ? "карта идёт"
-                  : "неизвестна"}
-            </span>
-          </div>
-          <p className="muted quote-notice">{data.notice}</p>
-          {data.winner && (
-            <div className="two-columns quote-prices">
-              <div>
-                <span>{map.team_a}</span>
-                <strong>{data.winner.team_a}</strong>
-              </div>
-              <div>
-                <span>{map.team_b}</span>
-                <strong>{data.winner.team_b}</strong>
-              </div>
-            </div>
-          )}
-          {data.duration_lines.length > 0 && (
-            <div className="table-scroll">
-              <table>
-                <caption>Тотал длительности</caption>
-                <thead>
-                  <tr>
-                    <th>Линия</th>
-                    <th>Больше</th>
-                    <th>Меньше</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.duration_lines.map((line) => (
-                    <tr key={line.line_minutes}>
-                      <td>{line.line_minutes} мин</td>
-                      <td className="numeric">{line.over}</td>
-                      <td className="numeric">{line.under}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          {!data.winner && data.duration_lines.length === 0 && (
-            <p className="quote-notice">
-              Для этой карты доступных рынков пока нет. Цены можно ввести вручную ниже.
-            </p>
-          )}
-        </>
+        <div className="two-columns">
+          <section>
+            <h3>Победа на карте</h3>
+            {data.status !== "empty" && data.winner ? (
+              <>
+                <QuoteSource odds={data} />
+                <div className="two-columns quote-prices">
+                  <div>
+                    <span>{map.team_a}</span>
+                    <strong>{data.winner.team_a}</strong>
+                  </div>
+                  <div>
+                    <span>{map.team_b}</span>
+                    <strong>{data.winner.team_b}</strong>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <p className="muted">Котировки на победу пока недоступны.</p>
+            )}
+          </section>
+          <section>
+            <h3>Тотал длительности</h3>
+            {data.status !== "empty" && data.duration_lines.length > 0 ? (
+              <>
+                <QuoteSource odds={data} />
+                <div className="table-scroll">
+                  <table aria-label="Коэффициенты на тотал длительности">
+                    <thead>
+                      <tr>
+                        <th>Линия</th>
+                        <th>Больше</th>
+                        <th>Меньше</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.duration_lines.map((line) => (
+                        <tr key={line.line_minutes}>
+                          <td>{line.line_minutes} мин</td>
+                          <td className="numeric">{line.over}</td>
+                          <td className="numeric">{line.under}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : (
+              <p className="muted">Котировки на тотал пока недоступны.</p>
+            )}
+          </section>
+        </div>
       )}
     </section>
   )

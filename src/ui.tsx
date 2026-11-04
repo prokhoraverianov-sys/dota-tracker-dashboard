@@ -49,7 +49,7 @@ export function Header({
   return (
     <header className="page-heading">
       <div>
-        <p className="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</p>
+        <p className="eyebrow">DOTA TRACKER</p>
         <h1>{title}</h1>
         <p className="muted">{subtitle}</p>
       </div>
@@ -74,6 +74,8 @@ export function Shell({
     { path: "/history", label: "История", icon: History },
     { path: "/stats", label: "Статистика", icon: ChartNoAxesCombined },
   ]
+  const section = route.split("?")[0]
+  const active = section === "/history" || section === "/stats" ? section : "/schedule"
   return (
     <div className="app-shell">
       <a
@@ -86,45 +88,43 @@ export function Shell({
       >
         К содержимому
       </a>
-      <aside className="sidebar">
-        <div className="brand">
-          <span className="brand-mark">
-            <Swords size={22} />
-          </span>
-          <div>
-            Dota Tracker<small>АНАЛИТИКА КАРТ</small>
+      <header className="topbar">
+        <div className="topbar-inner">
+          <div className="brand">
+            <span className="brand-mark">
+              <Swords size={22} />
+            </span>
+            <div>
+              Dota Tracker<small>АНАЛИТИКА КАРТ</small>
+            </div>
+          </div>
+          <nav aria-label="Основная навигация">
+            {links.map((item) => (
+              <button
+                type="button"
+                key={item.path}
+                className={active === item.path ? "nav-item active" : "nav-item"}
+                aria-current={active === item.path ? "page" : undefined}
+                onClick={() => navigate(item.path)}
+              >
+                <item.icon size={18} />
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="topbar-meta">
+            <div className="shadow-label">
+              <ShieldCheck size={16} /> Режим наблюдения
+            </div>
+            {logout && (
+              <button type="button" className="nav-item" aria-label="Выйти" onClick={logout}>
+                <LogOut size={17} />
+                Выйти
+              </button>
+            )}
           </div>
         </div>
-        <nav aria-label="Основная навигация">
-          {links.map((item) => (
-            <button
-              type="button"
-              key={item.path}
-              className={route === item.path ? "nav-item active" : "nav-item"}
-              onClick={() => navigate(item.path)}
-            >
-              <item.icon size={18} />
-              {item.label}
-            </button>
-          ))}
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="shadow-label">
-            <ShieldCheck size={16} /> Shadow only
-          </div>
-          <p>
-            Прогнозы для наблюдения.
-            <br />
-            Без исполнения ставок.
-          </p>
-          {logout && (
-            <button type="button" className="nav-item" onClick={logout}>
-              <LogOut size={17} />
-              Выйти
-            </button>
-          )}
-        </div>
-      </aside>
+      </header>
       <main id={mainId} tabIndex={-1}>
         {children}
       </main>
