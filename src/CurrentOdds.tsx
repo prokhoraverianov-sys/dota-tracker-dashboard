@@ -1,54 +1,10 @@
 import { RefreshCw } from "lucide-react"
 import { useEffect, useState } from "react"
-import { z } from "zod"
 import type { Api } from "./api"
 import { type MapDTO, message } from "./contracts"
-import { time } from "./domain"
+import { OddsComparison } from "./OddsComparison"
+import { type Odds, oddsSchema, providerQuotes } from "./odds"
 import { Notice } from "./ui"
-
-const oddsSchema = z.object({
-  status: z.enum(["fresh", "stale", "empty"]),
-  provider: z.string().nullable(),
-  source_url: z.string().nullable(),
-  observed_at_utc: z.string().nullable(),
-  phase: z.string(),
-  winner: z.object({ team_a: z.string(), team_b: z.string() }).nullable(),
-  duration_lines: z.array(
-    z.object({ line_minutes: z.string(), over: z.string(), under: z.string() }),
-  ),
-  notice: z.string(),
-})
-type Odds = z.infer<typeof oddsSchema>
-
-function QuoteSource({ odds }: { readonly odds: Odds }) {
-  const provider = odds.provider ?? "Источник не указан"
-  const sourceUrl = odds.source_url?.startsWith("https://") ? odds.source_url : null
-  const phase =
-    odds.phase === "pre_map"
-      ? "До карты"
-      : odds.phase === "live" || odds.phase === "in_play"
-        ? "Во время карты"
-        : "Фаза неизвестна"
-  return (
-    <div className="quote-summary">
-      <span className="badge">
-        {odds.status === "fresh" ? "Свежий снимок" : "Устаревший снимок"}
-      </span>
-      <span>
-        {sourceUrl ? (
-          <a href={sourceUrl} target="_blank" rel="noreferrer">
-            {provider}
-          </a>
-        ) : (
-          provider
-        )}
-        {" · "}
-        {time(odds.observed_at_utc)}
-      </span>
-      <span>{phase}</span>
-    </div>
-  )
-}
 
 export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: Api }) {
   const [data, setData] = useState<Odds | null>(null)
@@ -80,15 +36,15 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
       active = false
     }
   }, [api, map.series_id, map.map_number, refresh])
-  if (!map.series_id) return null
+  if (!map.series_id || !map.map_number) return null
   return (
-    <section className="panel current-odds">
+    <section className="panel current-odds" aria-busy={busy}>
       <div className="panel-heading">
         <div>
-          <h2>Коэффициенты карты</h2>
+          <h2>Коэффициенты карты · все источники</h2>
           <p className="muted">
-            Последний доступный снимок по каждому рынку. Цены сохранённых расчётов указаны в PRE и
-            POST.
+            Последний снимок каждого источника. Победа относится к этой карте, тотал — к её
+            длительности в минутах. Цены сохранённых расчётов указаны в PRE и POST.
           </p>
         </div>
         <button
@@ -98,63 +54,18 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
           onClick={() => setRefresh((x) => x + 1)}
         >
           <RefreshCw size={16} />
-          {busy ? "Загружаем…" : "Проверить новые цены"}
+          {busy ? "Загружаем…" : "Обновить снимки"}
         </button>
       </div>
       {error && <Notice error>{error}</Notice>}
+      {busy && !data && <p className="odds-loading muted">Загружаем котировки источников…</p>}
       {data && (
-        <div className="two-columns">
-          <section>
-            <h3>Победа на карте</h3>
-            {data.status !== "empty" && data.winner ? (
-              <>
-                <QuoteSource odds={data} />
-                <div className="two-columns quote-prices">
-                  <div>
-                    <span>{map.team_a}</span>
-                    <strong>{data.winner.team_a}</strong>
-                  </div>
-                  <div>
-                    <span>{map.team_b}</span>
-                    <strong>{data.winner.team_b}</strong>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <p className="muted">Котировки на победу пока недоступны.</p>
-            )}
-          </section>
-          <section>
-            <h3>Тотал длительности</h3>
-            {data.status !== "empty" && data.duration_lines.length > 0 ? (
-              <>
-                <QuoteSource odds={data} />
-                <div className="table-scroll">
-                  <table aria-label="Коэффициенты на тотал длительности">
-                    <thead>
-                      <tr>
-                        <th>Линия</th>
-                        <th>Больше</th>
-                        <th>Меньше</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.duration_lines.map((line) => (
-                        <tr key={line.line_minutes}>
-                          <td>{line.line_minutes} мин</td>
-                          <td className="numeric">{line.over}</td>
-                          <td className="numeric">{line.under}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            ) : (
-              <p className="muted">Котировки на тотал пока недоступны.</p>
-            )}
-          </section>
-        </div>
+        <OddsComparison
+          quotes={providerQuotes(data)}
+          teamA={map.team_a}
+          teamB={map.team_b}
+          mapNumber={map.map_number}
+        />
       )}
     </section>
   )

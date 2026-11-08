@@ -1776,3 +1776,212 @@ main {
     padding-inline: var(--s1);
   }
 }
+
+/* Multi-source quotes keep series and map markets separate. */
+.odds-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: var(--s3);
+  padding: 0 var(--s5) var(--s5);
+}
+.odds-provider {
+  min-width: 0;
+  padding: var(--s4);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+}
+.odds-provider-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
+}
+.odds-provider-heading a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.odds-status {
+  font-size: 10px;
+}
+.odds-status-fresh {
+  color: var(--mint);
+}
+.odds-status-stale {
+  color: var(--warning);
+}
+.odds-provider-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  margin: var(--s2) 0 var(--s4);
+  color: var(--secondary);
+  font-size: 11px;
+}
+.odds-provider-meta time {
+  flex-basis: 100%;
+}
+.odds-provider h3 {
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 500;
+}
+.odds-winner-prices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: var(--s2) 0 var(--s4);
+  gap: var(--s3);
+}
+.odds-winner-prices dt {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.odds-winner-prices dd {
+  margin: var(--s1) 0 0;
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--mint);
+}
+.odds-duration-table {
+  width: 100%;
+  margin-top: var(--s2);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.odds-duration-table th,
+.odds-duration-table td {
+  min-width: 0;
+  padding: var(--s2) var(--s1);
+}
+.odds-duration-table th {
+  font-size: 11px;
+  white-space: normal;
+}
+.odds-duration-table th:not(:first-child),
+.odds-duration-table td:not(:first-child) {
+  text-align: right;
+}
+.odds-missing {
+  font-size: 12px;
+  margin: var(--s2) 0 var(--s3);
+}
+.odds-provider-notice {
+  font-size: 11px;
+  color: var(--secondary);
+  margin-top: var(--s3);
+  overflow-wrap: anywhere;
+}
+.odds-loading,
+.market-board-notice {
+  padding: 0 var(--s5) var(--s5);
+}
+.market-board {
+  margin-bottom: var(--s5);
+}
+.market-checked {
+  margin-top: var(--s1);
+  font-size: 11px;
+}
+.market-source-statuses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: var(--s3);
+  padding: 0 var(--s5) var(--s4);
+}
+.market-source-statuses p {
+  display: flex;
+  gap: var(--s1) var(--s2);
+  flex-wrap: wrap;
+  align-content: start;
+  font-size: 12px;
+}
+.market-source-statuses small {
+  flex-basis: 100%;
+  color: var(--secondary);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.market-event {
+  border-top: 1px solid var(--line);
+}
+.market-event-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s4);
+  padding: var(--s5);
+}
+.market-event-heading h3 {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.market-event-heading p,
+.market-event-heading > span {
+  font-size: 12px;
+}
+.market-scope > summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s3);
+  align-items: center;
+  padding: var(--s3) var(--s5);
+  cursor: pointer;
+  list-style: none;
+}
+.market-scope > summary::-webkit-details-marker {
+  display: none;
+}
+.market-scope > summary > svg {
+  flex: 0 0 auto;
+  transition: transform 0.15s;
+}
+.market-scope[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.market-preview {
+  display: flex;
+  gap: var(--s1) var(--s3);
+  flex-wrap: wrap;
+  margin-top: var(--s1);
+  color: var(--secondary);
+  font-size: 11px;
+}
+.market-scope[open] .market-preview {
+  display: none;
+}
+@media (max-width: 520px) {
+  .odds-comparison {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 var(--s3) var(--s3);
+  }
+  .odds-provider {
+    padding: var(--s3);
+  }
+  .market-event-heading,
+  .market-scope > summary {
+    padding-right: var(--s3);
+    padding-left: var(--s3);
+  }
+}
+@media (max-width: 360px) {
+  .topbar nav {
+    gap: var(--s1);
+  }
+  .topbar .nav-item {
+    gap: var(--s1);
+    padding-inline: var(--s1);
+    font-size: 12px;
+  }
+}
+.odds-open-source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s4);
+  min-height: 36px;
+  font-size: 12px;
+}

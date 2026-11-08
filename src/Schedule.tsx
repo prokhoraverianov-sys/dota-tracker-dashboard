@@ -5,6 +5,7 @@ import type { Api } from "./api"
 import { type Catalog, message, scheduleSchema } from "./contracts"
 import { mapPath, mapStatus, query, time } from "./domain"
 import { EventOverview } from "./EventOverview"
+import { MarketBoard } from "./MarketBoard"
 import { Empty, Header, Notice } from "./ui"
 
 type ScheduleData = z.infer<typeof scheduleSchema>
@@ -100,6 +101,11 @@ export function Schedule({
           </button>
         ))}
       </fieldset>
+      <MarketBoard
+        key={tournament || "pari-universe"}
+        api={api}
+        tournament={tournament || "pari-universe"}
+      />
       <section className="toolbar schedule-toolbar" aria-label="Настройки расписания">
         <details className="optional-filters">
           <summary>{date || team ? "Фильтры применены" : "Фильтры расписания"}</summary>
