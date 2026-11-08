@@ -181,6 +181,18 @@ export function MapWorkspace({
       >
         <span className="badge">{locked ? "Карта завершена" : "Режим наблюдения"}</span>
       </Header>
+      {map.tournament === "PARI Universe" && map.series_id && (
+        <Notice>
+          Результаты сыгранных карт и архивные котировки доступны в истории серии.{" "}
+          <button
+            type="button"
+            className="text-button"
+            onClick={() => navigate(`/history?series=${encodeURIComponent(map.series_id ?? "")}`)}
+          >
+            Открыть историю серии
+          </button>
+        </Notice>
+      )}
       {error && <Notice error>{error}</Notice>}
       {notice && <Notice>{notice}</Notice>}
       <nav className="workspace-nav" aria-label="Разделы карты">

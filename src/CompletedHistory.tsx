@@ -205,7 +205,11 @@ export function CompletedHistory({
                       {expanded && (
                         <tr className="history-detail-row">
                           <td colSpan={5}>
-                            <HistoryMatchDetails match={match} archive={archive} />
+                            <HistoryMatchDetails
+                              match={match}
+                              archive={archive}
+                              heroes={catalog.heroes}
+                            />
                           </td>
                         </tr>
                       )}

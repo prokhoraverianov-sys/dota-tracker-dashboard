@@ -29,6 +29,9 @@ export function DraftEditor({
       [side]: {
         ...draft[side],
         [field]: draft[side][field].map((old, i) => (i === index ? value : old)),
+        ...(field === "players" && value !== draft[side].players[index]
+          ? { heroes: draft[side].heroes.map((hero, i) => (i === index ? "" : hero)) }
+          : {}),
       },
     })
   }
@@ -46,7 +49,9 @@ export function DraftEditor({
       <div className="panel-heading">
         <div>
           <h2>Составы и драфт</h2>
-          <p className="muted">Позиции 1–5 фиксированы. Замену впишите в нужную строку.</p>
+          <p className="muted">
+            Позиции 1–5 фиксированы. При смене игрока выберите его героя заново.
+          </p>
         </div>
         <span className="badge">{disabled ? "Только чтение" : "Черновик"}</span>
       </div>

@@ -56,7 +56,14 @@ export function LiveReview({
             <h3>Команда {index === 0 ? "A" : "B"}</h3>
             {proposal.input[side].players.map((player, i) => (
               <p key={`${side}-${i + 1}`} className="proposal-row">
-                {i + 1}. {player || "нет игрока"}
+                {i + 1}.{" "}
+                {current[side].players[i] && current[side].players[i] !== player ? (
+                  <span>
+                    {current[side].players[i]} → {player || "нет игрока"}
+                  </span>
+                ) : (
+                  player || "нет игрока"
+                )}
                 <strong>{proposal.input[side].heroes[i] || "нет героя"}</strong>
               </p>
             ))}

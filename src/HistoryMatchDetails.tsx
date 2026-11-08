@@ -1,4 +1,4 @@
-import { type ArchiveMatch, formatPrice } from "./archive"
+import { type ArchiveMatch, formatPrice, heroDisplayName } from "./archive"
 import { criterionLabels } from "./criteria"
 import { percent, time } from "./domain"
 import { type CompletedMatch, minutes } from "./reporting"
@@ -12,8 +12,10 @@ function durationError(predicted: number | undefined, actual: number | null) {
 export function HistoryMatchDetails({
   match,
   archive,
+  heroes,
 }: {
   readonly match: CompletedMatch
+  readonly heroes: readonly string[]
   readonly archive: ArchiveMatch | undefined
 }) {
   const criteria = [
@@ -73,6 +75,9 @@ export function HistoryMatchDetails({
       </dl>
       {archive && (
         <>
+          <p className="muted">
+            Игроки и герои этой карты из архива. Текущий состав команды здесь не подставляется.
+          </p>
           <div className="two-columns archive-draft">
             {[
               { team: match.team_a, picks: archive.picksA },
@@ -84,7 +89,7 @@ export function HistoryMatchDetails({
                   {picks.map(([player, hero]) => (
                     <li key={player}>
                       <strong>{player}</strong>
-                      <span>{hero?.replaceAll("-", " ")}</span>
+                      <span>{heroDisplayName(hero, heroes)}</span>
                     </li>
                   ))}
                 </ol>

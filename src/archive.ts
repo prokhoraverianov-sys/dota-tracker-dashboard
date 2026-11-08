@@ -40,3 +40,11 @@ export function archiveMatch(
 export function formatPrice(price: number | null | undefined): string {
   return price == null ? "—" : price.toFixed(2)
 }
+
+export function heroDisplayName(value: string | undefined, heroes: readonly string[]): string {
+  if (!value) return "Герой не указан"
+  const key = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, "")
+  const normalized = key(value)
+  const canonical = normalized === "outworlddevourer" ? "outworlddestroyer" : normalized
+  return heroes.find((hero) => key(hero) === canonical) ?? value
+}
