@@ -1,6 +1,13 @@
 import { ExternalLink } from "lucide-react"
 import { time } from "./domain"
-import { type ProviderOdds, priceLabel, providerLabel, quotePhase, quoteSourceUrl } from "./odds"
+import {
+  type ProviderOdds,
+  priceLabel,
+  providerLabel,
+  quoteNotice,
+  quotePhase,
+  quoteSourceUrl,
+} from "./odds"
 
 function ProviderQuote({
   quote,
@@ -100,10 +107,12 @@ function ProviderQuote({
         </>
       ) : (
         <p className="muted odds-missing">
-          {quote.notice || "Снимок котировок этого источника отсутствует."}
+          {quoteNotice(quote.notice) || "Снимок котировок этого источника отсутствует."}
         </p>
       )}
-      {quote.notice && available && <p className="odds-provider-notice">{quote.notice}</p>}
+      {quote.notice && available && (
+        <p className="odds-provider-notice">{quoteNotice(quote.notice)}</p>
+      )}
       {source && (
         <a className="odds-open-source" href={source} target="_blank" rel="noreferrer">
           {quote.provider?.toLowerCase() === "polymarket"

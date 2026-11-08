@@ -108,3 +108,16 @@ export function priceLabel(value: string): string {
   const price = Number(value)
   return Number.isFinite(price) && price > 0 ? priceFormatter.format(price) : value
 }
+
+export function quoteNotice(value: string): string {
+  const messages: Readonly<Record<string, string>> = {
+    "Cached odds observed within the last 60 seconds": "Снимок получен не более минуты назад.",
+    "Cached odds are stale or have a future timestamp":
+      "Снимок устарел или время источника опережает текущее.",
+    "No cached observation for this provider and market":
+      "Подтверждённого снимка этого рынка у источника нет.",
+    "No supported prices in this provider's latest observation":
+      "В последнем снимке нет подтверждённых цен этого рынка.",
+  }
+  return messages[value] ?? value
+}
