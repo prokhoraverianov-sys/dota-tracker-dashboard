@@ -9,7 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "lint": "biome check src tests vite.config.ts",
-    "test": "bun test tests/unit.test.ts tests/api.test.ts tests/usability.test.ts tests/visual-identity.test.ts"
+    "test": "bun test tests/unit.test.ts tests/api.test.ts tests/usability.test.ts tests/visual-identity.test.ts tests/playin-analysis.test.ts"
   },
   "dependencies": {
     "react": "^19.2.0",

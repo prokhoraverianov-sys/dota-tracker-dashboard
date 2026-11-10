@@ -7,6 +7,7 @@ import { mapPath, mapStatus, query, time } from "./domain"
 import { EventOverview } from "./EventOverview"
 import { MarketBoard } from "./MarketBoard"
 import { PlayIn } from "./PlayIn"
+import { PLAY_IN_ROUTE } from "./playin-data"
 import { Empty, Header, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./schedule-presentation.css"
@@ -35,7 +36,7 @@ export function Schedule(props: ScheduleProps) {
         title={playIn ? "1win Essence III · Play-In" : "Расписание"}
         subtitle={
           playIn
-            ? "Группы, результаты и подтверждённые данные карт. Время по Бангкоку (UTC+7)."
+            ? "Группы, результаты и анализ карт: откройте серию для PRE и POST. Время по Бангкоку (UTC+7)."
             : "Выберите карту для подготовки и прогноза. Время начала по Бангкоку (UTC+7)."
         }
       />
@@ -227,9 +228,17 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
         ))}
         {!busy && data?.series.length === 0 && (
           <Empty title={data.event ? "Подтверждённых пар пока нет" : "Серий по фильтрам нет"}>
-            {data.event
-              ? "Карточки для PRE и POST появятся после объявления пар."
-              : "Выберите другую дату или команду."}
+            {data.event ? (
+              <>
+                Карточки для PRE и POST появятся после объявления пар. Уже сейчас можно разобрать
+                опубликованные матчи квалификации.{" "}
+                <button type="button" className="secondary" onClick={() => navigate(PLAY_IN_ROUTE)}>
+                  Открыть матчи и анализ Play-In
+                </button>
+              </>
+            ) : (
+              "Выберите другую дату или команду."
+            )}
           </Empty>
         )}
       </section>

@@ -42,6 +42,8 @@ export const forecastSchema = z.object({
   snapshot_id: z.union([z.number(), z.string()]),
   stage: stageSchema,
   created_at_utc: z.string(),
+  model_team_a: z.string().nullish(),
+  model_team_b: z.string().nullish(),
   analysis: z
     .object({
       shadow_forecast: shadowSchema.nullable().optional(),
@@ -78,6 +80,7 @@ export const mapSchema = z.object({
   team_a: z.string(),
   team_b: z.string(),
   tournament: z.string().nullable(),
+  analysis_context: z.enum(["manual", "retrospective"]).optional(),
   pre: forecastSchema.nullable(),
   post: forecastSchema.nullable(),
   result: z

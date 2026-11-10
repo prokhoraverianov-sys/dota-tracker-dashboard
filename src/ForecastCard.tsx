@@ -6,6 +6,16 @@ import { Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./analysis-presentation.css"
 
+const abstentionLabels: Readonly<Record<string, string | undefined>> = {
+  duplicate_player_identity:
+    "Один и тот же игрок указан в составе несколько раз. Проверьте фактические составы обеих команд и укажите 10 разных игроков для POST.",
+  unknown_team: "Одна из команд не распознана в данных модели.",
+  unverified_or_ambiguous_player:
+    "В составе есть неподтверждённый или неоднозначно определённый игрок. Проверьте фактических игроков и их позиции.",
+  postdraft_requires_ten_distinct_verified_heroes:
+    "Для POST нужны 10 разных подтверждённых героев. Проверьте пики обеих команд.",
+}
+
 export function ForecastCard({
   forecast,
   stage,
@@ -21,7 +31,27 @@ export function ForecastCard({
   const totalLine = shadow?.duration_line_seconds
   const over = shadow?.duration_over_probability
   const missing = forecast?.analysis.missing_data ?? []
-  const criteria = readCriteria(shadow?.reasons, map.team_a, map.team_b)
+  const abstentionMessages = [
+    ...new Set(
+      [...missing, ...(shadow?.reasons ?? [])]
+        .map((reason) => abstentionLabels[reason])
+        .filter((reason): reason is string => reason !== undefined),
+    ),
+  ]
+  const qualityMessages = [
+    ...new Set([
+      ...missing.map((reason) => abstentionLabels[reason] ?? reason),
+      ...abstentionMessages,
+    ]),
+  ]
+  const explanation = forecast?.explanation.trim()
+    ? forecast.explanation
+    : abstentionMessages.join("\n\n") || "Нет сохранённого пояснения."
+  const criteria = readCriteria(
+    shadow?.reasons,
+    forecast?.model_team_a ?? map.team_a,
+    forecast?.model_team_b ?? map.team_b,
+  )
   const largestContribution = Math.max(0, ...criteria.map((row) => Math.abs(row.signed_logit)))
   return (
     <article className={`forecast-card analysis-card ${stage.toLowerCase()}`}>
@@ -57,7 +87,11 @@ export function ForecastCard({
               <strong>{percent(over)}</strong>
             </div>
           )}
-          {p == null && <Notice>Модель воздержалась от оценки победителя.</Notice>}
+          {p == null && (
+            <Notice>
+              Модель воздержалась от оценки победителя. {abstentionMessages.join(" ")}
+            </Notice>
+          )}
           <div className="forecast-section">
             <h3>Коэффициенты при расчёте</h3>
             <OddsTable candidates={forecast.candidates} teamA={map.team_a} teamB={map.team_b} />
@@ -146,17 +180,15 @@ export function ForecastCard({
                 </p>
               </>
             )}
-            <div className="explanation">
-              {forecast.explanation || "Нет сохранённого пояснения."}
-            </div>
+            <div className="explanation">{explanation}</div>
           </div>
           <div
-            className={`forecast-section forecast-quality${missing.length > 0 ? " forecast-quality-warning" : ""}`}
+            className={`forecast-section forecast-quality${qualityMessages.length > 0 ? " forecast-quality-warning" : ""}`}
           >
             <h3>Качество данных</h3>
-            {missing.length > 0 ? (
+            {qualityMessages.length > 0 ? (
               <ul className="missing-list">
-                {[...new Set(missing)].map((item) => (
+                {qualityMessages.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>

@@ -25,6 +25,8 @@ export function App() {
   const [catalogError, setCatalogError] = useState("")
   const [route, setRoute] = useState(() => window.location.hash.slice(1) || "/schedule")
   const selectedTournament = new URLSearchParams(route.split("?")[1]).get("tournament") ?? ""
+  const playInOverview =
+    route.split("?")[0] === "/schedule" && selectedTournament === "1win-essence-3-play-in"
   const dirty = useRef(false)
   const previous = useRef(route)
   const setDirty = useCallback((value: boolean) => {
@@ -144,7 +146,7 @@ export function App() {
   if (!session && !publicAccess) return <Login api={api} onLogin={login} notice={notice} />
   return (
     <Shell route={route} navigate={navigate} logout={publicAccess ? undefined : logout}>
-      {selectedTournament !== "1win-essence-3-play-in" && <SourceStatus api={api} />}
+      {!playInOverview && <SourceStatus api={api} />}
       <Suspense fallback={<Empty title="Загружаем раздел…" />}>
         {catalogError ? (
           <Notice error>

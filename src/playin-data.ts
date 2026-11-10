@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 export const PLAY_IN_KEY = "1win-essence-3-play-in"
+export const PLAY_IN_NAME = "1win Essence III · Play-In"
 export const PLAY_IN_ROUTE = `/schedule?tournament=${PLAY_IN_KEY}`
 export const playInSourceSchema = z.object({
   id: z.string(),
@@ -175,6 +176,29 @@ export const playInSchema = z.object({
 export type PlayInData = z.infer<typeof playInSchema>
 export type PlayInSeries = PlayInData["series"][number]
 export type PlayInMap = PlayInSeries["maps"][number]
+
+export function playInMapPath(seriesKey: string, mapNumber: number): string {
+  return `/series/${encodeURIComponent(`e3pi-${seriesKey}`)}/maps/${mapNumber}`
+}
+
+export function playInAnalysisMaps(data: PlayInData, series: PlayInSeries): number[] {
+  if (
+    series.status === "cancelled" ||
+    !series.scheduled_at ||
+    !Number.isFinite(Date.parse(series.scheduled_at)) ||
+    ![1, 3, 5].includes(series.best_of) ||
+    series.team1_key === series.team2_key ||
+    ![series.team1_key, series.team2_key].every((key) =>
+      data.teams.some((team) => team.key === key),
+    )
+  )
+    return []
+  if (series.status === "completed")
+    return [...new Set(series.maps.map((map) => map.map_number))]
+      .filter((number) => Number.isInteger(number) && number >= 1 && number <= series.best_of)
+      .sort((a, b) => a - b)
+  return Array.from({ length: series.best_of }, (_, index) => index + 1)
+}
 
 export function duration(value: number | null): string {
   if (value === null) return "Нет данных"

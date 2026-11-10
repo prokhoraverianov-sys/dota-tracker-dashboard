@@ -18,6 +18,7 @@ import { DraftEditor } from "./DraftEditor"
 import { draftKey, initialDraft, loadDraft, mapPath, mapStatus, validatePost } from "./domain"
 import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
+import { PLAY_IN_NAME, PLAY_IN_ROUTE } from "./playin-data"
 import { Quotes } from "./Quotes"
 import { ResultForm } from "./ResultForm"
 import { Back, Notice } from "./ui"
@@ -165,9 +166,11 @@ export function MapWorkspace({
       <Back
         onClick={() =>
           navigate(
-            map.tournament === "1win Essence III"
-              ? "/schedule?tournament=1win-essence-3"
-              : "/schedule",
+            map.tournament === PLAY_IN_NAME || map.series_id?.startsWith("e3pi-")
+              ? PLAY_IN_ROUTE
+              : map.tournament === "1win Essence III"
+                ? "/schedule?tournament=1win-essence-3"
+                : "/schedule",
           )
         }
       />
@@ -185,6 +188,12 @@ export function MapWorkspace({
         </div>
         <span className="badge">{locked ? "Карта завершена" : "Режим наблюдения"}</span>
       </header>
+      {map.analysis_context === "retrospective" && (
+        <Notice>
+          Ретроспективный разбор: карта уже началась или завершена. PRE и POST, рассчитанные сейчас,
+          сохраняются с текущим временем и не являются прогнозами, сделанными до матча.
+        </Notice>
+      )}
       {map.tournament === "PARI Universe" && map.series_id && (
         <Notice>
           Результаты сыгранных карт и архивные котировки доступны в истории серии.{" "}

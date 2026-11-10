@@ -11,6 +11,8 @@ import {
   type PlayInData,
   type PlayInMap,
   type PlayInSeries,
+  playInAnalysisMaps,
+  playInMapPath,
   playInSchema,
   qualificationSlots,
   seriesScore,
@@ -303,10 +305,12 @@ function Fixtures({
   data,
   team,
   group,
+  navigate,
 }: {
   readonly data: PlayInData
   readonly team: string
   readonly group: string
+  readonly navigate: (route: string) => void
 }) {
   const series = data.series.filter(
     (item) =>
@@ -319,54 +323,79 @@ function Fixtures({
         <div>
           <h2>Расписание и результаты</h2>
           <p className="muted">
-            Серий: {series.length} · время по Бангкоку. Откройте серию для данных карт.
+            Серий: {series.length} · время по Бангкоку. Выберите «Анализ карты» для PRE и POST;
+            раскройте серию для фактических результатов.
           </p>
         </div>
       </div>
       {series.length ? (
         series.map((item) => (
-          <details className="playin-series" key={item.key}>
-            <summary>
-              <span className="playin-series-date">
-                <strong>{item.scheduled_at ? time(item.scheduled_at) : "Время уточняется"}</strong>
-                <small>
-                  {groupName(item.group)} · BO{item.best_of}
-                </small>
-              </span>
-              <span className="playin-series-teams">
-                <TeamIdentity
-                  name={teamName(data, item.team1_key)}
-                  teamKey={item.team1_key}
-                  size="md"
-                />
-                <strong className="playin-series-score">{seriesScore(item)}</strong>
-                <TeamIdentity
-                  name={teamName(data, item.team2_key)}
-                  teamKey={item.team2_key}
-                  size="md"
-                />
-              </span>
-              <span className="playin-series-result">
-                <small className={item.status === "live" ? "hit-text" : "muted"}>
-                  {statusLabels[item.status]}
-                </small>
-              </span>
-              <span className="playin-expand">Карты ↓</span>
-            </summary>
-            <div className="playin-series-body">
-              <Sources data={data} ids={item.source_ids} />
-              {item.maps.length ? (
-                item.maps.map((map) => (
-                  <ActualMap key={map.key} map={map} series={item} data={data} />
-                ))
-              ) : (
-                <p className="muted playin-no-data">
-                  Данные карт не опубликованы или ещё не подтверждены. Счёт серии не заменяет
-                  результат отдельной карты.
-                </p>
-              )}
-            </div>
-          </details>
+          <article key={item.key}>
+            <details className="playin-series">
+              <summary>
+                <span className="playin-series-date">
+                  <strong>
+                    {item.scheduled_at ? time(item.scheduled_at) : "Время уточняется"}
+                  </strong>
+                  <small>
+                    {groupName(item.group)} · BO{item.best_of}
+                  </small>
+                </span>
+                <span className="playin-series-teams">
+                  <TeamIdentity
+                    name={teamName(data, item.team1_key)}
+                    teamKey={item.team1_key}
+                    size="md"
+                  />
+                  <strong className="playin-series-score">{seriesScore(item)}</strong>
+                  <TeamIdentity
+                    name={teamName(data, item.team2_key)}
+                    teamKey={item.team2_key}
+                    size="md"
+                  />
+                </span>
+                <span className="playin-series-result">
+                  <small className={item.status === "live" ? "hit-text" : "muted"}>
+                    {statusLabels[item.status]}
+                  </small>
+                </span>
+                <span className="playin-expand">Карты ↓</span>
+              </summary>
+              <div className="playin-series-body">
+                <Sources data={data} ids={item.source_ids} />
+                {item.maps.length ? (
+                  item.maps.map((map) => (
+                    <ActualMap key={map.key} map={map} series={item} data={data} />
+                  ))
+                ) : (
+                  <p className="muted playin-no-data">
+                    Данные карт не опубликованы или ещё не подтверждены. Счёт серии не заменяет
+                    результат отдельной карты.
+                  </p>
+                )}
+              </div>
+            </details>
+            {playInAnalysisMaps(data, item).length > 0 && (
+              <fieldset
+                className="actions playin-series-body"
+                aria-label={`Анализ карт ${teamName(data, item.team1_key)} — ${teamName(data, item.team2_key)}`}
+              >
+                <span className="muted">
+                  {item.status === "completed" ? "Ретроспективный разбор" : "Ручной PRE / POST"}
+                </span>
+                {playInAnalysisMaps(data, item).map((number) => (
+                  <button
+                    key={number}
+                    type="button"
+                    className="secondary"
+                    onClick={() => navigate(playInMapPath(item.key, number))}
+                  >
+                    Анализ карты {number}
+                  </button>
+                ))}
+              </fieldset>
+            )}
+          </article>
         ))
       ) : (
         <Empty title="Серий по фильтрам нет">Выберите другую группу или команду.</Empty>
@@ -752,7 +781,7 @@ export function PlayIn({
               </button>
             )}
           </fieldset>
-          <Fixtures data={data} team={team} group={group} />
+          <Fixtures data={data} team={team} group={group} navigate={navigate} />
           <section className="panel section-card" aria-label="Составы участников Play-In">
             <h2>Составы и замены</h2>
             <p className="muted">
