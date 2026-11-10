@@ -1,9 +1,12 @@
 import type { EventOverviewDTO } from "./contracts"
 import { time } from "./domain"
+import { PlayInCarryover } from "./PlayIn"
+import { PLAY_IN_ROUTE } from "./playin-data"
 
 export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
   return (
     <>
+      {event.play_in && <PlayInCarryover data={event.play_in} />}
       <section className="panel section-card" aria-label="Участники 1win Essence III">
         <h2>Участники 1win Essence III</h2>
         <p className="muted">
@@ -28,6 +31,22 @@ export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
                   ? "Команда распознана моделью"
                   : "Покрытие модели не подтверждено"}
               </small>
+              {team.play_in_team_key && (
+                <>
+                  {team.play_in_series_count !== undefined &&
+                    team.play_in_map_count !== undefined && (
+                      <small className="muted">
+                        Play-In: серий завершено — {team.play_in_series_count} · карт с данными —{" "}
+                        {team.play_in_map_count}
+                        {team.play_in_source_count !== undefined &&
+                          ` · источников — ${team.play_in_source_count}`}
+                      </small>
+                    )}
+                  <a href={`#${PLAY_IN_ROUTE}&team=${encodeURIComponent(team.play_in_team_key)}`}>
+                    Матчи и состав Play-In →
+                  </a>
+                </>
+              )}
               {team.roster_source?.startsWith("https://") && (
                 <a href={team.roster_source} target="_blank" rel="noreferrer">
                   Источник состава ↗
@@ -42,11 +61,7 @@ export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
               Расписание и участники ↗
             </a>
           )}
-          {event.qualifier_url.startsWith("https://") && (
-            <a href={event.qualifier_url} target="_blank" rel="noreferrer">
-              Play-In ↗
-            </a>
-          )}
+          <a href={`#${PLAY_IN_ROUTE}`}>Группы и история Play-In →</a>
         </div>
       </section>
       {event.slots.length > 0 && (

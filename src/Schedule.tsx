@@ -6,26 +6,62 @@ import { type Catalog, message, scheduleSchema } from "./contracts"
 import { mapPath, mapStatus, query, time } from "./domain"
 import { EventOverview } from "./EventOverview"
 import { MarketBoard } from "./MarketBoard"
+import { PlayIn } from "./PlayIn"
 import { Empty, Header, Notice } from "./ui"
 
 type ScheduleData = z.infer<typeof scheduleSchema>
 const tournamentOptions = [
   { key: "pari-universe", name: "PARI Universe", status: "Завершён" },
   { key: "1win-essence-3", name: "1win Essence III", status: "Предстоящий" },
+  { key: "1win-essence-3-play-in", name: "1win Essence III · Play-In", status: "7–11 ноября" },
 ] as const
 const recentSeriesWindow = 4 * 60 * 60 * 1000
 
-export function Schedule({
-  api,
-  catalog,
-  tournament,
-  navigate,
-}: {
+type ScheduleProps = {
   readonly api: Api
   readonly catalog: Catalog
   readonly tournament: string
   readonly navigate: (route: string) => void
-}) {
+}
+
+export function Schedule(props: ScheduleProps) {
+  const { tournament, navigate } = props
+  const playIn = tournament === "1win-essence-3-play-in"
+  return (
+    <>
+      <Header
+        title={playIn ? "1win Essence III · Play-In" : "Расписание"}
+        subtitle={
+          playIn
+            ? "Группы, результаты и подтверждённые данные карт. Время по Бангкоку (UTC+7)."
+            : "Выберите карту для подготовки и прогноза. Время начала по Бангкоку (UTC+7)."
+        }
+      />
+      <fieldset className="view-tabs tournament-tabs" aria-label="Турнир">
+        {tournamentOptions.map((option) => (
+          <button
+            key={option.key}
+            type="button"
+            className="secondary"
+            aria-pressed={(tournament || "pari-universe") === option.key}
+            onClick={() =>
+              navigate(
+                option.key === "pari-universe"
+                  ? "/schedule"
+                  : `/schedule?${query({ tournament: option.key })}`,
+              )
+            }
+          >
+            {option.name} <small>{option.status}</small>
+          </button>
+        ))}
+      </fieldset>
+      {playIn ? <PlayIn api={props.api} navigate={navigate} /> : <ScheduleContents {...props} />}
+    </>
+  )
+}
+
+function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps) {
   const [date, setDate] = useState("")
   const [team, setTeam] = useState("")
   const [data, setData] = useState<ScheduleData | null>(null)
@@ -57,6 +93,14 @@ export function Schedule({
     }
   }, [api, date, team, tournament, refresh])
 
+  useEffect(() => {
+    if (tournament !== "1win-essence-3" || busy) return
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") setRefresh((value) => value + 1)
+    }, 120000)
+    return () => window.clearInterval(timer)
+  }, [tournament, busy])
+
   const now = Date.now()
   const recent = data?.series
     .filter((item) => {
@@ -78,29 +122,6 @@ export function Schedule({
   ]
   return (
     <>
-      <Header
-        title="Расписание"
-        subtitle="Выберите карту для подготовки и прогноза. Время начала по Бангкоку (UTC+7)."
-      />
-      <fieldset className="view-tabs tournament-tabs" aria-label="Турнир">
-        {tournamentOptions.map((option) => (
-          <button
-            key={option.name}
-            type="button"
-            className="secondary"
-            aria-pressed={(tournament || "pari-universe") === option.key}
-            onClick={() =>
-              navigate(
-                option.key === "pari-universe"
-                  ? "/schedule"
-                  : `/schedule?${query({ tournament: option.key })}`,
-              )
-            }
-          >
-            {option.name} <small>{option.status}</small>
-          </button>
-        ))}
-      </fieldset>
       <MarketBoard
         key={tournament || "pari-universe"}
         api={api}

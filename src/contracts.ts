@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { playInSchema } from "./playin-data"
 export const stageSchema = z.enum(["pre_match", "post_draft"])
 export type Stage = z.infer<typeof stageSchema>
 export const draftSchema = z.object({
@@ -106,8 +107,17 @@ const eventOverviewSchema = z.object({
       players: z.array(z.string()),
       roster_source: z.string().nullable(),
       model_supported: z.boolean(),
+      key: z.string().nullish(),
+      aliases: z.array(z.string()).optional(),
+      play_in_team_key: z.string().nullish(),
+      origin_tournament_key: z.string().nullish(),
+      play_in_series_count: z.number().optional(),
+      play_in_map_count: z.number().optional(),
+      play_in_source_count: z.number().optional(),
+      source_urls: z.array(z.string()).optional(),
     }),
   ),
+  play_in: playInSchema.optional(),
   slots: z.array(
     z.object({
       series_id: z.string(),

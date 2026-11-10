@@ -1,0 +1,306 @@
+.playin-page {
+  display: grid;
+  gap: var(--s5);
+  min-width: 0;
+}
+.playin-page .panel {
+  margin-bottom: 0;
+  min-width: 0;
+}
+.playin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+}
+.playin-toolbar p {
+  font-size: 12px;
+}
+.playin-toolbar button {
+  flex-shrink: 0;
+}
+.playin-counts {
+  margin-bottom: 0;
+}
+.playin-qualification > .panel-heading {
+  padding: 0 0 var(--s4);
+}
+.playin-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s3);
+}
+.playin-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+  min-width: 0;
+  font-size: 12px;
+}
+.playin-slot strong {
+  font-size: 14px;
+}
+.playin-slot.qualified {
+  border-color: var(--mint);
+}
+.playin-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s5);
+}
+.playin-group table {
+  min-width: 430px;
+}
+.playin-group .text-button {
+  text-align: left;
+  white-space: normal;
+}
+.playin-group .metric-note {
+  white-space: nowrap;
+}
+.playin-standing-note {
+  font-size: 12px;
+  margin-top: calc(-1 * var(--s3));
+}
+.playin-filters {
+  margin: 0;
+  align-items: end;
+}
+.playin-filters label {
+  min-width: 170px;
+}
+.playin-series {
+  border-top: 1px solid var(--line);
+}
+.playin-series > summary {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr) 155px 65px;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+  cursor: pointer;
+  list-style: none;
+}
+.playin-series > summary::-webkit-details-marker {
+  display: none;
+}
+.playin-series > summary:hover {
+  background: var(--raised);
+}
+.playin-series-date,
+.playin-series-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  font-size: 12px;
+}
+.playin-series-date small {
+  color: var(--secondary);
+}
+.playin-series-teams {
+  display: flex;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+.playin-series-result strong {
+  color: var(--text);
+}
+.playin-expand {
+  color: var(--cyan);
+  font-size: 12px;
+}
+.playin-series[open] .playin-expand {
+  color: var(--secondary);
+}
+.playin-series-body {
+  padding: 0 var(--s5) var(--s5);
+}
+.playin-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.playin-map {
+  margin-top: var(--s4);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+}
+.playin-map-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s2) var(--s5);
+  margin-bottom: var(--s2);
+}
+.playin-map-heading span {
+  color: var(--secondary);
+  font-size: 12px;
+}
+.playin-drafts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s4);
+  padding: var(--s4) 0;
+  font-size: 12px;
+}
+.playin-drafts p {
+  margin-top: var(--s1);
+  overflow-wrap: anywhere;
+}
+.playin-map table {
+  min-width: 680px;
+}
+.playin-no-data {
+  padding: var(--s4) 0;
+  font-size: 12px;
+}
+.playin-rosters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: var(--s4);
+  margin-top: var(--s4);
+}
+.playin-rosters article {
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+  min-width: 0;
+}
+.playin-rosters ol {
+  padding-left: var(--s5);
+  margin: var(--s3) 0;
+}
+.playin-rosters li {
+  padding: var(--s1) 0;
+}
+.playin-rosters p {
+  font-size: 12px;
+  margin-bottom: var(--s2);
+}
+.playin-sub {
+  color: var(--warning);
+  font-size: 12px;
+}
+.playin-coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s3);
+  margin: var(--s4) 0;
+}
+.playin-coverage-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  padding: var(--s3);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+}
+.playin-coverage-grid span {
+  color: var(--secondary);
+  font-size: 12px;
+}
+.playin-missing {
+  margin: var(--s4) 0;
+  color: var(--warning);
+  font-size: 12px;
+}
+.playin-missing ul {
+  margin: var(--s2) 0;
+  padding-left: var(--s5);
+}
+.playin-page .section-card > p {
+  margin-top: var(--s2);
+}
+.playin-source-details,
+.playin-stats-details {
+  margin-top: var(--s4);
+  border-top: 1px solid var(--line);
+  padding-top: var(--s3);
+}
+.playin-source-details > summary,
+.playin-stats-details > summary {
+  cursor: pointer;
+  padding: var(--s2) 0;
+  color: var(--cyan);
+}
+.playin-source-details ul {
+  padding-left: var(--s5);
+  font-size: 12px;
+}
+.playin-source-details li {
+  margin: var(--s2) 0;
+  overflow-wrap: anywhere;
+}
+.playin-stats-details table {
+  min-width: 560px;
+}
+@media (max-width: 1000px) {
+  .playin-group-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .playin-slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .playin-series > summary {
+    grid-template-columns: 125px minmax(0, 1fr) 135px;
+  }
+  .playin-expand {
+    grid-column: 3;
+    text-align: left;
+  }
+}
+@media (max-width: 600px) {
+  .playin-series > summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: var(--s4) var(--s3);
+    gap: var(--s2) var(--s3);
+  }
+  .playin-series-date {
+    grid-column: 1;
+  }
+  .playin-series-result {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+    max-width: 145px;
+  }
+  .playin-series-teams {
+    grid-column: 1 / -1;
+  }
+  .playin-expand {
+    grid-column: 1 / -1;
+  }
+  .playin-series-body {
+    padding-right: var(--s3);
+    padding-left: var(--s3);
+  }
+  .playin-drafts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .playin-coverage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .playin-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .playin-filters label {
+    min-width: 0;
+  }
+  .playin-toolbar {
+    align-items: start;
+  }
+  .playin-slots {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .playin-qualification .panel-heading {
+    align-items: start;
+    gap: var(--s3);
+  }
+}
