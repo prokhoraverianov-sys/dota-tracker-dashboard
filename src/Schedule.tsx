@@ -1,4 +1,4 @@
-import { ArrowRight, RefreshCw, Swords } from "lucide-react"
+import { ArrowRight, RefreshCw } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { z } from "zod"
 import type { Api } from "./api"
@@ -8,6 +8,8 @@ import { EventOverview } from "./EventOverview"
 import { MarketBoard } from "./MarketBoard"
 import { PlayIn } from "./PlayIn"
 import { Empty, Header, Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
+import "./schedule-presentation.css"
 
 type ScheduleData = z.infer<typeof scheduleSchema>
 const tournamentOptions = [
@@ -28,7 +30,7 @@ export function Schedule(props: ScheduleProps) {
   const { tournament, navigate } = props
   const playIn = tournament === "1win-essence-3-play-in"
   return (
-    <>
+    <div className="schedule-page">
       <Header
         title={playIn ? "1win Essence III · Play-In" : "Расписание"}
         subtitle={
@@ -57,7 +59,7 @@ export function Schedule(props: ScheduleProps) {
         ))}
       </fieldset>
       {playIn ? <PlayIn api={props.api} navigate={navigate} /> : <ScheduleContents {...props} />}
-    </>
+    </div>
   )
 }
 
@@ -183,13 +185,12 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
                 <span>Турнирный день {item.tournament_date.split("-").reverse().join(".")}</span>
               )}
             </div>
-            <div className="series-teams">
-              <Swords size={18} aria-hidden="true" />
-              <div>
-                <strong>{item.team_a}</strong>
-                <span className="versus">—</span>
-                <strong>{item.team_b}</strong>
-              </div>
+            <div className="series-teams schedule-match-teams">
+              <TeamIdentity name={item.team_a} size="md" />
+              <span className="versus" aria-hidden="true">
+                VS
+              </span>
+              <TeamIdentity name={item.team_b} size="md" />
             </div>
             <div className="map-buttons">
               {!data?.event && now - Date.parse(item.starts_at_utc) >= recentSeriesWindow && (
@@ -205,7 +206,7 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
                 <button
                   type="button"
                   key={map.map_number}
-                  className="map-button"
+                  className={`map-button ${map.result ? "map-button-completed" : ""}`}
                   onClick={() => navigate(mapPath(map))}
                 >
                   <span>

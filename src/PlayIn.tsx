@@ -17,6 +17,7 @@ import {
   teamName,
 } from "./playin-data"
 import { Empty, Notice } from "./ui"
+import { HeroPortrait, TeamIdentity } from "./VisualIdentity"
 import "./playin.css"
 
 const statusLabels = {
@@ -56,6 +57,12 @@ export function PlayInCarryover({ data }: { readonly data: PlayInData }) {
           <p className="muted">
             {data.qualifications.length} из {slots.length} участников подтверждено · по{" "}
             {data.tournament.qualifiers_per_group} из каждой группы.
+            {slots.some((slot) => !slot.confirmed) && (
+              <span className="playin-qualification-note">
+                {" "}
+                Текущее место в таблице не подтверждает выход.
+              </span>
+            )}
           </p>
         </div>
         <a href={`#${PLAY_IN_ROUTE}`}>История Play-In →</a>
@@ -70,9 +77,15 @@ export function PlayInCarryover({ data }: { readonly data: PlayInData }) {
               {groupName(group)} ·{" "}
               {confirmed?.position === null ? "проходное место" : `место ${position}`}
             </small>
-            <strong>
-              {confirmed ? teamName(data, confirmed.team_key) : "Участник уточняется"}
-            </strong>
+            {confirmed ? (
+              <TeamIdentity
+                name={teamName(data, confirmed.team_key)}
+                teamKey={confirmed.team_key}
+                size="sm"
+              />
+            ) : (
+              <strong className="playin-slot-pending">Участник уточняется</strong>
+            )}
             {confirmed ? (
               <>
                 <span className="hit-text">
@@ -85,9 +98,7 @@ export function PlayInCarryover({ data }: { readonly data: PlayInData }) {
                 </a>
                 <Sources data={data} ids={confirmed.source_ids} />
               </>
-            ) : (
-              <span className="muted">Текущее место в таблице не подтверждает выход.</span>
-            )}
+            ) : null}
           </article>
         ))}
       </div>
@@ -133,8 +144,13 @@ function ExtraPlayerStats({ map }: { readonly map: PlayInMap }) {
             {map.players.map((player, index) => (
               <tr key={`${player.team_key}-${player.nickname}-${index}`}>
                 <th scope="row">
-                  {player.nickname}
-                  <small className="metric-note">{player.hero ?? "Герой неизвестен"}</small>
+                  <span className="playin-player-identity">
+                    {player.hero && <HeroPortrait name={player.hero} size="sm" />}
+                    <span>
+                      {player.nickname}
+                      <small className="metric-note">{player.hero ?? "Герой неизвестен"}</small>
+                    </span>
+                  </span>
                 </th>
                 {columns.map(([key]) => (
                   <td key={key}>{value(player[key])}</td>
@@ -187,21 +203,41 @@ function ActualMap({
       <div className="playin-drafts">
         {[series.team1_key, series.team2_key].map((key) => (
           <div key={key}>
-            <strong>{teamName(data, key)}</strong>
-            <p>
-              <span className="muted">Пики: </span>
-              {map.picks
-                .filter((pick) => pick.team_key === key)
-                .map((pick) => pick.hero)
-                .join(" · ") || "Нет подтверждённого драфта"}
-            </p>
-            <p>
-              <span className="muted">Баны: </span>
-              {map.bans
-                .filter((ban) => ban.team_key === key)
-                .map((ban) => ban.hero)
-                .join(" · ") || "Нет данных"}
-            </p>
+            <TeamIdentity name={teamName(data, key)} teamKey={key} size="sm" />
+            <div className="playin-hero-line">
+              <span className="muted playin-draft-label">Пики: </span>
+              {map.picks.some((pick) => pick.team_key === key) ? (
+                <span className="playin-hero-strip">
+                  {map.picks
+                    .filter((pick) => pick.team_key === key)
+                    .map((pick) => (
+                      <span className="playin-draft-hero" key={pick.hero}>
+                        <HeroPortrait name={pick.hero} size="md" />
+                        <small>{pick.hero}</small>
+                      </span>
+                    ))}
+                </span>
+              ) : (
+                "Нет подтверждённого драфта"
+              )}
+            </div>
+            <div className="playin-hero-line playin-bans">
+              <span className="muted playin-draft-label">Баны: </span>
+              {map.bans.some((ban) => ban.team_key === key) ? (
+                <span className="playin-hero-strip">
+                  {map.bans
+                    .filter((ban) => ban.team_key === key)
+                    .map((ban) => (
+                      <span className="playin-ban-hero" key={ban.hero} title={ban.hero}>
+                        <HeroPortrait name={ban.hero} size="sm" />
+                        <span className="playin-ban-name">{ban.hero}</span>
+                      </span>
+                    ))}
+                </span>
+              ) : (
+                "Нет данных"
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -224,10 +260,21 @@ function ActualMap({
               {map.players.map((player, index) => (
                 <tr key={`${player.team_key}-${player.nickname}-${index}`}>
                   <th scope="row">
-                    {player.nickname}
-                    <small className="metric-note">{player.hero ?? "Герой неизвестен"}</small>
+                    <span className="playin-player-identity">
+                      {player.hero && <HeroPortrait name={player.hero} size="sm" />}
+                      <span>
+                        {player.nickname}
+                        <small className="metric-note">{player.hero ?? "Герой неизвестен"}</small>
+                      </span>
+                    </span>
                   </th>
-                  <td>{teamName(data, player.team_key)}</td>
+                  <td>
+                    <TeamIdentity
+                      name={teamName(data, player.team_key)}
+                      teamKey={player.team_key}
+                      size="sm"
+                    />
+                  </td>
                   <td>
                     {value(player.kills)} / {value(player.deaths)} / {value(player.assists)}
                   </td>
@@ -287,12 +334,19 @@ function Fixtures({
                 </small>
               </span>
               <span className="playin-series-teams">
-                <strong>{teamName(data, item.team1_key)}</strong>
-                <span>—</span>
-                <strong>{teamName(data, item.team2_key)}</strong>
+                <TeamIdentity
+                  name={teamName(data, item.team1_key)}
+                  teamKey={item.team1_key}
+                  size="md"
+                />
+                <strong className="playin-series-score">{seriesScore(item)}</strong>
+                <TeamIdentity
+                  name={teamName(data, item.team2_key)}
+                  teamKey={item.team2_key}
+                  size="md"
+                />
               </span>
               <span className="playin-series-result">
-                <strong>{seriesScore(item)}</strong>
                 <small className={item.status === "live" ? "hit-text" : "muted"}>
                   {statusLabels[item.status]}
                 </small>
@@ -408,7 +462,12 @@ function FactualStats({ data, team }: { readonly data: PlayInData; readonly team
               <tbody>
                 {data.stats.heroes.map((hero) => (
                   <tr key={hero.hero}>
-                    <th scope="row">{hero.hero}</th>
+                    <th scope="row">
+                      <span className="playin-hero-table-name">
+                        <HeroPortrait name={hero.hero} size="sm" />
+                        {hero.hero}
+                      </span>
+                    </th>
                     <td>{hero.picks}</td>
                     <td>{hero.bans}</td>
                     <td>
@@ -576,7 +635,6 @@ export function PlayIn({
               <span>завершённых карт с данными</span>
             </div>
           </div>
-          <PlayInCarryover data={data} />
           <div className="playin-group-grid">
             {data.groups.map((item) => (
               <section
@@ -619,7 +677,7 @@ export function PlayIn({
                                 setGroup(item.group)
                               }}
                             >
-                              {row.team_name}
+                              <TeamIdentity name={row.team_name} teamKey={row.team_key} size="sm" />
                             </button>
                             {row.qualification_status === "qualified" && (
                               <small className="metric-note hit-text">Выход подтверждён</small>
@@ -649,6 +707,7 @@ export function PlayIn({
             показывается по опубликованному подтверждению или завершённым результатам всей группы
             без неразрешённой ничьей на границе прохода.
           </p>
+          <PlayInCarryover data={data} />
           <fieldset className="toolbar playin-filters" aria-label="Фильтры Play-In">
             <label>
               Группа
@@ -705,7 +764,9 @@ export function PlayIn({
                 .filter((item) => (!group || item.group === group) && (!team || item.key === team))
                 .map((item) => (
                   <article key={item.key}>
-                    <h3>{item.name}</h3>
+                    <h3>
+                      <TeamIdentity name={item.name} teamKey={item.key} size="md" />
+                    </h3>
                     <small className="muted">{groupName(item.group)}</small>
                     {item.roster.length ? (
                       <ol>

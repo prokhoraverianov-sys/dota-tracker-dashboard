@@ -4,6 +4,7 @@ import { CompletedHistory } from "./CompletedHistory"
 import type { Catalog } from "./contracts"
 import { ForecastArchive } from "./ForecastArchive"
 import { Header } from "./ui"
+import "./history-presentation.css"
 export function HistoryPage({
   api,
   catalog,
@@ -17,7 +18,7 @@ export function HistoryPage({
 }) {
   const [view, setView] = useState<"matches" | "archive">("matches")
   return (
-    <>
+    <div className="report-view history-view">
       <Header title="История" subtitle="Отчёт PARI Universe и архив сохранённых прогнозов." />
       <fieldset className="view-tabs" aria-label="Вид истории">
         <button
@@ -42,6 +43,6 @@ export function HistoryPage({
       ) : (
         <ForecastArchive api={api} catalog={catalog} navigate={navigate} />
       )}
-    </>
+    </div>
   )
 }

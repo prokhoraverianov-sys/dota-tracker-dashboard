@@ -4,6 +4,7 @@ import type { Api } from "./api"
 import { type Catalog, historySchema, type MapDTO, message } from "./contracts"
 import { mapPath, mapStatus, percent, query } from "./domain"
 import { Empty, Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
 export function ForecastArchive({
   api,
   catalog,
@@ -78,13 +79,13 @@ export function ForecastArchive({
         </button>
       </section>
       {error && <Notice error>{error}</Notice>}
-      <section className="panel">
+      <section className="panel forecast-archive-panel">
         <div className="panel-heading">
           <h2>{busy ? "Обновляем историю…" : `${items.length} карт`}</h2>
           <span className="badge">Неизменяемые снимки</span>
         </div>
         <div className="table-scroll">
-          <table>
+          <table className="report-numeric-table">
             <thead>
               <tr>
                 <th>Карта</th>
@@ -107,7 +108,11 @@ export function ForecastArchive({
                         type="button"
                         onClick={() => navigate(mapPath(map))}
                       >
-                        {map.team_a} vs {map.team_b}
+                        <span className="history-match-pair">
+                          <TeamIdentity name={map.team_a} size="sm" />
+                          <span className="history-versus">vs</span>
+                          <TeamIdentity name={map.team_b} size="sm" />
+                        </span>
                         <small>
                           Карта {map.map_number ?? map.map_id} · {map.tournament}
                         </small>

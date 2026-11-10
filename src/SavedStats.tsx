@@ -56,7 +56,7 @@ export function SavedStats({ api }: { readonly api: Api }) {
       {error && <Notice error>{error}</Notice>}
       {data?.items.map((row) => (
         <section
-          className="panel stats-panel"
+          className="panel stats-panel saved-stats-panel"
           key={`${row.stage}-${row.engine}-${row.model_version}`}
         >
           <div className="panel-heading">

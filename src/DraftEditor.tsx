@@ -2,6 +2,8 @@ import { useId, useState } from "react"
 import type { Catalog, Draft, MapDTO } from "./contracts"
 import { parseBulk, positions } from "./domain"
 import { Notice } from "./ui"
+import { HeroPortrait, TeamIdentity } from "./VisualIdentity"
+import "./analysis-presentation.css"
 export function DraftEditor({
   map,
   draft,
@@ -66,7 +68,7 @@ export function DraftEditor({
           <fieldset key={side} disabled={disabled}>
             <legend>
               <span className={`team-dot ${side}`} />
-              {map[side]}
+              <TeamIdentity name={map[side]} size="sm" />
             </legend>
             <div className="lineup-labels">
               <span>ПОЗ.</span>
@@ -83,13 +85,16 @@ export function DraftEditor({
                   placeholder="Игрок"
                   list={`players-${side}`}
                 />
-                <input
-                  aria-label={`${map[side]} герой ${position}`}
-                  value={draft[side].heroes[index] ?? ""}
-                  onChange={(e) => change(side, "heroes", index, e.target.value)}
-                  placeholder="Поиск героя"
-                  list={heroesId}
-                />
+                <div className="lineup-hero-field">
+                  <HeroPortrait name={draft[side].heroes[index] ?? ""} size="sm" />
+                  <input
+                    aria-label={`${map[side]} герой ${position}`}
+                    value={draft[side].heroes[index] ?? ""}
+                    onChange={(e) => change(side, "heroes", index, e.target.value)}
+                    placeholder="Поиск героя"
+                    list={heroesId}
+                  />
+                </div>
               </div>
             ))}
             <datalist id={`players-${side}`}>

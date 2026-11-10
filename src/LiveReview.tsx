@@ -1,6 +1,8 @@
 import type { Draft, LiveProposal } from "./contracts"
 import { time } from "./domain"
 import { Notice } from "./ui"
+import { HeroPortrait } from "./VisualIdentity"
+import "./analysis-presentation.css"
 export function draftCompleteness(input: Draft): number {
   return [...input.team_a.heroes, ...input.team_b.heroes].filter((hero) => hero.trim()).length
 }
@@ -64,7 +66,10 @@ export function LiveReview({
                 ) : (
                   player || "нет игрока"
                 )}
-                <strong>{proposal.input[side].heroes[i] || "нет героя"}</strong>
+                <strong className="proposal-hero">
+                  <HeroPortrait name={proposal.input[side].heroes[i] ?? ""} size="sm" />
+                  {proposal.input[side].heroes[i] || "нет героя"}
+                </strong>
               </p>
             ))}
           </div>

@@ -1,0 +1,1280 @@
+{
+  "retrieved_at": "2026-11-10T11:36:48.932Z",
+  "publisher": "Valve Corporation",
+  "portrait_source": "https://www.dota2.com/heroes",
+  "metadata_source": "https://raw.githubusercontent.com/odota/dotaconstants/master/build/heroes.json",
+  "metadata_parsed_sha256": "f2e9538bbe6b37529bc69de55a5752056cde8c9b8deb0cf2e2137a7bd1dfcfd3",
+  "usage": "Dota 2 hero identification in a Dota 2 match tracker. Trademarks and artwork belong to Valve Corporation.",
+  "assets": [
+    {
+      "id": 1,
+      "name": "Anti-Mage",
+      "canonical": "antimage",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/antimage.png",
+      "file": "1.png",
+      "bytes": 62893,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 2,
+      "name": "Axe",
+      "canonical": "axe",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/axe.png",
+      "file": "2.png",
+      "bytes": 66782,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 3,
+      "name": "Bane",
+      "canonical": "bane",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bane.png",
+      "file": "3.png",
+      "bytes": 69570,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 4,
+      "name": "Bloodseeker",
+      "canonical": "bloodseeker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bloodseeker.png",
+      "file": "4.png",
+      "bytes": 73984,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 5,
+      "name": "Crystal Maiden",
+      "canonical": "crystal_maiden",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crystal_maiden.png",
+      "file": "5.png",
+      "bytes": 70190,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 6,
+      "name": "Drow Ranger",
+      "canonical": "drow_ranger",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/drow_ranger.png",
+      "file": "6.png",
+      "bytes": 25318,
+      "width": 128,
+      "height": 72
+    },
+    {
+      "id": 7,
+      "name": "Earthshaker",
+      "canonical": "earthshaker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earthshaker.png",
+      "file": "7.png",
+      "bytes": 80360,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 8,
+      "name": "Juggernaut",
+      "canonical": "juggernaut",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/juggernaut.png",
+      "file": "8.png",
+      "bytes": 61087,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 9,
+      "name": "Mirana",
+      "canonical": "mirana",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mirana.png",
+      "file": "9.png",
+      "bytes": 63933,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 10,
+      "name": "Morphling",
+      "canonical": "morphling",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/morphling.png",
+      "file": "10.png",
+      "bytes": 71884,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 11,
+      "name": "Shadow Fiend",
+      "canonical": "nevermore",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nevermore.png",
+      "file": "11.png",
+      "bytes": 59039,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 12,
+      "name": "Phantom Lancer",
+      "canonical": "phantom_lancer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_lancer.png",
+      "file": "12.png",
+      "bytes": 78214,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 13,
+      "name": "Puck",
+      "canonical": "puck",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/puck.png",
+      "file": "13.png",
+      "bytes": 63209,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 14,
+      "name": "Pudge",
+      "canonical": "pudge",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pudge.png",
+      "file": "14.png",
+      "bytes": 70682,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 15,
+      "name": "Razor",
+      "canonical": "razor",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/razor.png",
+      "file": "15.png",
+      "bytes": 60603,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 16,
+      "name": "Sand King",
+      "canonical": "sand_king",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sand_king.png",
+      "file": "16.png",
+      "bytes": 61751,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 17,
+      "name": "Storm Spirit",
+      "canonical": "storm_spirit",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/storm_spirit.png",
+      "file": "17.png",
+      "bytes": 75930,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 18,
+      "name": "Sven",
+      "canonical": "sven",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sven.png",
+      "file": "18.png",
+      "bytes": 62826,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 19,
+      "name": "Tiny",
+      "canonical": "tiny",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tiny.png",
+      "file": "19.png",
+      "bytes": 71304,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 20,
+      "name": "Vengeful Spirit",
+      "canonical": "vengefulspirit",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/vengefulspirit.png",
+      "file": "20.png",
+      "bytes": 84089,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 21,
+      "name": "Windranger",
+      "canonical": "windrunner",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/windrunner.png",
+      "file": "21.png",
+      "bytes": 69977,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 22,
+      "name": "Zeus",
+      "canonical": "zuus",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/zuus.png",
+      "file": "22.png",
+      "bytes": 78999,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 23,
+      "name": "Kunkka",
+      "canonical": "kunkka",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kunkka.png",
+      "file": "23.png",
+      "bytes": 65303,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 25,
+      "name": "Lina",
+      "canonical": "lina",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lina.png",
+      "file": "25.png",
+      "bytes": 65502,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 26,
+      "name": "Lion",
+      "canonical": "lion",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lion.png",
+      "file": "26.png",
+      "bytes": 65825,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 27,
+      "name": "Shadow Shaman",
+      "canonical": "shadow_shaman",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_shaman.png",
+      "file": "27.png",
+      "bytes": 70325,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 28,
+      "name": "Slardar",
+      "canonical": "slardar",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slardar.png",
+      "file": "28.png",
+      "bytes": 63804,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 29,
+      "name": "Tidehunter",
+      "canonical": "tidehunter",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tidehunter.png",
+      "file": "29.png",
+      "bytes": 69013,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 30,
+      "name": "Witch Doctor",
+      "canonical": "witch_doctor",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/witch_doctor.png",
+      "file": "30.png",
+      "bytes": 64617,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 31,
+      "name": "Lich",
+      "canonical": "lich",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lich.png",
+      "file": "31.png",
+      "bytes": 73116,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 32,
+      "name": "Riki",
+      "canonical": "riki",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/riki.png",
+      "file": "32.png",
+      "bytes": 73976,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 33,
+      "name": "Enigma",
+      "canonical": "enigma",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enigma.png",
+      "file": "33.png",
+      "bytes": 70114,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 34,
+      "name": "Tinker",
+      "canonical": "tinker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tinker.png",
+      "file": "34.png",
+      "bytes": 69282,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 35,
+      "name": "Sniper",
+      "canonical": "sniper",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/sniper.png",
+      "file": "35.png",
+      "bytes": 63018,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 36,
+      "name": "Necrophos",
+      "canonical": "necrolyte",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/necrolyte.png",
+      "file": "36.png",
+      "bytes": 71569,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 37,
+      "name": "Warlock",
+      "canonical": "warlock",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/warlock.png",
+      "file": "37.png",
+      "bytes": 61330,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 38,
+      "name": "Beastmaster",
+      "canonical": "beastmaster",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/beastmaster.png",
+      "file": "38.png",
+      "bytes": 74687,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 39,
+      "name": "Queen of Pain",
+      "canonical": "queenofpain",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/queenofpain.png",
+      "file": "39.png",
+      "bytes": 61291,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 40,
+      "name": "Venomancer",
+      "canonical": "venomancer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/venomancer.png",
+      "file": "40.png",
+      "bytes": 70297,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 41,
+      "name": "Faceless Void",
+      "canonical": "faceless_void",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/faceless_void.png",
+      "file": "41.png",
+      "bytes": 61954,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 42,
+      "name": "Wraith King",
+      "canonical": "skeleton_king",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skeleton_king.png",
+      "file": "42.png",
+      "bytes": 83338,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 43,
+      "name": "Death Prophet",
+      "canonical": "death_prophet",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/death_prophet.png",
+      "file": "43.png",
+      "bytes": 60871,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 44,
+      "name": "Phantom Assassin",
+      "canonical": "phantom_assassin",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phantom_assassin.png",
+      "file": "44.png",
+      "bytes": 56606,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 45,
+      "name": "Pugna",
+      "canonical": "pugna",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pugna.png",
+      "file": "45.png",
+      "bytes": 73090,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 46,
+      "name": "Templar Assassin",
+      "canonical": "templar_assassin",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/templar_assassin.png",
+      "file": "46.png",
+      "bytes": 67666,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 47,
+      "name": "Viper",
+      "canonical": "viper",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/viper.png",
+      "file": "47.png",
+      "bytes": 61176,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 48,
+      "name": "Luna",
+      "canonical": "luna",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/luna.png",
+      "file": "48.png",
+      "bytes": 77108,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 49,
+      "name": "Dragon Knight",
+      "canonical": "dragon_knight",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dragon_knight.png",
+      "file": "49.png",
+      "bytes": 69702,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 50,
+      "name": "Dazzle",
+      "canonical": "dazzle",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dazzle.png",
+      "file": "50.png",
+      "bytes": 76471,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 51,
+      "name": "Clockwerk",
+      "canonical": "rattletrap",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rattletrap.png",
+      "file": "51.png",
+      "bytes": 72679,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 52,
+      "name": "Leshrac",
+      "canonical": "leshrac",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/leshrac.png",
+      "file": "52.png",
+      "bytes": 68927,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 53,
+      "name": "Nature's Prophet",
+      "canonical": "furion",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/furion.png",
+      "file": "53.png",
+      "bytes": 70253,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 54,
+      "name": "Lifestealer",
+      "canonical": "life_stealer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/life_stealer.png",
+      "file": "54.png",
+      "bytes": 71483,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 55,
+      "name": "Dark Seer",
+      "canonical": "dark_seer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_seer.png",
+      "file": "55.png",
+      "bytes": 80697,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 56,
+      "name": "Clinkz",
+      "canonical": "clinkz",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/clinkz.png",
+      "file": "56.png",
+      "bytes": 82955,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 57,
+      "name": "Omniknight",
+      "canonical": "omniknight",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/omniknight.png",
+      "file": "57.png",
+      "bytes": 75856,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 58,
+      "name": "Enchantress",
+      "canonical": "enchantress",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/enchantress.png",
+      "file": "58.png",
+      "bytes": 69185,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 59,
+      "name": "Huskar",
+      "canonical": "huskar",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/huskar.png",
+      "file": "59.png",
+      "bytes": 68205,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 60,
+      "name": "Night Stalker",
+      "canonical": "night_stalker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/night_stalker.png",
+      "file": "60.png",
+      "bytes": 65703,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 61,
+      "name": "Broodmother",
+      "canonical": "broodmother",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/broodmother.png",
+      "file": "61.png",
+      "bytes": 81941,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 62,
+      "name": "Bounty Hunter",
+      "canonical": "bounty_hunter",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bounty_hunter.png",
+      "file": "62.png",
+      "bytes": 77585,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 63,
+      "name": "Weaver",
+      "canonical": "weaver",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/weaver.png",
+      "file": "63.png",
+      "bytes": 63291,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 64,
+      "name": "Jakiro",
+      "canonical": "jakiro",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/jakiro.png",
+      "file": "64.png",
+      "bytes": 79414,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 65,
+      "name": "Batrider",
+      "canonical": "batrider",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/batrider.png",
+      "file": "65.png",
+      "bytes": 68905,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 66,
+      "name": "Chen",
+      "canonical": "chen",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chen.png",
+      "file": "66.png",
+      "bytes": 69542,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 67,
+      "name": "Spectre",
+      "canonical": "spectre",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spectre.png",
+      "file": "67.png",
+      "bytes": 56815,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 68,
+      "name": "Ancient Apparition",
+      "canonical": "ancient_apparition",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ancient_apparition.png",
+      "file": "68.png",
+      "bytes": 67247,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 69,
+      "name": "Doom",
+      "canonical": "doom_bringer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/doom_bringer.png",
+      "file": "69.png",
+      "bytes": 62832,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 70,
+      "name": "Ursa",
+      "canonical": "ursa",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ursa.png",
+      "file": "70.png",
+      "bytes": 59997,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 71,
+      "name": "Spirit Breaker",
+      "canonical": "spirit_breaker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/spirit_breaker.png",
+      "file": "71.png",
+      "bytes": 66643,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 72,
+      "name": "Gyrocopter",
+      "canonical": "gyrocopter",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/gyrocopter.png",
+      "file": "72.png",
+      "bytes": 66475,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 73,
+      "name": "Alchemist",
+      "canonical": "alchemist",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/alchemist.png",
+      "file": "73.png",
+      "bytes": 82940,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 74,
+      "name": "Invoker",
+      "canonical": "invoker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/invoker.png",
+      "file": "74.png",
+      "bytes": 53692,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 75,
+      "name": "Silencer",
+      "canonical": "silencer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/silencer.png",
+      "file": "75.png",
+      "bytes": 70947,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 76,
+      "name": "Outworld Devourer",
+      "canonical": "obsidian_destroyer",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/obsidian_destroyer.png",
+      "file": "76.png",
+      "bytes": 80767,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 77,
+      "name": "Lycan",
+      "canonical": "lycan",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lycan.png",
+      "file": "77.png",
+      "bytes": 62015,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 78,
+      "name": "Brewmaster",
+      "canonical": "brewmaster",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/brewmaster.png",
+      "file": "78.png",
+      "bytes": 66057,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 79,
+      "name": "Shadow Demon",
+      "canonical": "shadow_demon",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shadow_demon.png",
+      "file": "79.png",
+      "bytes": 58628,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 80,
+      "name": "Lone Druid",
+      "canonical": "lone_druid",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/lone_druid.png",
+      "file": "80.png",
+      "bytes": 70267,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 81,
+      "name": "Chaos Knight",
+      "canonical": "chaos_knight",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/chaos_knight.png",
+      "file": "81.png",
+      "bytes": 62091,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 82,
+      "name": "Meepo",
+      "canonical": "meepo",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/meepo.png",
+      "file": "82.png",
+      "bytes": 72686,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 83,
+      "name": "Treant Protector",
+      "canonical": "treant",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/treant.png",
+      "file": "83.png",
+      "bytes": 78683,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 84,
+      "name": "Ogre Magi",
+      "canonical": "ogre_magi",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ogre_magi.png",
+      "file": "84.png",
+      "bytes": 64011,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 85,
+      "name": "Undying",
+      "canonical": "undying",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/undying.png",
+      "file": "85.png",
+      "bytes": 66075,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 86,
+      "name": "Rubick",
+      "canonical": "rubick",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/rubick.png",
+      "file": "86.png",
+      "bytes": 68355,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 87,
+      "name": "Disruptor",
+      "canonical": "disruptor",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/disruptor.png",
+      "file": "87.png",
+      "bytes": 74406,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 88,
+      "name": "Nyx Assassin",
+      "canonical": "nyx_assassin",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/nyx_assassin.png",
+      "file": "88.png",
+      "bytes": 64343,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 89,
+      "name": "Naga Siren",
+      "canonical": "naga_siren",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/naga_siren.png",
+      "file": "89.png",
+      "bytes": 66085,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 90,
+      "name": "Keeper of the Light",
+      "canonical": "keeper_of_the_light",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/keeper_of_the_light.png",
+      "file": "90.png",
+      "bytes": 62919,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 91,
+      "name": "Io",
+      "canonical": "wisp",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/wisp.png",
+      "file": "91.png",
+      "bytes": 54000,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 92,
+      "name": "Visage",
+      "canonical": "visage",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/visage.png",
+      "file": "92.png",
+      "bytes": 68935,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 93,
+      "name": "Slark",
+      "canonical": "slark",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/slark.png",
+      "file": "93.png",
+      "bytes": 85147,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 94,
+      "name": "Medusa",
+      "canonical": "medusa",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/medusa.png",
+      "file": "94.png",
+      "bytes": 79717,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 95,
+      "name": "Troll Warlord",
+      "canonical": "troll_warlord",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/troll_warlord.png",
+      "file": "95.png",
+      "bytes": 72264,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 96,
+      "name": "Centaur Warrunner",
+      "canonical": "centaur",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/centaur.png",
+      "file": "96.png",
+      "bytes": 65216,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 97,
+      "name": "Magnus",
+      "canonical": "magnataur",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/magnataur.png",
+      "file": "97.png",
+      "bytes": 68910,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 98,
+      "name": "Timbersaw",
+      "canonical": "shredder",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/shredder.png",
+      "file": "98.png",
+      "bytes": 72759,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 99,
+      "name": "Bristleback",
+      "canonical": "bristleback",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/bristleback.png",
+      "file": "99.png",
+      "bytes": 70311,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 100,
+      "name": "Tusk",
+      "canonical": "tusk",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/tusk.png",
+      "file": "100.png",
+      "bytes": 69741,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 101,
+      "name": "Skywrath Mage",
+      "canonical": "skywrath_mage",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/skywrath_mage.png",
+      "file": "101.png",
+      "bytes": 76673,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 102,
+      "name": "Abaddon",
+      "canonical": "abaddon",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abaddon.png",
+      "file": "102.png",
+      "bytes": 53683,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 103,
+      "name": "Elder Titan",
+      "canonical": "elder_titan",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/elder_titan.png",
+      "file": "103.png",
+      "bytes": 79643,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 104,
+      "name": "Legion Commander",
+      "canonical": "legion_commander",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/legion_commander.png",
+      "file": "104.png",
+      "bytes": 67661,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 105,
+      "name": "Techies",
+      "canonical": "techies",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/techies.png",
+      "file": "105.png",
+      "bytes": 75277,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 106,
+      "name": "Ember Spirit",
+      "canonical": "ember_spirit",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ember_spirit.png",
+      "file": "106.png",
+      "bytes": 56176,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 107,
+      "name": "Earth Spirit",
+      "canonical": "earth_spirit",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/earth_spirit.png",
+      "file": "107.png",
+      "bytes": 55356,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 108,
+      "name": "Underlord",
+      "canonical": "abyssal_underlord",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/abyssal_underlord.png",
+      "file": "108.png",
+      "bytes": 80064,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 109,
+      "name": "Terrorblade",
+      "canonical": "terrorblade",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/terrorblade.png",
+      "file": "109.png",
+      "bytes": 66458,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 110,
+      "name": "Phoenix",
+      "canonical": "phoenix",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/phoenix.png",
+      "file": "110.png",
+      "bytes": 68649,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 111,
+      "name": "Oracle",
+      "canonical": "oracle",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/oracle.png",
+      "file": "111.png",
+      "bytes": 113535,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 112,
+      "name": "Winter Wyvern",
+      "canonical": "winter_wyvern",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/winter_wyvern.png",
+      "file": "112.png",
+      "bytes": 73617,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 113,
+      "name": "Arc Warden",
+      "canonical": "arc_warden",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/arc_warden.png",
+      "file": "113.png",
+      "bytes": 79903,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 114,
+      "name": "Monkey King",
+      "canonical": "monkey_king",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/monkey_king.png",
+      "file": "114.png",
+      "bytes": 71820,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 119,
+      "name": "Dark Willow",
+      "canonical": "dark_willow",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dark_willow.png",
+      "file": "119.png",
+      "bytes": 65168,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 120,
+      "name": "Pangolier",
+      "canonical": "pangolier",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/pangolier.png",
+      "file": "120.png",
+      "bytes": 62437,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 121,
+      "name": "Grimstroke",
+      "canonical": "grimstroke",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/grimstroke.png",
+      "file": "121.png",
+      "bytes": 70549,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 123,
+      "name": "Hoodwink",
+      "canonical": "hoodwink",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/hoodwink.png",
+      "file": "123.png",
+      "bytes": 67237,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 126,
+      "name": "Void Spirit",
+      "canonical": "void_spirit",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/void_spirit.png",
+      "file": "126.png",
+      "bytes": 66944,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 128,
+      "name": "Snapfire",
+      "canonical": "snapfire",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/snapfire.png",
+      "file": "128.png",
+      "bytes": 58444,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 129,
+      "name": "Mars",
+      "canonical": "mars",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/mars.png",
+      "file": "129.png",
+      "bytes": 58906,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 131,
+      "name": "Ring Master",
+      "canonical": "ringmaster",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/ringmaster.png",
+      "file": "131.png",
+      "bytes": 52008,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 135,
+      "name": "Dawnbreaker",
+      "canonical": "dawnbreaker",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/dawnbreaker.png",
+      "file": "135.png",
+      "bytes": 69855,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 136,
+      "name": "Marci",
+      "canonical": "marci",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/marci.png",
+      "file": "136.png",
+      "bytes": 59485,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 137,
+      "name": "Primal Beast",
+      "canonical": "primal_beast",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/primal_beast.png",
+      "file": "137.png",
+      "bytes": 75164,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 138,
+      "name": "Muerta",
+      "canonical": "muerta",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/muerta.png",
+      "file": "138.png",
+      "bytes": 69294,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 145,
+      "name": "Kez",
+      "canonical": "kez",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/kez.png",
+      "file": "145.png",
+      "bytes": 61706,
+      "width": 256,
+      "height": 144
+    },
+    {
+      "id": 155,
+      "name": "Largo",
+      "canonical": "largo",
+      "source": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/largo.png",
+      "file": "155.png",
+      "bytes": 64925,
+      "width": 256,
+      "height": 144
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import type { EventOverviewDTO } from "./contracts"
 import { time } from "./domain"
 import { PlayInCarryover } from "./PlayIn"
 import { PLAY_IN_ROUTE } from "./playin-data"
+import { TeamIdentity } from "./VisualIdentity"
 
 export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
   return (
@@ -22,7 +23,11 @@ export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
         <ul className="event-teams">
           {event.teams.map((team) => (
             <li key={team.name}>
-              <strong>{team.name}</strong>
+              <TeamIdentity
+                name={team.name}
+                teamKey={team.play_in_team_key ?? team.key ?? undefined}
+                size="md"
+              />
               <span className="muted">
                 {team.players.length ? team.players.join(" · ") : "Состав турнира уточняется"}
               </span>
@@ -87,7 +92,11 @@ export function EventOverview({ event }: { readonly event: EventOverviewDTO }) {
                     <th scope="row">{slot.phase}</th>
                     <td>BO{slot.best_of}</td>
                     <td>
-                      {slot.team_a ?? "Уточняется"} — {slot.team_b ?? "уточняется"}
+                      <span className="event-slot-pair">
+                        {slot.team_a ? <TeamIdentity name={slot.team_a} size="sm" /> : "Уточняется"}
+                        <span className="muted">—</span>
+                        {slot.team_b ? <TeamIdentity name={slot.team_b} size="sm" /> : "уточняется"}
+                      </span>
                     </td>
                   </tr>
                 ))}

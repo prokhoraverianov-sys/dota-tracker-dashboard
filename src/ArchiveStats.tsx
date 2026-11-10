@@ -36,7 +36,7 @@ export function ArchiveStats({
   ).length
   return (
     <>
-      <section className="panel section-card">
+      <section className="panel section-card archive-coverage">
         <h2>Покрытие архивных коэффициентов</h2>
         <p className="muted">
           {matched.length} из {items.length} карт выбранной выборки сопоставлены с архивом от{" "}
@@ -68,17 +68,28 @@ export function ArchiveStats({
         </p>
       </section>
       {matched.length === tournamentArchive.mapCount && items.length === matched.length && (
-        <section className="panel section-card">
+        <section className="panel section-card bank-summary">
           <h2>Расчётный банк · полный турнир</h2>
-          <p className="muted">
+          <p className="muted bank-conditions">
             Стартовый банк 100 USD. Для POST 1,25 ставка фиксирована: 20 USD на каждую из 84 карт,
             без фильтра по коэффициенту. В остальных сценариях ставка составляет 20% текущего банка.
             Использованы архивные коэффициенты. Время относительно драфта известно не для всех карт.
           </p>
           <div className="bank-grid">
             {tournamentArchive.bank.map((row) => (
-              <article key={row.scenario}>
+              <article
+                key={row.scenario}
+                className={
+                  row.scenario === "winnerPOST125" ? "bank-scenario featured" : "bank-scenario"
+                }
+              >
                 <h3>{scenarioTitles[row.scenario] ?? row.scenario}</h3>
+                <span className="bank-stake-rule">
+                  {row.scenario === "winnerPOST125"
+                    ? "Фиксированно 20 USD на карту"
+                    : "20% текущего банка"}
+                </span>
+                <small className="bank-value-label">Итоговый банк</small>
                 <strong>{money.format(row.bank)}</strong>
                 <span className={row.profit < 0 ? "miss-text" : "hit-text"}>
                   {money.format(row.profit)} к старту

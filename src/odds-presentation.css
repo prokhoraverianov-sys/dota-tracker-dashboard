@@ -1,0 +1,156 @@
+.provider-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.provider-marker {
+  width: 7px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--muted);
+  flex: 0 0 auto;
+}
+.provider-wordmark[data-provider="pari"] .provider-marker {
+  background: var(--mint);
+}
+.provider-wordmark[data-provider="betboom"] .provider-marker {
+  background: var(--warning);
+}
+.provider-wordmark[data-provider="polymarket"] .provider-marker {
+  background: var(--cyan);
+}
+.market-match-identity {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.market-versus {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+.odds-provider {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background: #182430;
+}
+.odds-provider-heading {
+  min-height: 26px;
+}
+.odds-provider-meta {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.6;
+  font-size: 11px;
+}
+.odds-provider-meta > span:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+.odds-provider h3 {
+  font-weight: 600;
+  color: var(--secondary);
+}
+.odds-status {
+  padding: 3px 7px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+.odds-status-fresh {
+  background: #74dfbd0c;
+  border-color: #345b50;
+}
+.odds-status-stale {
+  background: #f4cc850a;
+  border-color: #655238;
+}
+.odds-status-empty {
+  color: var(--secondary);
+}
+.odds-provider-empty {
+  background: var(--surface);
+  border-style: dashed;
+}
+.odds-winner-prices {
+  gap: 8px;
+}
+.odds-winner-prices > div {
+  min-width: 0;
+  padding: 10px;
+  background: #0c151d70;
+  border: 1px solid var(--line-soft, var(--line));
+  border-radius: 8px;
+}
+.odds-winner-prices dt {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+.odds-winner-prices dd {
+  margin-top: 6px;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.odds-duration-table {
+  margin-bottom: 8px;
+}
+.odds-duration-table tbody tr:hover {
+  background: #ffffff04;
+}
+.odds-provider-notice {
+  line-height: 1.6;
+}
+.odds-open-source {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 12px;
+  text-underline-offset: 3px;
+}
+.market-source-statuses p {
+  padding: 10px 12px;
+  border: 1px solid var(--line-soft, var(--line));
+  border-radius: 8px;
+  background: #0b101733;
+}
+.market-source-statuses p > span {
+  margin-left: auto;
+}
+.market-source-statuses small {
+  line-height: 1.55;
+}
+.market-scope > summary:hover {
+  background: #ffffff03;
+}
+@media (min-width: 960px) {
+  .odds-comparison {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .odds-provider {
+    padding: 16px;
+  }
+  .market-event-heading {
+    padding-block: 16px;
+  }
+  .market-board .panel-heading {
+    padding-bottom: 16px;
+  }
+  .market-source-statuses {
+    gap: 10px;
+    padding-bottom: 14px;
+  }
+}
+@media (max-width: 520px) {
+  .market-match-identity {
+    gap: 8px;
+  }
+  .odds-winner-prices > div {
+    padding: 8px;
+  }
+}

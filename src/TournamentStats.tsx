@@ -88,7 +88,7 @@ export function TournamentStats({
             </div>
           </div>
           <ReportProvenance data={data.provenance} />
-          <section className="panel">
+          <section className="panel report-comparison-panel">
             <div className="table-scroll">
               <table className="report-table">
                 <caption>Точность и длительность</caption>

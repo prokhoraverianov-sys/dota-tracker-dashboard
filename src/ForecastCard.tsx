@@ -3,6 +3,8 @@ import { criterionLabels, readCriteria } from "./criteria"
 import { percent, time } from "./domain"
 import { OddsTable } from "./OddsTable"
 import { Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
+import "./analysis-presentation.css"
 
 export function ForecastCard({
   forecast,
@@ -20,22 +22,25 @@ export function ForecastCard({
   const over = shadow?.duration_over_probability
   const missing = forecast?.analysis.missing_data ?? []
   const criteria = readCriteria(shadow?.reasons, map.team_a, map.team_b)
+  const largestContribution = Math.max(0, ...criteria.map((row) => Math.abs(row.signed_logit)))
   return (
-    <article className={`forecast-card ${stage.toLowerCase()}`}>
+    <article className={`forecast-card analysis-card ${stage.toLowerCase()}`}>
       <header>
-        <span className="stage">{stage}</span>
-        <span className="muted">{stage === "PRE" ? "До драфта" : "После драфта"}</span>
+        <div className="forecast-stage-title">
+          <span className="stage">{stage}</span>
+          <span className="muted">{stage === "PRE" ? "До драфта" : "После драфта"}</span>
+        </div>
         <span className="badge">{forecast ? "Сохранён" : "Нет прогноза"}</span>
       </header>
       {forecast ? (
         <>
           <div className="probability-pair">
             <div>
-              <span>{map.team_a}</span>
+              <TeamIdentity name={map.team_a} size="sm" />
               <strong>{percent(p)}</strong>
             </div>
             <div>
-              <span>{map.team_b}</span>
+              <TeamIdentity name={map.team_b} size="sm" />
               <strong>{percent(p == null ? null : 1 - p)}</strong>
             </div>
           </div>
@@ -99,9 +104,34 @@ export function ForecastCard({
                     {criteria.map((row) => (
                       <tr key={row.criterion}>
                         <th scope="row">{criterionLabels[row.criterion] ?? row.criterion}</th>
-                        <td className="numeric">
-                          {row.signed_logit > 0 && "+"}
-                          {row.signed_logit.toFixed(4)}
+                        <td className="factor-contribution">
+                          <span className="numeric factor-number">
+                            {row.signed_logit > 0 && "+"}
+                            {row.signed_logit.toFixed(4)}
+                          </span>
+                          <span
+                            className={`factor-track${row.availability === "unknown" ? " factor-track-unknown" : ""}`}
+                            aria-hidden="true"
+                          >
+                            <span
+                              className={`factor-fill ${row.signed_logit < 0 ? "factor-fill-b" : "factor-fill-a"}`}
+                              style={{
+                                width:
+                                  row.availability === "unknown" || largestContribution === 0
+                                    ? "0%"
+                                    : `${(Math.abs(row.signed_logit) / largestContribution) * 50}%`,
+                              }}
+                            />
+                          </span>
+                          <small className="factor-direction">
+                            {row.availability === "unknown"
+                              ? "Направление не подтверждено"
+                              : row.signed_logit > 0
+                                ? `В пользу ${map.team_a}`
+                                : row.signed_logit < 0
+                                  ? `В пользу ${map.team_b}`
+                                  : "Нулевой вклад"}
+                          </small>
                         </td>
                         <td className={row.availability === "unknown" ? "warning-text" : "muted"}>
                           {row.availability === "supported" ? "Есть опора" : "Опора неизвестна"}
@@ -111,7 +141,8 @@ export function ForecastCard({
                   </tbody>
                 </table>
                 <p className="footnote">
-                  Вклад в логит. Плюс в пользу {map.team_a}, минус в пользу {map.team_b}.
+                  Вклад в логит. Плюс в пользу {map.team_a}, минус в пользу {map.team_b}. Длина
+                  полосы — относительно наибольшего вклада в этом расчёте.
                 </p>
               </>
             )}
@@ -119,7 +150,9 @@ export function ForecastCard({
               {forecast.explanation || "Нет сохранённого пояснения."}
             </div>
           </div>
-          <div className="forecast-section">
+          <div
+            className={`forecast-section forecast-quality${missing.length > 0 ? " forecast-quality-warning" : ""}`}
+          >
             <h3>Качество данных</h3>
             {missing.length > 0 ? (
               <ul className="missing-list">

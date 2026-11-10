@@ -90,14 +90,19 @@ export function Shell({
       </a>
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="brand">
+          <button
+            type="button"
+            className="brand brand-home"
+            aria-label="Dota Tracker · к матчам"
+            onClick={() => navigate("/schedule")}
+          >
             <span className="brand-mark">
               <Swords size={22} />
             </span>
             <div>
               Dota Tracker<small>АНАЛИТИКА КАРТ</small>
             </div>
-          </div>
+          </button>
           <nav aria-label="Основная навигация">
             {links.map((item) => (
               <button

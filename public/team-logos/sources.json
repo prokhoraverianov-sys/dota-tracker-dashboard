@@ -1,0 +1,176 @@
+{
+  "retrievedAt": "2026-11-10T11:37:26.273Z",
+  "notice": "Team trademarks are owned by their respective teams. Images identify participants and are sourced from their published Liquipedia entries. Generic Dota placeholders are intentionally not copied as team logos.",
+  "logos": [
+    {
+      "key": "power-rangers",
+      "name": "Power Rangers",
+      "path": "power-rangers.png",
+      "sourcePage": "https://liquipedia.net/dota2/Power_Rangers",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/8/81/Power_Rangers_darkmode.png/128px-Power_Rangers_darkmode.png",
+      "bytes": 6566
+    },
+    {
+      "key": "cyxariki",
+      "name": "Ka4kanarskie cyxariki",
+      "path": "cyxariki.png",
+      "sourcePage": "https://liquipedia.net/dota2/Ka4kanarskie_cyxariki",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/2/25/Cyxariki_allmode.png/128px-Cyxariki_allmode.png",
+      "bytes": 29715
+    },
+    {
+      "key": "xipto",
+      "name": "Xipto Esports",
+      "path": "xipto.png",
+      "sourcePage": "https://liquipedia.net/dota2/Xipto_Esports",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/7/7e/Xipto_Esports_2025_allmode.png/128px-Xipto_Esports_2025_allmode.png",
+      "bytes": 11964
+    },
+    {
+      "key": "yellow-submarine",
+      "name": "Yellow Submarine",
+      "path": "yellow-submarine.png",
+      "sourcePage": "https://liquipedia.net/dota2/Yellow_Submarine",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/3/34/Yellow_Submarine_2025_allmode.png/128px-Yellow_Submarine_2025_allmode.png",
+      "bytes": 7879
+    },
+    {
+      "key": "legion",
+      "name": "LEGION",
+      "path": "legion.png",
+      "sourcePage": "https://liquipedia.net/dota2/LEGION_(stack)",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/e/e7/LEGION_DOTA2_allmode.png/128px-LEGION_DOTA2_allmode.png",
+      "bytes": 24746
+    },
+    {
+      "key": "playtime",
+      "name": "PlayTime",
+      "path": "playtime.png",
+      "sourcePage": "https://liquipedia.net/dota2/PlayTime",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/3/39/PlayTime_allmode.png/128px-PlayTime_allmode.png",
+      "bytes": 21245
+    },
+    {
+      "key": "cyberhero",
+      "name": "CyberHero",
+      "path": "cyberhero.png",
+      "sourcePage": "https://liquipedia.net/dota2/CyberHero",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/1/11/CyberHero_2025_darkmode.png/128px-CyberHero_2025_darkmode.png",
+      "bytes": 11004
+    },
+    {
+      "key": "huligani",
+      "name": "HULIGANI",
+      "path": "huligani.png",
+      "sourcePage": "https://liquipedia.net/dota2/HULIGANI",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/8/81/HULIGANI_allmode.png/128px-HULIGANI_allmode.png",
+      "bytes": 18825
+    },
+    {
+      "key": "1win",
+      "name": "1win",
+      "path": "1win.png",
+      "sourcePage": "https://liquipedia.net/dota2/1w_Team",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/5/5c/1win_Team_2024_allmode.png/128px-1win_Team_2024_allmode.png",
+      "bytes": 3807
+    },
+    {
+      "key": "aurora",
+      "name": "Aurora Gaming",
+      "path": "aurora.png",
+      "sourcePage": "https://liquipedia.net/dota2/Aurora_Gaming",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/1/1c/Aurora_Gaming_2025_allmode.png/128px-Aurora_Gaming_2025_allmode.png",
+      "bytes": 9197
+    },
+    {
+      "key": "gamerlegion",
+      "name": "GamerLegion",
+      "path": "gamerlegion.png",
+      "sourcePage": "https://liquipedia.net/dota2/GamerLegion",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/2/21/GamerLegion_2026_allmode.png/128px-GamerLegion_2026_allmode.png",
+      "bytes": 10014
+    },
+    {
+      "key": "lgd",
+      "name": "LGD Gaming",
+      "path": "lgd.png",
+      "sourcePage": "https://liquipedia.net/dota2/LGD_Gaming",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/2/2f/LGD_Gaming_Dec_2019_allmode.png/128px-LGD_Gaming_Dec_2019_allmode.png",
+      "bytes": 15419
+    },
+    {
+      "key": "parivision",
+      "name": "PARIVISION",
+      "path": "parivision.png",
+      "sourcePage": "https://liquipedia.net/dota2/PARIVISION",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/9/9d/PARIVISION_allmode.png/128px-PARIVISION_allmode.png",
+      "bytes": 4907
+    },
+    {
+      "key": "team-liquid",
+      "name": "Team Liquid",
+      "path": "team-liquid.png",
+      "sourcePage": "https://liquipedia.net/dota2/Team_Liquid",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/5/59/Team_Liquid_2024_darkmode.png/128px-Team_Liquid_2024_darkmode.png",
+      "bytes": 11680
+    },
+    {
+      "key": "team-spirit",
+      "name": "Team Spirit",
+      "path": "team-spirit.png",
+      "sourcePage": "https://liquipedia.net/dota2/Team_Spirit",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/8/80/Team_Spirit_2022_darkmode.png/128px-Team_Spirit_2022_darkmode.png",
+      "bytes": 5448
+    },
+    {
+      "key": "betboom",
+      "name": "BetBoom Team",
+      "path": "betboom.png",
+      "sourcePage": "https://liquipedia.net/dota2/BetBoom_Team",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/5/5b/BetBoom_Team_2024_allmode.png/128px-BetBoom_Team_2024_allmode.png",
+      "bytes": 5129
+    },
+    {
+      "key": "og",
+      "name": "OG",
+      "path": "og.png",
+      "sourcePage": "https://liquipedia.net/dota2/OG",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/7/7b/OG_2026_allmode.png/128px-OG_2026_allmode.png",
+      "bytes": 12153
+    },
+    {
+      "key": "team-yandex",
+      "name": "Team Yandex",
+      "path": "team-yandex.png",
+      "sourcePage": "https://liquipedia.net/dota2/Team_Yandex",
+      "sourceImage": "https://liquipedia.net/commons/images/thumb/3/3b/Team_Yandex_2026_darkmode.png/128px-Team_Yandex_2026_darkmode.png",
+      "bytes": 16530
+    }
+  ],
+  "unavailable": [
+    {
+      "key": "froglings",
+      "name": "Froglings",
+      "sourcePage": "https://liquipedia.net/dota2/1win_Essence/3/Play-In",
+      "reason": "Source uses a generic Dota placeholder."
+    },
+    {
+      "key": "angry-birds",
+      "name": "Angry Birds",
+      "sourcePage": "https://liquipedia.net/dota2/1win_Essence/3/Play-In",
+      "reason": "Source uses a generic Dota placeholder."
+    },
+    {
+      "key": "astra-invicta",
+      "name": "Astra Invicta",
+      "sourcePage": "https://liquipedia.net/dota2/1win_Essence/3/Play-In",
+      "reason": "Source uses a generic Dota placeholder."
+    },
+    {
+      "key": "do-konca",
+      "name": "DO KONCA",
+      "sourcePage": "https://liquipedia.net/dota2/1win_Essence/3",
+      "reason": "Source uses a generic Dota placeholder."
+    }
+  ]
+}

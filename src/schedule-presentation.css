@@ -1,0 +1,137 @@
+.schedule-page {
+  min-width: 0;
+}
+.schedule-page > .page-heading {
+  margin-top: 4px;
+  margin-bottom: 18px;
+}
+.schedule-page > .page-heading h1 {
+  font-size: clamp(26px, 2.2vw, 34px);
+  letter-spacing: -0.035em;
+}
+.schedule-page > .page-heading .eyebrow {
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.schedule-page > .page-heading .muted {
+  margin-top: 6px;
+}
+.schedule-page > .tournament-tabs {
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.schedule-page > .tournament-tabs button {
+  border-radius: 9px;
+  padding: 10px 14px;
+}
+.schedule-page > .tournament-tabs button[aria-pressed="true"] {
+  box-shadow: inset 0 -2px 0 var(--mint);
+}
+.schedule-page .schedule-panel .series-row {
+  grid-template-columns: 132px minmax(260px, 1fr) auto;
+  padding: 18px 22px;
+  gap: 22px;
+  transition: background-color 0.15s;
+}
+.schedule-page .schedule-panel .series-row:hover {
+  background: color-mix(in srgb, var(--raised) 45%, transparent);
+}
+.schedule-page .schedule-match-teams {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+.schedule-page .schedule-match-teams > .versus {
+  text-align: center;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.schedule-page .schedule-panel .map-buttons {
+  align-items: center;
+  justify-content: flex-end;
+}
+.schedule-page .map-button {
+  min-width: 112px;
+  text-align: left;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+.schedule-page .map-button small {
+  max-width: 175px;
+}
+.schedule-page .map-button-completed {
+  border-color: color-mix(in srgb, var(--mint) 35%, var(--line));
+}
+.schedule-page .series-time strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.schedule-page .event-teams {
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 12px;
+}
+.schedule-page .event-teams li {
+  padding: 16px;
+  gap: 8px;
+  background: var(--surface);
+}
+.schedule-page .event-teams li > .muted {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.schedule-page .event-teams li > small {
+  font-size: 11px;
+}
+.event-slot-pair {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 1200px) {
+  .schedule-page .schedule-panel .series-row {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+  .schedule-page .schedule-panel .map-buttons {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 680px) {
+  .schedule-page > .page-heading h1 {
+    font-size: 25px;
+  }
+  .schedule-page .schedule-panel .series-row {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+    gap: 14px;
+  }
+  .schedule-page .schedule-panel .map-buttons {
+    grid-column: 1;
+  }
+  .schedule-page .schedule-match-teams {
+    grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .schedule-page .map-button {
+    min-width: 0;
+    flex: 1 1 100px;
+  }
+  .schedule-page .event-teams {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .schedule-page > .page-heading {
+    margin-bottom: 14px;
+  }
+  .schedule-page > .tournament-tabs {
+    margin-bottom: 12px;
+  }
+}

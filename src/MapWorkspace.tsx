@@ -20,7 +20,9 @@ import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
 import { Quotes } from "./Quotes"
 import { ResultForm } from "./ResultForm"
-import { Back, Header, Notice } from "./ui"
+import { Back, Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
+import "./analysis-presentation.css"
 export function MapWorkspace({
   initial,
   api,
@@ -169,18 +171,20 @@ export function MapWorkspace({
           )
         }
       />
-      <Header
-        title={`${map.team_a} — ${map.team_b}`}
-        subtitle={
-          (map.tournament ?? "Матч") +
-          " · Карта " +
-          (map.map_number ?? map.map_id) +
-          " · " +
-          mapStatus(map)
-        }
-      >
+      <header className="page-heading map-heading">
+        <div className="map-heading-main">
+          <p className="eyebrow">{map.tournament ?? "Матч"}</p>
+          <h1 className="map-team-heading">
+            <TeamIdentity name={map.team_a} size="lg" />
+            <span className="map-versus"> — </span>
+            <TeamIdentity name={map.team_b} size="lg" />
+          </h1>
+          <p className="muted">
+            Карта {map.map_number ?? map.map_id} · {mapStatus(map)}
+          </p>
+        </div>
         <span className="badge">{locked ? "Карта завершена" : "Режим наблюдения"}</span>
-      </Header>
+      </header>
       {map.tournament === "PARI Universe" && map.series_id && (
         <Notice>
           Результаты сыгранных карт и архивные котировки доступны в истории серии.{" "}

@@ -1,5 +1,7 @@
 import { ExternalLink } from "lucide-react"
 import { time } from "./domain"
+import { TeamIdentity } from "./VisualIdentity"
+import "./odds-presentation.css"
 import {
   type ProviderOdds,
   priceLabel,
@@ -35,7 +37,10 @@ function ProviderQuote({
       aria-label={`${name} · ${scope}`}
     >
       <div className="odds-provider-heading">
-        <strong>{name}</strong>
+        <strong className="provider-wordmark" data-provider={quote.provider?.toLowerCase()}>
+          <span className="provider-marker" aria-hidden="true" />
+          {name}
+        </strong>
         <span className={`badge odds-status odds-status-${quote.status}`}>
           {quote.status === "fresh"
             ? "Свежий снимок"
@@ -66,11 +71,15 @@ function ProviderQuote({
           {quote.winner ? (
             <dl className="odds-winner-prices">
               <div>
-                <dt>{teamA}</dt>
+                <dt>
+                  <TeamIdentity name={teamA} size="sm" />
+                </dt>
                 <dd>{priceLabel(quote.winner.team_a)}</dd>
               </div>
               <div>
-                <dt>{teamB}</dt>
+                <dt>
+                  <TeamIdentity name={teamB} size="sm" />
+                </dt>
                 <dd>{priceLabel(quote.winner.team_b)}</dd>
               </div>
             </dl>

@@ -7,6 +7,7 @@ import { query, time } from "./domain"
 import { OddsComparison } from "./OddsComparison"
 import { completeProviders, priceLabel, providerLabel, providerOddsSchema } from "./odds"
 import { Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
 
 export const marketBoardSchema = z.object({
   checked_at_utc: z.string(),
@@ -44,8 +45,10 @@ function EventMarkets({ event }: { readonly event: Event }) {
     <article className="market-event">
       <div className="market-event-heading">
         <div>
-          <h3>
-            {event.team_a} — {event.team_b}
+          <h3 className="market-match-identity">
+            <TeamIdentity name={event.team_a} />
+            <span className="market-versus"> — </span>
+            <TeamIdentity name={event.team_b} />
           </h3>
           <p className="muted">{event.competition}</p>
         </div>
@@ -173,7 +176,10 @@ export function MarketBoard({
           <section className="market-source-statuses" aria-label="Доступность источников котировок">
             {data.sources.map((source) => (
               <p key={source.provider}>
-                <strong>{providerLabel(source.provider)}</strong>
+                <strong className="provider-wordmark" data-provider={source.provider.toLowerCase()}>
+                  <span className="provider-marker" aria-hidden="true" />
+                  {providerLabel(source.provider)}
+                </strong>
                 <span className={source.status === "ok" ? "hit-text" : "muted"}>
                   {source.status === "ok" ? "Снимки доступны" : "Нет снимка"}
                 </span>

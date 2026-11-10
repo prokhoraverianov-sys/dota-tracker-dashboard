@@ -15,6 +15,7 @@ import {
   winnerPrediction,
 } from "./reporting"
 import { Empty, Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
 
 function StageCell({
   match,
@@ -140,7 +141,7 @@ export function CompletedHistory({
         </div>
         {data && matches.length > 0 && (
           <div className="history-table-wrap">
-            <table className="completed-table">
+            <table className="completed-table report-numeric-table">
               <thead>
                 <tr>
                   <th scope="col">Матч</th>
@@ -162,11 +163,18 @@ export function CompletedHistory({
                           <button
                             type="button"
                             className="history-open"
+                            aria-label={label}
                             aria-expanded={expanded}
                             aria-controls={expanded ? `match-details-${match.match_id}` : undefined}
                             onClick={() => setOpenMatch(expanded ? null : match.match_id)}
                           >
-                            <strong>{label}</strong>
+                            <span className="history-match-pair">
+                              <TeamIdentity name={match.team_a} size="sm" />
+                              <span className="history-versus" aria-hidden="true">
+                                —
+                              </span>
+                              <TeamIdentity name={match.team_b} size="sm" />
+                            </span>
                             <ChevronDown size={16} aria-hidden="true" />
                           </button>
                           <small className="metric-note">
@@ -174,8 +182,12 @@ export function CompletedHistory({
                             {match.match_id}
                           </small>
                         </td>
-                        <td data-label="Результат">
-                          <strong>{match.winner ?? "Не указан"}</strong>
+                        <td data-label="Результат" className="history-outcome">
+                          {match.winner ? (
+                            <TeamIdentity name={match.winner} size="sm" />
+                          ) : (
+                            <strong>Не указан</strong>
+                          )}
                           <small className="metric-note">{minutes(match.duration_seconds)}</small>
                         </td>
                         <td data-label="PRE · до драфта">

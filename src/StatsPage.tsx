@@ -4,10 +4,11 @@ import type { Catalog } from "./contracts"
 import { SavedStats } from "./SavedStats"
 import { TournamentStats } from "./TournamentStats"
 import { Header } from "./ui"
+import "./history-presentation.css"
 export function StatsPage({ api, catalog }: { readonly api: Api; readonly catalog: Catalog }) {
   const [view, setView] = useState<"tournament" | "saved">("tournament")
   return (
-    <>
+    <div className="report-view statistics-view">
       <Header
         title="Статистика"
         subtitle="Точность PRE и POST, длительность и разрезы турнира. Отдельно — статистика сохранённых прогнозов."
@@ -35,6 +36,6 @@ export function StatsPage({ api, catalog }: { readonly api: Api; readonly catalo
       ) : (
         <SavedStats api={api} />
       )}
-    </>
+    </div>
   )
 }

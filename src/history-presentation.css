@@ -1,0 +1,336 @@
+:root {
+  --report-cell-space: 16px;
+}
+.report-view {
+  display: grid;
+  gap: var(--s5);
+  min-width: 0;
+}
+.report-view .view-tabs {
+  width: fit-content;
+  max-width: 100%;
+  gap: var(--s1);
+  padding: var(--s1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--sidebar);
+}
+.report-view .view-tabs .secondary {
+  border-color: transparent;
+  background: transparent;
+  color: var(--secondary);
+  min-height: 38px;
+  padding-inline: var(--s4);
+}
+.report-view .view-tabs button[aria-pressed="true"] {
+  color: var(--mint);
+  background: color-mix(in srgb, var(--mint) 11%, var(--surface));
+  border-color: color-mix(in srgb, var(--mint) 34%, var(--line));
+}
+.report-view .report-filters {
+  margin: 0;
+  padding: var(--s3) var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--sidebar);
+}
+.report-view .report-provenance {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3) var(--s4);
+  border-radius: 0 var(--small-radius) var(--small-radius) 0;
+  background: color-mix(in srgb, var(--mint) 4%, var(--canvas));
+}
+.report-view .report-provenance .report-links {
+  margin: 0;
+}
+.report-view .report-provenance summary {
+  color: var(--secondary);
+}
+.report-view .report-provenance details[open] summary {
+  color: var(--text);
+  margin-bottom: var(--s2);
+}
+.report-view .history-panel,
+.report-view .forecast-archive-panel {
+  padding: 0;
+  overflow: hidden;
+}
+.report-view .history-panel > .panel-heading,
+.report-view .forecast-archive-panel > .panel-heading {
+  padding: var(--s5);
+  margin: 0;
+}
+.report-view .completed-table,
+.report-view .report-numeric-table {
+  font-variant-numeric: tabular-nums;
+}
+.report-view .completed-table th,
+.report-view .completed-table td,
+.report-view .forecast-archive-panel th,
+.report-view .forecast-archive-panel td {
+  padding: var(--s4) var(--report-cell-space);
+}
+.report-view .completed-table thead,
+.report-view .forecast-archive-panel thead {
+  background: var(--sidebar);
+}
+.report-view .completed-table thead th,
+.report-view .forecast-archive-panel thead th {
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.report-view .history-row {
+  transition: background 120ms;
+}
+.report-view .history-row:hover {
+  background: color-mix(in srgb, var(--mint) 3%, var(--surface));
+}
+.report-view .history-row.expanded {
+  background: color-mix(in srgb, var(--mint) 7%, var(--surface));
+}
+.report-view .history-open {
+  width: 100%;
+  justify-content: space-between;
+  gap: var(--s3);
+  min-height: 42px;
+}
+.report-view .history-open > svg {
+  margin-left: auto;
+}
+.report-view .history-match-pair {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  text-align: left;
+}
+.report-view .history-versus {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+.report-view .history-outcome > .team-identity {
+  color: var(--mint);
+}
+.report-view .metric-note {
+  margin-top: var(--s1);
+  line-height: 1.6;
+}
+.report-view .history-detail {
+  padding: var(--s5) var(--s2);
+}
+.report-view .history-metrics > div {
+  padding: var(--s4);
+}
+.report-view .history-metrics dt {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.report-view .history-metrics dt > span:last-child {
+  color: var(--muted);
+}
+.report-view .history-metrics dd {
+  font-variant-numeric: tabular-nums;
+  margin-top: var(--s3);
+  font-size: 20px;
+}
+.report-view .history-draft-portraits {
+  gap: var(--s5);
+}
+.report-view .history-draft-portraits h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+}
+.report-view .draft-section-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.report-view .history-draft-portraits ol {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s2);
+  margin: var(--s3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.report-view .history-draft-portraits li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s1);
+  min-width: 0;
+  padding: var(--s2);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+  background: var(--raised);
+}
+.report-view .history-draft-portraits .historical-hero-name {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--secondary);
+}
+.report-view .history-source-block {
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--sidebar);
+}
+.report-view .history-source-block .two-columns {
+  gap: var(--s5);
+}
+.report-view .history-source-block a {
+  display: inline-block;
+  margin-top: var(--s2);
+  font-size: 12px;
+}
+.report-view .archive-criteria td,
+.report-view .report-comparison-panel td,
+.report-view .compact-stats-table td {
+  font-variant-numeric: tabular-nums;
+}
+.report-view .report-counts {
+  gap: var(--s3);
+  margin: 0;
+}
+.report-view .report-counts > div {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+}
+.report-view .report-counts strong {
+  color: var(--mint);
+  font-size: 30px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.report-view .report-counts span {
+  color: var(--secondary);
+  max-width: 190px;
+}
+.report-view .report-comparison-panel .report-table caption {
+  padding-bottom: var(--s4);
+  text-align: left;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+}
+.report-view .report-comparison-panel .report-table strong {
+  font-size: 22px;
+  font-weight: 650;
+}
+.report-view .report-kpis dd,
+.report-view .stats-metrics strong {
+  font-size: 25px;
+  font-variant-numeric: tabular-nums;
+}
+.report-view .saved-stats-panel .panel-heading {
+  padding-bottom: var(--s4);
+  border-bottom: 1px solid var(--line);
+}
+.report-view .saved-stats-panel h2 {
+  margin-top: var(--s2);
+  overflow-wrap: anywhere;
+}
+.report-view .bank-conditions {
+  padding: var(--s3) var(--s4);
+  border-left: 2px solid var(--mint);
+  border-radius: 0 var(--small-radius) var(--small-radius) 0;
+  background: var(--sidebar);
+  line-height: 1.7;
+}
+.report-view .bank-grid {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--s3);
+}
+.report-view .bank-grid > .bank-scenario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s2);
+  padding: var(--s4);
+}
+.report-view .bank-grid > .bank-scenario.featured {
+  border-color: color-mix(in srgb, var(--mint) 50%, var(--line));
+  background: color-mix(in srgb, var(--mint) 5%, var(--raised));
+}
+.report-view .bank-scenario h3 {
+  min-height: 42px;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.report-view .bank-stake-rule {
+  display: inline-block;
+  min-height: 38px;
+  color: var(--secondary);
+  font-size: 12px;
+}
+.report-view .bank-value-label {
+  margin-top: auto;
+  color: var(--muted);
+}
+.report-view .bank-scenario > strong {
+  font-variant-numeric: tabular-nums;
+  font-size: 27px;
+  line-height: 1.2;
+}
+.report-view .bank-scenario > .hit-text,
+.report-view .bank-scenario > .miss-text {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.report-view .history-draft-portraits li > strong {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.report-view .history-draft-portraits li span {
+  margin-left: 0;
+}
+@media (min-width: 1100px) {
+  .report-view .completed-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  .report-view .completed-table th:first-child {
+    width: 29%;
+  }
+  .report-view .completed-table th:nth-child(2) {
+    width: 16%;
+  }
+  .report-view .completed-table th:nth-child(3),
+  .report-view .completed-table th:nth-child(4) {
+    width: 17%;
+  }
+  .report-view .completed-table th:nth-child(5) {
+    width: 21%;
+  }
+  .report-view .history-match-pair {
+    row-gap: var(--s1);
+  }
+}
+@media (max-width: 760px) {
+  .report-view .history-draft-portraits ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .report-view .history-draft-portraits h3 {
+    flex-wrap: wrap;
+  }
+  .report-view .report-counts > div {
+    padding: var(--s3);
+    gap: var(--s3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .report-view .history-row {
+    transition: none;
+  }
+}

@@ -1,0 +1,97 @@
+.team-identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+  line-height: 1.3;
+}
+.team-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  padding: 4px;
+  background: #101922;
+  border: 1px solid var(--line, #304152);
+  border-radius: 8px;
+}
+.team-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.team-mark-fallback {
+  background: #17312d;
+  color: var(--mint, #74dfbd);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.team-identity-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.team-identity-sm {
+  gap: 8px;
+}
+.team-identity-sm .team-mark {
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+  border-radius: 6px;
+  font-size: 10px;
+}
+.team-identity-lg {
+  gap: 12px;
+}
+.team-identity-lg .team-mark {
+  width: 52px;
+  height: 52px;
+  padding: 6px;
+  border-radius: 12px;
+  font-size: 17px;
+}
+.hero-portrait {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+  line-height: 1.3;
+}
+.hero-portrait-frame {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 28px;
+  overflow: hidden;
+  background: var(--raised, #1c2835);
+  border: 1px solid var(--line, #304152);
+  border-radius: 5px;
+}
+.hero-portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-portrait-md .hero-portrait-frame {
+  width: 64px;
+  height: 36px;
+  border-radius: 6px;
+}
+.hero-portrait-placeholder {
+  color: var(--muted, #91a3b5);
+  font-size: 14px;
+  font-weight: 600;
+}
+.hero-portrait-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

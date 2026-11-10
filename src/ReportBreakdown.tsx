@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { type CompletedMatch, winnerPrediction } from "./reporting"
+import { TeamIdentity } from "./VisualIdentity"
 
 const days = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Bangkok", dateStyle: "short" })
 const stages = ["pre", "post"] as const
@@ -147,7 +148,9 @@ export function ReportBreakdown({ items }: { readonly items: readonly CompletedM
                 .sort(([a], [b]) => a.localeCompare(b))
                 .map(([group, rows]) => (
                   <tr key={group}>
-                    <th scope="row">{group}</th>
+                    <th scope="row">
+                      {view === "team" ? <TeamIdentity name={group} size="sm" /> : group}
+                    </th>
                     <td>{rows.length}</td>
                     {stages.map((stage) => (
                       <td key={stage}>{countWins(rows, stage)}</td>

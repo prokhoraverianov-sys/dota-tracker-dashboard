@@ -2,6 +2,7 @@ import { type ArchiveMatch, formatPrice, heroDisplayName } from "./archive"
 import { criterionLabels } from "./criteria"
 import { percent, time } from "./domain"
 import { type CompletedMatch, minutes } from "./reporting"
+import { HeroPortrait, TeamIdentity } from "./VisualIdentity"
 
 function durationError(predicted: number | undefined, actual: number | null) {
   if (predicted == null || actual == null) return "—"
@@ -50,13 +51,17 @@ export function HistoryMatchDetails({
       </div>
       <dl className="history-metrics">
         <div>
-          <dt>{match.team_a} · PRE → POST</dt>
+          <dt>
+            <TeamIdentity name={match.team_a} size="sm" /> <span>PRE → POST</span>
+          </dt>
           <dd>
             {percent(pre)} → {percent(post)}
           </dd>
         </div>
         <div>
-          <dt>{match.team_b} · PRE → POST</dt>
+          <dt>
+            <TeamIdentity name={match.team_b} size="sm" /> <span>PRE → POST</span>
+          </dt>
           <dd>
             {percent(pre == null ? null : 1 - pre)} → {percent(post == null ? null : 1 - post)}
           </dd>
@@ -78,25 +83,29 @@ export function HistoryMatchDetails({
           <p className="muted">
             Игроки и герои этой карты из архива. Текущий состав команды здесь не подставляется.
           </p>
-          <div className="two-columns archive-draft">
+          <div className="two-columns archive-draft history-draft-portraits">
             {[
               { team: match.team_a, picks: archive.picksA },
               { team: match.team_b, picks: archive.picksB },
             ].map(({ team, picks }) => (
               <div key={team}>
-                <h3>Драфт · {team}</h3>
+                <h3>
+                  <TeamIdentity name={team} size="md" />
+                  <span className="draft-section-label">Драфт карты</span>
+                </h3>
                 <ol>
                   {picks.map(([player, hero]) => (
                     <li key={player}>
+                      <HeroPortrait name={heroDisplayName(hero, heroes)} size="md" />
                       <strong>{player}</strong>
-                      <span>{heroDisplayName(hero, heroes)}</span>
+                      <span className="historical-hero-name">{heroDisplayName(hero, heroes)}</span>
                     </li>
                   ))}
                 </ol>
               </div>
             ))}
           </div>
-          <div className="archive-prices">
+          <div className="archive-prices history-source-block">
             <h3>Архивные коэффициенты</h3>
             <div className="two-columns">
               <div>
