@@ -116,13 +116,6 @@ export function MapWorkspace({
     }
   }
   async function live() {
-    if (
-      map.map_id === null &&
-      !window.confirm(
-        "Подготовить карту и запросить данные источника? Будет создана запись карты без прогноза.",
-      )
-    )
-      return
     setBusy("live")
     setError("")
     setProposal(null)
@@ -249,12 +242,7 @@ export function MapWorkspace({
             </p>
           </div>
           <div className="actions">
-            <button
-              type="button"
-              className="primary"
-              disabled={editorLocked || !!busy}
-              onClick={live}
-            >
+            <button type="button" className="primary" disabled={!!busy} onClick={live}>
               <Radio size={16} />
               {busy === "live" ? "Проверяем…" : "Получить данные источника"}
             </button>
@@ -273,6 +261,7 @@ export function MapWorkspace({
           <LiveReview
             proposal={proposal}
             current={draft}
+            readOnly={editorLocked}
             cancel={() => setProposal(null)}
             apply={() => {
               setDraft(proposal.input)

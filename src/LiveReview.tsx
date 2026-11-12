@@ -21,11 +21,13 @@ export function conflictText(value: string): string {
 export function LiveReview({
   proposal,
   current,
+  readOnly = false,
   apply,
   cancel,
 }: {
   readonly proposal: LiveProposal
   readonly current: Draft
+  readonly readOnly?: boolean
   readonly apply: () => void
   readonly cancel: () => void
 }) {
@@ -76,21 +78,25 @@ export function LiveReview({
         ))}
       </div>
       <p className="muted">
-        {changed
-          ? "Применение перенесёт показанные значения в черновик. Сохранённые прогнозы не изменятся."
-          : "Новых значений нет. Текущий черновик уже содержит эти данные."}
+        {readOnly
+          ? "Данные источника доступны для просмотра."
+          : changed
+            ? "Применение перенесёт показанные значения в черновик. Сохранённые прогнозы не изменятся."
+            : "Новых значений нет. Текущий черновик уже содержит эти данные."}
       </p>
       <div className="actions">
-        <button
-          type="button"
-          className="primary"
-          disabled={unavailable || !changed}
-          onClick={apply}
-        >
-          {picked === 0 ? "Применить изменения состава" : "Применить предложение"}
-        </button>
+        {!readOnly && (
+          <button
+            type="button"
+            className="primary"
+            disabled={unavailable || !changed}
+            onClick={apply}
+          >
+            {picked === 0 ? "Применить изменения состава" : "Применить предложение"}
+          </button>
+        )}
         <button type="button" className="secondary" onClick={cancel}>
-          Оставить мой черновик
+          {readOnly ? "Закрыть" : "Оставить мой черновик"}
         </button>
       </div>
     </section>
