@@ -23,7 +23,9 @@ export function App() {
   const [notice, setNotice] = useState("")
   const [catalog, setCatalog] = useState<Catalog | null>(null)
   const [catalogError, setCatalogError] = useState("")
-  const [route, setRoute] = useState(() => window.location.hash.slice(1) || "/schedule")
+  const [route, setRoute] = useState(
+    () => window.location.hash.slice(1) || "/schedule?tournament=1win-essence-3",
+  )
   const selectedTournament = new URLSearchParams(route.split("?")[1]).get("tournament") ?? ""
   const playInOverview =
     route.split("?")[0] === "/schedule" && selectedTournament === "1win-essence-3-play-in"

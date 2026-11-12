@@ -15,7 +15,7 @@ import "./schedule-presentation.css"
 type ScheduleData = z.infer<typeof scheduleSchema>
 const tournamentOptions = [
   { key: "pari-universe", name: "PARI Universe", status: "Завершён" },
-  { key: "1win-essence-3", name: "1win Essence III", status: "Предстоящий" },
+  { key: "1win-essence-3", name: "1win Essence III", status: "Основной этап" },
   { key: "1win-essence-3-play-in", name: "1win Essence III · Play-In", status: "7–11 ноября" },
 ] as const
 const recentSeriesWindow = 4 * 60 * 60 * 1000
@@ -125,11 +125,9 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
   ]
   return (
     <>
-      <MarketBoard
-        key={tournament || "pari-universe"}
-        api={api}
-        tournament={tournament || "pari-universe"}
-      />
+      {tournament !== "1win-essence-3" && (
+        <MarketBoard api={api} tournament={tournament || "pari-universe"} />
+      )}
       <section className="toolbar schedule-toolbar" aria-label="Настройки расписания">
         <details className="optional-filters">
           <summary>{date || team ? "Фильтры применены" : "Фильтры расписания"}</summary>
@@ -242,6 +240,7 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
           </Empty>
         )}
       </section>
+      {tournament === "1win-essence-3" && <MarketBoard api={api} tournament={tournament} />}
       {data?.event && <EventOverview event={data.event} />}
     </>
   )
