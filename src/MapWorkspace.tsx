@@ -6,8 +6,8 @@ import { CurrentOdds } from "./CurrentOdds"
 import {
   type Catalog,
   type Draft,
-  type LiveProposal,
   forecastSchema,
+  type LiveProposal,
   liveSchema,
   type MapDTO,
   mapSchema,
