@@ -66,9 +66,9 @@ export function MapWorkspace({
     setMap(reserved)
     return reserved
   }
-  async function calculate(stage: Stage) {
+  async function calculate(stage: Stage, input = draft, reserved?: MapDTO) {
     if (stage === "post_draft") {
-      const problem = validatePost(draft, catalog.heroes)
+      const problem = validatePost(input, catalog.heroes)
       if (problem) {
         setError(problem)
         return
@@ -78,8 +78,8 @@ export function MapWorkspace({
     setError("")
     setNotice("")
     try {
-      const current = await reserve()
-      const body = { expected_revision: current.revision, input: draft }
+      const current = reserved ?? (await reserve())
+      const body = { expected_revision: current.revision, input }
       const serialized = JSON.stringify({ stage, map: current.map_id, body })
       const requestKey =
         retry.current?.body === serialized ? retry.current.key : crypto.randomUUID()
@@ -121,7 +121,19 @@ export function MapWorkspace({
     setProposal(null)
     try {
       const current = await reserve()
-      setProposal(await api.request(`/maps/${current.map_id}/live`, liveSchema, { input: draft }))
+      const source = await api.request(`/maps/${current.map_id}/live`, liveSchema, { input: draft })
+      if (
+        !current.result &&
+        !current.post &&
+        source.status === "ok" &&
+        source.conflicts.length === 0 &&
+        !validatePost(source.input, catalog.heroes)
+      ) {
+        setDraft(source.input)
+        await calculate("post_draft", source.input, current)
+      } else {
+        setProposal(source)
+      }
     } catch (err) {
       setError(`${message(err)} Ваш черновик не изменён.`)
     } finally {
@@ -244,7 +256,11 @@ export function MapWorkspace({
           <div className="actions">
             <button type="button" className="primary" disabled={!!busy} onClick={live}>
               <Radio size={16} />
-              {busy === "live" ? "Проверяем…" : "Получить данные источника"}
+              {busy === "live"
+                ? "Загружаем драфт…"
+                : editorLocked
+                  ? "Получить данные источника"
+                  : "Загрузить драфт и рассчитать POST"}
             </button>
             <button
               type="button"
@@ -281,6 +297,9 @@ export function MapWorkspace({
           disabled={locked || !!busy || !!map.post}
         />
         <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
+        {locked && !map.post && (
+          <p className="muted">Карта завершена. Драфт можно посмотреть в данных источника.</p>
+        )}
         {!locked && (
           <fieldset
             ref={calculationRef}
