@@ -129,7 +129,7 @@
 }
 @media (min-width: 960px) {
   .odds-comparison {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 250px));
     gap: 8px;
   }
   .odds-provider {
