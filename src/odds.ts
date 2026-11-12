@@ -19,7 +19,7 @@ export const oddsSchema = snapshotSchema.extend({ providers: z.array(snapshotSch
 export type ProviderOdds = z.infer<typeof providerOddsSchema>
 export type Odds = z.infer<typeof oddsSchema>
 
-const trackedProviders = ["PARI", "betboom", "polymarket"] as const
+const trackedProviders = ["PARI", "polymarket"] as const
 
 export function providerLabel(provider: string | null): string {
   switch (provider?.toLocaleLowerCase("en")) {
@@ -52,15 +52,7 @@ export function completeProviders(
         notice: "Снимок котировок этого источника отсутствует.",
       },
   )
-  return [
-    ...tracked,
-    ...snapshots.filter(
-      (snapshot) =>
-        !trackedProviders.some(
-          (provider) => snapshot.provider?.toLowerCase() === provider.toLowerCase(),
-        ),
-    ),
-  ]
+  return tracked
 }
 export function providerQuotes(odds: Odds): ProviderOdds[] {
   return completeProviders(

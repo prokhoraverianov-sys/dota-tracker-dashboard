@@ -43,7 +43,7 @@
   min-height: 26px;
 }
 .odds-provider-meta {
-  padding-bottom: 12px;
+  padding-bottom: 6px;
   border-bottom: 1px solid var(--line);
   line-height: 1.6;
   font-size: 11px;
@@ -81,19 +81,19 @@
 }
 .odds-winner-prices > div {
   min-width: 0;
-  padding: 10px;
+  padding: 8px;
   background: #0c151d70;
   border: 1px solid var(--line-soft, var(--line));
   border-radius: 8px;
 }
 .odds-winner-prices dt {
-  min-height: 28px;
+  min-height: 20px;
   display: flex;
   align-items: center;
 }
 .odds-winner-prices dd {
   margin-top: 6px;
-  font-size: 26px;
+  font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.03em;
 }
@@ -109,7 +109,7 @@
 .odds-open-source {
   align-self: flex-start;
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 6px;
   text-underline-offset: 3px;
 }
 .market-source-statuses p {
@@ -129,11 +129,11 @@
 }
 @media (min-width: 960px) {
   .odds-comparison {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
   .odds-provider {
-    padding: 16px;
+    padding: 8px;
   }
   .market-event-heading {
     padding-block: 16px;

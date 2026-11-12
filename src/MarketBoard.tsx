@@ -69,7 +69,10 @@ function EventMarkets({ event }: { readonly event: Event }) {
               </strong>
               <span className="market-preview">
                 {market.providers
-                  .filter((provider) => provider.status !== "empty")
+                  .filter(
+                    (provider) =>
+                      provider.status !== "empty" && provider.provider?.toLowerCase() !== "betboom",
+                  )
                   .map((provider) => (
                     <span key={provider.provider}>
                       {providerLabel(provider.provider)}{" "}
@@ -141,7 +144,7 @@ export function MarketBoard({
     <section className="panel market-board" aria-busy={busy}>
       <div className="panel-heading">
         <div>
-          <h2>Котировки · PARI, BetBoom, Polymarket</h2>
+          <h2>Котировки · PARI и Polymarket</h2>
           <p className="muted">
             Серия и отдельные карты показаны раздельно. Все цены в десятичном формате.
             Автообновление раз в 45 секунд, пока страница открыта.
@@ -174,18 +177,23 @@ export function MarketBoard({
       {data && (
         <>
           <section className="market-source-statuses" aria-label="Доступность источников котировок">
-            {data.sources.map((source) => (
-              <p key={source.provider}>
-                <strong className="provider-wordmark" data-provider={source.provider.toLowerCase()}>
-                  <span className="provider-marker" aria-hidden="true" />
-                  {providerLabel(source.provider)}
-                </strong>
-                <span className={source.status === "ok" ? "hit-text" : "muted"}>
-                  {source.status === "ok" ? "Снимки доступны" : "Нет снимка"}
-                </span>
-                {source.notice && <small>{source.notice}</small>}
-              </p>
-            ))}
+            {data.sources
+              .filter((source) => source.provider.toLowerCase() !== "betboom")
+              .map((source) => (
+                <p key={source.provider}>
+                  <strong
+                    className="provider-wordmark"
+                    data-provider={source.provider.toLowerCase()}
+                  >
+                    <span className="provider-marker" aria-hidden="true" />
+                    {providerLabel(source.provider)}
+                  </strong>
+                  <span className={source.status === "ok" ? "hit-text" : "muted"}>
+                    {source.status === "ok" ? "Снимки доступны" : "Нет снимка"}
+                  </span>
+                  {source.notice && <small>{source.notice}</small>}
+                </p>
+              ))}
           </section>
           {data.notice && <p className="market-board-notice muted">{data.notice}</p>}
           {data.events.map((event) => (
