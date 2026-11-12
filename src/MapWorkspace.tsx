@@ -7,6 +7,7 @@ import {
   type Catalog,
   type Draft,
   type LiveProposal,
+  forecastSchema,
   liveSchema,
   type MapDTO,
   mapSchema,
@@ -43,6 +44,9 @@ export function MapWorkspace({
   const [busy, setBusy] = useState("")
   const [error, setError] = useState("")
   const [notice, setNotice] = useState("")
+  const [retrospective, setRetrospective] = useState<ReturnType<
+    typeof forecastSchema.parse
+  > | null>(null)
   const [proposal, setProposal] = useState<LiveProposal | null>(null)
   const forecastSectionRef = useRef<HTMLElement>(null)
   const calculationRef = useRef<HTMLFieldSetElement>(null)
@@ -80,6 +84,29 @@ export function MapWorkspace({
     try {
       const current = reserved ?? (await reserve())
       const body = { expected_revision: current.revision, input }
+      if (current.result && stage === "post_draft" && current.map_id !== null) {
+        const analysis = await api.request(
+          `/maps/${current.map_id}/retrospective-post`,
+          forecastSchema.shape.analysis,
+          body,
+        )
+        setRetrospective({
+          map_id: current.map_id,
+          snapshot_id: "retrospective",
+          stage,
+          created_at_utc: new Date().toISOString(),
+          analysis,
+          players_a: input.team_a.players,
+          players_b: input.team_b.players,
+          heroes_a: input.team_a.heroes,
+          heroes_b: input.team_b.heroes,
+          explanation: "",
+          odds: { provider: null, source_url: null, observed_at_utc: null, phase: null },
+          candidates: [],
+        })
+        window.requestAnimationFrame(() => forecastSectionRef.current?.scrollIntoView())
+        return
+      }
       const serialized = JSON.stringify({ stage, map: current.map_id, body })
       const requestKey =
         retry.current?.body === serialized ? retry.current.key : crypto.randomUUID()
@@ -123,7 +150,6 @@ export function MapWorkspace({
       const current = await reserve()
       const source = await api.request(`/maps/${current.map_id}/live`, liveSchema, { input: draft })
       if (
-        !current.result &&
         !current.post &&
         source.status === "ok" &&
         source.conflicts.length === 0 &&
@@ -161,7 +187,10 @@ export function MapWorkspace({
       {(map.pre || map.post) && <Delta map={map} />}
       <div className="two-columns forecasts">
         <ForecastCard forecast={map.pre} stage="PRE" map={map} />
-        <ForecastCard forecast={map.post} stage="POST" map={map} />
+        <div>
+          {retrospective && <strong>Ретроспективный POST · после завершения карты</strong>}
+          <ForecastCard forecast={map.post ?? retrospective} stage="POST" map={map} />
+        </div>
       </div>
     </section>
   )
@@ -258,9 +287,11 @@ export function MapWorkspace({
               <Radio size={16} />
               {busy === "live"
                 ? "Загружаем драфт…"
-                : editorLocked
+                : map.post
                   ? "Получить данные источника"
-                  : "Загрузить драфт и рассчитать POST"}
+                  : locked
+                    ? "Загрузить драфт и рассчитать ретроспективный POST"
+                    : "Загрузить драфт и рассчитать POST"}
             </button>
             <button
               type="button"
@@ -298,7 +329,9 @@ export function MapWorkspace({
         />
         <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
         {locked && !map.post && (
-          <p className="muted">Карта завершена. Драфт можно посмотреть в данных источника.</p>
+          <p className="muted">
+            Карта завершена. Ретроспективный расчёт доступен по драфту из источника.
+          </p>
         )}
         {!locked && (
           <fieldset

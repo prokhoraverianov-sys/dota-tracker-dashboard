@@ -25,6 +25,7 @@ export function ForecastCard({
   readonly stage: "PRE" | "POST"
   readonly map: MapDTO
 }) {
+  const retrospective = forecast?.snapshot_id === "retrospective"
   const shadow = forecast?.analysis.shadow_forecast
   const p = shadow?.winner_probability_team_a
   const duration = shadow?.duration_mean_seconds == null ? null : shadow.duration_mean_seconds / 60
@@ -60,7 +61,9 @@ export function ForecastCard({
           <span className="stage">{stage}</span>
           <span className="muted">{stage === "PRE" ? "До драфта" : "После драфта"}</span>
         </div>
-        <span className="badge">{forecast ? "Сохранён" : "Нет прогноза"}</span>
+        <span className="badge">
+          {retrospective ? "Расчёт после карты" : forecast ? "Сохранён" : "Нет прогноза"}
+        </span>
       </header>
       {forecast ? (
         <>
