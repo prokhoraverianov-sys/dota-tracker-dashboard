@@ -2,6 +2,7 @@ import type { Forecast, MapDTO } from "./contracts"
 import { criterionLabels, readCriteria } from "./criteria"
 import { percent, time } from "./domain"
 import { OddsTable } from "./OddsTable"
+import { priceLabel, quoteSourceUrl } from "./odds"
 import { Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./analysis-presentation.css"
@@ -26,6 +27,7 @@ export function ForecastCard({
   readonly map: MapDTO
 }) {
   const retrospective = forecast?.snapshot_id === "retrospective"
+  const polymarketQuotes = forecast?.polymarket_quotes ?? []
   const shadow = forecast?.analysis.shadow_forecast
   const p = shadow?.winner_probability_team_a
   const duration = shadow?.duration_mean_seconds == null ? null : shadow.duration_mean_seconds / 60
@@ -124,6 +126,27 @@ export function ForecastCard({
                 300000 && (
                 <p className="warning-text">На момент расчёта котировки были старше 5 минут.</p>
               )}
+            {polymarketQuotes.map((quote) => {
+              const source = quoteSourceUrl(quote.source_url, "polymarket")
+              return (
+                <p key={quote.market_scope} className="quote-state">
+                  <strong>
+                    Polymarket · {quote.market_scope === "series" ? "Серия" : "Карта"}
+                  </strong>
+                  {" · "}
+                  {map.team_a} {priceLabel(quote.winner.team_a)} / {map.team_b}{" "}
+                  {priceLabel(quote.winner.team_b)} · {time(quote.observed_at_utc)}
+                  {source && (
+                    <>
+                      {" · "}
+                      <a href={source} target="_blank" rel="noreferrer">
+                        Рынок ↗
+                      </a>
+                    </>
+                  )}
+                </p>
+              )
+            })}
           </div>
           <div className="forecast-section">
             <h3>Основания и ограничения прогноза</h3>
@@ -211,8 +234,10 @@ export function ForecastCard({
           <strong>Прогноз ещё не сохранён</strong>
           <p>
             {stage === "PRE"
-              ? "PRE рассчитывается по исходному составу."
-              : "Для POST проверьте игроков и заполните все десять героев."}
+              ? "PRE рассчитывается после подтверждения пары."
+              : map.play_status === "unplayed"
+                ? "Карта не сыграна."
+                : "POST рассчитывается после подтверждения полного драфта."}
           </p>
         </div>
       )}
