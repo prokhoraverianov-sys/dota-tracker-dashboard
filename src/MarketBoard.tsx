@@ -116,14 +116,16 @@ export function MarketBoard({
   useEffect(() => {
     let active = true
     let pending = false
-    async function load() {
+    async function load(manual: boolean) {
       if (pending) return
       pending = true
-      setBusy(true)
-      setError("")
+      if (manual) setBusy(true)
       try {
         const value = await api.request(`/markets?${query({ tournament })}`, marketBoardSchema)
-        if (active) setData(value)
+        if (active) {
+          setData(value)
+          setError("")
+        }
       } catch (err) {
         if (active) setError(message(err))
       } finally {
@@ -131,13 +133,16 @@ export function MarketBoard({
         if (active) setBusy(false)
       }
     }
-    void load()
-    const timer = window.setInterval(() => {
-      if (document.visibilityState === "visible") void load()
-    }, 45_000)
+    function refreshVisible() {
+      if (document.visibilityState === "visible") void load(false)
+    }
+    void load(true)
+    const timer = window.setInterval(refreshVisible, 15_000)
+    document.addEventListener("visibilitychange", refreshVisible)
     return () => {
       active = false
       window.clearInterval(timer)
+      document.removeEventListener("visibilitychange", refreshVisible)
     }
   }, [api, tournament, refresh])
   return (
@@ -147,7 +152,7 @@ export function MarketBoard({
           <h2>Котировки · PARI и Polymarket</h2>
           <p className="muted">
             Серия и отдельные карты показаны раздельно. Все цены в десятичном формате.
-            Автообновление раз в 45 секунд, пока страница открыта.
+            Автообновление раз в 15 секунд, пока страница открыта.
           </p>
           {data && (
             <p className="muted market-checked">

@@ -15,25 +15,35 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
   useEffect(() => {
     if (!map.series_id || !map.map_number) return
     let active = true
-    setBusy(true)
-    setError("")
-    setData(null)
-    api
-      .request(
-        `/series/${encodeURIComponent(map.series_id)}/maps/${map.map_number}/odds`,
-        oddsSchema,
-      )
-      .then((value) => {
-        if (active) setData(value)
-      })
-      .catch((err) => {
+    let pending = false
+    const path = `/series/${encodeURIComponent(map.series_id)}/maps/${map.map_number}/odds`
+    async function load(manual: boolean) {
+      if (pending) return
+      pending = true
+      if (manual) setBusy(true)
+      try {
+        const value = await api.request(path, oddsSchema)
+        if (active) {
+          setData(value)
+          setError("")
+        }
+      } catch (err) {
         if (active) setError(message(err))
-      })
-      .finally(() => {
+      } finally {
+        pending = false
         if (active) setBusy(false)
-      })
+      }
+    }
+    function refreshVisible() {
+      if (document.visibilityState === "visible") void load(false)
+    }
+    void load(true)
+    const timer = window.setInterval(refreshVisible, 15_000)
+    document.addEventListener("visibilitychange", refreshVisible)
     return () => {
       active = false
+      window.clearInterval(timer)
+      document.removeEventListener("visibilitychange", refreshVisible)
     }
   }, [api, map.series_id, map.map_number, refresh])
   if (!map.series_id || !map.map_number) return null
@@ -57,7 +67,12 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
           {busy ? "Загружаем…" : "Обновить снимки"}
         </button>
       </div>
-      {error && <Notice error>{error}</Notice>}
+      {error && (
+        <Notice error>
+          {data && "Обновление не удалось. Последний снимок может устареть. "}
+          {error}
+        </Notice>
+      )}
       {busy && !data && <p className="odds-loading muted">Загружаем котировки источников…</p>}
       {data && (
         <OddsComparison

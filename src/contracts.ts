@@ -69,6 +69,16 @@ export const forecastSchema = z.object({
     phase: z.string().nullable(),
   }),
   candidates: z.array(candidateSchema),
+  polymarket_quotes: z
+    .array(
+      z.object({
+        market_scope: z.enum(["map", "series"]),
+        observed_at_utc: z.string(),
+        source_url: z.string(),
+        winner: z.object({ team_a: z.string(), team_b: z.string() }),
+      }),
+    )
+    .optional(),
 })
 export type Forecast = z.infer<typeof forecastSchema>
 export const mapSchema = z.object({
@@ -81,8 +91,20 @@ export const mapSchema = z.object({
   team_b: z.string(),
   tournament: z.string().nullable(),
   analysis_context: z.enum(["manual", "retrospective"]).optional(),
+  play_status: z.literal("unplayed").nullish(),
   pre: forecastSchema.nullable(),
   post: forecastSchema.nullable(),
+  retrospective_post: z
+    .object({
+      analysis: forecastSchema.shape.analysis,
+      created_at_utc: z.string(),
+      source_url: z.string(),
+      players_a: z.array(z.string()),
+      players_b: z.array(z.string()),
+      heroes_a: z.array(z.string()),
+      heroes_b: z.array(z.string()),
+    })
+    .nullish(),
   result: z
     .object({
       winner: z.enum(["A", "B"]),

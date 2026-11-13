@@ -6,6 +6,7 @@ import { CurrentOdds } from "./CurrentOdds"
 import {
   type Catalog,
   type Draft,
+  type Forecast,
   forecastSchema,
   type LiveProposal,
   liveSchema,
@@ -40,28 +41,60 @@ export function MapWorkspace({
 }) {
   const [map, setMap] = useState(initial)
   const key = draftKey(initial)
-  const [draft, setDraft] = useState(() => loadDraft(key, initialDraft(initial)))
+  const [editedDraft, setEditedDraft] = useState<Draft | null>(() => {
+    const baseline = initialDraft(initial)
+    const saved = loadDraft(key, baseline)
+    return JSON.stringify(saved) === JSON.stringify(baseline) ? null : saved
+  })
   const [busy, setBusy] = useState("")
   const [error, setError] = useState("")
   const [notice, setNotice] = useState("")
-  const [retrospective, setRetrospective] = useState<ReturnType<
-    typeof forecastSchema.parse
-  > | null>(null)
+  const [retrospective, setRetrospective] = useState<Forecast | null>(null)
   const [proposal, setProposal] = useState<LiveProposal | null>(null)
   const forecastSectionRef = useRef<HTMLElement>(null)
   const calculationRef = useRef<HTMLFieldSetElement>(null)
   const oddsSectionRef = useRef<HTMLDivElement>(null)
   const retry = useRef<{ body: string; key: string } | null>(null)
-  const dirty = JSON.stringify(draft) !== JSON.stringify(initialDraft(map))
-  const locked = !!map.result
+  const unplayed = map.play_status === "unplayed"
+  const recorded = map.retrospective_post
+  const locked = !!map.result || !!recorded || unplayed
   const editorLocked = locked || !!map.post
+  const baseline = initialDraft(map)
+  const draft = editorLocked ? baseline : (editedDraft ?? baseline)
+  const dirty = editedDraft !== null && JSON.stringify(editedDraft) !== JSON.stringify(baseline)
+  const pollPath = mapPath(map)
+  const pollable = !unplayed && (!map.result || (!map.post && !recorded))
   useEffect(() => {
     setDirty(dirty && !editorLocked)
-    if (dirty && !editorLocked) localStorage.setItem(key, JSON.stringify(draft))
+    if (dirty) localStorage.setItem(key, JSON.stringify(editedDraft))
     else localStorage.removeItem(key)
-  }, [dirty, draft, key, editorLocked, setDirty])
+  }, [dirty, editedDraft, key, editorLocked, setDirty])
+  useEffect(() => {
+    if (!pollable || busy) return
+    let active = true
+    let pending = false
+    async function refreshCard() {
+      if (pending || document.visibilityState !== "visible") return
+      pending = true
+      try {
+        const latest = await api.request(pollPath, mapSchema)
+        if (active) setMap((current) => (latest.revision >= current.revision ? latest : current))
+      } catch {
+        // Keep the last confirmed card during a temporary refresh failure.
+      } finally {
+        pending = false
+      }
+    }
+    const timer = window.setInterval(refreshCard, 15_000)
+    document.addEventListener("visibilitychange", refreshCard)
+    return () => {
+      active = false
+      window.clearInterval(timer)
+      document.removeEventListener("visibilitychange", refreshCard)
+    }
+  }, [api, busy, pollPath, pollable])
   function edit(value: Draft) {
-    setDraft(value)
+    setEditedDraft(value)
     setProposal(null)
   }
   async function reserve(): Promise<MapDTO> {
@@ -118,7 +151,7 @@ export function MapWorkspace({
         requestKey,
       )
       setMap(result.map)
-      if (stage === "post_draft") setDraft(initialDraft(result.map))
+      if (stage === "post_draft") setEditedDraft(null)
       retry.current = null
       window.requestAnimationFrame(() => forecastSectionRef.current?.scrollIntoView())
       setNotice(
@@ -151,11 +184,12 @@ export function MapWorkspace({
       const source = await api.request(`/maps/${current.map_id}/live`, liveSchema, { input: draft })
       if (
         !current.post &&
+        !current.retrospective_post &&
         source.status === "ok" &&
         source.conflicts.length === 0 &&
         !validatePost(source.input, catalog.heroes)
       ) {
-        setDraft(source.input)
+        if (!editorLocked) setEditedDraft(source.input)
         await calculate("post_draft", source.input, current)
       } else {
         setProposal(source)
@@ -168,7 +202,7 @@ export function MapWorkspace({
   }
   function discard() {
     if (window.confirm("Удалить локальные изменения и вернуться к сохранённому составу?")) {
-      setDraft(initialDraft(map))
+      setEditedDraft(null)
       setProposal(null)
       localStorage.removeItem(key)
     }
@@ -178,6 +212,19 @@ export function MapWorkspace({
     section?.focus({ preventScroll: true })
     section?.scrollIntoView()
   }
+  const savedRetrospective: Forecast | null =
+    recorded && map.map_id !== null
+      ? {
+          ...recorded,
+          map_id: map.map_id,
+          snapshot_id: "retrospective",
+          stage: "post_draft",
+          explanation: "",
+          odds: { provider: null, source_url: null, observed_at_utc: null, phase: null },
+          candidates: [],
+        }
+      : null
+  const post = map.post ?? savedRetrospective ?? retrospective
   const forecastSection = (
     <section ref={forecastSectionRef} className="workspace-section" aria-label="Прогнозы карты">
       <div className="workspace-heading">
@@ -188,8 +235,20 @@ export function MapWorkspace({
       <div className="two-columns forecasts">
         <ForecastCard forecast={map.pre} stage="PRE" map={map} />
         <div>
-          {retrospective && <strong>Ретроспективный POST · после завершения карты</strong>}
-          <ForecastCard forecast={map.post ?? retrospective} stage="POST" map={map} />
+          {post?.snapshot_id === "retrospective" && (
+            <p className="muted">
+              Ретроспективный POST · после завершения карты
+              {recorded?.source_url.startsWith("https://") && (
+                <>
+                  {" · "}
+                  <a href={recorded.source_url} target="_blank" rel="noreferrer">
+                    Источник драфта ↗
+                  </a>
+                </>
+              )}
+            </p>
+          )}
+          <ForecastCard forecast={post} stage="POST" map={map} />
         </div>
       </div>
     </section>
@@ -220,8 +279,11 @@ export function MapWorkspace({
             Карта {map.map_number ?? map.map_id} · {mapStatus(map)}
           </p>
         </div>
-        <span className="badge">{locked ? "Карта завершена" : "Режим наблюдения"}</span>
+        <span className="badge">
+          {unplayed ? "Не сыграна" : locked ? "Карта завершена" : "Режим наблюдения"}
+        </span>
       </header>
+      {unplayed && <Notice>Серия завершилась до этой карты.</Notice>}
       {map.analysis_context === "retrospective" && (
         <Notice>
           Ретроспективный разбор: карта уже началась или завершена. PRE и POST, рассчитанные сейчас,
@@ -247,7 +309,14 @@ export function MapWorkspace({
           <strong>PRE</strong> {map.pre ? "сохранён" : "до драфта"}
         </span>
         <span>
-          <strong>POST</strong> {map.post ? "сохранён" : `${draftCompleteness(draft)}/10 героев`}
+          <strong>POST</strong>{" "}
+          {map.post
+            ? "сохранён"
+            : post
+              ? "ретроспективный"
+              : unplayed
+                ? "карта не сыграна"
+                : `${draftCompleteness(draft)}/10 героев`}
         </span>
         <button
           type="button"
@@ -272,100 +341,105 @@ export function MapWorkspace({
         )}
       </nav>
       {!prepareFirst && forecastSection}
-      <section className="workspace-section draft-section" aria-label="Подготовка карты">
-        <div className="editor-toolbar">
-          <div>
-            <h2>Подготовка карты</h2>
-            <p className="muted">
-              {dirty && !locked
-                ? "Черновик сохранён в браузере. Проверьте состав и пики перед POST."
-                : "Загрузите пики из источника или заполните 10 фиксированных позиций вручную."}
-            </p>
+      {!unplayed && (
+        <section className="workspace-section draft-section" aria-label="Подготовка карты">
+          <div className="editor-toolbar">
+            <div>
+              <h2>Подготовка карты</h2>
+              <p className="muted">
+                {dirty
+                  ? editorLocked
+                    ? "Локальный черновик сохранён. Здесь показан состав с сервера."
+                    : "Черновик сохранён в браузере. Проверьте состав и пики перед POST."
+                  : "Загрузите пики из источника или заполните 10 фиксированных позиций вручную."}
+              </p>
+            </div>
+            <div className="actions">
+              <button type="button" className="primary" disabled={!!busy} onClick={live}>
+                <Radio size={16} />
+                {busy === "live"
+                  ? "Загружаем драфт…"
+                  : map.post || recorded
+                    ? "Получить данные источника"
+                    : locked
+                      ? "Загрузить драфт и рассчитать ретроспективный POST"
+                      : "Загрузить драфт и рассчитать POST"}
+              </button>
+              <button
+                type="button"
+                className="text-button"
+                disabled={editorLocked || !dirty || !!busy}
+                onClick={discard}
+              >
+                <RotateCcw size={16} />
+                Сбросить
+              </button>
+            </div>
           </div>
-          <div className="actions">
-            <button type="button" className="primary" disabled={!!busy} onClick={live}>
-              <Radio size={16} />
-              {busy === "live"
-                ? "Загружаем драфт…"
-                : map.post
-                  ? "Получить данные источника"
-                  : locked
-                    ? "Загрузить драфт и рассчитать ретроспективный POST"
-                    : "Загрузить драфт и рассчитать POST"}
-            </button>
-            <button
-              type="button"
-              className="text-button"
-              disabled={editorLocked || !dirty || !!busy}
-              onClick={discard}
-            >
-              <RotateCcw size={16} />
-              Сбросить
-            </button>
-          </div>
-        </div>
-        {proposal && (
-          <LiveReview
-            proposal={proposal}
-            current={draft}
-            readOnly={editorLocked}
-            cancel={() => setProposal(null)}
-            apply={() => {
-              setDraft(proposal.input)
-              setProposal(null)
-              setNotice("Предложение применено к черновику. Проверьте позиции перед POST.")
-              if (!validatePost(proposal.input, catalog.heroes)) {
-                window.requestAnimationFrame(showCalculation)
-              }
-            }}
-          />
-        )}
-        <DraftEditor
-          map={map}
-          draft={draft}
-          catalog={catalog}
-          onChange={edit}
-          disabled={locked || !!busy || !!map.post}
-        />
-        <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
-        {locked && !map.post && (
-          <p className="muted">
-            Карта завершена. Ретроспективный расчёт доступен по драфту из источника.
-          </p>
-        )}
-        {!locked && (
-          <fieldset
-            ref={calculationRef}
-            className="workspace-anchor"
-            aria-label="Расчёт PRE и POST"
-            tabIndex={-1}
-          >
-            <CalculateBar
-              pre={!!map.pre}
-              post={!!map.post}
-              busy={busy}
-              postProblem={validatePost(draft, catalog.heroes)}
-              picked={draftCompleteness(draft)}
-              onPre={() => calculate("pre_match")}
-              onPost={() => calculate("post_draft")}
+          {proposal && (
+            <LiveReview
+              proposal={proposal}
+              current={draft}
+              readOnly={editorLocked}
+              cancel={() => setProposal(null)}
+              apply={() => {
+                setEditedDraft(proposal.input)
+                setProposal(null)
+                setNotice("Предложение применено к черновику. Проверьте позиции перед POST.")
+                if (!validatePost(proposal.input, catalog.heroes)) {
+                  window.requestAnimationFrame(showCalculation)
+                }
+              }}
             />
-          </fieldset>
-        )}
-      </section>
+          )}
+          <DraftEditor
+            map={map}
+            draft={draft}
+            catalog={catalog}
+            onChange={edit}
+            disabled={locked || !!busy || !!map.post}
+          />
+          <Quotes draft={draft} onChange={edit} map={map} disabled={editorLocked || !!busy} />
+          {locked && !post && (
+            <p className="muted">
+              Карта завершена. Ретроспективный расчёт доступен по драфту из источника.
+            </p>
+          )}
+          {!locked && (
+            <fieldset
+              ref={calculationRef}
+              className="workspace-anchor"
+              aria-label="Расчёт PRE и POST"
+              tabIndex={-1}
+            >
+              <CalculateBar
+                pre={!!map.pre}
+                post={!!map.post}
+                busy={busy}
+                postProblem={validatePost(draft, catalog.heroes)}
+                picked={draftCompleteness(draft)}
+                onPre={() => calculate("pre_match")}
+                onPost={() => calculate("post_draft")}
+              />
+            </fieldset>
+          )}
+        </section>
+      )}
       <div ref={oddsSectionRef} className="workspace-anchor">
         <CurrentOdds map={map} api={api} />
       </div>
       {prepareFirst && forecastSection}
-      <ResultForm
-        onRefresh={setMap}
-        map={map}
-        api={api}
-        onSaved={(value) => {
-          setMap(value)
-          setDraft(initialDraft(value))
-          setDirty(false)
-        }}
-      />
+      {!unplayed && (
+        <ResultForm
+          onRefresh={setMap}
+          map={map}
+          api={api}
+          onSaved={(value) => {
+            setMap(value)
+            setDirty(false)
+          }}
+        />
+      )}
     </>
   )
 }

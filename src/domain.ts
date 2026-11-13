@@ -1,7 +1,7 @@
 import { type Draft, draftSchema, type MapDTO } from "./contracts"
 export const positions = [1, 2, 3, 4, 5] as const
 export function initialDraft(map: MapDTO): Draft {
-  const saved = map.post
+  const saved = map.post ?? map.retrospective_post
   const fill = (values: string[]) => positions.map((_, i) => values[i] ?? "")
   return {
     team_a: {
@@ -66,13 +66,16 @@ export function mapPath(map: MapDTO): string {
     : `/series/${encodeURIComponent(map.series_id ?? "")}/maps/${map.map_number}`
 }
 export function mapStatus(map: MapDTO): string {
+  if (map.play_status === "unplayed") return "Не сыграна"
   return map.result
     ? "Завершена"
     : map.post
       ? "POST сохранён"
-      : map.pre
-        ? "PRE сохранён"
-        : "Ожидает анализа"
+      : map.retrospective_post
+        ? "Ретроспективный POST"
+        : map.pre
+          ? "PRE сохранён"
+          : "Ожидает анализа"
 }
 export function prices(
   a: string,

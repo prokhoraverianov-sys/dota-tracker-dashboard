@@ -100,7 +100,7 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
     if (tournament !== "1win-essence-3" || busy) return
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") setRefresh((value) => value + 1)
-    }, 120000)
+    }, 30_000)
     return () => window.clearInterval(timer)
   }, [tournament, busy])
 
@@ -109,12 +109,18 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
     .filter((item) => {
       const start = Date.parse(item.starts_at_utc)
       return (
-        start <= now && now - start < recentSeriesWindow && item.maps.some((map) => !map.result)
+        start <= now &&
+        now - start < recentSeriesWindow &&
+        item.maps.some((map) => !map.result && map.play_status !== "unplayed")
       )
     })
     .sort((a, b) => b.starts_at_utc.localeCompare(a.starts_at_utc))
   const upcoming = data?.series
-    .filter((item) => Date.parse(item.starts_at_utc) > now && item.maps.some((map) => !map.result))
+    .filter(
+      (item) =>
+        Date.parse(item.starts_at_utc) > now &&
+        item.maps.some((map) => !map.result && map.play_status !== "unplayed"),
+    )
     .sort((a, b) => a.starts_at_utc.localeCompare(b.starts_at_utc))
   const series = [
     ...(recent ?? []),
@@ -205,16 +211,18 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
                 <button
                   type="button"
                   key={map.map_number}
-                  className={`map-button ${map.result ? "map-button-completed" : ""}`}
+                  className={`map-button ${map.result || map.play_status === "unplayed" ? "map-button-completed" : ""}`}
                   onClick={() => navigate(mapPath(map))}
                 >
                   <span>
                     Карта {map.map_number} <ArrowRight size={13} aria-hidden="true" />
                   </span>
                   <small>
-                    {!map.result &&
+                    {map.play_status !== "unplayed" &&
+                    !map.result &&
                     !map.pre &&
                     !map.post &&
+                    !map.retrospective_post &&
                     now - Date.parse(item.starts_at_utc) >= recentSeriesWindow
                       ? "Без сохранённого прогноза"
                       : mapStatus(map)}
