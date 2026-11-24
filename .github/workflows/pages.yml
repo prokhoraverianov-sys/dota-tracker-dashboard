@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+    - cron: "41 2 * * *"
 permissions:
   contents: read
 concurrency:
@@ -11,18 +14,46 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.publish.outputs.required }}
+      index_sha: ${{ steps.checksums.outputs.index_sha }}
+      results_sha: ${{ steps.checksums.outputs.results_sha }}
     permissions:
       contents: read
       pages: read
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Verify result binding and settlement rules
+        run: python3 -m unittest discover -s scripts -p 'test_*results.py'
+      - name: Reconcile tournament results
+        id: results
+        env:
+          AUDIT: ${{ (github.event_name != 'schedule' || github.event.schedule == '41 2 * * *') && '--audit-archives' || '' }}
+        run: python3 scripts/refresh_results.py --previous-url "https://prokhoraverianov-sys.github.io/dota-tracker-dashboard/data/verified-results.json" $AUDIT
+      - name: Apply verified map outcomes to the tracker
+        id: settlements
+        continue-on-error: true
+        run: python3 scripts/sync_verified_outcomes.py --apply
+      - id: publish
+        env:
+          REQUIRED: ${{ github.event_name != 'schedule' || steps.results.outputs.changed == 'true' || steps.settlements.outputs.changed == 'true' }}
+        run: echo "required=$REQUIRED" >> "$GITHUB_OUTPUT"
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
+        if: steps.publish.outputs.required == 'true'
         with:
           bun-version: 1.4.2
       - run: bun install --frozen-lockfile
+        if: steps.publish.outputs.required == 'true'
+      - run: node scripts/test_archived_prices.cjs
+        if: steps.publish.outputs.required == 'true'
+      - run: node scripts/test_verified_projection.cjs
+        if: steps.publish.outputs.required == 'true'
       - run: bunx biome check src vite.config.ts
+        if: steps.publish.outputs.required == 'true'
       - run: bun run build
+        if: steps.publish.outputs.required == 'true'
       - name: Reject secret material
+        if: steps.publish.outputs.required == 'true'
         shell: bash
         run: |
           if grep -RIEq -- '-----BEGIN .*PRIVATE KEY-----|AKIA[0-9A-Z]{16}|[0-9]{8,}:[A-Za-z0-9_-]{30,}|gh[pousr]_[A-Za-z0-9]{30,}' src public dist; then
@@ -31,12 +62,21 @@ jobs:
           fi
           test -f dist/index.html
           test -f dist/config.json
+      - name: Record built page and result checksums
+        id: checksums
+        if: steps.publish.outputs.required == 'true'
+        run: |
+          echo "index_sha=$(sha256sum dist/index.html | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
+          echo "results_sha=$(sha256sum dist/data/verified-results.json | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+        if: steps.publish.outputs.required == 'true'
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
+        if: steps.publish.outputs.required == 'true'
         with:
           path: dist
   deploy:
     needs: build
+    if: needs.build.outputs.publish == 'true'
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -48,3 +88,30 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
+      - name: Verify the public site serves this build and its reconciled results
+        env:
+          SITE: ${{ steps.deployment.outputs.page_url }}
+          INDEX_SHA: ${{ needs.build.outputs.index_sha }}
+          RESULTS_SHA: ${{ needs.build.outputs.results_sha }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, os, time, urllib.request
+          expected = {"index.html": os.environ["INDEX_SHA"], "data/verified-results.json": os.environ["RESULTS_SHA"]}
+          for attempt in range(12):
+              pending = []
+              for path, checksum in expected.items():
+                  url = os.environ["SITE"].rstrip("/") + "/" + path + "?release=" + os.environ["GITHUB_SHA"]
+                  try:
+                      with urllib.request.urlopen(url, timeout=10) as response:
+                          if hashlib.sha256(response.read()).hexdigest() == checksum:
+                              continue
+                  except OSError as exc:
+                      print(path, exc)
+                  pending.append(path)
+              if not pending:
+                  print("Verified published HTML and result registry")
+                  break
+              time.sleep(5)
+          else:
+              raise SystemExit("Public content still differs: " + ", ".join(pending))
+          PY
