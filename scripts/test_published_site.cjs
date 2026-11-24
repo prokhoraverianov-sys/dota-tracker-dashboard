@@ -98,7 +98,7 @@ async function main() {
     assert.equal(await page.locator(".playin-group tbody tr").count(), 10)
 
     await page.getByRole("button", { name: "PARI Universe", exact: true }).click()
-    await page.getByRole("region", { name: "Группа B", exact: true }).waitFor()
+    await page.locator(".schedule-groups").getByRole("region", { name: "Группа B", exact: true }).waitFor()
     assert.equal(await page.locator(".schedule-groups .playin-group").count(), 2)
     assert.equal(await page.locator(".schedule-groups tbody tr").count(), 10)
 
