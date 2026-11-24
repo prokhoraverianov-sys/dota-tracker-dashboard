@@ -115,6 +115,45 @@ class ResultSyncTest(unittest.TestCase):
         out = sync.load_schedule("https://tracker/schedule?", "one", {"series": {}}, True, read)
         self.assertEqual([s["series_id"] for s in out["series"]], ["one", "two"])
 
+    def test_fourth_event_without_tracker_gets_real_game_results_once(self):
+        config = {"key": "fourth", "name": "Fourth", "stage_id": 5001, "league_id": 20486, "bracket_ids": [72]}
+        refs = [{"type": "match_participant", "id": str(n)} for n in (1, 2)]
+        teamrefs = [{"type": "team", "id": str(n)} for n in (10, 20)]
+        names = ["PARIVISION", "Team Spirit"]
+        scores = [0, 0]
+        def document():
+            included = []
+            for i in (0, 1):
+                included.append({**refs[i], "attributes": {"isTbd": False, "isTba": False, "matchScore": scores[i]},
+                                 "relationships": {"team": {"data": teamrefs[i]}}})
+                included.append({**teamrefs[i], "attributes": {"title": names[i]}})
+            relationships = {"stage": {"data": {"type":"stage","id":"5001"}},
+                             "bracket": {"data": {"type":"stage_bracket","id":"72"}},
+                             **{f"participant{i+1}": {"data":refs[i]} for i in (0,1)}}
+            attrs = {"date":"1970-01-02","time":"06:46:40","format":"bestOf1","isHidden":False,"isFinished":sum(scores)>0}
+            entry = {"type":"match","id":"191","attributes":attrs,"relationships":relationships}
+            excluded = {**entry, "id":"192", "relationships":{**relationships,"bracket":{"data":{"type":"stage_bracket","id":"99"}}}}
+            return {"data":[entry,excluded], "included":included}
+        def read(url):
+            if "tracker" in url:
+                raise OSError("tracker unavailable")
+            if "opendota.com" in url:
+                return [league(555, 100000, "A")] if scores[0] else []
+            if "/matches?" in url:
+                return document()
+            raise OSError("match details pending")
+        snapshot = {"version":1,"tournaments":{f"old{i}":{"name":f"Old {i}","series":{}} for i in range(3)}}
+        for score in (0,1,1):
+            scores[0] = score
+            sync.run(snapshot,"https://tracker",read,configured=[config])
+            fixtures = snapshot["tournaments"]["fourth"]["series"]
+            self.assertEqual(list(fixtures), ["cs-5001-191"])
+            self.assertEqual(len(fixtures["cs-5001-191"]["maps"]),score)
+        self.assertEqual(len(snapshot["tournaments"]),4)
+        card=fixtures["cs-5001-191"]["maps"][0]
+        self.assertEqual((card["steam_match_id"], card["winner"]),("555","A"))
+        self.assertTrue(fixtures["cs-5001-191"]["finished"])
+
 
 if __name__ == "__main__":
     unittest.main()

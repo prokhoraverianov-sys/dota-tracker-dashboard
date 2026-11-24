@@ -8,6 +8,7 @@ from functools import lru_cache
 import gzip
 import json
 import os
+import re
 from pathlib import Path
 import sys
 import time
@@ -20,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "public/data/verified-results.json"
 LEAGUES = {"pari-universe": 20395, "1win-essence-3": 20486, "1win-essence-3-play-in": 20486}
 STAGES = {"pari-universe": "10003747", "1win-essence-3": "10003626"}
+REGISTRY = ROOT / "scripts/tournaments.json"
 CYBER = "https://www.cybersport.ru/api"
 NETWORK_ERRORS = (OSError, ValueError, EOFError)
 MAX_BYTES = 96 * 1024 * 1024
@@ -214,24 +216,91 @@ def names_for_match(document, entry):
             for n in (1, 2)]
 
 
-def stage_fixtures(stage, read):
-    query = urlencode({"filter[stage]": stage, "page[limit]": "100", "sort": "date"})
-    result = []
-    for page in range(1, 31):
-        doc = read(f"{CYBER}/matches?{query}&page%5Bnumber%5D={page}")
+def stage_schedule(config, read, previous):
+    stage = str(config["stage_id"])
+    brackets = {str(n) for n in config.get("bracket_ids", [])}
+    result = {}
+    for offset in range(0, 10000, 100):
+        query = urlencode({"filter[stage]": stage, "page[limit]": "100", "page[offset]": offset, "sort": "date"})
+        try:
+            doc = read(f"{CYBER}/matches?{query}")
+            resources = {(r["type"], r["id"]): r for r in doc["included"]}
+        except (KeyError, TypeError, *NETWORK_ERRORS) as exc:
+            warn(f"stage {stage} page {offset // 100 + 1}: {exc}; keeping earlier fixtures")
+            break
+        new = 0
         for entry in doc["data"]:
             try:
-                if str(entry["relationships"]["stage"]["data"]["id"]) != str(stage):
+                ref = str(entry["id"])
+                relations = entry["relationships"]
+                if entry["type"] != "match" or not ref.isascii() or not ref.isdigit() or relations["stage"]["data"] != {"type":"stage","id":stage}:
                     continue
-                names = names_for_match(doc, entry)
-                day, hour = (entry["attributes"][k] for k in ("date", "time"))
-                when = stamp(f"{day}T{hour}+03:00")
-                result.append((entry["id"], frozenset(names), when))
+                bracket = (relations.get("bracket") or {}).get("data") or {}
+                if brackets and (bracket.get("type") != "stage_bracket" or bracket.get("id") not in brackets):
+                    continue
+                attrs = entry["attributes"]
+                best = {"bestOf1":1,"bestOf2":2,"bestOf3":3,"bestOf5":5}.get(attrs.get("format"))
+                if not best or attrs.get("isHidden") is not False or type(attrs.get("isFinished")) is not bool:
+                    continue
+                names, scores = [], []
+                for key in ("participant1", "participant2"):
+                    pointer = relations[key]["data"]
+                    part = resources[("match_participant", pointer["id"])]
+                    if pointer["type"] != "match_participant" or any(part["attributes"].get(flag) is not False for flag in ("isTbd", "isTba")):
+                        break
+                    team = part["relationships"]["team"]["data"]
+                    if team["type"] != "team":
+                        break
+                    names.append(resources[("team", team["id"])]["attributes"]["title"].strip())
+                    scores.append(part["attributes"].get("matchScore"))
+                if len(names) != 2 or not all(names) or names[0].casefold() == names[1].casefold():
+                    continue
+                start = iso(stamp(f"{attrs['date']}T{attrs['time']}+03:00"))
+                sid = f"cs-{stage}-{ref}"
+                old = previous.get(sid)
+                if old and names == [old["team_b"], old["team_a"]]:
+                    names.reverse()
+                    scores.reverse()
+                finished = attrs["isFinished"]
+                if not all(type(n) is int and n >= 0 for n in scores):
+                    scores = None
+                elif best == 2:
+                    if sum(scores) > 2 or finished != (sum(scores) == 2):
+                        scores = None
+                else:
+                    target = best // 2 + 1
+                    if min(scores) >= target or max(scores) > target or (max(scores) == target) != finished:
+                        scores = None
+                row = {"series_id": sid, "source_match_id": ref, "team_a":names[0], "team_b":names[1],
+                       "starts_at_utc":start, "best_of":best, "finished":finished, "map_score":scores, "maps":[]}
+                if sid in result and result[sid] != row:
+                    raise ValueError(f"conflicting source fixture {sid}")
+                new += sid not in result
+                result[sid] = row
             except (KeyError, TypeError, ValueError):
                 continue  # TBD fixtures have no names or start time.
-        if len(doc["data"]) < 100 or not (doc.get("links") or {}).get("next"):
+        if len(doc["data"]) < 100:
             break
-    return result
+        if offset and not new and all(f"cs-{stage}-{r['id']}" in result for r in doc["data"]):
+            warn(f"stage {stage}: provider repeated pagination")
+            break
+    return {"series": list(result.values())}
+
+
+def registrations(path):
+    rows = json.loads(path.read_bytes())
+    if not isinstance(rows, list):
+        raise ValueError("tournament registry must be an array")
+    keys, stages = set(LEAGUES), set(STAGES.values())
+    for row in rows:
+        if (not re.fullmatch("[a-z0-9]+(?:-[a-z0-9]+)*", row["key"]) or not row["name"].strip()
+                or not positive(row["league_id"]) or not positive(row["stage_id"])
+                or not all(positive(n) for n in row.get("bracket_ids", []))
+                or row["key"] in keys or str(row["stage_id"]) in stages):
+            raise ValueError("invalid or duplicate registered tournament identity")
+        keys.add(row["key"])
+        stages.add(str(row["stage_id"]))
+    return rows
 
 
 def roster_matches(entry, resources, stats, record):
@@ -347,7 +416,8 @@ def fill_from_bracket(event, schedule, stage, league, read):
             source_id = fixture.get("source_match_id") or series.get("source_match_id")
             if not source_id:
                 if listed is None:
-                    listed = stage_fixtures(stage, read)
+                    listed = [(s["source_match_id"], frozenset((s["team_a"].casefold(),s["team_b"].casefold())),
+                               stamp(s["starts_at_utc"])) for s in stage_schedule({"stage_id": stage},read,{})["series"]]
                 pair = frozenset(series[k].casefold() for k in ("team_a", "team_b"))
                 hits = {ref for ref, teams, when in listed if teams == pair and abs(when - start) <= 7200}
                 if len(hits) != 1:
@@ -370,6 +440,8 @@ def enrich(event, schedule, rows):
     anchor_rows = defaultdict(list)
     for sid, fixture in fixtures.items():
         new = {k: fixture[k] for k in ("team_a", "team_b", "best_of", "starts_at_utc")}
+        if fixture.get("source_match_id"):
+            new["source_match_id"] = str(fixture["source_match_id"])
         new.update(maps=[], finished=False)
         if not new["team_a"] or not new["team_b"] or new["team_a"] == new["team_b"]:
             continue
@@ -477,19 +549,29 @@ def load_schedule(url, key, event, audit, read):
     return {"series": list(series.values()), "event": {"slots": list(slots.values())}}
 
 
-def run(seed, origin, read=fetch, audit=True):
+def run(seed, origin, read=fetch, audit=True, configured=None):
     schedule_url = f"{origin.rstrip('/')}/api/v1/schedule?"
-    catalog = read(schedule_url + urlencode({"date": "1970-01-01"}))
-    options = catalog.get("tournaments")
-    if not isinstance(options, list) or not options:
-        raise ValueError("registered tournament catalog unavailable")
+    local = {r["key"]:r for r in (registrations(REGISTRY) if configured is None else configured)}
+    try:
+        catalog = read(schedule_url + urlencode({"date": "1970-01-01"}))["tournaments"]
+        if not isinstance(catalog, list) or not catalog:
+            raise ValueError("empty tournament catalog")
+    except (KeyError, TypeError, *NETWORK_ERRORS) as exc:
+        warn(f"tracker catalog unavailable ({exc}); checking configured stages")
+        catalog = []
+    options = {r["key"]:r for r in catalog}
+    for key, config in local.items():
+        options[key] = {**options.get(key, {}), **config}
     cache = {}
     cached_match = lru_cache(maxsize=24)(read)
-    for option in options:
+    for option in options.values():
         key = option["key"]
         event = seed["tournaments"].setdefault(key, {"name": option["name"], "series": {}})
         try:
-            schedule = load_schedule(schedule_url, key, event, audit, read)
+            if key in local:
+                schedule = stage_schedule(local[key], cached_match, event["series"])
+            else:
+                schedule = load_schedule(schedule_url, key, event, audit, read)
             if schedule is None:
                 continue
             league_id = option.get("league_id") or LEAGUES.get(key)

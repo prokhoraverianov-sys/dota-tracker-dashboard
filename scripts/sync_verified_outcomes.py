@@ -7,7 +7,7 @@ import json
 import os
 import time
 from urllib.error import HTTPError
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from refresh_results import DATA, ROOT, fetch, positive, stamp, validate, warn
@@ -163,9 +163,16 @@ def main():
         STATE.write_text(json.dumps(state, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
     if fetch(API + "/auth/mode").get("public_access") is not True:
         raise ValueError("public mode is disabled")
+    options = fetch(API + "/schedule?" + urlencode({"date": "1970-01-01"})).get("tournaments")
+    if not isinstance(options, list):
+        raise ValueError("could not confirm which tournaments the model server tracks")
+    served = {entry["key"] for entry in options}
     original = json.dumps(state, sort_keys=True)
     queue = []
     for key, event in data["tournaments"].items():
+        if key not in served:
+            print(f"{key}: public results available; no model server registration")
+            continue
         for sid, series in event["series"].items():
             for row in series["maps"]:
                 if row.get("steam_match_id"):
