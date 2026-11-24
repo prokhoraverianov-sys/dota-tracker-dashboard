@@ -125,6 +125,23 @@ def structural(series):
     return series["team_a"], series["team_b"], series["best_of"]
 
 
+def orientation(source, target):
+    """Return the A/B ordering of a second representation of the same confirmed pair."""
+    pair = source.get("team_a"), source.get("team_b")
+    reference = target.get("team_a"), target.get("team_b")
+    if not all(pair) or pair[0] == pair[1]:
+        return 0
+    return 1 if pair == reference else -1 if pair[::-1] == reference else 0
+
+
+def oriented_result(row, order):
+    if order == 1:
+        return row
+    if order != -1 or row.get("winner") not in ("A", "B"):
+        raise ValueError("cannot orient unknown winner or team pair")
+    return {**row, "winner": "B" if row["winner"] == "A" else "A"}
+
+
 def extend(series, rows):
     """Combine facts by slot, preserving supplemental seed fields and the first actual observation."""
     by_number = {r["map_number"]: r for r in series["maps"]}
@@ -146,14 +163,17 @@ def hydrate(seed, previous):
         event = seed["tournaments"].setdefault(key, older)
         for sid, old in older["series"].items():
             series = event["series"].get(sid)
-            if series is None or not series["maps"]:
+            if series is None:
                 event["series"][sid] = old
                 continue
-            if structural(series) != structural(old):
-                if old["maps"]:
+            order = orientation(old, series)
+            if not order or series["best_of"] != old["best_of"]:
+                if old["maps"] and series["maps"]:
                     raise ValueError(f"seed and published results disagree on {sid} participants")
+                if old["maps"]:
+                    event["series"][sid] = old
                 continue
-            extend(series, old["maps"])
+            extend(series, [oriented_result(row, order) for row in old["maps"]])
     return validate(seed)
 
 
@@ -407,7 +427,7 @@ def fill_from_bracket(event, schedule, stage, league, read):
     for fixture in schedule["series"]:
         sid = fixture["series_id"]
         series = event["series"].get(sid)
-        if not series or series["finished"] or structural(series) != structural(fixture):
+        if not series or series["finished"] or not orientation(fixture,series) or fixture["best_of"] != series["best_of"]:
             continue
         start = stamp(fixture["starts_at_utc"])
         if start > time.time():
@@ -446,7 +466,7 @@ def enrich(event, schedule, rows):
         if not new["team_a"] or not new["team_b"] or new["team_a"] == new["team_b"]:
             continue
         series = event["series"].setdefault(sid, new)
-        if structural(series) != structural(new):
+        if not orientation(new, series) or new["best_of"] != series["best_of"]:
             if series["maps"]:
                 warn(f"{sid}: participants or format changed; retain verified maps")
                 continue
@@ -459,11 +479,12 @@ def enrich(event, schedule, rows):
             if not saved or not saved.get("steam_match_id") or not saved.get("started_at_utc"):
                 continue
             match = rows.get(str(saved["steam_match_id"]))
-            if not match or (card.get("team_a"), card.get("team_b")) != structural(fixture)[:2]:
+            order = orientation(card, series)
+            if not match or not order or card.get("series_id") != sid:
                 continue
             result = {"map_number": card["map_number"], "steam_match_id": str(match["match_id"]),
                       "started_at_utc": saved["started_at_utc"], "duration_seconds": saved["duration_seconds"],
-                      "winner": saved["winner"], "source_url": f"https://api.opendota.com/api/matches/{match['match_id']}"}
+                      "winner": oriented_result(saved, order)["winner"], "source_url": f"https://api.opendota.com/api/matches/{match['match_id']}"}
             fact(result)
             # Independent confirmation requires already established Steam teams or source names.
             try:
@@ -493,10 +514,13 @@ def enrich(event, schedule, rows):
 
     for sid, fixture in fixtures.items():
         series = event["series"].get(sid)
-        if not series or structural(series) != structural(fixture):
+        if not series or not orientation(fixture, series) or fixture["best_of"] != series["best_of"]:
             continue
         detail = slots.get(sid) or fixture
         score = detail.get("map_score")
+        order = orientation(detail, series)
+        if score is not None:
+            score = list(score) if order == 1 else list(reversed(score)) if order == -1 else None
         matches = sorted(grouped[sid], key=lambda pair: pair[0]["start_time"])
         candidates = list(anchor_rows[sid])
         tally = [sum(w == side for _, w in matches) for side in ("A", "B")]
@@ -533,7 +557,7 @@ def load_schedule(url, key, event, audit, read):
         for source, records in ((series, page["series"]), (slots, (page.get("event") or {}).get("slots", []))):
             for entry in records:
                 sid = entry["series_id"]
-                if sid in source and any(source[sid].get(k) != entry.get(k) for k in ("team_a", "team_b", "best_of")):
+                if sid in source and (not orientation(source[sid],entry) or source[sid].get("best_of") != entry.get("best_of")):
                     raise ValueError(f"conflicting fixtures for {sid} across schedule pages")
                 source[sid] = entry
     try:

@@ -10,7 +10,7 @@ from urllib.error import HTTPError
 from urllib.parse import quote, urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-from refresh_results import DATA, ROOT, fetch, positive, stamp, validate, warn
+from refresh_results import DATA, ROOT, fetch, orientation, oriented_result, positive, stamp, validate, warn
 
 
 ORIGIN = "https://54-251-198-194.sslip.io"
@@ -87,11 +87,15 @@ def check_stages(card, row, archive):
         external = stage.get("draft_external_game_id")
         if external != f"steam:{row['steam_match_id']}":
             proof = (archive or {}).get("post") or {}
-            fields = ("snapshot_id", "map_id", "draft_external_game_id", "players_a", "players_b",
-                      "heroes_a", "heroes_b", "created_at_utc", "draft_observed_at_utc")
+            fields = ("snapshot_id", "map_id", "draft_external_game_id", "created_at_utc", "draft_observed_at_utc")
+            order = orientation(archive or {}, card)
+            sides = (("a","a"),("b","b")) if order == 1 else (("a","b"),("b","a"))
+            pairs_verified = order and all(
+                len(proof.get(f"{field}_{a}") or []) == 5 and proof[f"{field}_{a}"] == stage.get(f"{field}_{b}")
+                for field in ("players","heroes") for a,b in sides)
             if (not external or not external.startswith("hawk:") or
                     str(proof.get("verified_steam_match_id")) != row["steam_match_id"]
-                    or not all(proof.get(field) == stage.get(field) for field in fields)):
+                    or not pairs_verified or not all(proof.get(field) == stage.get(field) for field in fields)):
                 return "unverified-post-draft"
     return None
 
@@ -99,17 +103,20 @@ def check_stages(card, row, archive):
 def settle_one(key, name, sid, series, row, archive, apply, read=fetch, write=post_result):
     number = row["map_number"]
     slot_url = f"{API}/series/{quote(sid, safe='')}/maps/{number}"
-    expected = {"tournament": name, "series_id": sid, "map_number": number,
-                "team_a": series["team_a"], "team_b": series["team_b"]}
+    expected = {"tournament": name, "series_id": sid, "map_number": number}
     slot = read(slot_url)
-    if not same_card(slot, expected) or not positive(slot.get("map_id")):
+    if not same_card(slot, expected) or not orientation(series, slot) or not positive(slot.get("map_id")):
         return "no-matching-server-card"
     mid = slot["map_id"]
     expected["map_id"] = mid
     card_url = f"{API}/maps/{mid}"
     card = read(card_url)
-    if not same_card(card, expected) or card.get("revision") != slot.get("revision"):
+    order = orientation(series, card)
+    if not order or not same_card(card, expected) or card.get("revision") != slot.get("revision"):
         return "binding-changed"
+    winner_team = series["team_a" if row["winner"] == "A" else "team_b"]
+    row = oriented_result(row, order)
+    checked_identity = {**expected, "team_a":card["team_a"], "team_b":card["team_b"]}
     for stage in ("pre", "post"):
         if (slot.get(stage) or {}).get("snapshot_id") != (card.get(stage) or {}).get("snapshot_id"):
             return "binding-changed"
@@ -117,7 +124,7 @@ def settle_one(key, name, sid, series, row, archive, apply, read=fetch, write=po
         return "already-recorded" if result_agrees(card, row) else "result-conflict"
     if slot.get("result") or card.get("analysis_context") == "retrospective":
         return "binding-changed"
-    if archive and not same_card(archive, expected):
+    if archive and (not same_card(archive, expected) or not orientation(archive, card)):
         return "archived-binding-conflict"
     blocked = check_stages(card, row, archive)
     if blocked:
@@ -127,7 +134,7 @@ def settle_one(key, name, sid, series, row, archive, apply, read=fetch, write=po
     duration = row["duration_seconds"]
     if not positive(duration) or duration // 60 > 999 or type(card.get("revision")) is not int:
         return "invalid-result"
-    identity = json.dumps([key, sid, number, row["steam_match_id"], row["winner"], duration],
+    identity = json.dumps([key, sid, number, row["steam_match_id"], winner_team, duration],
                           separators=(",", ":")).encode()
     body = {"expected_revision": card["revision"], "winner": row["winner"],
             "duration": f"{duration//60:02d}:{duration%60:02d}", "confirmed": True}
@@ -137,7 +144,7 @@ def settle_one(key, name, sid, series, row, archive, apply, read=fetch, write=po
         if exc.code != 409:
             raise
     checked = read(card_url)
-    if same_card(checked, expected) and result_agrees(checked, row):
+    if same_card(checked, checked_identity) and result_agrees(checked, row):
         return "recorded"
     return "unconfirmed-write"
 

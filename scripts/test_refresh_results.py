@@ -154,6 +154,45 @@ class ResultSyncTest(unittest.TestCase):
         self.assertEqual((card["steam_match_id"], card["winner"]),("555","A"))
         self.assertTrue(fixtures["cs-5001-191"]["finished"])
 
+    def test_reversed_bracket_score_hydration_and_provider_binding(self):
+        known = result(1, 11, "A", 100000)
+        archive = {"name":"1win","series":{"final":series([known])}}
+        flipped = {"team_a":"Team Spirit","team_b":"PARIVISION"}
+        fixture = {**series(),"series_id":"final",**flipped,"map_score":[0,2]}
+        rows = sync.league_matches([league(11,100000,"A"),league(12,103000,"A")],20486,200000)
+        sync.enrich(archive,{"series":[fixture]},rows)
+        self.assertEqual([r["winner"] for r in archive["series"]["final"]["maps"]], ["A","A"])
+        previous = {"version":1,"tournaments":{"one":{"name":"1win","series":{
+            "final":{**series([{**known,"winner":"B"}]),**flipped}}}}}
+        sync.hydrate({"version":1,"tournaments":{"one":archive}},previous)
+        self.assertEqual(archive["series"]["final"]["team_a"],"PARIVISION")
+        before = copy.deepcopy(archive)
+        wrong = {**fixture,"team_a":"Unrelated"}
+        sync.enrich(archive,{"series":[wrong]},rows)
+        self.assertEqual(archive,before)
+
+    def test_submit_winner_in_fresh_card_order_only(self):
+        row = {**result(1, 52, "A", 100000), "source_url":"https://www.opendota.com/matches/52"}
+        card = {"series_id":"final","map_number":1,"tournament":"1win","map_id":71,"revision":0,
+                "team_a":"Team Spirit","team_b":"PARIVISION","post":None}
+        card["pre"] = {"stage":"pre_match","map_id":71,"snapshot_id":80,"created_at_utc":sync.iso(99900),
+                       "model_team_a":card["team_a"],"model_team_b":card["team_b"],
+                       "analysis":{"metadata":{"status":"prediction"},"shadow_forecast":{"winner_probability_team_a":.63}}}
+        writes_seen = []
+        def read(url):
+            return {**card,"team_a":"PARIVISION","team_b":"Team Spirit"} if "/series/" in url else card
+        def write(mid, body, key):
+            writes_seen.append(body["winner"])
+            card["result"] = {"duration_seconds":300,"winner":body["winner"]}
+        def settle():
+            return writes.settle_one("one","1win","final",series(),row,None,True,read=read,write=write)
+        self.assertEqual(settle(),"recorded")
+        self.assertEqual(writes_seen,["B"])
+        self.assertEqual(settle(),"already-recorded")
+        card["team_a"] = "Unrelated"
+        self.assertEqual(settle(),"binding-changed")
+        self.assertEqual(writes_seen,["B"])
+
 
 if __name__ == "__main__":
     unittest.main()
