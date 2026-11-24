@@ -15,6 +15,8 @@ function compile(file) {
   return mod.exports
 }
 const { mapSchema, scheduleSchema } = compile("contracts.ts")
+const { evaluateMap } = compile("map-outcome.ts")
+const { reportPrice } = compile("report-price.ts")
 const { verifiedView } = compile("verified-results.ts")
 
 async function main() {
@@ -30,6 +32,21 @@ async function main() {
       .flatMap(series => series.maps.map(m => m.steam_match_id).filter(Boolean))
     assert.deepEqual(ids.toSorted(), expected.toSorted(), key)
     assert.equal(new Set(ids).size, ids.length, key)
+    if (["1win-essence-3", "1win-essence-3-play-in", "pari-universe"].includes(key)) {
+      for (const stage of ["pre","post"]) {
+        const cards = all.series.flatMap(s => s.maps).filter(m => m.result)
+        const results = cards.map(m => evaluateMap(m, stage))
+        assert(results.every(v => typeof v.comparison === "boolean"), key + "/" + stage)
+        if (key === "1win-essence-3") {
+          const prices = cards.map((m,i) => reportPrice(m, results[i].selected))
+          assert(prices.every(q => q?.value > 1))
+          console.log(key, stage, results.filter(v => v.comparison).length, "of", cards.length,
+            "originals", results.filter(v=>v.hit === true).length, "/", results.filter(v=>v.hit!==null).length,
+            "mean odds", (prices.reduce((sum,q) => sum + q.value,0) / prices.length).toFixed(3),
+            "series prices", prices.filter(q => q.series).length)
+        }
+      }
+    }
     const dated = []
     for (const day of all.dates) {
       const partial = await view(url + "&date=" + day)

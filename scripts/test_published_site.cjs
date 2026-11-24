@@ -24,7 +24,7 @@ async function main() {
       const block = result.locator(":scope > div").filter({
         has: page.getByRole("heading", { name: stage, exact: true }),
       })
-      await block.getByText("Угадано", { exact: true }).waitFor()
+      await block.getByText("Зашло", { exact: true }).waitFor()
       await block.getByText("Выбор модели · PARIVISION", { exact: true }).waitFor()
     }
     const odds = page.getByRole("table", { name: "Архив котировок", exact: true })
@@ -46,6 +46,13 @@ async function main() {
     const completed = page.locator(".report-counts > div")
       .filter({ has: page.getByText("карт с результатом", { exact: true }) })
     await completed.getByText("66", { exact: true }).waitFor()
+    const maps = page.locator(".history-panel tbody tr")
+    assert.equal(await maps.count(), 66)
+    assert.equal(await maps.locator(".stage-verdict strong").filter({ hasText: /^(Зашло|Не зашло)$/ }).count(), 132)
+    assert.equal(await maps.getByText(/Групповой этап · Группа/).count(), 30)
+    assert.equal(await maps.getByText(/^Плей-офф ·/).count(), 36)
+    assert.equal(await maps.getByText("Плей-офф · Гранд-финал", { exact: true }).count(), 4)
+    assert.equal(await maps.getByText(/^Кэф\. /).count(), 132)
     assert.deepEqual(errors, [], "Unhandled application error on the published site")
     console.log("Published dashboard passed: 66 results, map 116, PRE/POST, odds, mobile heading.")
   } finally {

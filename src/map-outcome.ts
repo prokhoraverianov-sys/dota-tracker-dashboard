@@ -22,10 +22,7 @@ export function retrospectiveForecast(
 
 export function evaluateMap(map: MapDTO, stage: MapStage) {
   const original = map[stage]
-  const forecast = original ?? (stage === "post" ? map.retrospective_post : map.retrospective_pre)
-  const probability = forecast?.analysis.shadow_forecast?.winner_probability_team_a
-  const selected = probability == null || probability === 0.5 ? null : probability > 0.5 ? "A" : "B"
-  const pick = selected === null ? null : selected === "A" ? map.team_a : map.team_b
+  const replay = stage === "post" ? map.retrospective_post : map.retrospective_pre
   const result = map.result
   const draftId = original?.draft_external_game_id
   const steamId = result?.steam_match_id
@@ -33,12 +30,25 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
   const explicitSteam = !!draftId && (draftId.startsWith("steam:") || /^\d+$/.test(draftId))
   const verified =
     !!steamId && (explicitSteam ? steamMatch : original?.verified_steam_match_id === steamId)
+  const originalProbability = original?.analysis.shadow_forecast?.winner_probability_team_a
+  const replayProbability = replay?.analysis.shadow_forecast?.winner_probability_team_a
+  const needsReplay =
+    originalProbability == null ||
+    originalProbability === 0.5 ||
+    (stage === "post" && !!result && !verified)
+  const useReplay = needsReplay && replayProbability != null && replayProbability !== 0.5
+  const forecast = useReplay ? replay : (original ?? replay)
+  const probability = forecast?.analysis.shadow_forecast?.winner_probability_team_a
+  const selected: "A" | "B" | null =
+    probability == null || probability === 0.5 ? null : probability > 0.5 ? "A" : "B"
+  const pick = selected === null ? null : selected === "A" ? map.team_a : map.team_b
   let note = ""
   if (map.play_status === "unplayed") note = "Карта не сыграна"
   else if (map.result_conflict) note = "Источники расходятся"
   else if (!forecast) note = "Нет сохранённого прогноза"
   else if (!selected) note = probability === 0.5 ? "Равные шансы" : "Модель воздержалась"
   else if (
+    useReplay ||
     !original ||
     original.snapshot_id === "retrospective" ||
     map.analysis_context === "retrospective"
@@ -73,8 +83,8 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
     selected &&
     map.play_status !== "unplayed" &&
     !map.result_conflict &&
-    (stage === "pre" || verified || (!original && !!forecast))
+    (stage === "pre" || verified || useReplay)
       ? selected === result.winner
       : null
-  return { hit, pick, note, forecast, comparison }
+  return { hit, pick, selected, note, forecast, comparison } as const
 }

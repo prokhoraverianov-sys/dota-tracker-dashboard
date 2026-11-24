@@ -70,13 +70,7 @@ function observationTime(at: string | null) {
   return at ? <time dateTime={at}>{time(at)} · UTC+7</time> : <>Время не подтверждено</>
 }
 
-export function ArchivedPrices({
-  map,
-  beforeStart = [],
-}: {
-  readonly map: MapDTO
-  readonly beforeStart?: readonly ProviderOdds[] | undefined
-}) {
+export function archivedWinnerPrices(map: MapDTO, beforeStart: readonly ProviderOdds[] = []) {
   const saved = archive[`${map.series_id}/${map.map_number}`]
   const steam = map.result?.steam_match_id
   const sameOrder = saved && map.team_a === saved.team_a && map.team_b === saved.team_b
@@ -135,6 +129,17 @@ export function ArchivedPrices({
       })
     }
   }
+  return { observations, pari }
+}
+
+export function ArchivedPrices({
+  map,
+  beforeStart = [],
+}: {
+  readonly map: MapDTO
+  readonly beforeStart?: readonly ProviderOdds[] | undefined
+}) {
+  const { observations, pari } = archivedWinnerPrices(map, beforeStart)
   const totalSource = pari?.totalUrl ? bookmaker(pari.totalUrl) : null
   const totalUrl = pari?.totalUrl && totalSource ? quoteSourceUrl(pari.totalUrl, totalSource) : null
   if (!observations.length && !totalUrl)

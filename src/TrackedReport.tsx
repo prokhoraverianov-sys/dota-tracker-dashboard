@@ -5,22 +5,32 @@ import { type MapDTO, message, scheduleSchema } from "./contracts"
 import { mapPath, percent, query, time } from "./domain"
 import { StageVerdict } from "./MapOutcome"
 import { evaluateMap, mapStages, stageNames } from "./map-outcome"
+import { decimalPrice, reportPrice } from "./report-price"
 import { minutes } from "./reporting"
+import phases from "./tournament-phases.json"
 import { Empty, Notice } from "./ui"
+
+const archivedPhases: Record<string, string> = phases
+
+function stageLabel(phase: string) {
+  if (/^(верхняя сетка|нижняя сетка|гранд-финал)/i.test(phase)) return `Плей-офф · ${phase}`
+  if (/^группа /i.test(phase)) return `Групповой этап · ${phase}`
+  return phase
+}
 
 function StageStats({ maps }: { readonly maps: MapDTO[] }) {
   return (
     <section className="panel report-comparison-panel">
       <div className="table-scroll">
         <table className="report-table">
-          <caption>Точность на картах с подтверждённым победителем</caption>
+          <caption>Результаты прогнозов на сыгранных картах</caption>
           <thead>
             <tr>
               <th>Прогноз</th>
-              <th>Угадано</th>
-              <th>Точность</th>
-              <th>Вне оценки</th>
-              <th>Без прогноза</th>
+              <th>Зашло</th>
+              <th>Не зашло</th>
+              <th>Ср. кэф. до карты</th>
+              <th>Точность своевременных оригиналов</th>
             </tr>
           </thead>
           <tbody>
@@ -28,16 +38,35 @@ function StageStats({ maps }: { readonly maps: MapDTO[] }) {
               const verdicts = maps.map((map) => evaluateMap(map, stage))
               const scored = verdicts.filter((item) => item.hit !== null)
               const hits = scored.filter((item) => item.hit).length
-              const missing = verdicts.filter((item) => !item.forecast).length
+              const wins = verdicts.filter((v) => v.comparison === true).length
+              const losses = verdicts.filter((v) => v.comparison === false).length
+              const prices = maps.flatMap((map, index) => {
+                const v = verdicts[index]
+                const quote =
+                  v?.comparison != null && v.selected ? reportPrice(map, v.selected) : null
+                return quote ? [quote] : []
+              })
+              const mean = prices.length
+                ? prices.reduce((sum, q) => sum + q.value, 0) / prices.length
+                : null
               return (
                 <tr key={stage}>
                   <th scope="row">{stageNames[stage]}</th>
+                  <td>{wins}</td>
+                  <td>{losses}</td>
                   <td>
-                    {hits} из {scored.length}
+                    {mean != null ? decimalPrice(mean) : "Нет подтверждённых цен"}
+                    <small className="metric-note">
+                      {prices.length} из {maps.length} карт ·{" "}
+                      {prices.filter((q) => q.series).length} по рынку серии при 1:1
+                    </small>
                   </td>
-                  <td>{scored.length ? percent(hits / scored.length) : "—"}</td>
-                  <td>{verdicts.length - scored.length - missing}</td>
-                  <td>{missing}</td>
+                  <td>
+                    {scored.length ? percent(hits / scored.length) : "—"}
+                    <small className="metric-note">
+                      {hits} из {scored.length}
+                    </small>
+                  </td>
                 </tr>
               )
             })}
@@ -45,9 +74,9 @@ function StageStats({ maps }: { readonly maps: MapDTO[] }) {
         </table>
       </div>
       <p className="footnote">
-        Для PRE проверяем время до старта. Для POST сверяем драфт и время до окончания карты. Если
-        точного времени окончания нет, используем время старта плюс игровую длительность. Причины
-        исключения указаны у каждой карты.
+        «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. Средний кэф. — среднее по
+        выбранным командам, одна архивная цена до старта на карту. На решающих картах при отсутствии
+        цены карты используется рынок серии при 1:1.
       </p>
     </section>
   )
@@ -100,10 +129,14 @@ export function TrackedReport({
   const all = data?.series.flatMap((series) => series.maps.map((map) => ({ map, series }))) ?? []
   const playable = all.filter(({ map }) => map.play_status !== "unplayed")
   const played = playable.filter(({ map }) => map.result && !map.result_conflict)
+  const livePhases = new Map(
+    data?.event?.slots.map((slot) => [slot.series_id, stageLabel(slot.phase)]),
+  )
+  const phaseFor = (id: string) => livePhases.get(id) || archivedPhases[id] || ""
   const terms = search.toLocaleLowerCase("ru").trim().split(/\s+/).filter(Boolean)
   const visible = playable.filter(({ map, series }) => {
     const label =
-      `${map.team_a} ${map.team_b} ${series.series_id} ${map.result?.steam_match_id ?? ""}`.toLocaleLowerCase(
+      `${phaseFor(series.series_id)} ${map.team_a} ${map.team_b} ${series.series_id} ${map.result?.steam_match_id ?? ""}`.toLocaleLowerCase(
         "ru",
       )
     return terms.every((term) => label.includes(term))
@@ -139,7 +172,7 @@ export function TrackedReport({
                   type="search"
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Команда или ID"
+                  placeholder="Команда, стадия или ID"
                 />
               </label>
             </div>
@@ -149,6 +182,7 @@ export function TrackedReport({
                   <thead>
                     <tr>
                       <th>Матч</th>
+                      <th>Стадия</th>
                       <th>Победитель</th>
                       <th>PRE</th>
                       <th>POST</th>
@@ -166,6 +200,7 @@ export function TrackedReport({
                             {time(map.result?.started_at_utc ?? series.starts_at_utc)}
                           </small>
                         </td>
+                        <td>{phaseFor(series.series_id) || "Стадия уточняется"}</td>
                         <td>
                           {map.result_conflict ? (
                             "Источники расходятся"

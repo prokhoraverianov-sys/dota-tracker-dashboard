@@ -1,5 +1,6 @@
 import type { MapDTO } from "./contracts"
 import { evaluateMap, mapStages, stageNames } from "./map-outcome"
+import { decimalPrice, reportPrice } from "./report-price"
 import { minutes } from "./reporting"
 
 export function StageVerdict({
@@ -9,18 +10,20 @@ export function StageVerdict({
   readonly map: MapDTO
   readonly stage: "pre" | "post"
 }) {
-  const { hit, pick, note, comparison } = evaluateMap(map, stage)
+  const { selected, pick, note, comparison } = evaluateMap(map, stage)
+  const price = comparison !== null && selected ? reportPrice(map, selected) : null
   return (
     <div className="stage-verdict">
-      <strong className={hit === null ? "muted" : hit ? "hit-text" : "miss-text"}>
-        {hit === null ? note : hit ? "Угадано" : "Ошибка"}
+      <strong className={comparison === null ? "muted" : comparison ? "hit-text" : "miss-text"}>
+        {comparison === null ? note : comparison ? "Зашло" : "Не зашло"}
       </strong>
       {pick && <small>Выбор модели · {pick}</small>}
-      {hit === null && comparison !== null && (
+      {price && (
         <small>
-          {comparison ? "Совпал с результатом" : "Разошёлся с результатом"} · вне точности
+          Кэф. {decimalPrice(price.value)} · {price.label}
         </small>
       )}
+      {note && comparison !== null && <small>{note} · вне точности оригиналов</small>}
     </div>
   )
 }
