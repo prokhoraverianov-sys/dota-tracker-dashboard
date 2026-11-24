@@ -1,0 +1,464 @@
+{
+  "9086875606": {
+    "series": "e3-g-b1",
+    "number": 1,
+    "a": "GamerLegion",
+    "b": "Aurora Gaming",
+    "probabilities": [0.503147656368636, 0.5067530384473461, 0.5085554895661651]
+  },
+  "9086957012": {
+    "series": "e3-g-b1",
+    "number": 2,
+    "a": "GamerLegion",
+    "b": "Aurora Gaming",
+    "probabilities": [0.5364403871827046, 0.5729440697461867, 0.5909271399842384]
+  },
+  "9087068600": {
+    "series": "e3-g-b1",
+    "number": 3,
+    "a": "GamerLegion",
+    "b": "Aurora Gaming",
+    "probabilities": [0.4931295678439038, 0.4867194484170701, 0.48351589438939585]
+  },
+  "9087180510": {
+    "series": "e3-g-a1",
+    "number": 1,
+    "a": "PARIVISION",
+    "b": "DO KONCA",
+    "probabilities": [0.8290846921147446, 0.8400084656947074, 0.8452549695643475]
+  },
+  "9087276030": {
+    "series": "e3-g-a1",
+    "number": 2,
+    "a": "PARIVISION",
+    "b": "DO KONCA",
+    "probabilities": [0.835056569435034, 0.8511661238109188, 0.8587220890139016]
+  },
+  "9087374444": {
+    "series": "e3-g-d1",
+    "number": 1,
+    "a": "Team Spirit",
+    "b": "1win",
+    "probabilities": [0.8139433254620468, 0.8215133984312435, 0.8252070739497961]
+  },
+  "9087439951": {
+    "series": "e3-g-d1",
+    "number": 2,
+    "a": "Team Spirit",
+    "b": "1win",
+    "probabilities": [0.787689115327853, 0.7680012882698584, 0.7576912905835046]
+  },
+  "9088001992": {
+    "series": "e3-g-b2",
+    "number": 1,
+    "a": "GamerLegion",
+    "b": "CyberHero",
+    "probabilities": [0.7937998387849463, 0.8123655227792849, 0.821154635211209]
+  },
+  "9088086810": {
+    "series": "e3-g-b2",
+    "number": 2,
+    "a": "GamerLegion",
+    "b": "CyberHero",
+    "probabilities": [0.7871895708343373, 0.7998922861802692, 0.806026999381541]
+  },
+  "9088161900": {
+    "series": "e3-g-b2",
+    "number": 3,
+    "a": "GamerLegion",
+    "b": "CyberHero",
+    "probabilities": [0.7821823429080679, 0.790235552187121, 0.7941793176401556]
+  },
+  "9088267544": {
+    "series": "e3-g-a2",
+    "number": 1,
+    "a": "PARIVISION",
+    "b": "Yellow Submarine",
+    "probabilities": [0.7103731587704214, 0.6821080792390934, 0.6674371725282866]
+  },
+  "9088362009": {
+    "series": "e3-g-a2",
+    "number": 2,
+    "a": "PARIVISION",
+    "b": "Yellow Submarine",
+    "probabilities": [0.7302707751337281, 0.7233372147914561, 0.7198294550794473]
+  },
+  "9088481002": {
+    "series": "e3-g-c1",
+    "number": 1,
+    "a": "LGD Gaming",
+    "b": "Team Liquid",
+    "probabilities": [0.4715637133173721, 0.5051077527803802, 0.5218814132813154]
+  },
+  "9088593108": {
+    "series": "e3-g-c1",
+    "number": 2,
+    "a": "LGD Gaming",
+    "b": "Team Liquid",
+    "probabilities": [0.4302720579148632, 0.42230585590515884, 0.4183375921298691]
+  },
+  "9088710443": {
+    "series": "e3-g-c1",
+    "number": 3,
+    "a": "LGD Gaming",
+    "b": "Team Liquid",
+    "probabilities": [0.4523990590166397, 0.4666006772622137, 0.4737233003474714]
+  },
+  "9088831675": {
+    "series": "e3-g-d2",
+    "number": 1,
+    "a": "Team Spirit",
+    "b": "Froglings",
+    "probabilities": [0.7836095968419353, 0.7978976417320353, 0.8047727498652452]
+  },
+  "9088923051": {
+    "series": "e3-g-d2",
+    "number": 2,
+    "a": "Team Spirit",
+    "b": "Froglings",
+    "probabilities": [0.774534468477873, 0.780356021361513, 0.7832260099449629]
+  },
+  "9089448051": {
+    "series": "e3-g-c2",
+    "number": 1,
+    "a": "LGD Gaming",
+    "b": "LEGION",
+    "probabilities": [0.7586117184635357, 0.7835170415732167, 0.7952521180971563]
+  },
+  "9089567599": {
+    "series": "e3-g-c2",
+    "number": 2,
+    "a": "LGD Gaming",
+    "b": "LEGION",
+    "probabilities": [0.736404139422245, 0.7409358430666944, 0.7431826026843725]
+  },
+  "9089662134": {
+    "series": "e3-g-a3",
+    "number": 1,
+    "a": "DO KONCA",
+    "b": "Yellow Submarine",
+    "probabilities": [0.5405176148928175, 0.5213033525755917, 0.5116689395096219]
+  },
+  "9089764053": {
+    "series": "e3-g-a3",
+    "number": 2,
+    "a": "DO KONCA",
+    "b": "Yellow Submarine",
+    "probabilities": [0.5760359477723923, 0.5922934639824725, 0.6003494066048597]
+  },
+  "9089886596": {
+    "series": "e3-g-a3",
+    "number": 3,
+    "a": "DO KONCA",
+    "b": "Yellow Submarine",
+    "probabilities": [0.553047784995003, 0.5464648546542176, 0.5431671390389822]
+  },
+  "9090050956": {
+    "series": "e3-g-c3",
+    "number": 1,
+    "a": "Team Liquid",
+    "b": "LEGION",
+    "probabilities": [0.7763204531258054, 0.7840563426735562, 0.787850904253528]
+  },
+  "9090171021": {
+    "series": "e3-g-c3",
+    "number": 2,
+    "a": "Team Liquid",
+    "b": "LEGION",
+    "probabilities": [0.8126309129869544, 0.8500705752326914, 0.8663580107415416]
+  },
+  "9090295298": {
+    "series": "e3-g-c3",
+    "number": 3,
+    "a": "Team Liquid",
+    "b": "LEGION",
+    "probabilities": [0.7525527859256823, 0.736005468451982, 0.7274705449424346]
+  },
+  "9090414768": {
+    "series": "e3-g-b3",
+    "number": 1,
+    "a": "Aurora Gaming",
+    "b": "CyberHero",
+    "probabilities": [0.738853729096934, 0.7438840855865363, 0.7463753089873639]
+  },
+  "9090500945": {
+    "series": "e3-g-b3",
+    "number": 2,
+    "a": "Aurora Gaming",
+    "b": "CyberHero",
+    "probabilities": [0.7006443621220696, 0.6616642020897382, 0.6412732898120912]
+  },
+  "9090576268": {
+    "series": "e3-g-d3",
+    "number": 1,
+    "a": "1win",
+    "b": "Froglings",
+    "probabilities": [0.641739758546033, 0.6391849121868162, 0.637904517882921]
+  },
+  "9090631460": {
+    "series": "e3-g-d3",
+    "number": 2,
+    "a": "1win",
+    "b": "Froglings",
+    "probabilities": [0.6060561298531137, 0.5664815377824597, 0.5463374226430953]
+  },
+  "9090701002": {
+    "series": "e3-g-d3",
+    "number": 3,
+    "a": "1win",
+    "b": "Froglings",
+    "probabilities": [0.6400209131373313, 0.6357330119545803, 0.6335809019453003]
+  },
+  "9091135592": {
+    "series": "e3-p-r01-m001",
+    "number": 1,
+    "a": "PARIVISION",
+    "b": "GamerLegion",
+    "probabilities": [0.6108673331661096, 0.6255878572045609, 0.6328637605288674]
+  },
+  "9091291242": {
+    "series": "e3-p-r01-m001",
+    "number": 2,
+    "a": "PARIVISION",
+    "b": "GamerLegion",
+    "probabilities": [0.6624469202347376, 0.6762998093139472, 0.6831139131677677]
+  },
+  "9091386510": {
+    "series": "e3-p-r01-m001",
+    "number": 3,
+    "a": "PARIVISION",
+    "b": "GamerLegion",
+    "probabilities": [0.6519867335181486, 0.655645959833633, 0.6574687056875711]
+  },
+  "9091523157": {
+    "series": "e3-p-r01-m004",
+    "number": 1,
+    "a": "Froglings",
+    "b": "LEGION",
+    "probabilities": [0.4931962195353064, 0.5154398245918136, 0.5265442231542159]
+  },
+  "9091678507": {
+    "series": "e3-p-r01-m004",
+    "number": 2,
+    "a": "Froglings",
+    "b": "LEGION",
+    "probabilities": [0.4582220593187531, 0.4455191448976137, 0.4391932282952765]
+  },
+  "9091792655": {
+    "series": "e3-p-r01-m003",
+    "number": 1,
+    "a": "Aurora Gaming",
+    "b": "DO KONCA",
+    "probabilities": [0.701661685701624, 0.6942816810198672, 0.6905536199599359]
+  },
+  "9091993665": {
+    "series": "e3-p-r01-m003",
+    "number": 2,
+    "a": "Aurora Gaming",
+    "b": "DO KONCA",
+    "probabilities": [0.7145733706688493, 0.720142484842784, 0.7229019927341551]
+  },
+  "9092063120": {
+    "series": "e3-p-r01-m002",
+    "number": 1,
+    "a": "LGD Gaming",
+    "b": "Team Spirit",
+    "probabilities": [0.33544206328244025, 0.35346198081627256, 0.36263452908797145]
+  },
+  "9092124714": {
+    "series": "e3-p-r01-m002",
+    "number": 2,
+    "a": "LGD Gaming",
+    "b": "Team Spirit",
+    "probabilities": [0.34088836439406145, 0.3646620083134034, 0.37680999826223466]
+  },
+  "9092574111": {
+    "series": "e3-p-r01-m006",
+    "number": 1,
+    "a": "DO KONCA",
+    "b": "Froglings",
+    "probabilities": [0.6781397536326533, 0.702786388090997, 0.7146924999448001]
+  },
+  "9092641299": {
+    "series": "e3-p-r01-m006",
+    "number": 2,
+    "a": "DO KONCA",
+    "b": "Froglings",
+    "probabilities": [0.6975568098892124, 0.7391414409852172, 0.7584904489186239]
+  },
+  "9092706541": {
+    "series": "e3-p-r01-m006",
+    "number": 3,
+    "a": "DO KONCA",
+    "b": "Froglings",
+    "probabilities": [0.6456638899488534, 0.6388084584013747, 0.635359213319248]
+  },
+  "9092843858": {
+    "series": "e3-p-r01-m005",
+    "number": 1,
+    "a": "GamerLegion",
+    "b": "LGD Gaming",
+    "probabilities": [0.5864107419596818, 0.5996251949270595, 0.6061797415216431]
+  },
+  "9092956211": {
+    "series": "e3-p-r01-m005",
+    "number": 2,
+    "a": "GamerLegion",
+    "b": "LGD Gaming",
+    "probabilities": [0.6016739833028513, 0.629599557891102, 0.6432564908841385]
+  },
+  "9093051668": {
+    "series": "e3-p-r01-m005",
+    "number": 3,
+    "a": "GamerLegion",
+    "b": "LGD Gaming",
+    "probabilities": [0.5783031580675483, 0.5835181167507287, 0.5861186797958226]
+  },
+  "9093175023": {
+    "series": "e3-p-r02-m001",
+    "number": 1,
+    "a": "PARIVISION",
+    "b": "Team Spirit",
+    "probabilities": [0.6001529699632917, 0.6481983377415382, 0.6712055171734636]
+  },
+  "9093259247": {
+    "series": "e3-p-r02-m001",
+    "number": 2,
+    "a": "PARIVISION",
+    "b": "Team Spirit",
+    "probabilities": [0.586833408170573, 0.6226248331670773, 0.6400569706941044]
+  },
+  "9093340128": {
+    "series": "e3-p-r02-m002",
+    "number": 1,
+    "a": "Aurora Gaming",
+    "b": "LEGION",
+    "probabilities": [0.7456698388862982, 0.7584466548285307, 0.764668700372228]
+  },
+  "9093401586": {
+    "series": "e3-p-r02-m002",
+    "number": 2,
+    "a": "Aurora Gaming",
+    "b": "LEGION",
+    "probabilities": [0.7186698876564318, 0.7044604557177533, 0.6972016567298729]
+  },
+  "9093458287": {
+    "series": "e3-p-r02-m002",
+    "number": 3,
+    "a": "Aurora Gaming",
+    "b": "LEGION",
+    "probabilities": [0.7189779844363191, 0.7050947890955279, 0.6980055741654705]
+  },
+  "9093871938": {
+    "series": "e3-p-r02-m004",
+    "number": 1,
+    "a": "PARIVISION",
+    "b": "Froglings",
+    "probabilities": [0.8110073774160244, 0.8163691334597987, 0.8190054731674968]
+  },
+  "9093927215": {
+    "series": "e3-p-r02-m004",
+    "number": 2,
+    "a": "PARIVISION",
+    "b": "Froglings",
+    "probabilities": [0.8129354376611869, 0.8201252748845267, 0.8236384858694609]
+  },
+  "9094055565": {
+    "series": "e3-p-r02-m003",
+    "number": 1,
+    "a": "LEGION",
+    "b": "LGD Gaming",
+    "probabilities": [0.28193306985866007, 0.29610803460749896, 0.3033482340152526]
+  },
+  "9094149032": {
+    "series": "e3-p-r02-m003",
+    "number": 2,
+    "a": "LEGION",
+    "b": "LGD Gaming",
+    "probabilities": [0.27570292244587813, 0.2833570871994535, 0.28723197964543645]
+  },
+  "9094241558": {
+    "series": "e3-p-r02-m003",
+    "number": 3,
+    "a": "LEGION",
+    "b": "LGD Gaming",
+    "probabilities": [0.26611639898611955, 0.2640647855602639, 0.26304279011976517]
+  },
+  "9094375739": {
+    "series": "e3-p-r04-m001",
+    "number": 1,
+    "a": "Team Spirit",
+    "b": "Aurora Gaming",
+    "probabilities": [0.5966308922065826, 0.5924697645756801, 0.5903841765306601]
+  },
+  "9094461999": {
+    "series": "e3-p-r04-m001",
+    "number": 2,
+    "a": "Team Spirit",
+    "b": "Aurora Gaming",
+    "probabilities": [0.6216421412348196, 0.6420653708636416, 0.6520919968485449]
+  },
+  "9094562824": {
+    "series": "e3-p-r03-m001",
+    "number": 1,
+    "a": "LGD Gaming",
+    "b": "PARIVISION",
+    "probabilities": [0.26040109207725864, 0.24003574591129753, 0.23027078220744274]
+  },
+  "9094639003": {
+    "series": "e3-p-r03-m001",
+    "number": 2,
+    "a": "LGD Gaming",
+    "b": "PARIVISION",
+    "probabilities": [0.27821024678133605, 0.2745961071665009, 0.2728000187642481]
+  },
+  "9095253294": {
+    "series": "e3-p-r04-m002",
+    "number": 1,
+    "a": "Aurora Gaming",
+    "b": "PARIVISION",
+    "probabilities": [0.3502479793220083, 0.35506807733020945, 0.3574892729696536]
+  },
+  "9095316326": {
+    "series": "e3-p-r04-m002",
+    "number": 2,
+    "a": "Aurora Gaming",
+    "b": "PARIVISION",
+    "probabilities": [0.35659023354565067, 0.3678793038020929, 0.3735795252482091]
+  },
+  "9095408575": {
+    "series": "e3-p-r04-m002",
+    "number": 3,
+    "a": "Aurora Gaming",
+    "b": "PARIVISION",
+    "probabilities": [0.3396790382117923, 0.3339471657788175, 0.33109939089994056]
+  },
+  "9095571488": {
+    "series": "e3-p-r05-m001",
+    "number": 1,
+    "a": "Team Spirit",
+    "b": "PARIVISION",
+    "probabilities": [0.3838648396710434, 0.3218515479595823, 0.29290311694106075]
+  },
+  "9095683418": {
+    "series": "e3-p-r05-m001",
+    "number": 2,
+    "a": "Team Spirit",
+    "b": "PARIVISION",
+    "probabilities": [0.403256444930976, 0.3582992245112666, 0.33666917029705457]
+  },
+  "9095760627": {
+    "series": "e3-p-r05-m001",
+    "number": 3,
+    "a": "Team Spirit",
+    "b": "PARIVISION",
+    "probabilities": [0.3954990769451628, 0.3435681004424793, 0.3188584119488502]
+  },
+  "9095836436": {
+    "series": "e3-p-r05-m001",
+    "number": 4,
+    "a": "Team Spirit",
+    "b": "PARIVISION",
+    "probabilities": [0.4122238803485815, 0.37554917234377416, 0.3577059369521364]
+  }
+}

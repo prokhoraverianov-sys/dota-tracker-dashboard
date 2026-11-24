@@ -21,7 +21,7 @@ import { draftKey, initialDraft, loadDraft, mapPath, mapStatus, validatePost } f
 import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
 import { MapOutcome } from "./MapOutcome"
-import { retrospectiveForecast } from "./map-outcome"
+import { evaluateMap, retrospectiveForecast } from "./map-outcome"
 import { PLAY_IN_NAME, PLAY_IN_ROUTE } from "./playin-data"
 import { Quotes } from "./Quotes"
 import { Back, Notice } from "./ui"
@@ -217,7 +217,9 @@ export function MapWorkspace({
   }
   const savedPre = retrospectiveForecast(map, "pre")
   const savedPost = retrospectiveForecast(map, "post")
-  const post = map.post ?? savedPost ?? retrospective
+  const pre = evaluateMap(map, "pre").forecast === map.pre ? map.pre : savedPre
+  const post =
+    (evaluateMap(map, "post").forecast === map.post ? map.post : savedPost) ?? retrospective
   const forecastSection = (
     <section ref={forecastSectionRef} className="workspace-section" aria-label="Прогнозы карты">
       <div className="workspace-heading">
@@ -227,15 +229,13 @@ export function MapWorkspace({
       {(map.pre || map.post) && <Delta map={map} />}
       <div className="two-columns forecasts">
         <div>
-          <ForecastCard forecast={map.pre ?? savedPre} stage="PRE" map={map} />
-          {map.pre &&
-            savedPre &&
-            map.pre.analysis.shadow_forecast?.winner_probability_team_a == null && (
-              <details>
-                <summary>Отдельный ретроспективный PRE</summary>
-                <ForecastCard forecast={savedPre} stage="PRE" map={map} />
-              </details>
-            )}
+          <ForecastCard forecast={pre} stage="PRE" map={map} />
+          {map.pre && pre !== map.pre && (
+            <details>
+              <summary>Исходная запись PRE</summary>
+              <ForecastCard forecast={map.pre} stage="PRE" map={map} />
+            </details>
+          )}
         </div>
         <div>
           {post?.snapshot_id === "retrospective" && (
@@ -252,14 +252,12 @@ export function MapWorkspace({
             </p>
           )}
           <ForecastCard forecast={post} stage="POST" map={map} />
-          {map.post &&
-            savedPost &&
-            map.post.analysis.shadow_forecast?.winner_probability_team_a == null && (
-              <details>
-                <summary>Отдельный ретроспективный POST</summary>
-                <ForecastCard forecast={savedPost} stage="POST" map={map} />
-              </details>
-            )}
+          {map.post && post !== map.post && (
+            <details>
+              <summary>Исходная запись POST</summary>
+              <ForecastCard forecast={map.post} stage="POST" map={map} />
+            </details>
+          )}
         </div>
       </div>
     </section>

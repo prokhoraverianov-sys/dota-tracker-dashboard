@@ -46,6 +46,18 @@ async function main() {
     const completed = page.locator(".report-counts > div")
       .filter({ has: page.getByText("карт с результатом", { exact: true }) })
     await completed.getByText("66", { exact: true }).waitFor()
+    const summary = page.getByRole("table", { name: "Результаты прогнозов на сыгранных картах" })
+    for (const [label, wins, losses, odds, bank] of [
+      ["PRE", 42, 24, "1,63", "75,12"], ["POST · 0,25", 45, 21, "1,58", "170,71"],
+      ["POST · 0,5", 45, 21, "1,58", "170,71"], ["POST · 1,0", 43, 23, "1,59", "96,52"],
+      ["POST · 1,25", 43, 23, "1,59", "96,52"]
+    ]) {
+      const row = summary.getByRole("row").filter({has: page.getByRole("rowheader", {name: label, exact: true})})
+      const cells = await row.locator("td").allTextContents()
+      assert.deepEqual(cells.slice(0,2), [String(wins),String(losses)])
+      assert(cells[2].startsWith(odds))
+      assert.equal(cells[3], "$" + bank)
+    }
     const maps = page.locator(".history-panel tbody tr")
     assert.equal(await maps.count(), 66)
     assert.equal(await maps.locator(".stage-verdict strong").filter({ hasText: /^(Зашло|Не зашло)$/ }).count(), 132)

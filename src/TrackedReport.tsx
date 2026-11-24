@@ -4,11 +4,12 @@ import type { Api } from "./api"
 import { type MapDTO, message, scheduleSchema } from "./contracts"
 import { mapPath, percent, query, time } from "./domain"
 import { StageVerdict } from "./MapOutcome"
-import { evaluateMap, mapStages, stageNames } from "./map-outcome"
+import { evaluateMap, mapStages } from "./map-outcome"
 import { decimalPrice, reportPrice } from "./report-price"
 import { minutes } from "./reporting"
 import phases from "./tournament-phases.json"
 import { Empty, Notice } from "./ui"
+import { weightedPost, weights } from "./weighted-post"
 
 const archivedPhases: Record<string, string> = phases
 
@@ -18,7 +19,8 @@ function stageLabel(phase: string) {
   return phase
 }
 
-function StageStats({ maps }: { readonly maps: MapDTO[] }) {
+function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essence: boolean }) {
+  const scenarios = essence ? [...mapStages, ...weights] : mapStages
   return (
     <section className="panel report-comparison-panel">
       <div className="table-scroll">
@@ -30,28 +32,42 @@ function StageStats({ maps }: { readonly maps: MapDTO[] }) {
               <th>Зашло</th>
               <th>Не зашло</th>
               <th>Ср. кэф. до карты</th>
+              {essence && <th>Итоговый банк</th>}
               <th>Точность своевременных оригиналов</th>
             </tr>
           </thead>
           <tbody>
-            {mapStages.map((stage) => {
-              const verdicts = maps.map((map) => evaluateMap(map, stage))
-              const scored = verdicts.filter((item) => item.hit !== null)
-              const hits = scored.filter((item) => item.hit).length
-              const wins = verdicts.filter((v) => v.comparison === true).length
-              const losses = verdicts.filter((v) => v.comparison === false).length
+            {scenarios.map((stage) => {
+              const original = stage === "pre" || stage === "post"
+              const label =
+                stage === "pre"
+                  ? "PRE"
+                  : stage === "post"
+                    ? essence
+                      ? "POST · 0,25"
+                      : "POST"
+                    : `POST · ${stage}`
+              const verdicts = maps.map((map) =>
+                stage === "pre" || stage === "post"
+                  ? evaluateMap(map, stage)
+                  : weightedPost(map, stage),
+              )
+              const scored = verdicts.filter((item) => item?.hit != null)
+              const hits = scored.filter((item) => item?.hit).length
+              const wins = verdicts.filter((v) => v?.comparison === true).length
+              const losses = verdicts.filter((v) => v?.comparison === false).length
               const prices = maps.flatMap((map, index) => {
                 const v = verdicts[index]
                 const quote =
                   v?.comparison != null && v.selected ? reportPrice(map, v.selected) : null
-                return quote ? [quote] : []
+                return quote ? [{ ...quote, won: v?.comparison === true }] : []
               })
               const mean = prices.length
                 ? prices.reduce((sum, q) => sum + q.value, 0) / prices.length
                 : null
               return (
                 <tr key={stage}>
-                  <th scope="row">{stageNames[stage]}</th>
+                  <th scope="row">{label}</th>
                   <td>{wins}</td>
                   <td>{losses}</td>
                   <td>
@@ -61,11 +77,30 @@ function StageStats({ maps }: { readonly maps: MapDTO[] }) {
                       {prices.filter((q) => q.series).length} по рынку серии при 1:1
                     </small>
                   </td>
+                  {essence && (
+                    <td>
+                      $
+                      {decimalPrice(
+                        100 +
+                          prices.reduce(
+                            (sum, q) => sum + (q.won ? Math.round(2000 * (q.value - 1)) : -2000),
+                            0,
+                          ) /
+                            100,
+                      )}
+                    </td>
+                  )}
                   <td>
-                    {scored.length ? percent(hits / scored.length) : "—"}
-                    <small className="metric-note">
-                      {hits} из {scored.length}
-                    </small>
+                    {original ? (
+                      <>
+                        {scored.length ? percent(hits / scored.length) : "—"}
+                        <small className="metric-note">
+                          {hits} из {scored.length}
+                        </small>
+                      </>
+                    ) : (
+                      "Пересчёт веса"
+                    )}
                   </td>
                 </tr>
               )
@@ -77,6 +112,8 @@ function StageStats({ maps }: { readonly maps: MapDTO[] }) {
         «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. Средний кэф. — среднее по
         выбранным командам, одна архивная цена до старта на карту. На решающих картах при отсутствии
         цены карты используется рынок серии при 1:1.
+        {essence &&
+          " Каждый сценарий начинает со $100. Ставка всегда $20, выигрыш округляется до цента на каждой карте."}
       </p>
     </section>
   )
@@ -132,7 +169,7 @@ export function TrackedReport({
   const livePhases = new Map(
     data?.event?.slots.map((slot) => [slot.series_id, stageLabel(slot.phase)]),
   )
-  const phaseFor = (id: string) => livePhases.get(id) || archivedPhases[id] || ""
+  const phaseFor = (id: string) => archivedPhases[id] || livePhases.get(id) || ""
   const terms = search.toLocaleLowerCase("ru").trim().split(/\s+/).filter(Boolean)
   const visible = playable.filter(({ map, series }) => {
     const label =
@@ -162,7 +199,12 @@ export function TrackedReport({
               <span>карт отпали по счёту</span>
             </div>
           </div>
-          {stats && <StageStats maps={played.map((item) => item.map)} />}
+          {stats && (
+            <StageStats
+              essence={tournament === "1win-essence-3"}
+              maps={played.map((item) => item.map)}
+            />
+          )}
           <section className="panel history-panel">
             <div className="panel-heading">
               <h2>Карты турнира</h2>
@@ -185,7 +227,7 @@ export function TrackedReport({
                       <th>Стадия</th>
                       <th>Победитель</th>
                       <th>PRE</th>
-                      <th>POST</th>
+                      <th>{tournament === "1win-essence-3" ? "POST · 0,25" : "POST"}</th>
                     </tr>
                   </thead>
                   <tbody>
