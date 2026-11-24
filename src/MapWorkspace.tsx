@@ -17,13 +17,14 @@ import {
   savedSchema,
 } from "./contracts"
 import { DraftEditor } from "./DraftEditor"
-import { draftKey, initialDraft, loadDraft, mapPath, mapStatus, validatePost } from "./domain"
+import { draftKey, initialDraft, loadDraft, mapPath, time, validatePost } from "./domain"
 import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
 import { MapOutcome } from "./MapOutcome"
 import { evaluateMap, retrospectiveForecast } from "./map-outcome"
 import { PLAY_IN_NAME, PLAY_IN_ROUTE } from "./playin-data"
 import { Quotes } from "./Quotes"
+import { tournamentPhase } from "./tournament-phase"
 import { Back, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./analysis-presentation.css"
@@ -224,9 +225,8 @@ export function MapWorkspace({
     <section ref={forecastSectionRef} className="workspace-section" aria-label="Прогнозы карты">
       <div className="workspace-heading">
         <h2>Прогнозы карты</h2>
-        <p className="muted">Вероятности, длительность, цены и данные расчёта для каждого этапа.</p>
       </div>
-      {(map.pre || map.post) && <Delta map={map} />}
+      <Delta team={map.team_a} pre={pre} post={post} />
       <div className="two-columns forecasts">
         <div>
           <ForecastCard forecast={pre} stage="PRE" map={map} />
@@ -238,20 +238,17 @@ export function MapWorkspace({
           )}
         </div>
         <div>
-          {post?.snapshot_id === "retrospective" && (
-            <p className="muted">
-              Ретроспективный POST · после завершения карты
-              {recorded?.source_url.startsWith("https://") && (
-                <>
-                  {" · "}
-                  <a href={recorded.source_url} target="_blank" rel="noreferrer">
-                    Источник драфта ↗
-                  </a>
-                </>
-              )}
-            </p>
-          )}
           <ForecastCard forecast={post} stage="POST" map={map} />
+          {post?.snapshot_id === "retrospective" && recorded?.source_url.startsWith("https://") && (
+            <a
+              className="forecast-source"
+              href={recorded.source_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Источник драфта ↗
+            </a>
+          )}
           {map.post && post !== map.post && (
             <details>
               <summary>Исходная запись POST</summary>
@@ -262,7 +259,7 @@ export function MapWorkspace({
       </div>
     </section>
   )
-  const prepareFirst = !locked && !map.post
+  const phase = tournamentPhase(map.series_id ?? "")
   return (
     <>
       <Back
@@ -280,18 +277,28 @@ export function MapWorkspace({
       />
       <header className="page-heading map-heading">
         <div className="map-heading-main">
-          <p className="eyebrow">{map.tournament ?? "Матч"}</p>
+          <p className="muted">{[map.tournament, phase].filter(Boolean).join(" · ")}</p>
+          <p className="map-number">Карта {map.map_number ?? map.map_id}</p>
           <h1 className="map-team-heading">
-            <TeamIdentity name={map.team_a} size="lg" />
-            <span className="map-versus"> — </span>
-            <TeamIdentity name={map.team_b} size="lg" />
+            <span className="map-heading-side">
+              <small>
+                <span className="team-dot team_a" /> Команда A
+              </small>
+              <TeamIdentity name={map.team_a} size="lg" />
+            </span>
+            <span className="map-heading-side">
+              <small>
+                <span className="team-dot team_b" /> Команда B
+              </small>
+              <TeamIdentity name={map.team_b} size="lg" />
+            </span>
           </h1>
-          <p className="muted">
-            Карта {map.map_number ?? map.map_id} · {mapStatus(map)}
-          </p>
+          {map.result?.started_at_utc && (
+            <p className="muted">Начало {time(map.result.started_at_utc)} · UTC+7</p>
+          )}
         </div>
         <span className="badge">
-          {unplayed ? "Не сыграна" : locked ? "Карта завершена" : "Режим наблюдения"}
+          {unplayed ? "Не сыграна" : map.result ? "Карта завершена" : "Ожидается результат"}
         </span>
       </header>
       <MapOutcome map={map} />
@@ -302,61 +309,37 @@ export function MapWorkspace({
           сохраняются с текущим временем и не являются прогнозами, сделанными до матча.
         </Notice>
       )}
-      {map.tournament === "PARI Universe" && map.series_id && (
-        <Notice>
-          Результаты сыгранных карт и архивные котировки доступны в истории серии.{" "}
-          <button
-            type="button"
-            className="text-button"
-            onClick={() =>
-              navigate(
-                `/history?tournament=pari-universe&series=${encodeURIComponent(map.series_id ?? "")}`,
-              )
-            }
-          >
-            Открыть историю серии
-          </button>
-        </Notice>
-      )}
       {error && <Notice error>{error}</Notice>}
       {notice && <Notice>{notice}</Notice>}
-      <nav className="workspace-nav" aria-label="Разделы карты">
-        <span>
-          <strong>PRE</strong> {map.pre ? "сохранён" : "до драфта"}
-        </span>
-        <span>
-          <strong>POST</strong>{" "}
-          {map.post
-            ? "сохранён"
-            : post
-              ? "ретроспективный"
-              : unplayed
-                ? "карта не сыграна"
-                : `${draftCompleteness(draft)}/10 героев`}
-        </span>
-        <button
-          type="button"
-          className="text-button"
-          onClick={() => forecastSectionRef.current?.scrollIntoView()}
-        >
-          <ArrowDown size={15} /> Прогнозы
-        </button>
-        {!locked && (!map.pre || !map.post) && (
-          <button type="button" className="text-button" onClick={showCalculation}>
-            <ArrowDown size={15} /> К расчёту
-          </button>
-        )}
-        {map.series_id && (
+      {!unplayed && (
+        <nav className="workspace-nav" aria-label="Разделы карты">
           <button
             type="button"
             className="text-button"
-            onClick={() => oddsSectionRef.current?.scrollIntoView()}
+            onClick={() => forecastSectionRef.current?.scrollIntoView()}
           >
-            <ArrowDown size={15} /> Текущие цены
+            <ArrowDown size={15} /> Прогнозы
           </button>
-        )}
-      </nav>
-      {!prepareFirst && forecastSection}
+          {!locked && (!map.pre || !map.post) && (
+            <button type="button" className="text-button" onClick={showCalculation}>
+              <ArrowDown size={15} /> К расчёту
+            </button>
+          )}
+          {map.series_id && (
+            <button
+              type="button"
+              className="text-button"
+              onClick={() => oddsSectionRef.current?.scrollIntoView()}
+            >
+              <ArrowDown size={15} /> Коэффициенты
+            </button>
+          )}
+        </nav>
+      )}
+      {!unplayed && forecastSection}
+      <div ref={oddsSectionRef} className="workspace-anchor">
+        <CurrentOdds map={map} api={api} />
+      </div>
       {!unplayed && (
         <section className="workspace-section draft-section" aria-label="Подготовка карты">
           <div className="editor-toolbar">
@@ -441,10 +424,6 @@ export function MapWorkspace({
           )}
         </section>
       )}
-      <div ref={oddsSectionRef} className="workspace-anchor">
-        <CurrentOdds map={map} api={api} />
-      </div>
-      {prepareFirst && forecastSection}
     </>
   )
 }

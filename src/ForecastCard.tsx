@@ -106,8 +106,8 @@ export function ForecastCard({
               Модель воздержалась от оценки победителя. {abstentionMessages.join(" ")}
             </Notice>
           )}
-          <div className="forecast-section">
-            <h3>Коэффициенты при расчёте</h3>
+          <details className="forecast-section">
+            <summary>Коэффициенты при расчёте</summary>
             <OddsTable candidates={forecast.candidates} teamA={map.team_a} teamB={map.team_b} />
             <p className="quote-state">
               {forecast.odds.provider ??
@@ -169,9 +169,9 @@ export function ForecastCard({
                 </p>
               )
             })}
-          </div>
-          <div className="forecast-section">
-            <h3>Основания и ограничения прогноза</h3>
+          </details>
+          <details className="forecast-section">
+            <summary>Основания прогноза</summary>
             {criteria.length > 0 && (
               <>
                 <table className="compact-stats-table forecast-factors">
@@ -229,7 +229,7 @@ export function ForecastCard({
               </>
             )}
             <div className="explanation">{explanation}</div>
-          </div>
+          </details>
           <div
             className={`forecast-section forecast-quality${qualityMessages.length > 0 ? " forecast-quality-warning" : ""}`}
           >
@@ -267,18 +267,26 @@ export function ForecastCard({
   )
 }
 
-export function Delta({ map }: { readonly map: MapDTO }) {
-  const a = map.pre?.analysis.shadow_forecast?.winner_probability_team_a
-  const b = map.post?.analysis.shadow_forecast?.winner_probability_team_a
+export function Delta({
+  team,
+  pre,
+  post,
+}: {
+  readonly team: string
+  readonly pre: Omit<Forecast, "map_id"> | null
+  readonly post: Omit<Forecast, "map_id"> | null
+}) {
+  const a = pre?.analysis.shadow_forecast?.winner_probability_team_a
+  const b = post?.analysis.shadow_forecast?.winner_probability_team_a
+  if (a == null || b == null) return null
+  const difference = (b - a) * 100
   return (
     <div className="delta">
-      <span>Изменение PRE → POST · {map.team_a}</span>
+      <span>Изменение шанса PRE → POST · {team}</span>
       <strong>
-        {a == null || b == null
-          ? "Нет пары для сравнения"
-          : `${(b - a >= 0 ? "+" : "") + ((b - a) * 100).toFixed(2)} п.п.`}
+        {difference > 0 && "+"}
+        {difference.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} п.п.
       </strong>
-      <small>Разница сохранённых оценок.</small>
     </div>
   )
 }

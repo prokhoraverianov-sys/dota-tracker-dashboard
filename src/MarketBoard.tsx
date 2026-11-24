@@ -76,9 +76,8 @@ function EventMarkets({ event }: { readonly event: Event }) {
                   .map((provider) => (
                     <span key={provider.provider}>
                       {providerLabel(provider.provider)}{" "}
-                      {provider.winner
-                        ? `${priceLabel(provider.winner.team_a)} / ${priceLabel(provider.winner.team_b)}`
-                        : "нет цен на победу"}
+                      {provider.winner &&
+                        ` · ${event.team_a} ${priceLabel(provider.winner.team_a)} · ${event.team_b} ${priceLabel(provider.winner.team_b)}`}
                       {provider.duration_lines.length > 0
                         ? ` · линий тотала: ${provider.duration_lines.length}`
                         : ""}
@@ -105,7 +104,7 @@ export function MarketBoard({
   api,
   tournament,
 }: {
-  readonly api: Api
+  readonly api: Pick<Api, "request">
   readonly tournament: string
 }) {
   const [data, setData] = useState<MarketBoardData | null>(null)
@@ -149,14 +148,11 @@ export function MarketBoard({
     <section className="panel market-board" aria-busy={busy}>
       <div className="panel-heading">
         <div>
-          <h2>Котировки · PARI и Polymarket</h2>
-          <p className="muted">
-            Серия и отдельные карты показаны раздельно. Все цены в десятичном формате.
-            Автообновление раз в 15 секунд, пока страница открыта.
-          </p>
+          <h2>Текущие рынки</h2>
+          <p className="muted">PARI и Polymarket · автоматическое обновление каждые 15 секунд.</p>
           {data && (
             <p className="muted market-checked">
-              Последнее успешное обновление: {time(data.checked_at_utc)} · UTC+7
+              Последняя проверка: {time(data.checked_at_utc)} · UTC+7
             </p>
           )}
         </div>
@@ -194,7 +190,7 @@ export function MarketBoard({
                     {providerLabel(source.provider)}
                   </strong>
                   <span className={source.status === "ok" ? "hit-text" : "muted"}>
-                    {source.status === "ok" ? "Снимки доступны" : "Нет снимка"}
+                    {source.status === "ok" ? "Источник ответил" : "Источник недоступен"}
                   </span>
                   {source.notice && <small>{source.notice}</small>}
                 </p>

@@ -5,7 +5,6 @@ import {
   ChartNoAxesCombined,
   History,
   LogOut,
-  ShieldCheck,
   Swords,
 } from "lucide-react"
 import { type ReactNode, useId } from "react"
@@ -49,7 +48,6 @@ export function Header({
   return (
     <header className="page-heading">
       <div>
-        <p className="eyebrow">DOTA TRACKER</p>
         <h1>{title}</h1>
         <p className="muted">{subtitle}</p>
       </div>
@@ -102,9 +100,7 @@ export function Shell({
             <span className="brand-mark">
               <Swords size={22} />
             </span>
-            <div>
-              Dota Tracker<small>АНАЛИТИКА КАРТ</small>
-            </div>
+            <span>Dota Tracker</span>
           </button>
           <nav aria-label="Основная навигация">
             {links.map((item) => (
@@ -127,9 +123,6 @@ export function Shell({
             ))}
           </nav>
           <div className="topbar-meta">
-            <div className="shadow-label">
-              <ShieldCheck size={16} /> Режим наблюдения
-            </div>
             {logout && (
               <button type="button" className="nav-item" aria-label="Выйти" onClick={logout}>
                 <LogOut size={17} />

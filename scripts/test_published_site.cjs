@@ -65,8 +65,74 @@ async function main() {
     assert.equal(await maps.getByText(/^Плей-офф ·/).count(), 36)
     assert.equal(await maps.getByText("Плей-офф · Гранд-финал", { exact: true }).count(), 4)
     assert.equal(await maps.getByText(/^Кэф\. /).count(), 132)
+
+    home.hash = "/schedule?tournament=1win-essence-3&view=groups"
+    await page.goto(home.href)
+    await page.getByRole("region", { name: "Группа D", exact: true }).waitFor()
+    assert.equal(await page.locator(".schedule-groups .playin-group").count(), 4)
+    const group = page.getByRole("region", { name: "Группа B", exact: true })
+    await group.getByRole("button", { name: "GamerLegion", exact: true }).click()
+    assert.equal(await page.locator(".tracker-series").count(), 2)
+    const aurora = page.locator(".tracker-series").filter({ hasText: "Aurora Gaming" })
+    assert.deepEqual(await aurora.locator(".tracker-series-side > strong").allTextContents(), ["1", "2"])
+    await aurora.locator("summary").click()
+    await aurora.getByRole("link", { name: /Карта 2/ }).click()
+    await page.getByRole("heading", { level: 1 }).getByText("Aurora Gaming").waitFor()
+
+    home.hash = "/schedule?tournament=pari-universe&view=markets"
+    await page.goto(home.href)
+    await page.getByRole("heading", { name: "Котировки до старта карты" }).waitFor()
+    await page.getByRole("searchbox", { name: "Поиск котировок" }).fill("9056215433")
+    const recovered = page.locator(".tournament-price-rows > tr")
+    assert.equal(await recovered.count(), 1)
+    await recovered.getByRole("link", { name: "Polymarket ↗" }).waitFor()
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+
+    home.hash = "/schedule?tournament=1win-essence-3-play-in&view=markets"
+    await page.goto(home.href)
+    await page.getByText("55 из 55 карт с ценой · Polymarket 55 из 55", { exact: true }).waitFor()
+    await page.getByRole("button", { name: "Группы", exact: true }).click()
+    await page.getByRole("heading", { name: "Группа A", exact: true }).waitFor()
+    await page.reload()
+    await page.getByRole("heading", { name: "Группа B", exact: true }).waitFor()
+    assert.equal(await page.locator(".playin-group tbody tr").count(), 10)
+
+    await page.getByRole("button", { name: "PARI Universe", exact: true }).click()
+    await page.getByRole("region", { name: "Группа B", exact: true }).waitFor()
+    assert.equal(await page.locator(".schedule-groups .playin-group").count(), 2)
+    assert.equal(await page.locator(".schedule-groups tbody tr").count(), 10)
+
+    const fresh = await browser.newPage()
+    await fresh.route("**/data/verified-results.json", async (route) => {
+      const original = await route.fetch()
+      const data = await original.json()
+      data.tournaments["new-tournament-group-test"] = {
+        name: "Тестовый турнир",
+        series: {
+          "cs-1234-5678": {
+            group: { id: "9501", name: "Группа Z" },
+            phase: "Групповой этап · Группа Z",
+            team_a: "Test Team Alpha",
+            team_b: "Test Team Beta",
+            starts_at_utc: "2099-01-01T12:00:00Z",
+            best_of: 3,
+            finished: false,
+            maps: [],
+          },
+        },
+      }
+      await route.fulfill({ response: original, json: data })
+    })
+    home.hash = "/schedule?tournament=new-tournament-group-test"
+    await fresh.goto(home.href)
+    const futureGroup = fresh.getByRole("region", { name: "Группа Z", exact: true })
+    await futureGroup.getByRole("button", { name: "Test Team Alpha", exact: true }).waitFor()
+    await futureGroup.getByRole("button", { name: "Test Team Beta", exact: true }).waitFor()
+    assert.equal(await futureGroup.getByText("сыграно 0", { exact: true }).count(), 2)
+    await fresh.close()
+
     assert.deepEqual(errors, [], "Unhandled application error on the published site")
-    console.log("Published dashboard passed: 66 results, map 116, PRE/POST, odds, mobile heading.")
+    console.log("Dashboard passed: 66 results, exact map forecasts, group scores, CLOB odds and mobile layout.")
   } finally {
     await browser.close()
   }

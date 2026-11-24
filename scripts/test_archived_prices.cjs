@@ -21,6 +21,33 @@ component.filename = __filename
 component.paths = module.paths
 component._compile(output.text, __filename)
 const data = require("../public/data/verified-results.json")
+const recovered = require("../src/polymarket-api-prices.json")
+const seriesById = Object.assign({}, ...Object.values(data.tournaments).map((event) => event.series))
+for (const [key, entry] of Object.entries(recovered)) {
+  const [seriesId, number] = key.split("/")
+  const series = seriesById[seriesId]
+  const fact = series?.maps.find((map) => map.map_number === Number(number))
+  assert(fact?.steam_match_id && fact.started_at_utc, key)
+  assert.deepEqual([entry.steam, entry.team_a, entry.team_b],
+                   [fact.steam_match_id, series.team_a, series.team_b], key)
+  for (const quote of entry.quotes) {
+    const address = new URL(quote.url)
+    const market = address.searchParams.get("marketSlug")
+    assert.equal(address.hostname, "polymarket.com", key)
+    assert.equal(quote.source, "polymarket", key)
+    assert(Date.parse(quote.at) < Date.parse(fact.started_at_utc), key)
+    assert([quote.team_a, quote.team_b].every((value) => Number.isFinite(+value) && +value > 1), key)
+    if (quote.scope === "series_at_1_1") {
+      assert.equal(number, "3", key)
+      assert.equal(series.best_of, 3, key)
+      assert.notEqual(series.maps[0].winner, series.maps[1].winner, key)
+    } else {
+      assert.equal(quote.scope, "map", key)
+      assert(market?.endsWith(`-game${number}`), key)
+    }
+  }
+}
+assert(Object.keys(recovered).length >= 69, "Polymarket API coverage regressed")
 let compared = 0
 for (const event of Object.values(data.tournaments)) {
   for (const [series_id, series] of Object.entries(event.series)) {

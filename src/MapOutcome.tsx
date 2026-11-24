@@ -17,13 +17,14 @@ export function StageVerdict({
       <strong className={comparison === null ? "muted" : comparison ? "hit-text" : "miss-text"}>
         {comparison === null ? note : comparison ? "Зашло" : "Не зашло"}
       </strong>
-      {pick && <small>Выбор модели · {pick}</small>}
+      {pick && <small className="verdict-pick">Выбор модели · {pick}</small>}
       {price && (
         <small>
           Кэф. {decimalPrice(price.value)} · {price.label}
         </small>
       )}
-      {note && comparison !== null && <small>{note} · вне точности оригиналов</small>}
+      {comparison !== null && !price && <small>Нет подтверждённой цены до старта</small>}
+      {note && comparison !== null && <small>{note}</small>}
     </div>
   )
 }

@@ -10,7 +10,6 @@ import {
 } from "./api"
 import { type Catalog, catalogSchema, message, type Session } from "./contracts"
 import { Login } from "./Login"
-import { MapPage } from "./MapPage"
 import { Schedule } from "./Schedule"
 import { SourceStatus } from "./SourceStatus"
 import { Empty, Notice, Shell } from "./ui"
@@ -21,6 +20,7 @@ const HistoryPage = lazy(() =>
 const StatsPage = lazy(() =>
   import("./StatsPage").then(({ StatsPage }) => ({ default: StatsPage })),
 )
+const MapPage = lazy(() => import("./MapPage").then(({ MapPage }) => ({ default: MapPage })))
 const PublicArchive = lazy(() =>
   import("./PublicArchive").then(({ PublicArchive }) => ({ default: PublicArchive })),
 )
@@ -240,11 +240,11 @@ export function App() {
           />
         ) : (
           <Schedule
-            key={route}
+            key={playInOverview ? route : selectedTournament}
             api={api}
-            catalog={catalog}
             navigate={navigate}
             tournament={selectedTournament}
+            view={new URLSearchParams(route.split("?")[1]).get("view")}
           />
         )}
       </Suspense>

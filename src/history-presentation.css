@@ -107,6 +107,59 @@
   gap: var(--s2);
   text-align: left;
 }
+
+.tracked-map-pair {
+  display: grid;
+  gap: var(--s1);
+  width: fit-content;
+  font-weight: 600;
+}
+
+@media (max-width: 680px) {
+  .history-panel .report-table:has(.tracked-map-rows) {
+    min-width: 0;
+  }
+
+  .report-table:has(.tracked-map-rows) > thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .tracked-map-rows {
+    display: block;
+  }
+
+  .tracked-map-rows > tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .report-table .tracked-map-rows > tr > td {
+    display: block;
+    min-width: 0;
+    padding: var(--s2) var(--s3);
+    border: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .tracked-map-rows > tr > td:first-child {
+    grid-column: 1 / -1;
+    padding-top: var(--s3);
+  }
+
+  .tracked-map-rows > tr > td[data-mobile-label]::before {
+    content: attr(data-mobile-label);
+    display: block;
+    color: var(--muted);
+    margin-bottom: var(--s1);
+    font-size: 11px;
+  }
+}
 .report-view .history-versus {
   color: var(--muted);
   font-size: 11px;

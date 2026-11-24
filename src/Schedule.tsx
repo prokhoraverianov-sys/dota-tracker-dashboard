@@ -1,22 +1,29 @@
-import { ArrowRight, RefreshCw } from "lucide-react"
-import { useEffect, useState } from "react"
+import { ArrowRight, ChevronDown, RefreshCw } from "lucide-react"
+import { lazy, Suspense, useEffect, useId, useRef, useState } from "react"
 import type { z } from "zod"
 import type { Api } from "./api"
-import { type Catalog, message, scheduleSchema } from "./contracts"
+import { message, scheduleSchema } from "./contracts"
 import { mapPath, mapStatus, query, time } from "./domain"
 import { EventOverview } from "./EventOverview"
+import { type GroupStanding, type GroupStandingTable, GroupTables } from "./GroupTables"
 import { MarketBoard } from "./MarketBoard"
 import { PlayIn } from "./PlayIn"
-import { PLAY_IN_ROUTE } from "./playin-data"
+import { PLAY_IN_KEY } from "./playin-data"
 import { TournamentPicker } from "./TournamentPicker"
+import { tournamentPhase } from "./tournament-phase"
 import { Empty, Header, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./schedule-presentation.css"
 
-type ScheduleData = z.infer<typeof scheduleSchema>
-const recentSeriesWindow = 4 * 60 * 60 * 1000
+const TournamentPrices = lazy(() =>
+  import("./TournamentPrices").then(({ TournamentPrices }) => ({ default: TournamentPrices })),
+)
 
-function SeriesScore({ series }: { readonly series: ScheduleData["series"][number] }) {
+type ScheduleData = z.infer<typeof scheduleSchema>
+type Series = ScheduleData["series"][number]
+type Section = "all" | "groups" | "playoff" | "markets"
+
+function seriesResult(series: Series) {
   const winners = series.maps.flatMap((map) =>
     !map.result || map.result_conflict || map.play_status === "unplayed"
       ? []
@@ -24,233 +31,461 @@ function SeriesScore({ series }: { readonly series: ScheduleData["series"][numbe
   )
   const a = winners.filter((name) => name === series.team_a).length
   const b = winners.filter((name) => name === series.team_b).length
-  if (!winners.length) return <span className="versus">VS</span>
+  const target = Math.floor(series.best_of / 2) + 1
+  const done = a >= target || b >= target || (series.best_of > 0 && a + b === series.best_of)
+  return { a, b, done }
+}
+
+function groupFor(series: Series, phase: string) {
+  if (series.group) return series.group
+  const name = phase.match(/(?:^| · )(Группа [^·]+?)(?: · |$)/u)?.[1]
+  return name ? { id: name, name } : undefined
+}
+
+function groupStandings(id: string, name: string, matches: readonly Series[]): GroupStandingTable {
+  const rows = new Map<string, GroupStanding>()
+  for (const match of matches) {
+    for (const name of [match.team_a, match.team_b]) {
+      if (!rows.has(name))
+        rows.set(name, {
+          id: name,
+          name,
+          rank: null,
+          played: 0,
+          won: 0,
+          drawn: 0,
+          lost: 0,
+          mapsWon: 0,
+          mapsLost: 0,
+        })
+    }
+  }
+  let completed = 0
+  for (const match of matches) {
+    const first = rows.get(match.team_a)
+    const second = rows.get(match.team_b)
+    if (!first || !second) continue
+    const score = seriesResult(match)
+    first.mapsWon += score.a
+    first.mapsLost += score.b
+    second.mapsWon += score.b
+    second.mapsLost += score.a
+    if (!score.done) continue
+    completed += 1
+    first.played += 1
+    second.played += 1
+    first[score.a > score.b ? "won" : score.a === score.b ? "drawn" : "lost"] += 1
+    second[score.b > score.a ? "won" : score.b === score.a ? "drawn" : "lost"] += 1
+  }
+  const points = (row: GroupStanding) => row.won * 3 + row.drawn
+  const ordered = [...rows.values()].sort(
+    (a, b) => points(b) - points(a) || a.name.localeCompare(b.name),
+  )
+  if (completed > 0) {
+    let rank = 0
+    let previous: number | undefined
+    ordered.forEach((row, index) => {
+      const current = points(row)
+      if (current !== previous) rank = index + 1
+      row.rank = rank
+      previous = current
+    })
+  }
+  return { id, name, complete: completed === matches.length, rows: ordered }
+}
+
+function SeriesRow({
+  series,
+  phase,
+  tournament,
+  navigate,
+}: {
+  readonly series: Series
+  readonly phase: string
+  readonly tournament: string
+  readonly navigate: (route: string) => void
+}) {
+  const score = seriesResult(series)
+  const scored = score.a + score.b > 0
+  const played = series.maps.filter((map) => map.play_status !== "unplayed")
   return (
-    <span className="versus series-score" title="Счёт по подтверждённым картам">
-      {a} : {b}
-    </span>
+    <details className="playin-series tracker-series">
+      <summary>
+        <span className="tracker-series-date">
+          <strong>{time(series.starts_at_utc)}</strong>
+          <small>
+            {phase.replace(/^(Групповой этап|Плей-офф) · /u, "") || "Стадия уточняется"}
+          </small>
+        </span>
+        <span className="tracker-series-teams">
+          <span className="tracker-series-side" data-winner={score.done && score.a > score.b}>
+            <TeamIdentity name={series.team_a} size="md" />
+            <strong>{scored ? score.a : "–"}</strong>
+          </span>
+          <span className="tracker-series-side" data-winner={score.done && score.b > score.a}>
+            <TeamIdentity name={series.team_b} size="md" />
+            <strong>{scored ? score.b : "–"}</strong>
+          </span>
+        </span>
+        <span className="tracker-series-status">
+          <span>BO{series.best_of}</span>
+          <small>{score.done ? "Завершена" : scored ? "Есть результаты" : "Ожидается"}</small>
+        </span>
+        <ChevronDown size={17} aria-hidden="true" />
+      </summary>
+      <div className="playin-series-body">
+        <div className="map-buttons tracker-map-buttons">
+          {played.map((map) => (
+            <a
+              key={map.map_number}
+              className="map-button"
+              href={`#${mapPath(map)}?${query({ tournament })}`}
+              onClick={(event) => {
+                if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+                event.preventDefault()
+                navigate(`${mapPath(map)}?${query({ tournament })}`)
+              }}
+            >
+              <span>
+                Карта {map.map_number} <ArrowRight size={14} aria-hidden="true" />
+              </span>
+              <small>{mapStatus(map)}</small>
+            </a>
+          ))}
+        </div>
+        {played.length < series.maps.length && (
+          <small className="muted">
+            Отпали по счёту:{" "}
+            {series.maps
+              .filter((map) => map.play_status === "unplayed")
+              .map((map) => map.map_number)
+              .join(", ")}
+          </small>
+        )}
+      </div>
+    </details>
   )
 }
 
 type ScheduleProps = {
-  readonly api: Api
-  readonly catalog: Catalog
+  readonly api: Pick<Api, "request">
   readonly tournament: string
   readonly navigate: (route: string) => void
+  readonly view: string | null
+  readonly archive?: boolean
 }
 
-export function Schedule(props: ScheduleProps) {
-  const { tournament, navigate } = props
-  const playIn = tournament === "1win-essence-3-play-in"
+export function Schedule({ api, tournament, navigate, view, archive }: ScheduleProps) {
+  const selected = tournament || "pari-universe"
+  const playIn = selected === PLAY_IN_KEY && !archive
+  const odds = view === "markets"
   return (
     <div className="schedule-page">
       <Header
-        title={playIn ? "1win Essence III · Play-In" : "Расписание"}
-        subtitle={
-          playIn
-            ? "Группы, результаты и анализ карт: откройте серию для PRE и POST. Время по Бангкоку (UTC+7)."
-            : "Выберите карту для подготовки и прогноза. Время начала по Бангкоку (UTC+7)."
-        }
+        title={selected === PLAY_IN_KEY ? "1win Essence III · Play-In" : "Расписание"}
+        subtitle="Откройте серию для просмотра карт. Время UTC+7."
       />
       <TournamentPicker
-        api={props.api}
-        value={tournament || "pari-universe"}
+        api={api}
+        value={selected}
         onChange={(key) => navigate(`/schedule?${query({ tournament: key })}`)}
       />
-      {playIn ? <PlayIn api={props.api} navigate={navigate} /> : <ScheduleContents {...props} />}
+      {playIn && (
+        <fieldset className="view-tabs schedule-views" aria-label="Раздел Play-In">
+          <button
+            type="button"
+            className="secondary"
+            aria-pressed={!odds}
+            onClick={() => navigate(`/schedule?${query({ tournament: selected })}`)}
+          >
+            Группы
+          </button>
+          <button
+            type="button"
+            className="secondary"
+            aria-pressed={odds}
+            onClick={() =>
+              navigate(`/schedule?${query({ tournament: selected, view: "markets" })}`)
+            }
+          >
+            Котировки
+          </button>
+        </fieldset>
+      )}
+      {playIn && !odds ? (
+        <PlayIn api={api} navigate={navigate} />
+      ) : (
+        <ScheduleContents
+          api={api}
+          tournament={selected}
+          navigate={navigate}
+          view={view}
+          archive={archive ?? false}
+        />
+      )}
     </div>
   )
 }
 
-function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps) {
-  const [date, setDate] = useState("")
+function ScheduleContents({ api, tournament, navigate, view, archive }: ScheduleProps) {
+  const matchesId = useId()
+  const matchesHeading = useRef<HTMLHeadingElement>(null)
+  const [group, setGroup] = useState("")
   const [team, setTeam] = useState("")
+  const [date, setDate] = useState("")
   const [data, setData] = useState<ScheduleData | null>(null)
   const [error, setError] = useState("")
   const [busy, setBusy] = useState(true)
   const [refresh, setRefresh] = useState(0)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Retry the request with the same filters.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Manual refresh repeats the same request.
   useEffect(() => {
     let active = true
-    setBusy(true)
-    setError("")
-    api
-      .request(`/schedule?${query({ date, team, tournament })}`, scheduleSchema)
-      .then((result) => {
-        if (!active) return
-        setData(result)
-      })
-      .catch((err) => {
+    let pending = false
+    async function load(manual: boolean) {
+      if (pending) return
+      pending = true
+      if (manual) setBusy(true)
+      try {
+        const result = await api.request(`/schedule?${query({ tournament })}`, scheduleSchema)
+        if (active) {
+          setData(result)
+          setError("")
+        }
+      } catch (err) {
         if (active) setError(message(err))
-      })
-      .finally(() => {
+      } finally {
+        pending = false
         if (active) setBusy(false)
-      })
+      }
+    }
+    void load(true)
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") void load(false)
+    }, 30_000)
     return () => {
       active = false
+      window.clearInterval(timer)
     }
-  }, [api, date, team, tournament, refresh])
+  }, [api, tournament, refresh])
 
-  useEffect(() => {
-    if (busy) return
-    const timer = window.setInterval(() => {
-      if (document.visibilityState === "visible") setRefresh((value) => value + 1)
-    }, 30_000)
-    return () => window.clearInterval(timer)
-  }, [busy])
-
-  const now = Date.now()
-  const recent = data?.series
+  const slots = new Map(data?.event?.slots.map((slot) => [slot.series_id, slot.phase]))
+  const phaseOf = (match: Series) =>
+    tournamentPhase(match.series_id, match.phase ?? slots.get(match.series_id) ?? match.group?.name)
+  const series = data?.series ?? []
+  const groups = new Map<string, { name: string; matches: Series[] }>()
+  for (const match of series) {
+    const phase = phaseOf(match)
+    const source = groupFor(match, phase)
+    if (!source || phase.includes("переигровки")) continue
+    const entry = groups.get(source.id) ?? { name: source.name, matches: [] }
+    entry.matches.push(match)
+    groups.set(source.id, entry)
+  }
+  const groupEntries = [...groups].sort(([, a], [, b]) => a.name.localeCompare(b.name, "ru"))
+  const groupMatches = groupEntries.flatMap(([, item]) => item.matches)
+  const playoff = series.filter((match) => phaseOf(match).startsWith("Плей-офф"))
+  const allComplete = series.length > 0 && series.every((item) => seriesResult(item).done)
+  const active: Section =
+    view === "all" || view === "groups" || view === "playoff" || view === "markets"
+      ? view
+      : groups.size
+        ? "groups"
+        : "all"
+  const teams = [...new Set(series.flatMap((item) => [item.team_a, item.team_b]))].sort((a, b) =>
+    a.localeCompare(b),
+  )
+  const visible = (active === "playoff" ? playoff : series)
     .filter((item) => {
-      const start = Date.parse(item.starts_at_utc)
+      const phase = phaseOf(item)
+      const matchGroup = groupFor(item, phase)
       return (
-        start <= now &&
-        now - start < recentSeriesWindow &&
-        item.maps.some((map) => !map.result && map.play_status !== "unplayed")
+        (active !== "groups" ||
+          ((matchGroup || phase.startsWith("Групповой этап")) &&
+            (!group || matchGroup?.id === group))) &&
+        (!team || item.team_a === team || item.team_b === team) &&
+        (!date || (item.tournament_date ?? item.starts_at_utc.slice(0, 10)) === date)
       )
     })
-    .sort((a, b) => b.starts_at_utc.localeCompare(a.starts_at_utc))
-  const upcoming = data?.series
-    .filter(
-      (item) =>
-        Date.parse(item.starts_at_utc) > now &&
-        item.maps.some((map) => !map.result && map.play_status !== "unplayed"),
-    )
-    .sort((a, b) => a.starts_at_utc.localeCompare(b.starts_at_utc))
-  const series = [
-    ...(recent ?? []),
-    ...(upcoming ?? []),
-    ...(data?.series ?? [])
-      .filter((item) => !recent?.includes(item) && !upcoming?.includes(item))
-      .sort((a, b) => b.starts_at_utc.localeCompare(a.starts_at_utc)),
-  ]
+    .sort((a, b) => {
+      const aDone = seriesResult(a).done
+      const bDone = seriesResult(b).done
+      if (aDone !== bDone) return Number(aDone) - Number(bDone)
+      return active === "groups" || !aDone
+        ? a.starts_at_utc.localeCompare(b.starts_at_utc)
+        : b.starts_at_utc.localeCompare(a.starts_at_utc)
+    })
+
+  function filterGroup(next: string, name = "") {
+    setGroup(next)
+    setTeam(name)
+    setDate("")
+    window.requestAnimationFrame(() => matchesHeading.current?.focus())
+  }
+
   return (
     <>
-      {tournament !== "1win-essence-3" && (
-        <MarketBoard api={api} tournament={tournament || "pari-universe"} />
+      {(tournament !== PLAY_IN_KEY || archive) && (
+        <fieldset className="view-tabs schedule-views" aria-label="Раздел турнира">
+          {(
+            [
+              ["all", "Все матчи", true],
+              ["groups", "Группы", groups.size > 0],
+              ["playoff", "Плей-офф", playoff.length > 0],
+              ["markets", "Котировки", true],
+            ] as const
+          )
+            .filter(([, , show]) => show)
+            .map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                className="secondary"
+                aria-pressed={active === key}
+                onClick={() => {
+                  setGroup("")
+                  setTeam("")
+                  setDate("")
+                  navigate(`/schedule?${query({ tournament, view: key })}`)
+                }}
+              >
+                {label}
+              </button>
+            ))}
+        </fieldset>
       )}
-      <section className="toolbar schedule-toolbar" aria-label="Настройки расписания">
-        <details className="optional-filters">
-          <summary>{date || team ? "Фильтры применены" : "Фильтры расписания"}</summary>
-          <div className="optional-filter-fields">
-            <label>
-              День турнира
-              <select value={date} onChange={(e) => setDate(e.target.value)}>
-                <option value="">Все даты</option>
-                {data?.dates.map((day) => (
-                  <option key={day}>{day}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Команда
-              <select value={team} onChange={(e) => setTeam(e.target.value)}>
-                <option value="">Все команды</option>
-                {(data?.event?.teams ?? catalog.teams).map((item) => (
-                  <option key={item.name}>{item.name}</option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </details>
-        <button
-          type="button"
-          className="secondary"
-          onClick={() => setRefresh((x) => x + 1)}
-          disabled={busy}
-        >
-          <RefreshCw size={16} /> {busy ? "Обновляем…" : "Обновить"}
-        </button>
-      </section>
-      {error && <Notice error>{error} Попробуйте обновить расписание.</Notice>}
-      <section className="panel schedule-panel" aria-busy={busy}>
-        <div className="panel-heading">
-          <div>
-            <h2>{data?.event ? "Подтверждённые пары" : "Серии"}</h2>
-            <p className="muted">
-              {data
-                ? `${data.series.length} · обновлено ${time(data.refreshed_at_utc)}`
-                : busy
-                  ? "Загружаем расписание…"
-                  : "Расписание недоступно"}
-            </p>
-          </div>
-        </div>
-        {series.map((item) => (
-          <article className="series-row" key={item.series_id}>
-            <div className="series-time">
-              <strong>{time(item.starts_at_utc)}</strong>
-              <span>BO{item.best_of}</span>
-              {item.tournament_date && (
-                <span>Турнирный день {item.tournament_date.split("-").reverse().join(".")}</span>
-              )}
+      {active === "markets" ? (
+        !data && busy ? (
+          <Empty title="Загружаем котировки…" />
+        ) : !data && error ? (
+          <Notice error>Не удалось загрузить котировки. {error}</Notice>
+        ) : allComplete || tournament === PLAY_IN_KEY || archive ? (
+          <Suspense fallback={<Empty title="Загружаем историю цен…" />}>
+            <TournamentPrices maps={series.flatMap((item) => item.maps)} tournament={tournament} />
+          </Suspense>
+        ) : (
+          <MarketBoard api={api} tournament={tournament} />
+        )
+      ) : (
+        <>
+          {error && <Notice error>Не удалось обновить расписание. {error}</Notice>}
+          {active === "groups" && groups.size > 0 && (
+            <div className="schedule-groups">
+              <div className="report-counts">
+                <div>
+                  <strong>
+                    {new Set(groupMatches.flatMap((match) => [match.team_a, match.team_b])).size}
+                  </strong>
+                  <span>команд · {groups.size} групп</span>
+                </div>
+                <div>
+                  <strong>
+                    {groupMatches.filter((match) => seriesResult(match).done).length} /{" "}
+                    {groupMatches.length}
+                  </strong>
+                  <span>серий завершено</span>
+                </div>
+                <div>
+                  <strong>
+                    {groupMatches.reduce((total, match) => {
+                      const score = seriesResult(match)
+                      return total + score.a + score.b
+                    }, 0)}
+                  </strong>
+                  <span>карт с результатом</span>
+                </div>
+              </div>
+              <GroupTables
+                tables={groupEntries.map(([id, item]) =>
+                  groupStandings(id, item.name, item.matches),
+                )}
+                onTeam={filterGroup}
+              />
+              <p className="muted">
+                Положение по результатам серий. При равенстве показателей учитывайте тай-брейки
+                турнира.
+              </p>
             </div>
-            <div className="series-teams schedule-match-teams">
-              <TeamIdentity name={item.team_a} size="md" />
-              <SeriesScore series={item} />
-              <TeamIdentity name={item.team_b} size="md" />
-            </div>
-            <div className="map-buttons">
-              {!data?.event && now - Date.parse(item.starts_at_utc) >= recentSeriesWindow && (
+          )}
+          <section className="panel schedule-panel" aria-busy={busy} aria-labelledby={matchesId}>
+            <div className="panel-heading schedule-list-heading">
+              <div>
+                <h2 id={matchesId} ref={matchesHeading} tabIndex={-1}>
+                  {active === "groups"
+                    ? "Матчи групп"
+                    : active === "playoff"
+                      ? "Матчи плей-офф"
+                      : "Матчи турнира"}
+                </h2>
+                <p className="muted">
+                  {data
+                    ? `${visible.length} из ${series.length} серий`
+                    : busy
+                      ? "Загружаем расписание…"
+                      : "Расписание недоступно"}
+                </p>
+              </div>
+              <div className="schedule-filters">
+                {active === "groups" && (
+                  <select
+                    aria-label="Группа"
+                    value={group}
+                    onChange={(e) => {
+                      setGroup(e.target.value)
+                      setTeam("")
+                    }}
+                  >
+                    <option value="">Все группы</option>
+                    {groupEntries.map(([id, item]) => (
+                      <option key={id} value={id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                <select aria-label="Команда" value={team} onChange={(e) => setTeam(e.target.value)}>
+                  <option value="">Все команды</option>
+                  {teams.map((name) => (
+                    <option key={name}>{name}</option>
+                  ))}
+                </select>
+                <select aria-label="Дата" value={date} onChange={(e) => setDate(e.target.value)}>
+                  <option value="">Все даты</option>
+                  {data?.dates.map((day) => (
+                    <option key={day} value={day}>
+                      {day.split("-").reverse().join(".")}
+                    </option>
+                  ))}
+                </select>
                 <button
                   type="button"
-                  className="text-button"
-                  onClick={() =>
-                    navigate(
-                      `/history?${query({ series: item.series_id, tournament: tournament || "pari-universe" })}`,
-                    )
-                  }
+                  className="secondary"
+                  onClick={() => setRefresh((value) => value + 1)}
+                  disabled={busy}
+                  aria-label="Обновить расписание"
                 >
-                  Найти в истории <ArrowRight size={13} aria-hidden="true" />
+                  <RefreshCw size={16} aria-hidden="true" />
                 </button>
-              )}
-              {item.maps.map((map) => (
-                <button
-                  type="button"
-                  key={map.map_number}
-                  className={`map-button ${map.result || map.play_status === "unplayed" ? "map-button-completed" : ""}`}
-                  onClick={() =>
-                    navigate(
-                      `${mapPath(map)}?${query({ tournament: tournament || "pari-universe" })}`,
-                    )
-                  }
-                >
-                  <span>
-                    Карта {map.map_number} <ArrowRight size={13} aria-hidden="true" />
-                  </span>
-                  <small>
-                    {map.play_status !== "unplayed" &&
-                    !map.result &&
-                    !map.pre &&
-                    !map.post &&
-                    !map.retrospective_post &&
-                    now - Date.parse(item.starts_at_utc) >= recentSeriesWindow
-                      ? "Без сохранённого прогноза"
-                      : mapStatus(map)}
-                  </small>
-                </button>
-              ))}
+              </div>
             </div>
-          </article>
-        ))}
-        {!busy && data?.series.length === 0 && (
-          <Empty title={data.event ? "Подтверждённых пар пока нет" : "Серий по фильтрам нет"}>
-            {data.event ? (
-              <>
-                Карточки для PRE и POST появятся после объявления пар. Уже сейчас можно разобрать
-                опубликованные матчи квалификации.{" "}
-                <button type="button" className="secondary" onClick={() => navigate(PLAY_IN_ROUTE)}>
-                  Открыть матчи и анализ Play-In
-                </button>
-              </>
-            ) : (
-              "Выберите другую дату или команду."
-            )}
-          </Empty>
-        )}
-      </section>
-      {tournament === "1win-essence-3" && <MarketBoard api={api} tournament={tournament} />}
-      {data?.event && <EventOverview event={data.event} />}
+            {visible.map((item) => (
+              <SeriesRow
+                key={item.series_id}
+                series={item}
+                phase={phaseOf(item)}
+                tournament={tournament}
+                navigate={navigate}
+              />
+            ))}
+            {!busy && !visible.length && data && <Empty title="Серий по выбранным условиям нет" />}
+          </section>
+          {data?.event && (
+            <details className="panel tournament-details">
+              <summary>Участники, составы и источники</summary>
+              <EventOverview event={data.event} />
+            </details>
+          )}
+        </>
+      )}
     </>
   )
 }

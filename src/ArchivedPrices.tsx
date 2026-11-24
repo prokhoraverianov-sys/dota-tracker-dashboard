@@ -5,8 +5,9 @@ import records from "./essence-archived-prices.json"
 import { type ProviderOdds, priceLabel, providerLabel, quoteSourceUrl } from "./odds"
 import pariRecords from "./pari-universe-archive.json"
 import playInRecords from "./playin-archived-prices.json"
+import apiRecords from "./polymarket-api-prices.json"
 
-interface Observation {
+export interface Observation {
   source: string
   scope: string
   team_a: string
@@ -71,16 +72,8 @@ function observationTime(at: string | null) {
 }
 
 export function archivedWinnerPrices(map: MapDTO, beforeStart: readonly ProviderOdds[] = []) {
-  const saved = archive[`${map.series_id}/${map.map_number}`]
+  const key = `${map.series_id}/${map.map_number}`
   const steam = map.result?.steam_match_id
-  const sameOrder = saved && map.team_a === saved.team_a && map.team_b === saved.team_b
-  const reverseOrder =
-    saved &&
-    steam &&
-    String(steam) === saved.steam &&
-    map.team_a === saved.team_b &&
-    map.team_b === saved.team_a
-  const matches = saved && (!steam || String(steam) === saved.steam) && (sameOrder || reverseOrder)
   const pariEntry =
     map.series_id?.startsWith("p26-") && map.result?.steam_match_id
       ? pariArchive[String(map.result.steam_match_id)]
@@ -92,17 +85,29 @@ export function archivedWinnerPrices(map: MapDTO, beforeStart: readonly Provider
       : undefined
   const observations: Observation[] = []
   for (const row of beforeStart) {
-    if (!row.winner || !row.provider || !row.observed_at_utc || !row.source_url) continue
+    if (
+      !row.winner ||
+      !row.provider ||
+      !row.observed_at_utc ||
+      !row.source_url ||
+      row.market_scope !== "map"
+    )
+      continue
     observations.push({
       source: row.provider,
-      scope: "before",
+      scope: observationPhase(row.observed_at_utc, map),
       team_a: row.winner.team_a,
       team_b: row.winner.team_b,
       at: row.observed_at_utc,
       url: row.source_url,
     })
   }
-  if (matches) {
+  const recovered: Readonly<Record<string, ArchivedMap>> = apiRecords
+  for (const saved of [archive[key], steam ? recovered[key] : undefined]) {
+    if (!saved || (steam && String(steam) !== saved.steam)) continue
+    const sameOrder = map.team_a === saved.team_a && map.team_b === saved.team_b
+    const reverseOrder = !!steam && map.team_a === saved.team_b && map.team_b === saved.team_a
+    if (!sameOrder && !reverseOrder) continue
     for (const item of saved.quotes) {
       if (!observations.some((row) => row.source === item.source && row.at === item.at)) {
         observations.push(
@@ -155,65 +160,69 @@ export function ArchivedPrices({
     <div className="archive-prices">
       <h3>Архив котировок</h3>
       {observations.length > 0 && (
-        <table className="odds-duration-table" aria-label="Архив котировок">
-          <thead>
-            <tr>
-              <th>Источник и рынок</th>
-              <th>{map.team_a}</th>
-              <th>{map.team_b}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {observations.map((q) => {
-              const url = quoteSourceUrl(q.url, q.source)
-              return (
-                <tr key={`${q.source}-${q.at}-${q.scope}`}>
-                  <th scope="row">
-                    {url ? (
-                      <a href={url} target="_blank" rel="noreferrer">
-                        {providerLabel(q.source)}
-                      </a>
-                    ) : (
-                      providerLabel(q.source)
-                    )}
-                    <div>{phaseLabel(q.scope)}</div>
-                    <small>
-                      {observationTime(q.at)}
-                      {!!q.resolution && ` · шаг архива ${q.resolution} с`}
-                    </small>
-                  </th>
-                  <td className="numeric">{priceLabel(q.team_a)}</td>
-                  <td className="numeric">{priceLabel(q.team_b)}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <div className="table-scroll">
+          <table className="odds-duration-table" aria-label="Архив котировок">
+            <thead>
+              <tr>
+                <th>Источник и рынок</th>
+                <th>{map.team_a}</th>
+                <th>{map.team_b}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {observations.map((q) => {
+                const url = quoteSourceUrl(q.url, q.source)
+                return (
+                  <tr key={`${q.source}-${q.at}-${q.scope}`}>
+                    <th scope="row">
+                      {url ? (
+                        <a href={url} target="_blank" rel="noreferrer">
+                          {providerLabel(q.source)}
+                        </a>
+                      ) : (
+                        providerLabel(q.source)
+                      )}
+                      <div>{phaseLabel(q.scope)}</div>
+                      <small>
+                        {observationTime(q.at)}
+                        {!!q.resolution && ` · шаг архива ${q.resolution} с`}
+                      </small>
+                    </th>
+                    <td className="numeric">{priceLabel(q.team_a)}</td>
+                    <td className="numeric">{priceLabel(q.team_b)}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
       {pari && totalUrl && pari.line != null && (
-        <table className="odds-duration-table" aria-label="Архив тоталов длительности">
-          <thead>
-            <tr>
-              <th>Тотал длительности</th>
-              <th>Меньше</th>
-              <th>Больше</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">
-                <a href={totalUrl} target="_blank" rel="noreferrer">
-                  {totalSource}
-                </a>{" "}
-                · {pari.line} мин
-                <div>{phaseLabel(observationPhase(pari.totalTime, map))}</div>
-                <small>{observationTime(pari.totalTime)}</small>
-              </th>
-              <td>{pari.under == null ? "Цена не сохранена" : priceLabel(String(pari.under))}</td>
-              <td>{pari.over == null ? "Цена не сохранена" : priceLabel(String(pari.over))}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-scroll">
+          <table className="odds-duration-table" aria-label="Архив тоталов длительности">
+            <thead>
+              <tr>
+                <th>Тотал длительности</th>
+                <th>Меньше</th>
+                <th>Больше</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <a href={totalUrl} target="_blank" rel="noreferrer">
+                    {totalSource}
+                  </a>{" "}
+                  · {pari.line} мин
+                  <div>{phaseLabel(observationPhase(pari.totalTime, map))}</div>
+                  <small>{observationTime(pari.totalTime)}</small>
+                </th>
+                <td>{pari.under == null ? "Цена не сохранена" : priceLabel(String(pari.under))}</td>
+                <td>{pari.over == null ? "Цена не сохранена" : priceLabel(String(pari.over))}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       )}
       {observations.some((q) => q.scope === "map" || q.scope === "series_at_1_1") && (
         <p className="muted">

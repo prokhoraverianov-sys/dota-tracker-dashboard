@@ -180,6 +180,7 @@ const eventOverviewSchema = z.object({
   ),
 })
 export type EventOverviewDTO = z.infer<typeof eventOverviewSchema>
+export const scheduleGroupSchema = z.object({ id: z.string().min(1), name: z.string().min(1) })
 export const scheduleSchema = z.object({
   tournaments: z.array(z.object({ key: z.string(), name: z.string() })).optional(),
   event: eventOverviewSchema.nullish(),
@@ -189,6 +190,8 @@ export const scheduleSchema = z.object({
   series: z.array(
     z.object({
       series_id: z.string(),
+      phase: z.string().nullish(),
+      group: scheduleGroupSchema.nullish(),
       starts_at_utc: z.string(),
       tournament_date: z.string().optional(),
       team_a: z.string(),

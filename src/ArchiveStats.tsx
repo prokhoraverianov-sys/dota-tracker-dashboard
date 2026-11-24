@@ -2,19 +2,6 @@ import { archiveMatch, tournamentArchive } from "./archive"
 import { time } from "./domain"
 import type { CompletedMatch, Provenance } from "./reporting"
 
-const money = new Intl.NumberFormat("ru-RU", {
-  style: "currency",
-  currency: "USD",
-  currencyDisplay: "code",
-})
-const scenarioTitles: Readonly<Record<string, string | undefined>> = {
-  winnerPOST125: "Победитель · POST · влияние драфта 1,25",
-  winnerPRE: "Победитель · PRE",
-  winnerPOST: "Победитель · POST · влияние драфта 0,25",
-  totalPRE: "Тотал · PRE",
-  totalPOST: "Тотал · POST",
-}
-
 export function ArchiveStats({
   items,
   provenance,
@@ -68,38 +55,19 @@ export function ArchiveStats({
         </p>
       </section>
       {matched.length === tournamentArchive.mapCount && items.length === matched.length && (
-        <section className="panel section-card bank-summary">
-          <h2>Расчётный банк · полный турнир</h2>
-          <p className="muted bank-conditions">
-            Стартовый банк 100 USD. Для POST 1,25 ставка фиксирована: 20 USD на каждую из 84 карт,
-            без фильтра по коэффициенту. В остальных сценариях ставка составляет 20% текущего банка.
-            Использованы архивные коэффициенты. Время относительно драфта известно не для всех карт.
+        <section className="panel section-card">
+          <h2>Сравнение сценариев PARI Universe</h2>
+          <p className="muted">
+            Пять сценариев со стартом $100 и фиксированными $20 на карту. Сводка показывает цены до
+            старта и все архивные цены в отдельных срезах.
           </p>
-          <div className="bank-grid">
-            {tournamentArchive.bank.map((row) => (
-              <article
-                key={row.scenario}
-                className={
-                  row.scenario === "winnerPOST125" ? "bank-scenario featured" : "bank-scenario"
-                }
-              >
-                <h3>{scenarioTitles[row.scenario] ?? row.scenario}</h3>
-                <span className="bank-stake-rule">
-                  {row.scenario === "winnerPOST125"
-                    ? "Фиксированно 20 USD на карту"
-                    : "20% текущего банка"}
-                </span>
-                <small className="bank-value-label">Итоговый банк</small>
-                <strong>{money.format(row.bank)}</strong>
-                <span className={row.profit < 0 ? "miss-text" : "hit-text"}>
-                  {money.format(row.profit)} к старту
-                </span>
-                <small className="muted">
-                  {row.won} выигр. · {row.lost} проигр. · {row.push} возвр. · {row.skip} пропусков
-                </small>
-              </article>
-            ))}
-          </div>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1MB3IqnQjt7GzjwRHnKq_kaAGbBpU6kNTPU_0veq8UG8/edit#gid=1204429685"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Открыть сводку турнира ↗
+          </a>
         </section>
       )}
     </>

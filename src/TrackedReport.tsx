@@ -7,17 +7,10 @@ import { StageVerdict } from "./MapOutcome"
 import { evaluateMap, mapStages } from "./map-outcome"
 import { decimalPrice, reportPrice } from "./report-price"
 import { minutes } from "./reporting"
-import phases from "./tournament-phases.json"
+import { tournamentPhase } from "./tournament-phase"
 import { Empty, Notice } from "./ui"
+import { TeamIdentity } from "./VisualIdentity"
 import { weightedPost, weights } from "./weighted-post"
-
-const archivedPhases: Record<string, string> = phases
-
-function stageLabel(phase: string) {
-  if (/^(верхняя сетка|нижняя сетка|гранд-финал)/i.test(phase)) return `Плей-офф · ${phase}`
-  if (/^группа /i.test(phase)) return `Групповой этап · ${phase}`
-  return phase
-}
 
 function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essence: boolean }) {
   const scenarios = essence ? [...mapStages, ...weights] : mapStages
@@ -166,14 +159,16 @@ export function TrackedReport({
   const all = data?.series.flatMap((series) => series.maps.map((map) => ({ map, series }))) ?? []
   const playable = all.filter(({ map }) => map.play_status !== "unplayed")
   const played = playable.filter(({ map }) => map.result && !map.result_conflict)
-  const livePhases = new Map(
-    data?.event?.slots.map((slot) => [slot.series_id, stageLabel(slot.phase)]),
-  )
-  const phaseFor = (id: string) => archivedPhases[id] || livePhases.get(id) || ""
+  const livePhases = new Map(data?.event?.slots.map((slot) => [slot.series_id, slot.phase]))
+  const phaseFor = (series: (typeof all)[number]["series"]) =>
+    tournamentPhase(
+      series.series_id,
+      series.phase ?? livePhases.get(series.series_id) ?? series.group?.name,
+    )
   const terms = search.toLocaleLowerCase("ru").trim().split(/\s+/).filter(Boolean)
   const visible = playable.filter(({ map, series }) => {
     const label =
-      `${phaseFor(series.series_id)} ${map.team_a} ${map.team_b} ${series.series_id} ${map.result?.steam_match_id ?? ""}`.toLocaleLowerCase(
+      `${phaseFor(series)} ${map.team_a} ${map.team_b} ${series.series_id} ${map.result?.steam_match_id ?? ""}`.toLocaleLowerCase(
         "ru",
       )
     return terms.every((term) => label.includes(term))
@@ -230,20 +225,26 @@ export function TrackedReport({
                       <th>{tournament === "1win-essence-3" ? "POST · 0,25" : "POST"}</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="tracked-map-rows">
                     {visible.map(({ map, series }) => (
                       <tr key={`${series.series_id}/${map.map_number}`}>
                         <td>
-                          <a href={`#${mapPath(map)}?${query({ tournament })}`}>
-                            {map.team_a} — {map.team_b}
+                          <a
+                            className="tracked-map-pair"
+                            href={`#${mapPath(map)}?${query({ tournament })}`}
+                          >
+                            <TeamIdentity name={map.team_a} size="sm" />
+                            <TeamIdentity name={map.team_b} size="sm" />
                           </a>
                           <small className="metric-note">
                             Карта {map.map_number} ·{" "}
                             {time(map.result?.started_at_utc ?? series.starts_at_utc)}
                           </small>
                         </td>
-                        <td>{phaseFor(series.series_id) || "Стадия уточняется"}</td>
-                        <td>
+                        <td data-mobile-label="Стадия">
+                          {phaseFor(series) || "Стадия уточняется"}
+                        </td>
+                        <td data-mobile-label="Победитель">
                           {map.result_conflict ? (
                             "Источники расходятся"
                           ) : map.result ? (
@@ -258,7 +259,7 @@ export function TrackedReport({
                           )}
                         </td>
                         {mapStages.map((stage) => (
-                          <td key={stage}>
+                          <td key={stage} data-mobile-label={stage.toUpperCase()}>
                             <StageVerdict map={map} stage={stage} />
                           </td>
                         ))}

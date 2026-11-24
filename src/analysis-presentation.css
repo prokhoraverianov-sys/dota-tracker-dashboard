@@ -6,6 +6,7 @@
 }
 .map-heading-main {
   min-width: 0;
+  flex: 1;
 }
 .outcome-panel {
   display: grid;
@@ -30,6 +31,10 @@
 .outcome-panel a {
   font-size: 12px;
 }
+.stage-verdict .verdict-pick {
+  color: var(--text);
+  font-weight: 600;
+}
 @media (max-width: 680px) {
   .outcome-panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -39,19 +44,37 @@
   }
 }
 .map-team-heading {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
   gap: var(--s3);
   margin-top: var(--s3);
 }
 .page-heading .map-team-heading {
-  font-size: clamp(23px, 2.2vw, 34px);
+  font-size: clamp(19px, 2.2vw, 31px);
   letter-spacing: -0.025em;
 }
-.map-versus {
-  font-size: 0.7em;
-  font-weight: 400;
+.map-number {
+  margin-top: var(--s2);
+  font-size: 18px;
+  font-weight: 650;
+}
+.map-heading-side {
+  display: grid;
+  min-width: 0;
+  gap: var(--s2);
+  padding: var(--s3);
+  border: 1px solid var(--line);
+  border-radius: var(--small-radius);
+  background: var(--canvas);
+}
+.map-heading-side > small {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 12px;
+  font-weight: 550;
+  letter-spacing: 0;
   color: var(--muted);
 }
 .map-heading .badge {
@@ -108,9 +131,21 @@
   border: 1px solid #30415280;
   border-radius: var(--small-radius);
 }
-.analysis-card .forecast-section h3 {
+.analysis-card .forecast-section h3,
+.analysis-card .forecast-section > summary {
   font-size: 14px;
   color: var(--text);
+}
+.analysis-card .forecast-section > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.analysis-card .forecast-section[open] > summary {
+  margin-bottom: var(--s3);
+}
+.forecast-source {
+  display: inline-block;
+  margin-block: var(--s2);
 }
 .analysis-card .forecast-factors {
   width: 100%;
@@ -237,6 +272,14 @@
 @media (max-width: 680px) {
   .map-heading {
     padding: var(--s4);
+    display: block;
+  }
+  .map-heading .badge {
+    margin-top: var(--s2);
+  }
+  .map-heading .map-heading-side .team-identity {
+    align-items: flex-start;
+    flex-direction: column;
   }
   .map-team-heading {
     gap: var(--s2);

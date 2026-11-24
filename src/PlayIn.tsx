@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import type { Api } from "./api"
 import { message } from "./contracts"
 import { time } from "./domain"
+import { GroupTables } from "./GroupTables"
 import {
   duration,
   groupName,
@@ -564,7 +565,7 @@ export function PlayIn({
   api,
   navigate,
 }: {
-  readonly api: Api
+  readonly api: Pick<Api, "request">
   readonly navigate: (route: string) => void
 }) {
   const [data, setData] = useState<PlayInData | null>(null)
@@ -664,73 +665,30 @@ export function PlayIn({
               <span>завершённых карт с данными</span>
             </div>
           </div>
-          <div className="playin-group-grid">
-            {data.groups.map((item) => (
-              <section
-                className="panel playin-group"
-                key={item.group}
-                aria-label={groupName(item.group)}
-              >
-                <div className="panel-heading">
-                  <div>
-                    <h2>{groupName(item.group)}</h2>
-                    <p className="muted">
-                      {item.complete
-                        ? "Все серии группы завершены"
-                        : "Текущее положение · группа не завершена"}
-                    </p>
-                  </div>
-                </div>
-                <div className="table-scroll">
-                  <table className="compact-stats-table">
-                    <caption>Таблица · {groupName(item.group)}</caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Команда</th>
-                        <th scope="col">Серии П–Н–Пор</th>
-                        <th scope="col">Карты</th>
-                        <th scope="col">Разница</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {item.standings.map((row) => (
-                        <tr key={row.team_key}>
-                          <td>{row.rank}</td>
-                          <th scope="row">
-                            <button
-                              className="text-button"
-                              type="button"
-                              onClick={() => {
-                                setTeam(row.team_key)
-                                setGroup(item.group)
-                              }}
-                            >
-                              <TeamIdentity name={row.team_name} teamKey={row.team_key} size="sm" />
-                            </button>
-                            {row.qualification_status === "qualified" && (
-                              <small className="metric-note hit-text">Выход подтверждён</small>
-                            )}
-                          </th>
-                          <td>
-                            {row.won}–{row.drawn}–{row.lost}
-                            <small className="metric-note">сыграно {row.played}</small>
-                          </td>
-                          <td>
-                            {row.maps_won} : {row.maps_lost}
-                          </td>
-                          <td>
-                            {row.map_difference > 0 ? "+" : ""}
-                            {row.map_difference}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-            ))}
-          </div>
+          <GroupTables
+            tables={data.groups.map((item) => ({
+              id: item.group,
+              name: groupName(item.group),
+              complete: item.complete,
+              rows: item.standings.map((row) => ({
+                id: row.team_key,
+                name: row.team_name,
+                teamKey: row.team_key,
+                rank: row.rank,
+                played: row.played,
+                won: row.won,
+                drawn: row.drawn,
+                lost: row.lost,
+                mapsWon: row.maps_won,
+                mapsLost: row.maps_lost,
+                qualified: row.qualification_status === "qualified",
+              })),
+            }))}
+            onTeam={(group, team) => {
+              setGroup(group)
+              setTeam(team)
+            }}
+          />
           <p className="muted playin-standing-note">
             Места при равных показателях предварительные до подтверждения тай-брейков. Выход
             показывается по опубликованному подтверждению или завершённым результатам всей группы

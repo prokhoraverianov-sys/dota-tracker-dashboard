@@ -5,7 +5,8 @@ import type { Api } from "./api"
 import { type MapDTO, mapSchema, message } from "./contracts"
 import { ForecastCard } from "./ForecastCard"
 import { MapOutcome } from "./MapOutcome"
-import { mapStages, retrospectiveForecast, stageNames } from "./map-outcome"
+import { evaluateMap, mapStages, retrospectiveForecast, stageNames } from "./map-outcome"
+import { Schedule } from "./Schedule"
 import { mainTournament, TournamentPicker } from "./TournamentPicker"
 import { TrackedReport } from "./TrackedReport"
 import { Back, Empty, Header, Notice } from "./ui"
@@ -53,18 +54,19 @@ function ArchiveCard({ path }: { readonly path: string }) {
           <div className="two-columns forecasts">
             {mapStages.map((stage) => {
               const original = map[stage]
-              const retro = retrospectiveForecast(map, stage)
+              const forecast =
+                evaluateMap(map, stage).forecast === original
+                  ? original
+                  : retrospectiveForecast(map, stage)
               return (
                 <div key={stage}>
-                  <ForecastCard forecast={original ?? retro} stage={stageNames[stage]} map={map} />
-                  {original &&
-                    retro &&
-                    original.analysis.shadow_forecast?.winner_probability_team_a == null && (
-                      <details>
-                        <summary>Отдельный ретроспективный {stageNames[stage]}</summary>
-                        <ForecastCard forecast={retro} stage={stageNames[stage]} map={map} />
-                      </details>
-                    )}
+                  <ForecastCard forecast={forecast} stage={stageNames[stage]} map={map} />
+                  {original && forecast !== original && (
+                    <details>
+                      <summary>Исходная запись {stageNames[stage]}</summary>
+                      <ForecastCard forecast={original} stage={stageNames[stage]} map={map} />
+                    </details>
+                  )}
                 </div>
               )
             })}
@@ -126,6 +128,15 @@ export function PublicArchive({
           <Back onClick={() => navigate(`/schedule?tournament=${encodeURIComponent(selected)}`)} />
           <ArchiveCard key={section} path={section} />
         </>
+      ) : section === "/schedule" ? (
+        <Schedule
+          key={selected}
+          api={archiveReader}
+          tournament={selected}
+          navigate={navigate}
+          view={filters.get("view")}
+          archive
+        />
       ) : (
         <>
           <Header

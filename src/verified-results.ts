@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { type MapDTO, mapSchema, scheduleSchema } from "./contracts"
+import { type MapDTO, mapSchema, scheduleGroupSchema, scheduleSchema } from "./contracts"
 
 const resultFact = z.object({
   map_number: z.number().int().positive(),
@@ -12,6 +12,8 @@ const resultFact = z.object({
   observed_at_utc: z.string().optional(),
 })
 const seriesFact = z.object({
+  phase: z.string().optional(),
+  group: scheduleGroupSchema.optional(),
   team_a: z.string(),
   team_b: z.string(),
   starts_at_utc: z.iso.datetime({ offset: true }),
@@ -234,6 +236,8 @@ function projectSchedule(
         starts_at_utc: series.starts_at_utc,
         best_of: series.best_of,
       }),
+      phase: existing?.phase ?? series.phase,
+      group: existing?.group ?? series.group,
       maps: [...rows.values()].sort((a, b) => (a.map_number ?? 0) - (b.map_number ?? 0)),
     })
   }

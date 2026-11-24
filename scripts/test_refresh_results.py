@@ -122,13 +122,15 @@ class ResultSyncTest(unittest.TestCase):
         names = ["PARIVISION", "Team Spirit"]
         scores = [0, 0]
         def document():
-            included = []
+            group = {"type": "group_table", "id": "83"}
+            included = [{**group, "attributes": {"name": "Группа В"}}]
             for i in (0, 1):
                 included.append({**refs[i], "attributes": {"isTbd": False, "isTba": False, "matchScore": scores[i]},
                                  "relationships": {"team": {"data": teamrefs[i]}}})
                 included.append({**teamrefs[i], "attributes": {"title": names[i]}})
             relationships = {"stage": {"data": {"type":"stage","id":"5001"}},
                              "bracket": {"data": {"type":"stage_bracket","id":"72"}},
+                             "groupTable": {"data": group},
                              **{f"participant{i+1}": {"data":refs[i]} for i in (0,1)}}
             attrs = {"date":"1970-01-02","time":"06:46:40","format":"bestOf1","isHidden":False,"isFinished":sum(scores)>0}
             entry = {"type":"match","id":"191","attributes":attrs,"relationships":relationships}
@@ -149,6 +151,8 @@ class ResultSyncTest(unittest.TestCase):
             fixtures = snapshot["tournaments"]["fourth"]["series"]
             self.assertEqual(list(fixtures), ["cs-5001-191"])
             self.assertEqual(len(fixtures["cs-5001-191"]["maps"]),score)
+            self.assertEqual(fixtures["cs-5001-191"]["group"], {"id": "83", "name": "Группа B"})
+            self.assertEqual(fixtures["cs-5001-191"]["phase"], "Групповой этап · Группа B")
         self.assertEqual(len(snapshot["tournaments"]),4)
         card=fixtures["cs-5001-191"]["maps"][0]
         self.assertEqual((card["steam_match_id"], card["winner"]),("555","A"))

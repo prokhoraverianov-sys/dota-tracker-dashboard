@@ -173,6 +173,9 @@ def hydrate(seed, previous):
                 if old["maps"]:
                     event["series"][sid] = old
                 continue
+            for field in ("phase", "group"):
+                if field in old:
+                    series.setdefault(field, old[field])
             extend(series, [oriented_result(row, order) for row in old["maps"]])
     return validate(seed)
 
@@ -236,6 +239,25 @@ def names_for_match(document, entry):
             for n in (1, 2)]
 
 
+def fixture_stage(relations, resources):
+    table = (relations.get("groupTable") or {}).get("data") or {}
+    if table.get("type") == "group_table" and isinstance(table.get("id"), str):
+        group = resources.get(("group_table", table["id"]), {}).get("attributes", {})
+        name = group.get("name")
+        if isinstance(name, str) and name.strip():
+            name = name.strip()
+            short = re.fullmatch(r"(?:группа|group)\s+([АВСЕ])", name, re.I)
+            if short:
+                name = "Группа " + short[1].upper().translate(str.maketrans("АВСЕ", "ABCE"))
+            elif not re.match(r"^(?:группа|group)\b", name, re.I):
+                name = f"Группа {name}"
+            return {"group": {"id": table["id"], "name": name}, "phase": f"Групповой этап · {name}"}
+    ref = (relations.get("bracket") or {}).get("data") or {}
+    bracket = resources.get(("stage_bracket", ref.get("id")), {}).get("attributes", {})
+    phase = bracket.get("name")
+    return {"phase": phase.strip()} if isinstance(phase, str) and phase.strip() else {}
+
+
 def stage_schedule(config, read, previous):
     stage = str(config["stage_id"])
     brackets = {str(n) for n in config.get("bracket_ids", [])}
@@ -292,7 +314,8 @@ def stage_schedule(config, read, previous):
                     if min(scores) >= target or max(scores) > target or (max(scores) == target) != finished:
                         scores = None
                 row = {"series_id": sid, "source_match_id": ref, "team_a":names[0], "team_b":names[1],
-                       "starts_at_utc":start, "best_of":best, "finished":finished, "map_score":scores, "maps":[]}
+                       "starts_at_utc":start, "best_of":best, "finished":finished, "map_score":scores,
+                       "maps":[], **fixture_stage(relations, resources)}
                 if sid in result and result[sid] != row:
                     raise ValueError(f"conflicting source fixture {sid}")
                 new += sid not in result
@@ -473,6 +496,11 @@ def enrich(event, schedule, rows):
             series = event["series"][sid] = new
         if not series["maps"]:
             series["starts_at_utc"] = new["starts_at_utc"]
+        phase = fixture.get("phase") or slots.get(sid, {}).get("phase")
+        if isinstance(phase, str) and phase.strip():
+            series["phase"] = phase.strip()
+        if fixture.get("group"):
+            series["group"] = fixture["group"]
 
         for card in fixture.get("maps", []):
             saved = card.get("result")
