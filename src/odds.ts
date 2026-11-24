@@ -15,7 +15,10 @@ const snapshotSchema = z.object({
   notice: z.string(),
 })
 export const providerOddsSchema = snapshotSchema
-export const oddsSchema = snapshotSchema.extend({ providers: z.array(snapshotSchema).optional() })
+export const oddsSchema = snapshotSchema.extend({
+  providers: z.array(snapshotSchema).optional(),
+  before_start_providers: z.array(snapshotSchema).optional(),
+})
 export type ProviderOdds = z.infer<typeof providerOddsSchema>
 export type Odds = z.infer<typeof oddsSchema>
 
@@ -52,7 +55,17 @@ export function completeProviders(
         notice: "Снимок котировок этого источника отсутствует.",
       },
   )
-  return tracked
+  return [
+    ...tracked,
+    ...snapshots.filter(
+      (row) =>
+        row.provider &&
+        (row.winner || row.duration_lines.length > 0) &&
+        !trackedProviders.some(
+          (provider) => provider.toLowerCase() === row.provider?.toLowerCase(),
+        ),
+    ),
+  ]
 }
 export function providerQuotes(odds: Odds): ProviderOdds[] {
   return completeProviders(

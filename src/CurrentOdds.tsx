@@ -1,5 +1,6 @@
 import { RefreshCw } from "lucide-react"
 import { useEffect, useState } from "react"
+import { ArchivedPrices } from "./ArchivedPrices"
 import type { Api } from "./api"
 import { type MapDTO, message } from "./contracts"
 import { OddsComparison } from "./OddsComparison"
@@ -11,6 +12,7 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
   const [error, setError] = useState("")
   const [refresh, setRefresh] = useState(0)
   const [busy, setBusy] = useState(false)
+  const finished = !!map.result || map.play_status === "unplayed"
   // biome-ignore lint/correctness/useExhaustiveDependencies: The refresh button triggers a new request.
   useEffect(() => {
     if (!map.series_id || !map.map_number) return
@@ -38,15 +40,15 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
       if (document.visibilityState === "visible") void load(false)
     }
     void load(true)
-    const timer = window.setInterval(refreshVisible, 15_000)
-    document.addEventListener("visibilitychange", refreshVisible)
+    const timer = finished ? undefined : window.setInterval(refreshVisible, 15_000)
+    if (!finished) document.addEventListener("visibilitychange", refreshVisible)
     return () => {
       active = false
       window.clearInterval(timer)
       document.removeEventListener("visibilitychange", refreshVisible)
     }
-  }, [api, map.series_id, map.map_number, refresh])
-  if (!map.series_id || !map.map_number) return null
+  }, [api, map.series_id, map.map_number, finished, refresh])
+  if (!map.series_id || !map.map_number || map.play_status === "unplayed") return null
   return (
     <section className="panel current-odds" aria-busy={busy}>
       <div className="panel-heading">
@@ -67,6 +69,7 @@ export function CurrentOdds({ map, api }: { readonly map: MapDTO; readonly api: 
           {busy ? "Загружаем…" : "Обновить снимки"}
         </button>
       </div>
+      <ArchivedPrices map={map} beforeStart={data?.before_start_providers} />
       {error && (
         <Notice error>
           {data && "Обновление не удалось. Последний снимок может устареть. "}

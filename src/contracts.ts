@@ -42,6 +42,9 @@ export const forecastSchema = z.object({
   snapshot_id: z.union([z.number(), z.string()]),
   stage: stageSchema,
   created_at_utc: z.string(),
+  draft_external_game_id: z.string().nullish(),
+  draft_observed_at_utc: z.string().nullish(),
+  verified_steam_match_id: z.string().nullish(),
   model_team_a: z.string().nullish(),
   model_team_b: z.string().nullish(),
   analysis: z
@@ -79,8 +82,34 @@ export const forecastSchema = z.object({
       }),
     )
     .optional(),
+  polymarket_diagnostics: z
+    .array(
+      z.object({
+        market_scope: z.enum(["map", "series"]),
+        cutoff_at_utc: z.string(),
+        observed_at_utc: z.string().nullable(),
+        status: z.enum([
+          "attached",
+          "no_observation",
+          "identity_mismatch",
+          "outside_freshness_window",
+          "no_complete_prices",
+          "read_error",
+        ]),
+      }),
+    )
+    .optional(),
 })
 export type Forecast = z.infer<typeof forecastSchema>
+const retrospectiveSchema = z.object({
+  analysis: forecastSchema.shape.analysis,
+  created_at_utc: z.string(),
+  source_url: z.string(),
+  players_a: z.array(z.string()),
+  players_b: z.array(z.string()),
+  heroes_a: z.array(z.string()),
+  heroes_b: z.array(z.string()),
+})
 export const mapSchema = z.object({
   map_id: z.number().nullable(),
   series_id: z.string().nullable(),
@@ -92,24 +121,19 @@ export const mapSchema = z.object({
   tournament: z.string().nullable(),
   analysis_context: z.enum(["manual", "retrospective"]).optional(),
   play_status: z.literal("unplayed").nullish(),
+  result_conflict: z.string().nullish(),
   pre: forecastSchema.nullable(),
   post: forecastSchema.nullable(),
-  retrospective_post: z
-    .object({
-      analysis: forecastSchema.shape.analysis,
-      created_at_utc: z.string(),
-      source_url: z.string(),
-      players_a: z.array(z.string()),
-      players_b: z.array(z.string()),
-      heroes_a: z.array(z.string()),
-      heroes_b: z.array(z.string()),
-    })
-    .nullish(),
+  retrospective_pre: retrospectiveSchema.nullish(),
+  retrospective_post: retrospectiveSchema.nullish(),
   result: z
     .object({
       winner: z.enum(["A", "B"]),
       duration_seconds: z.number(),
       settled_at_utc: z.string(),
+      steam_match_id: z.string().nullish(),
+      started_at_utc: z.string().nullish(),
+      ended_at_utc: z.string().nullish(),
     })
     .nullable(),
   rosters: z.object({ team_a: z.array(z.string()), team_b: z.array(z.string()) }),

@@ -8,17 +8,29 @@ import { EventOverview } from "./EventOverview"
 import { MarketBoard } from "./MarketBoard"
 import { PlayIn } from "./PlayIn"
 import { PLAY_IN_ROUTE } from "./playin-data"
+import { TournamentPicker } from "./TournamentPicker"
 import { Empty, Header, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./schedule-presentation.css"
 
 type ScheduleData = z.infer<typeof scheduleSchema>
-const tournamentOptions = [
-  { key: "pari-universe", name: "PARI Universe", status: "Завершён" },
-  { key: "1win-essence-3", name: "1win Essence III", status: "Основной этап" },
-  { key: "1win-essence-3-play-in", name: "1win Essence III · Play-In", status: "7–11 ноября" },
-] as const
 const recentSeriesWindow = 4 * 60 * 60 * 1000
+
+function SeriesScore({ series }: { readonly series: ScheduleData["series"][number] }) {
+  const winners = series.maps.flatMap((map) =>
+    !map.result || map.result_conflict || map.play_status === "unplayed"
+      ? []
+      : [map.result.winner === "A" ? map.team_a : map.team_b],
+  )
+  const a = winners.filter((name) => name === series.team_a).length
+  const b = winners.filter((name) => name === series.team_b).length
+  if (!winners.length) return <span className="versus">VS</span>
+  return (
+    <span className="versus series-score" title="Счёт по подтверждённым картам">
+      {a} : {b}
+    </span>
+  )
+}
 
 type ScheduleProps = {
   readonly api: Api
@@ -40,25 +52,11 @@ export function Schedule(props: ScheduleProps) {
             : "Выберите карту для подготовки и прогноза. Время начала по Бангкоку (UTC+7)."
         }
       />
-      <fieldset className="view-tabs tournament-tabs" aria-label="Турнир">
-        {tournamentOptions.map((option) => (
-          <button
-            key={option.key}
-            type="button"
-            className="secondary"
-            aria-pressed={(tournament || "pari-universe") === option.key}
-            onClick={() =>
-              navigate(
-                option.key === "pari-universe"
-                  ? "/schedule"
-                  : `/schedule?${query({ tournament: option.key })}`,
-              )
-            }
-          >
-            {option.name} <small>{option.status}</small>
-          </button>
-        ))}
-      </fieldset>
+      <TournamentPicker
+        api={props.api}
+        value={tournament || "pari-universe"}
+        onChange={(key) => navigate(`/schedule?${query({ tournament: key })}`)}
+      />
       {playIn ? <PlayIn api={props.api} navigate={navigate} /> : <ScheduleContents {...props} />}
     </div>
   )
@@ -80,9 +78,6 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
       .request(`/schedule?${query({ date, team, tournament })}`, scheduleSchema)
       .then((result) => {
         if (!active) return
-        if (tournament === "1win-essence-3" && !result.event) {
-          throw new Error("Расписание 1win Essence III пока недоступно.")
-        }
         setData(result)
       })
       .catch((err) => {
@@ -97,12 +92,12 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
   }, [api, date, team, tournament, refresh])
 
   useEffect(() => {
-    if (tournament !== "1win-essence-3" || busy) return
+    if (busy) return
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") setRefresh((value) => value + 1)
     }, 30_000)
     return () => window.clearInterval(timer)
-  }, [tournament, busy])
+  }, [busy])
 
   const now = Date.now()
   const recent = data?.series
@@ -192,9 +187,7 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
             </div>
             <div className="series-teams schedule-match-teams">
               <TeamIdentity name={item.team_a} size="md" />
-              <span className="versus" aria-hidden="true">
-                VS
-              </span>
+              <SeriesScore series={item} />
               <TeamIdentity name={item.team_b} size="md" />
             </div>
             <div className="map-buttons">
@@ -202,7 +195,11 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
                 <button
                   type="button"
                   className="text-button"
-                  onClick={() => navigate(`/history?${query({ series: item.series_id })}`)}
+                  onClick={() =>
+                    navigate(
+                      `/history?${query({ series: item.series_id, tournament: tournament || "pari-universe" })}`,
+                    )
+                  }
                 >
                   Найти в истории <ArrowRight size={13} aria-hidden="true" />
                 </button>
@@ -212,7 +209,11 @@ function ScheduleContents({ api, catalog, tournament, navigate }: ScheduleProps)
                   type="button"
                   key={map.map_number}
                   className={`map-button ${map.result || map.play_status === "unplayed" ? "map-button-completed" : ""}`}
-                  onClick={() => navigate(mapPath(map))}
+                  onClick={() =>
+                    navigate(
+                      `${mapPath(map)}?${query({ tournament: tournament || "pari-universe" })}`,
+                    )
+                  }
                 >
                   <span>
                     Карта {map.map_number} <ArrowRight size={13} aria-hidden="true" />

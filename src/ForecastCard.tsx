@@ -17,17 +17,26 @@ const abstentionLabels: Readonly<Record<string, string | undefined>> = {
     "Для POST нужны 10 разных подтверждённых героев. Проверьте пики обеих команд.",
 }
 
+const marketDiagnosticLabels = {
+  no_observation: "К моменту расчёта снимок не найден",
+  identity_mismatch: "Снимок не совпал с командами или рынком",
+  outside_freshness_window: "Снимок вне 60-секундного окна до расчёта",
+  no_complete_prices: "В стакане нет цен на обе команды",
+  read_error: "Не удалось прочитать снимок котировки",
+}
+
 export function ForecastCard({
   forecast,
   stage,
   map,
 }: {
-  readonly forecast: Forecast | null
+  readonly forecast: Omit<Forecast, "map_id"> | null
   readonly stage: "PRE" | "POST"
   readonly map: MapDTO
 }) {
   const retrospective = forecast?.snapshot_id === "retrospective"
   const polymarketQuotes = forecast?.polymarket_quotes ?? []
+  const polymarketDiagnostics = forecast?.polymarket_diagnostics ?? []
   const shadow = forecast?.analysis.shadow_forecast
   const p = shadow?.winner_probability_team_a
   const duration = shadow?.duration_mean_seconds == null ? null : shadow.duration_mean_seconds / 60
@@ -144,6 +153,19 @@ export function ForecastCard({
                       </a>
                     </>
                   )}
+                </p>
+              )
+            })}
+            {polymarketDiagnostics.map((item) => {
+              if (item.status === "attached") return null
+              return (
+                <p key={`missing-${item.market_scope}`} className="quote-state">
+                  <strong>Polymarket · {item.market_scope === "series" ? "Серия" : "Карта"}</strong>
+                  {" · "}
+                  {marketDiagnosticLabels[item.status]}
+                  {" · Срез "}
+                  {time(item.cutoff_at_utc)}
+                  {item.observed_at_utc && <> · Снимок {time(item.observed_at_utc)}</>}
                 </p>
               )
             })}

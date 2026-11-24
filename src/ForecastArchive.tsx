@@ -3,6 +3,9 @@ import { useEffect, useState } from "react"
 import type { Api } from "./api"
 import { type Catalog, historySchema, type MapDTO, message } from "./contracts"
 import { mapPath, mapStatus, percent, query } from "./domain"
+import { historyCsv, projectHistory } from "./history-results"
+import { StageVerdict } from "./MapOutcome"
+import { evaluateMap } from "./map-outcome"
 import { Empty, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 export function ForecastArchive({
@@ -20,15 +23,21 @@ export function ForecastArchive({
   const [items, setItems] = useState<MapDTO[]>([])
   const [error, setError] = useState("")
   const [busy, setBusy] = useState(false)
+  const [loadedFilters, setLoadedFilters] = useState<string | null>(null)
   const filters = query({ team, date_from: from, date_to: to })
   useEffect(() => {
     let active = true
     setBusy(true)
     setError("")
+    setItems([])
     api
       .request(`/history?${filters}`, historySchema)
-      .then((data) => {
-        if (active) setItems(data.items)
+      .then((data) => projectHistory(data.items))
+      .then((cards) => {
+        if (active) {
+          setItems(cards)
+          setLoadedFilters(filters)
+        }
       })
       .catch((err) => {
         if (active) setError(message(err))
@@ -40,10 +49,11 @@ export function ForecastArchive({
       active = false
     }
   }, [api, filters])
-  async function download() {
+  function download() {
     try {
-      const response = await api.response(`/history.csv?${filters}`)
-      const url = URL.createObjectURL(await response.blob())
+      const url = URL.createObjectURL(
+        new Blob([historyCsv(items)], { type: "text/csv;charset=utf-8" }),
+      )
       const link = document.createElement("a")
       link.href = url
       link.download = "dota-history.csv"
@@ -73,7 +83,12 @@ export function ForecastArchive({
           По дату
           <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
         </label>
-        <button className="secondary" type="button" onClick={download}>
+        <button
+          className="secondary"
+          type="button"
+          disabled={busy || !!error || filters !== loadedFilters}
+          onClick={download}
+        >
           <Download size={16} />
           CSV
         </button>
@@ -82,7 +97,6 @@ export function ForecastArchive({
       <section className="panel forecast-archive-panel">
         <div className="panel-heading">
           <h2>{busy ? "Обновляем историю…" : `${items.length} карт`}</h2>
-          <span className="badge">Неизменяемые снимки</span>
         </div>
         <div className="table-scroll">
           <table className="report-numeric-table">
@@ -98,10 +112,12 @@ export function ForecastArchive({
             </thead>
             <tbody>
               {items.map((map) => {
-                const a = map.pre?.analysis.shadow_forecast?.winner_probability_team_a
-                const b = map.post?.analysis.shadow_forecast?.winner_probability_team_a
+                const a = evaluateMap(map, "pre").forecast?.analysis.shadow_forecast
+                  ?.winner_probability_team_a
+                const b = evaluateMap(map, "post").forecast?.analysis.shadow_forecast
+                  ?.winner_probability_team_a
                 return (
-                  <tr key={map.map_id}>
+                  <tr key={mapPath(map)}>
                     <td>
                       <button
                         className="table-link"
@@ -118,17 +134,30 @@ export function ForecastArchive({
                         </small>
                       </button>
                     </td>
-                    <td className="numeric">{percent(a)}</td>
-                    <td className="numeric">{percent(b)}</td>
+                    <td className="numeric">
+                      {percent(a)}
+                      <StageVerdict map={map} stage="pre" />
+                    </td>
+                    <td className="numeric">
+                      {percent(b)}
+                      <StageVerdict map={map} stage="post" />
+                    </td>
                     <td className="numeric">
                       {a == null || b == null ? "—" : ((b - a) * 100).toFixed(2)}
                     </td>
                     <td>
-                      {map.result
-                        ? map.result.winner === "A"
-                          ? map.team_a
-                          : map.team_b
-                        : "Не записан"}
+                      {map.result_conflict
+                        ? "Требует сверки"
+                        : map.play_status === "unplayed"
+                          ? "Карта не сыграна"
+                          : map.result
+                            ? map.result.winner === "A"
+                              ? map.team_a
+                              : map.team_b
+                            : "Ожидаем результат"}
+                      {map.result?.steam_match_id && !map.result_conflict && (
+                        <small>Steam Match ID {map.result.steam_match_id}</small>
+                      )}
                     </td>
                     <td>
                       <span className="badge">{mapStatus(map)}</span>

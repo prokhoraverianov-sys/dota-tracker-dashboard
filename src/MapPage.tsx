@@ -21,7 +21,7 @@ export function MapPage({
   useEffect(() => {
     let active = true
     api
-      .request(path, mapSchema)
+      .request(path.split("?")[0] ?? path, mapSchema)
       .then((value) => {
         if (active) setMap(value)
       })
@@ -53,6 +53,7 @@ export function MapPage({
     <MapWorkspace
       key={path}
       initial={map}
+      tournamentKey={new URLSearchParams(path.split("?")[1]).get("tournament")}
       api={api}
       catalog={catalog}
       navigate={navigate}

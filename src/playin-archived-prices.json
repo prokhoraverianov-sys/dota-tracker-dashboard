@@ -1,0 +1,882 @@
+{
+  "e3pi-RhxYgt3YxA-M1/1": {
+    "steam": "9079764155",
+    "team_a": "HULIGANI",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.9801980198019802",
+        "team_b": "2.0202020202020203",
+        "at": "2026-11-07T10:05:00.000Z",
+        "url": "https://polymarket.com/event/dota2-huliga-legion1-2026-11-07?marketSlug=dota2-huliga-legion1-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M1/2": {
+    "steam": "9079878551",
+    "team_a": "HULIGANI",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8518518518518516",
+        "team_b": "2.1739130434782608",
+        "at": "2026-11-07T11:50:00.000Z",
+        "url": "https://polymarket.com/event/dota2-huliga-legion1-2026-11-07?marketSlug=dota2-huliga-legion1-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M1/3": {
+    "steam": "9079997066",
+    "team_a": "HULIGANI",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.6260162601626016",
+        "team_b": "2.5974025974025974",
+        "at": "2026-11-07T13:05:00.000Z",
+        "url": "https://polymarket.com/event/dota2-huliga-legion1-2026-11-07?marketSlug=dota2-huliga-legion1-2026-11-07",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M2/1": {
+    "steam": "9080108550",
+    "team_a": "CyberHero",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.7094017094017095",
+        "team_b": "2.4096385542168677",
+        "at": "2026-11-07T14:15:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-cyxari-2026-11-07?marketSlug=dota2-ch1-cyxari-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M2/2": {
+    "steam": "9080208108",
+    "team_a": "CyberHero",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8691588785046729",
+        "team_b": "2.150537634408602",
+        "at": "2026-11-07T15:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-cyxari-2026-11-07?marketSlug=dota2-ch1-cyxari-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M2/3": {
+    "steam": "9080306859",
+    "team_a": "CyberHero",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.8867924528301885",
+        "team_b": "2.127659574468085",
+        "at": "2026-11-07T16:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-cyxari-2026-11-07?marketSlug=dota2-ch1-cyxari-2026-11-07",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M3/1": {
+    "steam": "9080433008",
+    "team_a": "Froglings",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.7027027027027026",
+        "team_b": "1.5873015873015872",
+        "at": "2026-11-07T17:25:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-angryb-2026-11-07?marketSlug=dota2-frogli-angryb-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M3/2": {
+    "steam": "9080563157",
+    "team_a": "Froglings",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4388489208633095",
+        "team_b": "3.278688524590164",
+        "at": "2026-11-07T18:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-angryb-2026-11-07?marketSlug=dota2-frogli-angryb-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M3/3": {
+    "steam": "9080668008",
+    "team_a": "Froglings",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.5151515151515151",
+        "team_b": "2.941176470588235",
+        "at": "2026-11-07T20:05:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-angryb-2026-11-07?marketSlug=dota2-frogli-angryb-2026-11-07",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M4/1": {
+    "steam": "9080751906",
+    "team_a": "PlayTime",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-07T21:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-huliga-2026-11-07?marketSlug=dota2-playti-huliga-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M4/2": {
+    "steam": "9080827908",
+    "team_a": "PlayTime",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5",
+        "team_b": "1.6666666666666667",
+        "at": "2026-11-07T22:25:00.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-huliga-2026-11-07?marketSlug=dota2-playti-huliga-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxA-M4/3": {
+    "steam": "9080891303",
+    "team_a": "PlayTime",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.5",
+        "team_b": "1.6666666666666667",
+        "at": "2026-11-07T23:40:00.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-huliga-2026-11-07?marketSlug=dota2-playti-huliga-2026-11-07",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M1/1": {
+    "steam": "9081380063",
+    "team_a": "CyberHero",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8867924528301885",
+        "team_b": "2.127659574468085",
+        "at": "2026-11-08T09:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-angryb-2026-11-08?marketSlug=dota2-ch1-angryb-2026-11-08-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M1/2": {
+    "steam": "9081465435",
+    "team_a": "CyberHero",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2",
+        "team_b": "2",
+        "at": "2026-11-08T11:05:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-angryb-2026-11-08?marketSlug=dota2-ch1-angryb-2026-11-08-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M1/3": {
+    "steam": "9081559872",
+    "team_a": "CyberHero",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-08T12:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-angryb-2026-11-08?marketSlug=dota2-ch1-angryb-2026-11-08",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M2/1": {
+    "steam": "9081658571",
+    "team_a": "HULIGANI",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4390243902439024",
+        "team_b": "1.6949152542372883",
+        "at": "2026-11-08T13:15:00.000Z",
+        "url": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M2/2": {
+    "steam": "9081779066",
+    "team_a": "HULIGANI",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4691358024691357",
+        "team_b": "1.680672268907563",
+        "at": "2026-11-08T14:20:00.000Z",
+        "url": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M3/1": {
+    "steam": "9081944953",
+    "team_a": "PlayTime",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.0202020202020203",
+        "team_b": "1.9801980198019802",
+        "at": "2026-11-08T16:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-legion1-2026-11-07?marketSlug=dota2-playti-legion1-2026-11-07-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M3/2": {
+    "steam": "9082081542",
+    "team_a": "PlayTime",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2",
+        "team_b": "2",
+        "at": "2026-11-08T17:25:00.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-legion1-2026-11-07?marketSlug=dota2-playti-legion1-2026-11-07-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M4/1": {
+    "steam": "9082219265",
+    "team_a": "Froglings",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6528925619834711",
+        "team_b": "2.531645569620253",
+        "at": "2026-11-08T19:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-cyxari-2026-11-08?marketSlug=dota2-frogli-cyxari-2026-11-08-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M4/2": {
+    "steam": "9082314722",
+    "team_a": "Froglings",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6",
+        "team_b": "2.6666666666666665",
+        "at": "2026-11-08T20:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-cyxari-2026-11-08?marketSlug=dota2-frogli-cyxari-2026-11-08-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxB-M4/3": {
+    "steam": "9082403785",
+    "team_a": "Froglings",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.6051364365971108",
+        "team_b": "2.6525198938992043",
+        "at": "2026-11-08T21:40:00.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-cyxari-2026-11-08?marketSlug=dota2-frogli-cyxari-2026-11-08",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M1/1": {
+    "steam": "9082841679",
+    "team_a": "Xipto Esports",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.150537634408602",
+        "team_b": "1.8691588785046729",
+        "at": "2026-11-09T10:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-huliga-2026-11-09?marketSlug=dota2-xe-huliga-2026-11-09-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M1/2": {
+    "steam": "9082894311",
+    "team_a": "Xipto Esports",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-09T11:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-huliga-2026-11-09?marketSlug=dota2-xe-huliga-2026-11-09-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M1/3": {
+    "steam": "9082948486",
+    "team_a": "Xipto Esports",
+    "team_b": "HULIGANI",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.247191011235955",
+        "team_b": "1.8018018018018016",
+        "at": "2026-11-09T11:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-huliga-2026-11-09?marketSlug=dota2-xe-huliga-2026-11-09",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M2/1": {
+    "steam": "9083034846",
+    "team_a": "Angry Birds",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2",
+        "team_b": "2",
+        "at": "2026-11-09T13:10:00.000Z",
+        "url": "https://polymarket.com/event/dota2-angryb-cyxari-2026-11-09?marketSlug=dota2-angryb-cyxari-2026-11-09-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M2/2": {
+    "steam": "9083128390",
+    "team_a": "Angry Birds",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4390243902439024",
+        "team_b": "1.6949152542372883",
+        "at": "2026-11-09T14:15:00.000Z",
+        "url": "https://polymarket.com/event/dota2-angryb-cyxari-2026-11-09?marketSlug=dota2-angryb-cyxari-2026-11-09-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M3/1": {
+    "steam": "9083275194",
+    "team_a": "Power Rangers",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4390243902439024",
+        "team_b": "1.6949152542372883",
+        "at": "2026-11-09T16:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-cyxari-2026-11-09?marketSlug=dota2-pr1-cyxari-2026-11-09-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M3/2": {
+    "steam": "9083363527",
+    "team_a": "Power Rangers",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.6315789473684212",
+        "team_b": "1.6129032258064517",
+        "at": "2026-11-09T17:00:00.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-cyxari-2026-11-09?marketSlug=dota2-pr1-cyxari-2026-11-09-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M3/3": {
+    "steam": "9083438538",
+    "team_a": "Power Rangers",
+    "team_b": "Ka4kanarskie cyxariki",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.247191011235955",
+        "team_b": "1.8018018018018016",
+        "at": "2026-11-09T17:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-cyxari-2026-11-09?marketSlug=dota2-pr1-cyxari-2026-11-09",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M4/1": {
+    "steam": "9083538745",
+    "team_a": "Xipto Esports",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-09T19:15:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-yes-2026-11-09?marketSlug=dota2-xe-yes-2026-11-09-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M4/2": {
+    "steam": "9083621675",
+    "team_a": "Xipto Esports",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.127659574468085",
+        "team_b": "1.8867924528301885",
+        "at": "2026-11-09T20:25:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-yes-2026-11-09?marketSlug=dota2-xe-yes-2026-11-09-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxC-M4/3": {
+    "steam": "9083696820",
+    "team_a": "Xipto Esports",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.2988505747126435",
+        "team_b": "1.7699115044247788",
+        "at": "2026-11-09T21:45:00.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-yes-2026-11-09?marketSlug=dota2-xe-yes-2026-11-09",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M1/1": {
+    "steam": "9084111096",
+    "team_a": "Yellow Submarine",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.127659574468085",
+        "team_b": "1.8867924528301885",
+        "at": "2026-11-10T10:02:18.000Z",
+        "url": "https://polymarket.com/event/dota2-yes-legion1-2026-11-10?marketSlug=dota2-yes-legion1-2026-11-10-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M1/2": {
+    "steam": "9084182133",
+    "team_a": "Yellow Submarine",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-10T11:24:15.000Z",
+        "url": "https://polymarket.com/event/dota2-yes-legion1-2026-11-10?marketSlug=dota2-yes-legion1-2026-11-10-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M1/3": {
+    "steam": "9084256746",
+    "team_a": "Yellow Submarine",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.2988505747126435",
+        "team_b": "1.7699115044247788",
+        "at": "2026-11-10T12:33:47.000Z",
+        "url": "https://polymarket.com/event/dota2-yes-legion1-2026-11-10?marketSlug=dota2-yes-legion1-2026-11-10",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M2/1": {
+    "steam": "9084351361",
+    "team_a": "Xipto Esports",
+    "team_b": "PlayTime",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.0833333333333335",
+        "team_b": "1.923076923076923",
+        "at": "2026-11-10T13:48:50.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-playti-2026-11-10?marketSlug=dota2-xe-playti-2026-11-10-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M2/2": {
+    "steam": "9084474528",
+    "team_a": "Xipto Esports",
+    "team_b": "PlayTime",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-10T15:11:40.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-playti-2026-11-10?marketSlug=dota2-xe-playti-2026-11-10-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M2/3": {
+    "steam": "9084572091",
+    "team_a": "Xipto Esports",
+    "team_b": "PlayTime",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.0202020202020203",
+        "team_b": "1.9801980198019802",
+        "at": "2026-11-10T16:21:25.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-playti-2026-11-10?marketSlug=dota2-xe-playti-2026-11-10",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M3/1": {
+    "steam": "9084713851",
+    "team_a": "Froglings",
+    "team_b": "Power Rangers",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4184397163120568",
+        "team_b": "3.3898305084745766",
+        "at": "2026-11-10T18:04:51.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-pr1-2026-11-10-dh2?marketSlug=dota2-frogli-pr1-2026-11-10-dh2-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M3/2": {
+    "steam": "9084819065",
+    "team_a": "Froglings",
+    "team_b": "Power Rangers",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.342281879194631",
+        "team_b": "3.9215686274509802",
+        "at": "2026-11-10T19:29:16.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-pr1-2026-11-10-dh2?marketSlug=dota2-frogli-pr1-2026-11-10-dh2-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M3/3": {
+    "steam": "9084897791",
+    "team_a": "Froglings",
+    "team_b": "Power Rangers",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.5037593984962405",
+        "team_b": "2.9850746268656714",
+        "at": "2026-11-10T20:37:27.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-pr1-2026-11-10-dh2?marketSlug=dota2-frogli-pr1-2026-11-10-dh2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M4/1": {
+    "steam": "9084955218",
+    "team_a": "CyberHero",
+    "team_b": "Power Rangers",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.574803149606299",
+        "team_b": "2.73972602739726",
+        "at": "2026-11-10T21:45:10.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-pr1-2026-11-10?marketSlug=dota2-ch1-pr1-2026-11-10-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxD-M4/2": {
+    "steam": "9085010599",
+    "team_a": "CyberHero",
+    "team_b": "Power Rangers",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6",
+        "team_b": "2.6666666666666665",
+        "at": "2026-11-10T23:20:02.000Z",
+        "url": "https://polymarket.com/event/dota2-ch1-pr1-2026-11-10?marketSlug=dota2-ch1-pr1-2026-11-10-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M1/1": {
+    "steam": "9085389914",
+    "team_a": "Xipto Esports",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-11T10:00:16.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-legion1-2026-11-11?marketSlug=dota2-xe-legion1-2026-11-11-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M1/2": {
+    "steam": "9085432630",
+    "team_a": "Xipto Esports",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.6315789473684212",
+        "team_b": "1.6129032258064517",
+        "at": "2026-11-11T10:52:11.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-legion1-2026-11-11?marketSlug=dota2-xe-legion1-2026-11-11-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M1/3": {
+    "steam": "9085490599",
+    "team_a": "Xipto Esports",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.380952380952381",
+        "team_b": "1.7241379310344829",
+        "at": "2026-11-11T11:49:57.000Z",
+        "url": "https://polymarket.com/event/dota2-xe-legion1-2026-11-11?marketSlug=dota2-xe-legion1-2026-11-11",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M2/1": {
+    "steam": "9085616958",
+    "team_a": "Froglings",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.9607843137254901",
+        "team_b": "2.0408163265306123",
+        "at": "2026-11-11T13:29:01.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-ch1-2026-11-11?marketSlug=dota2-frogli-ch1-2026-11-11-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M2/2": {
+    "steam": "9085710488",
+    "team_a": "Froglings",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.941747572815534",
+        "team_b": "2.061855670103093",
+        "at": "2026-11-11T14:37:03.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-ch1-2026-11-11?marketSlug=dota2-frogli-ch1-2026-11-11-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M2/3": {
+    "steam": "9085805420",
+    "team_a": "Froglings",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.8348623853211008",
+        "team_b": "2.1978021978021975",
+        "at": "2026-11-11T15:39:12.000Z",
+        "url": "https://polymarket.com/event/dota2-frogli-ch1-2026-11-11?marketSlug=dota2-frogli-ch1-2026-11-11",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M3/1": {
+    "steam": "9085906939",
+    "team_a": "Power Rangers",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.1978021978021975",
+        "team_b": "1.8348623853211008",
+        "at": "2026-11-11T16:52:07.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-angryb-2026-11-11?marketSlug=dota2-pr1-angryb-2026-11-11-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M3/2": {
+    "steam": "9086014176",
+    "team_a": "Power Rangers",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.247191011235955",
+        "team_b": "1.8018018018018016",
+        "at": "2026-11-11T18:06:19.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-angryb-2026-11-11?marketSlug=dota2-pr1-angryb-2026-11-11-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M3/3": {
+    "steam": "9086093467",
+    "team_a": "Power Rangers",
+    "team_b": "Angry Birds",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-11T19:08:12.000Z",
+        "url": "https://polymarket.com/event/dota2-pr1-angryb-2026-11-11?marketSlug=dota2-pr1-angryb-2026-11-11",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M4/1": {
+    "steam": "9086164367",
+    "team_a": "PlayTime",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4096385542168677",
+        "team_b": "1.7094017094017095",
+        "at": "2026-11-11T20:07:53.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-yes-2026-11-11?marketSlug=dota2-playti-yes-2026-11-11-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3pi-RhxYgt3YxE-M4/2": {
+    "steam": "9086220626",
+    "team_a": "PlayTime",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.127659574468085",
+        "team_b": "1.8867924528301885",
+        "at": "2026-11-11T21:03:18.000Z",
+        "url": "https://polymarket.com/event/dota2-playti-yes-2026-11-11?marketSlug=dota2-playti-yes-2026-11-11-game2",
+        "resolution": 0
+      }
+    ]
+  }
+}

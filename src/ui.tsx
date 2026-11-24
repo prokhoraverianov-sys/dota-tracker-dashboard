@@ -75,6 +75,9 @@ export function Shell({
     { path: "/stats", label: "Статистика", icon: ChartNoAxesCombined },
   ]
   const section = route.split("?")[0]
+  const tournament =
+    new URLSearchParams(route.split("?")[1]).get("tournament") ??
+    (section === "/schedule" ? "pari-universe" : "")
   const active = section === "/history" || section === "/stats" ? section : "/schedule"
   return (
     <div className="app-shell">
@@ -110,7 +113,13 @@ export function Shell({
                 key={item.path}
                 className={active === item.path ? "nav-item active" : "nav-item"}
                 aria-current={active === item.path ? "page" : undefined}
-                onClick={() => navigate(item.path)}
+                onClick={() =>
+                  navigate(
+                    tournament
+                      ? `${item.path}?tournament=${encodeURIComponent(tournament)}`
+                      : item.path,
+                  )
+                }
               >
                 <item.icon size={18} />
                 {item.label}

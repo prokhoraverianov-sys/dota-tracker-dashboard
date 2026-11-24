@@ -1,0 +1,1418 @@
+{
+  "e3-g-a1/1": {
+    "steam": "9087180510",
+    "team_a": "PARIVISION",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2578616352201257",
+        "team_b": "4.878048780487805",
+        "at": "2026-11-12T16:34:07+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-konca-2026-11-12?marketSlug=dota2-pari-konca-2026-11-12-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.22",
+        "team_b": "4.3",
+        "at": "2026-11-12T15:41:57.108728Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69841606"
+      }
+    ]
+  },
+  "e3-g-a1/2": {
+    "steam": "9087276030",
+    "team_a": "PARIVISION",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2422360248447204",
+        "team_b": "5.128205128205128",
+        "at": "2026-11-12T17:46:33+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-konca-2026-11-12?marketSlug=dota2-pari-konca-2026-11-12-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.22",
+        "team_b": "4.3",
+        "at": "2026-11-12T15:41:57.108728Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69841606"
+      }
+    ]
+  },
+  "e3-g-a2/1": {
+    "steam": "9088267544",
+    "team_a": "PARIVISION",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1560693641618498",
+        "team_b": "7.4074074074074066",
+        "at": "2026-11-13T13:56:03+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-yes-2026-11-13?marketSlug=dota2-pari-yes-2026-11-13-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.13",
+        "team_b": "6",
+        "at": "2026-11-13T12:30:46.833007Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849256"
+      }
+    ]
+  },
+  "e3-g-a2/2": {
+    "steam": "9088362009",
+    "team_a": "PARIVISION",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1299435028248588",
+        "team_b": "8.695652173913043",
+        "at": "2026-11-13T14:53:54+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-yes-2026-11-13?marketSlug=dota2-pari-yes-2026-11-13-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.13",
+        "team_b": "6",
+        "at": "2026-11-13T12:30:46.833007Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849256"
+      }
+    ]
+  },
+  "e3-g-a3/1": {
+    "steam": "9089662134",
+    "team_a": "DO KONCA",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6528925619834711",
+        "team_b": "2.531645569620253",
+        "at": "2026-11-14T12:05:09+00:00",
+        "url": "https://polymarket.com/event/dota2-konca-yes-2026-11-14?marketSlug=dota2-konca-yes-2026-11-14-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.47",
+        "team_b": "2.7",
+        "at": "2026-11-14T10:58:49.074702Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69864280"
+      }
+    ]
+  },
+  "e3-g-a3/2": {
+    "steam": "9089764053",
+    "team_a": "DO KONCA",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5503875968992247",
+        "team_b": "2.8169014084507045",
+        "at": "2026-11-14T13:14:18+00:00",
+        "url": "https://polymarket.com/event/dota2-konca-yes-2026-11-14?marketSlug=dota2-konca-yes-2026-11-14-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.47",
+        "team_b": "2.7",
+        "at": "2026-11-14T10:58:49.074702Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69864280"
+      }
+    ]
+  },
+  "e3-g-a3/3": {
+    "steam": "9089886596",
+    "team_a": "DO KONCA",
+    "team_b": "Yellow Submarine",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.5151515151515151",
+        "team_b": "2.941176470588235",
+        "at": "2026-11-14T14:30:15+00:00",
+        "url": "https://polymarket.com/event/dota2-konca-yes-2026-11-14?marketSlug=dota2-konca-yes-2026-11-14",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-g-b1/1": {
+    "steam": "9086875606",
+    "team_a": "GamerLegion",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.9850746268656714",
+        "team_b": "1.5037593984962405",
+        "at": "2026-11-12T13:04:06+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-gl-2026-11-12?marketSlug=dota2-aur1-gl-2026-11-12-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "2.7",
+        "team_b": "1.47",
+        "at": "2026-11-12T07:56:41.442557Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69841594"
+      }
+    ]
+  },
+  "e3-g-b1/2": {
+    "steam": "9086957012",
+    "team_a": "GamerLegion",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4691358024691357",
+        "team_b": "1.680672268907563",
+        "at": "2026-11-12T14:02:06+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-gl-2026-11-12?marketSlug=dota2-aur1-gl-2026-11-12-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "13",
+        "team_b": "1.02",
+        "at": "2026-11-12T15:03:33.276516Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69841594"
+      }
+    ]
+  },
+  "e3-g-b1/3": {
+    "steam": "9087068600",
+    "team_a": "GamerLegion",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.6666666666666665",
+        "team_b": "1.6",
+        "at": "2026-11-12T15:16:33+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-gl-2026-11-12?marketSlug=dota2-aur1-gl-2026-11-12",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "during",
+        "team_a": "3.9",
+        "team_b": "1.23",
+        "at": "2026-11-12T15:41:57.108728Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69841594"
+      }
+    ]
+  },
+  "e3-g-b2/1": {
+    "steam": "9088001992",
+    "team_a": "GamerLegion",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-13T10:02:51+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-ch1-2026-11-13?marketSlug=dota2-gl-ch1-2026-11-13-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.44",
+        "team_b": "2.8",
+        "at": "2026-11-13T04:58:34.445501Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849232"
+      }
+    ]
+  },
+  "e3-g-b2/2": {
+    "steam": "9088086810",
+    "team_a": "GamerLegion",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4285714285714286",
+        "team_b": "3.3333333333333335",
+        "at": "2026-11-13T11:32:11+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-ch1-2026-11-13?marketSlug=dota2-gl-ch1-2026-11-13-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "13",
+        "team_b": "1.02",
+        "at": "2026-11-13T12:23:06.629034Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849232"
+      }
+    ]
+  },
+  "e3-g-b2/3": {
+    "steam": "9088161900",
+    "team_a": "GamerLegion",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.5037593984962405",
+        "team_b": "2.9850746268656714",
+        "at": "2026-11-13T12:38:07+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-ch1-2026-11-13?marketSlug=dota2-gl-ch1-2026-11-13",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "during",
+        "team_a": "1.02",
+        "team_b": "13",
+        "at": "2026-11-13T13:15:31.932564Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849232"
+      }
+    ]
+  },
+  "e3-g-b3/1": {
+    "steam": "9090414768",
+    "team_a": "Aurora Gaming",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.282051282051282",
+        "team_b": "4.545454545454546",
+        "at": "2026-11-14T20:01:58+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-ch1-2026-11-14?marketSlug=dota2-aur1-ch1-2026-11-14-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.02",
+        "team_b": "13",
+        "at": "2026-11-14T20:58:20.447033Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69863727"
+      }
+    ]
+  },
+  "e3-g-b3/2": {
+    "steam": "9090500945",
+    "team_a": "Aurora Gaming",
+    "team_b": "CyberHero",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2738853503184713",
+        "team_b": "4.651162790697675",
+        "at": "2026-11-14T21:05:05+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-ch1-2026-11-14?marketSlug=dota2-aur1-ch1-2026-11-14-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.04",
+        "team_b": "10.5",
+        "at": "2026-11-14T22:00:00.087854Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69863727"
+      }
+    ]
+  },
+  "e3-g-c1/1": {
+    "steam": "9088481002",
+    "team_a": "LGD Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-13T16:13:59+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-lgd-2026-11-14?marketSlug=dota2-liquid-lgd-2026-11-14-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "13",
+        "team_b": "1.02",
+        "at": "2026-11-13T17:12:51.036143Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849268"
+      }
+    ]
+  },
+  "e3-g-c1/2": {
+    "steam": "9088593108",
+    "team_a": "LGD Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.8169014084507045",
+        "team_b": "1.5503875968992247",
+        "at": "2026-11-13T17:25:26+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-lgd-2026-11-14?marketSlug=dota2-liquid-lgd-2026-11-14-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.03",
+        "team_b": "11.5",
+        "at": "2026-11-13T18:27:12.085649Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849268"
+      }
+    ]
+  },
+  "e3-g-c1/3": {
+    "steam": "9088710443",
+    "team_a": "LGD Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.73972602739726",
+        "team_b": "1.574803149606299",
+        "at": "2026-11-13T18:43:24+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-lgd-2026-11-14?marketSlug=dota2-liquid-lgd-2026-11-14",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.03",
+        "team_b": "11.5",
+        "at": "2026-11-13T19:50:09.279156Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849268"
+      }
+    ]
+  },
+  "e3-g-c2/1": {
+    "steam": "9089448051",
+    "team_a": "LGD Gaming",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.3986013986013988",
+        "team_b": "3.5087719298245617",
+        "at": "2026-11-14T09:02:01+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-legion1-2026-11-12?marketSlug=dota2-lgd-legion1-2026-11-12-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.02",
+        "team_b": "13",
+        "at": "2026-11-14T10:34:26.116050Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69863740"
+      }
+    ]
+  },
+  "e3-g-c2/2": {
+    "steam": "9089567599",
+    "team_a": "LGD Gaming",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-14T10:50:47+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-legion1-2026-11-12?marketSlug=dota2-lgd-legion1-2026-11-12-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.03",
+        "team_b": "11.5",
+        "at": "2026-11-14T11:45:37.444824Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69863740"
+      }
+    ]
+  },
+  "e3-g-c3/1": {
+    "steam": "9090050956",
+    "team_a": "Team Liquid",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.3245033112582782",
+        "team_b": "4.081632653061225",
+        "at": "2026-11-14T16:02:13+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-legion1-2026-11-13?marketSlug=dota2-liquid-legion1-2026-11-13-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "13",
+        "team_b": "1.02",
+        "at": "2026-11-14T17:08:22.757894Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69862338"
+      }
+    ]
+  },
+  "e3-g-c3/2": {
+    "steam": "9090171021",
+    "team_a": "Team Liquid",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.3793103448275863",
+        "team_b": "3.6363636363636362",
+        "at": "2026-11-14T17:18:39+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-legion1-2026-11-13?marketSlug=dota2-liquid-legion1-2026-11-13-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.52",
+        "team_b": "2.45",
+        "at": "2026-11-14T18:26:15.184030Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69862338"
+      }
+    ]
+  },
+  "e3-g-c3/3": {
+    "steam": "9090295298",
+    "team_a": "Team Liquid",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.3245033112582782",
+        "team_b": "4.081632653061225",
+        "at": "2026-11-14T18:52:54+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-legion1-2026-11-13?marketSlug=dota2-liquid-legion1-2026-11-13",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "13",
+        "team_b": "1.02",
+        "at": "2026-11-14T19:47:27.239758Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69862338"
+      }
+    ]
+  },
+  "e3-g-d1/1": {
+    "steam": "9087374444",
+    "team_a": "Team Spirit",
+    "team_b": "1win",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2269938650306749",
+        "team_b": "5.405405405405405",
+        "at": "2026-11-12T19:01:08+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-1win-2026-11-14?marketSlug=dota2-ts8-1win-2026-11-14-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.2",
+        "team_b": "4.6",
+        "at": "2026-11-12T16:13:14.726240Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69840311"
+      }
+    ]
+  },
+  "e3-g-d1/2": {
+    "steam": "9087439951",
+    "team_a": "Team Spirit",
+    "team_b": "1win",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.183431952662722",
+        "team_b": "6.451612903225807",
+        "at": "2026-11-12T19:52:00+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-1win-2026-11-14?marketSlug=dota2-ts8-1win-2026-11-14-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.2",
+        "team_b": "4.6",
+        "at": "2026-11-12T16:13:14.726240Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69840311"
+      }
+    ]
+  },
+  "e3-g-d2/1": {
+    "steam": "9088831675",
+    "team_a": "Team Spirit",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1235955056179776",
+        "team_b": "9.090909090909092",
+        "at": "2026-11-13T20:11:44+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-frogli-2026-11-13?marketSlug=dota2-ts8-frogli-2026-11-13-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "9.5",
+        "team_b": "1.05",
+        "at": "2026-11-13T21:12:25.471204Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849244"
+      }
+    ]
+  },
+  "e3-g-d2/2": {
+    "steam": "9088923051",
+    "team_a": "Team Spirit",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2048192771084338",
+        "team_b": "5.88235294117647",
+        "at": "2026-11-13T21:22:19+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-frogli-2026-11-13?marketSlug=dota2-ts8-frogli-2026-11-13-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "4.6",
+        "team_b": "1.18",
+        "at": "2026-11-13T22:30:09.666850Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69849244"
+      }
+    ]
+  },
+  "e3-g-d3/1": {
+    "steam": "9090576268",
+    "team_a": "1win",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8348623853211008",
+        "team_b": "2.1978021978021975",
+        "at": "2026-11-14T22:17:11+00:00",
+        "url": "https://polymarket.com/event/dota2-1win-frogli-2026-11-14?marketSlug=dota2-1win-frogli-2026-11-14-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.02",
+        "team_b": "13",
+        "at": "2026-11-14T23:07:28.458437Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69872655"
+      }
+    ]
+  },
+  "e3-g-d3/2": {
+    "steam": "9090631460",
+    "team_a": "1win",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8181818181818181",
+        "team_b": "2.2222222222222223",
+        "at": "2026-11-14T23:18:14+00:00",
+        "url": "https://polymarket.com/event/dota2-1win-frogli-2026-11-14?marketSlug=dota2-1win-frogli-2026-11-14-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "2.8",
+        "team_b": "1.4",
+        "at": "2026-11-15T00:49:34.902984Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69872655"
+      }
+    ]
+  },
+  "e3-g-d3/3": {
+    "steam": "9090701002",
+    "team_a": "1win",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.0202020202020203",
+        "team_b": "1.9801980198019802",
+        "at": "2026-11-15T01:00:01+00:00",
+        "url": "https://polymarket.com/event/dota2-1win-frogli-2026-11-14?marketSlug=dota2-1win-frogli-2026-11-14",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "after",
+        "team_a": "1.05",
+        "team_b": "9.5",
+        "at": "2026-11-15T01:52:04.393879Z",
+        "url": "https://pari.ru/esports/category/dota2/141455/69872655"
+      }
+    ]
+  },
+  "e3-p-r01-m001/1": {
+    "steam": "9091135592",
+    "team_a": "PARIVISION",
+    "team_b": "GamerLegion",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2987012987012987",
+        "team_b": "4.3478260869565215",
+        "at": "2026-11-15T10:14:07+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-gl-2026-11-15?marketSlug=dota2-pari-gl-2026-11-15-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.22",
+        "team_b": "4.3",
+        "at": "2026-11-15T10:04:17.089150Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941012"
+      }
+    ]
+  },
+  "e3-p-r01-m001/2": {
+    "steam": "9091291242",
+    "team_a": "PARIVISION",
+    "team_b": "GamerLegion",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4184397163120568",
+        "team_b": "3.3898305084745766",
+        "at": "2026-11-15T12:00:24+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-gl-2026-11-15?marketSlug=dota2-pari-gl-2026-11-15-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.22",
+        "team_b": "4.3",
+        "at": "2026-11-15T10:04:17.089150Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941012"
+      }
+    ]
+  },
+  "e3-p-r01-m001/3": {
+    "steam": "9091386510",
+    "team_a": "PARIVISION",
+    "team_b": "GamerLegion",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.2738853503184713",
+        "team_b": "4.651162790697675",
+        "at": "2026-11-15T13:03:29+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-gl-2026-11-15?marketSlug=dota2-pari-gl-2026-11-15",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r01-m002/1": {
+    "steam": "9092063120",
+    "team_a": "LGD Gaming",
+    "team_b": "Team Spirit",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "3.278688524590164",
+        "team_b": "1.4388489208633095",
+        "at": "2026-11-15T20:27:09+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-ts8-2026-11-15?marketSlug=dota2-lgd-ts8-2026-11-15-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "during",
+        "team_a": "3.1",
+        "team_b": "1.37",
+        "at": "2026-11-15T20:28:12.787553Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941019"
+      }
+    ]
+  },
+  "e3-p-r01-m002/2": {
+    "steam": "9092124714",
+    "team_a": "LGD Gaming",
+    "team_b": "Team Spirit",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "3.5087719298245617",
+        "team_b": "1.3986013986013988",
+        "at": "2026-11-15T21:29:17+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-ts8-2026-11-15?marketSlug=dota2-lgd-ts8-2026-11-15-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "3.33",
+        "team_b": "1.33",
+        "at": "2026-11-15T20:28:12.787553Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941019"
+      }
+    ]
+  },
+  "e3-p-r01-m003/1": {
+    "steam": "9091792655",
+    "team_a": "Aurora Gaming",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5267175572519083",
+        "team_b": "2.8985507246376816",
+        "at": "2026-11-15T17:09:59+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-konca-2026-11-15?marketSlug=dota2-aur1-konca-2026-11-15-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.52",
+        "team_b": "2.54",
+        "at": "2026-11-15T16:57:25.879614Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941015"
+      }
+    ]
+  },
+  "e3-p-r01-m003/2": {
+    "steam": "9091993665",
+    "team_a": "Aurora Gaming",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6528925619834711",
+        "team_b": "2.531645569620253",
+        "at": "2026-11-15T19:28:04+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-konca-2026-11-15?marketSlug=dota2-aur1-konca-2026-11-15-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.52",
+        "team_b": "2.54",
+        "at": "2026-11-15T16:57:25.879614Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941015"
+      }
+    ]
+  },
+  "e3-p-r01-m004/1": {
+    "steam": "9091523157",
+    "team_a": "Froglings",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.923076923076923",
+        "team_b": "2.0833333333333335",
+        "at": "2026-11-15T14:24:33+00:00",
+        "url": "https://polymarket.com/event/dota2-frogli-legion1-2026-11-15?marketSlug=dota2-frogli-legion1-2026-11-15-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "during",
+        "team_a": "1.76",
+        "team_b": "1.94",
+        "at": "2026-11-15T14:25:24.615281Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941009"
+      }
+    ]
+  },
+  "e3-p-r01-m004/2": {
+    "steam": "9091678507",
+    "team_a": "Froglings",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.0202020202020203",
+        "team_b": "1.9801980198019802",
+        "at": "2026-11-15T15:53:22+00:00",
+        "url": "https://polymarket.com/event/dota2-frogli-legion1-2026-11-15?marketSlug=dota2-frogli-legion1-2026-11-15-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.75",
+        "team_b": "1.95",
+        "at": "2026-11-15T14:25:24.615281Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69941009"
+      }
+    ]
+  },
+  "e3-p-r01-m005/1": {
+    "steam": "9092843858",
+    "team_a": "GamerLegion",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.1739130434782608",
+        "team_b": "1.8518518518518516",
+        "at": "2026-11-16T14:02:29+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-lgd-2026-11-16?marketSlug=dota2-gl-lgd-2026-11-16-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "2.04",
+        "team_b": "1.78",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968973"
+      }
+    ]
+  },
+  "e3-p-r01-m005/2": {
+    "steam": "9092956211",
+    "team_a": "GamerLegion",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.150537634408602",
+        "team_b": "1.8691588785046729",
+        "at": "2026-11-16T15:16:36+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-lgd-2026-11-16?marketSlug=dota2-gl-lgd-2026-11-16-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "2.04",
+        "team_b": "1.78",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968973"
+      }
+    ]
+  },
+  "e3-p-r01-m005/3": {
+    "steam": "9093051668",
+    "team_a": "GamerLegion",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.150537634408602",
+        "team_b": "1.8691588785046729",
+        "at": "2026-11-16T16:28:43+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-lgd-2026-11-16?marketSlug=dota2-gl-lgd-2026-11-16",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r01-m006/1": {
+    "steam": "9092574111",
+    "team_a": "DO KONCA",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.7391304347826089",
+        "team_b": "2.3529411764705883",
+        "at": "2026-11-16T10:01:40+00:00",
+        "url": "https://polymarket.com/event/dota2-frogli-konca-2026-11-16?marketSlug=dota2-frogli-konca-2026-11-16-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.55",
+        "team_b": "2.45",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968949"
+      }
+    ]
+  },
+  "e3-p-r01-m006/2": {
+    "steam": "9092641299",
+    "team_a": "DO KONCA",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.680672268907563",
+        "team_b": "2.4691358024691357",
+        "at": "2026-11-16T11:16:29+00:00",
+        "url": "https://polymarket.com/event/dota2-frogli-konca-2026-11-16?marketSlug=dota2-frogli-konca-2026-11-16-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.55",
+        "team_b": "2.45",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968949"
+      }
+    ]
+  },
+  "e3-p-r01-m006/3": {
+    "steam": "9092706541",
+    "team_a": "DO KONCA",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.5151515151515151",
+        "team_b": "2.941176470588235",
+        "at": "2026-11-16T12:20:02+00:00",
+        "url": "https://polymarket.com/event/dota2-frogli-konca-2026-11-16?marketSlug=dota2-frogli-konca-2026-11-16",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r02-m001/1": {
+    "steam": "9093175023",
+    "team_a": "PARIVISION",
+    "team_b": "Team Spirit",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.9047619047619047",
+        "team_b": "2.1052631578947367",
+        "at": "2026-11-16T18:03:05+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-ts8-2026-11-16?marketSlug=dota2-pari-ts8-2026-11-16-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.8",
+        "team_b": "2",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968988"
+      }
+    ]
+  },
+  "e3-p-r02-m001/2": {
+    "steam": "9093259247",
+    "team_a": "PARIVISION",
+    "team_b": "Team Spirit",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.941747572815534",
+        "team_b": "2.061855670103093",
+        "at": "2026-11-16T19:01:41+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-ts8-2026-11-16?marketSlug=dota2-pari-ts8-2026-11-16-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.8",
+        "team_b": "2",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968988"
+      }
+    ]
+  },
+  "e3-p-r02-m002/1": {
+    "steam": "9093340128",
+    "team_a": "Aurora Gaming",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4184397163120568",
+        "team_b": "3.3898305084745766",
+        "at": "2026-11-16T20:10:29+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-aur1-2026-11-16?marketSlug=dota2-legion1-aur1-2026-11-16-game1",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.32",
+        "team_b": "3.4",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968961"
+      }
+    ]
+  },
+  "e3-p-r02-m002/2": {
+    "steam": "9093401586",
+    "team_a": "Aurora Gaming",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-16T21:10:34+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-aur1-2026-11-16?marketSlug=dota2-legion1-aur1-2026-11-16-game2",
+        "resolution": 0
+      },
+      {
+        "source": "PARI",
+        "scope": "before",
+        "team_a": "1.32",
+        "team_b": "3.4",
+        "at": "2026-11-16T08:09:22.594801Z",
+        "url": "https://pari.ru/esports/category/dota2/148380/69968961"
+      }
+    ]
+  },
+  "e3-p-r02-m002/3": {
+    "steam": "9093458287",
+    "team_a": "Aurora Gaming",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.3986013986013988",
+        "team_b": "3.5087719298245617",
+        "at": "2026-11-16T22:25:40+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-aur1-2026-11-16?marketSlug=dota2-legion1-aur1-2026-11-16",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r02-m003/1": {
+    "steam": "9094055565",
+    "team_a": "LEGION",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.7027027027027026",
+        "team_b": "1.5873015873015872",
+        "at": "2026-11-17T13:01:54.000Z",
+        "url": "https://polymarket.com/event/dota2-lgd-legion1-2026-11-17?marketSlug=dota2-lgd-legion1-2026-11-17-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r02-m003/2": {
+    "steam": "9094149032",
+    "team_a": "LEGION",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.73972602739726",
+        "team_b": "1.574803149606299",
+        "at": "2026-11-17T14:03:59.000Z",
+        "url": "https://polymarket.com/event/dota2-lgd-legion1-2026-11-17?marketSlug=dota2-lgd-legion1-2026-11-17-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r02-m003/3": {
+    "steam": "9094241558",
+    "team_a": "LEGION",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-17T15:04:59.000Z",
+        "url": "https://polymarket.com/event/dota2-lgd-legion1-2026-11-17?marketSlug=dota2-lgd-legion1-2026-11-17",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r02-m004/1": {
+    "steam": "9093871938",
+    "team_a": "PARIVISION",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2121212121212122",
+        "team_b": "5.714285714285714",
+        "at": "2026-11-17T09:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-pari-frogli-2026-11-17?marketSlug=dota2-pari-frogli-2026-11-17-game1",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3-p-r02-m004/2": {
+    "steam": "9093927215",
+    "team_a": "PARIVISION",
+    "team_b": "Froglings",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.183431952662722",
+        "team_b": "6.451612903225807",
+        "at": "2026-11-17T10:55:00.000Z",
+        "url": "https://polymarket.com/event/dota2-pari-frogli-2026-11-17?marketSlug=dota2-pari-frogli-2026-11-17-game2",
+        "resolution": 300
+      }
+    ]
+  },
+  "e3-p-r03-m001/1": {
+    "steam": "9094562824",
+    "team_a": "LGD Gaming",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "4.444444444444445",
+        "team_b": "1.2903225806451613",
+        "at": "2026-11-17T19:04:58.000Z",
+        "url": "https://polymarket.com/event/dota2-lgd-pari-2026-11-17?marketSlug=dota2-lgd-pari-2026-11-17-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r03-m001/2": {
+    "steam": "9094639003",
+    "team_a": "LGD Gaming",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "5.128205128205128",
+        "team_b": "1.2422360248447204",
+        "at": "2026-11-17T20:02:59.000Z",
+        "url": "https://polymarket.com/event/dota2-lgd-pari-2026-11-17?marketSlug=dota2-lgd-pari-2026-11-17-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r04-m001/1": {
+    "steam": "9094375739",
+    "team_a": "Team Spirit",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-17T16:36:59.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-aur1-2026-11-17?marketSlug=dota2-ts8-aur1-2026-11-17-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r04-m001/2": {
+    "steam": "9094461999",
+    "team_a": "Team Spirit",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4388489208633095",
+        "team_b": "3.278688524590164",
+        "at": "2026-11-17T17:43:59.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-aur1-2026-11-17?marketSlug=dota2-ts8-aur1-2026-11-17-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r04-m002/1": {
+    "steam": "9095253294",
+    "team_a": "Aurora Gaming",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "4.081632653061225",
+        "team_b": "1.3245033112582782",
+        "at": "2026-11-18T11:59:56.000Z",
+        "url": "https://polymarket.com/event/dota2-aur1-pari-2026-11-18?marketSlug=dota2-aur1-pari-2026-11-18-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r04-m002/2": {
+    "steam": "9095316326",
+    "team_a": "Aurora Gaming",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "3.3898305084745766",
+        "team_b": "1.4184397163120568",
+        "at": "2026-11-18T12:55:59.000Z",
+        "url": "https://polymarket.com/event/dota2-aur1-pari-2026-11-18?marketSlug=dota2-aur1-pari-2026-11-18-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r04-m002/3": {
+    "steam": "9095408575",
+    "team_a": "Aurora Gaming",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "3.773584905660377",
+        "team_b": "1.3605442176870748",
+        "at": "2026-11-18T14:05:59.000Z",
+        "url": "https://polymarket.com/event/dota2-aur1-pari-2026-11-18?marketSlug=dota2-aur1-pari-2026-11-18",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r05-m001/1": {
+    "steam": "9095571488",
+    "team_a": "Team Spirit",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8348623853211008",
+        "team_b": "2.1978021978021975",
+        "at": "2026-11-18T15:59:55.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-pari-2026-11-18?marketSlug=dota2-ts8-pari-2026-11-18-game1",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r05-m001/2": {
+    "steam": "9095683418",
+    "team_a": "Team Spirit",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.7857142857142856",
+        "team_b": "2.272727272727273",
+        "at": "2026-11-18T17:23:59.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-pari-2026-11-18?marketSlug=dota2-ts8-pari-2026-11-18-game2",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r05-m001/3": {
+    "steam": "9095760627",
+    "team_a": "Team Spirit",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.941747572815534",
+        "team_b": "2.061855670103093",
+        "at": "2026-11-18T18:30:59.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-pari-2026-11-18?marketSlug=dota2-ts8-pari-2026-11-18-game3",
+        "resolution": 0
+      }
+    ]
+  },
+  "e3-p-r05-m001/4": {
+    "steam": "9095836436",
+    "team_a": "Team Spirit",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4096385542168677",
+        "team_b": "1.7094017094017095",
+        "at": "2026-11-18T19:46:58.000Z",
+        "url": "https://polymarket.com/event/dota2-ts8-pari-2026-11-18?marketSlug=dota2-ts8-pari-2026-11-18-game4",
+        "resolution": 0
+      }
+    ]
+  }
+}

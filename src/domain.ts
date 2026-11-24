@@ -67,8 +67,9 @@ export function mapPath(map: MapDTO): string {
 }
 export function mapStatus(map: MapDTO): string {
   if (map.play_status === "unplayed") return "Не сыграна"
+  if (map.result_conflict) return "Источники расходятся"
   return map.result
-    ? "Завершена"
+    ? `Победа · ${map.result.winner === "A" ? map.team_a : map.team_b}`
     : map.post
       ? "POST сохранён"
       : map.retrospective_post

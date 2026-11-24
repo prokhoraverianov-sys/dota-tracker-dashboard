@@ -20,20 +20,23 @@ import { DraftEditor } from "./DraftEditor"
 import { draftKey, initialDraft, loadDraft, mapPath, mapStatus, validatePost } from "./domain"
 import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
+import { MapOutcome } from "./MapOutcome"
+import { retrospectiveForecast } from "./map-outcome"
 import { PLAY_IN_NAME, PLAY_IN_ROUTE } from "./playin-data"
 import { Quotes } from "./Quotes"
-import { ResultForm } from "./ResultForm"
 import { Back, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./analysis-presentation.css"
 export function MapWorkspace({
   initial,
+  tournamentKey,
   api,
   catalog,
   navigate,
   setDirty,
 }: {
   readonly initial: MapDTO
+  readonly tournamentKey: string | null
   readonly api: Api
   readonly catalog: Catalog
   readonly navigate: (path: string) => void
@@ -212,19 +215,9 @@ export function MapWorkspace({
     section?.focus({ preventScroll: true })
     section?.scrollIntoView()
   }
-  const savedRetrospective: Forecast | null =
-    recorded && map.map_id !== null
-      ? {
-          ...recorded,
-          map_id: map.map_id,
-          snapshot_id: "retrospective",
-          stage: "post_draft",
-          explanation: "",
-          odds: { provider: null, source_url: null, observed_at_utc: null, phase: null },
-          candidates: [],
-        }
-      : null
-  const post = map.post ?? savedRetrospective ?? retrospective
+  const savedPre = retrospectiveForecast(map, "pre")
+  const savedPost = retrospectiveForecast(map, "post")
+  const post = map.post ?? savedPost ?? retrospective
   const forecastSection = (
     <section ref={forecastSectionRef} className="workspace-section" aria-label="Прогнозы карты">
       <div className="workspace-heading">
@@ -233,7 +226,17 @@ export function MapWorkspace({
       </div>
       {(map.pre || map.post) && <Delta map={map} />}
       <div className="two-columns forecasts">
-        <ForecastCard forecast={map.pre} stage="PRE" map={map} />
+        <div>
+          <ForecastCard forecast={map.pre ?? savedPre} stage="PRE" map={map} />
+          {map.pre &&
+            savedPre &&
+            map.pre.analysis.shadow_forecast?.winner_probability_team_a == null && (
+              <details>
+                <summary>Отдельный ретроспективный PRE</summary>
+                <ForecastCard forecast={savedPre} stage="PRE" map={map} />
+              </details>
+            )}
+        </div>
         <div>
           {post?.snapshot_id === "retrospective" && (
             <p className="muted">
@@ -249,6 +252,14 @@ export function MapWorkspace({
             </p>
           )}
           <ForecastCard forecast={post} stage="POST" map={map} />
+          {map.post &&
+            savedPost &&
+            map.post.analysis.shadow_forecast?.winner_probability_team_a == null && (
+              <details>
+                <summary>Отдельный ретроспективный POST</summary>
+                <ForecastCard forecast={savedPost} stage="POST" map={map} />
+              </details>
+            )}
         </div>
       </div>
     </section>
@@ -259,11 +270,13 @@ export function MapWorkspace({
       <Back
         onClick={() =>
           navigate(
-            map.tournament === PLAY_IN_NAME || map.series_id?.startsWith("e3pi-")
-              ? PLAY_IN_ROUTE
-              : map.tournament === "1win Essence III"
-                ? "/schedule?tournament=1win-essence-3"
-                : "/schedule",
+            tournamentKey
+              ? `/schedule?tournament=${encodeURIComponent(tournamentKey)}`
+              : map.tournament === PLAY_IN_NAME || map.series_id?.startsWith("e3pi-")
+                ? PLAY_IN_ROUTE
+                : map.tournament === "1win Essence III"
+                  ? "/schedule?tournament=1win-essence-3"
+                  : "/schedule",
           )
         }
       />
@@ -283,6 +296,7 @@ export function MapWorkspace({
           {unplayed ? "Не сыграна" : locked ? "Карта завершена" : "Режим наблюдения"}
         </span>
       </header>
+      <MapOutcome map={map} />
       {unplayed && <Notice>Серия завершилась до этой карты.</Notice>}
       {map.analysis_context === "retrospective" && (
         <Notice>
@@ -296,7 +310,11 @@ export function MapWorkspace({
           <button
             type="button"
             className="text-button"
-            onClick={() => navigate(`/history?series=${encodeURIComponent(map.series_id ?? "")}`)}
+            onClick={() =>
+              navigate(
+                `/history?tournament=pari-universe&series=${encodeURIComponent(map.series_id ?? "")}`,
+              )
+            }
           >
             Открыть историю серии
           </button>
@@ -429,17 +447,6 @@ export function MapWorkspace({
         <CurrentOdds map={map} api={api} />
       </div>
       {prepareFirst && forecastSection}
-      {!unplayed && (
-        <ResultForm
-          onRefresh={setMap}
-          map={map}
-          api={api}
-          onSaved={(value) => {
-            setMap(value)
-            setDirty(false)
-          }}
-        />
-      )}
     </>
   )
 }

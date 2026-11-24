@@ -7,6 +7,37 @@
 .map-heading-main {
   min-width: 0;
 }
+.outcome-panel {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.5fr) repeat(2, minmax(140px, 1fr));
+  align-items: start;
+  padding: var(--s5);
+  gap: var(--s4);
+  margin-bottom: var(--s4);
+}
+.outcome-panel h2,
+.outcome-panel h3 {
+  font-size: 14px;
+  margin-bottom: var(--s2);
+}
+.stage-verdict,
+.outcome-panel > div {
+  display: grid;
+  gap: var(--s1);
+  overflow-wrap: break-word;
+}
+.stage-verdict small,
+.outcome-panel a {
+  font-size: 12px;
+}
+@media (max-width: 680px) {
+  .outcome-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .outcome-panel > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
 .map-team-heading {
   display: flex;
   align-items: center;

@@ -1,6 +1,7 @@
 import ky from "ky"
 import { z } from "zod"
 import { errorSchema, type Session, sessionSchema } from "./contracts"
+import { isResultRoute, loadVerifiedResults, verifiedView } from "./verified-results"
 export class ApiError extends Error {
   constructor(
     readonly status: number,
@@ -33,8 +34,22 @@ export class Api {
     body?: unknown,
     idempotency?: string,
   ): Promise<T> {
-    const response = await this.response(path, body, idempotency)
-    return schema.parse(await response.json())
+    if (body !== undefined || !isResultRoute(path)) {
+      const response = await this.response(path, body, idempotency)
+      return schema.parse(await response.json())
+    }
+    const register = loadVerifiedResults()
+    let raw: unknown
+    try {
+      const response = await this.response(path)
+      raw = await response.json()
+    } catch (err) {
+      if (err instanceof ApiError && err.status < 500 && err.status !== 404) throw err
+      const saved = await verifiedView(path, null, register)
+      if (saved == null) throw err
+      return schema.parse(saved)
+    }
+    return schema.parse(await verifiedView(path, raw, register))
   }
   async response(path: string, body?: unknown, idempotency?: string): Promise<Response> {
     const token = this.session()
@@ -71,9 +86,16 @@ export async function loadConfig(): Promise<string> {
 }
 export async function loadPublicAccess(origin: string): Promise<boolean> {
   const response = await ky(`${origin}/api/v1/auth/mode`, { retry: 0, throwHttpErrors: false })
-  if (response.status === 404) return false
-  if (!response.ok) throw new Error(`Сервер вернул ${response.status}`)
+  if ([401, 403, 404].includes(response.status)) return false
+  if (!response.ok)
+    throw new ApiError(response.status, "auth_mode", `Сервер вернул ${response.status}`)
   return z.object({ public_access: z.boolean() }).parse(await response.json()).public_access
+}
+export function serviceUnavailable(error: unknown) {
+  return error instanceof ApiError
+    ? error.status >= 500
+    : error instanceof TypeError ||
+        (error instanceof Error && ["TimeoutError", "NetworkError"].includes(error.name))
 }
 export function readSession(): Session | null {
   const raw = sessionStorage.getItem("dota-session")
