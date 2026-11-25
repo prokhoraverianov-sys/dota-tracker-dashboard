@@ -28,7 +28,9 @@ async function main() {
       await block.getByText("Выбор модели · PARIVISION", { exact: true }).waitFor()
     }
     const odds = page.getByRole("table", { name: "Архив котировок", exact: true })
-      .getByRole("row").filter({ has: page.getByRole("link", { name: "Polymarket", exact: true }) })
+      .getByRole("row")
+      .filter({ has: page.getByRole("link", { name: "Polymarket", exact: true }) })
+      .filter({ hasText: "справочная цена до старта" })
     await odds.waitFor()
     const prices = await odds.getByRole("cell").allTextContents()
     assert.deepEqual(prices.map((value) => Number(value.replace(",", "."))), [2.41, 1.709])
