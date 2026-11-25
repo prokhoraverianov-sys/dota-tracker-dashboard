@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "key": "blast-slam-ix",
+    "name": "BLAST Slam IX",
+    "league_id": 20208,
+    "stage_id": 10003480,
+    "bracket_ids": [10011634, 10011635, 10011636, 10011637],
+    "best_of_overrides": {"10100697": 5},
+    "markets": {
+      "starts_at_utc": "2026-11-20T00:00:00Z",
+      "ends_at_utc": "2026-11-30T00:00:00Z",
+      "polymarket_query": "BLAST Slam Playoffs",
+      "polymarket_competitions": ["BLAST Slam Playoffs"]
+    }
+  }
+]

@@ -12,8 +12,8 @@ import { Empty, Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import { weightedPost, weights } from "./weighted-post"
 
-function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essence: boolean }) {
-  const scenarios = essence ? [...mapStages, ...weights] : mapStages
+function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weighted: boolean }) {
+  const scenarios = weighted ? [...mapStages, ...weights] : mapStages
   return (
     <section className="panel report-comparison-panel">
       <div className="table-scroll">
@@ -25,7 +25,7 @@ function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essen
               <th>Зашло</th>
               <th>Не зашло</th>
               <th>Ср. кэф. до карты</th>
-              {essence && <th>Итоговый банк</th>}
+              {weighted && <th>Итоговый банк</th>}
               <th>Точность своевременных оригиналов</th>
             </tr>
           </thead>
@@ -36,7 +36,7 @@ function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essen
                 stage === "pre"
                   ? "PRE"
                   : stage === "post"
-                    ? essence
+                    ? weighted
                       ? "POST · 0,25"
                       : "POST"
                     : `POST · ${stage}`
@@ -70,7 +70,7 @@ function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essen
                       {prices.filter((q) => q.series).length} по рынку серии при 1:1
                     </small>
                   </td>
-                  {essence && (
+                  {weighted && (
                     <td>
                       $
                       {decimalPrice(
@@ -105,7 +105,7 @@ function StageStats({ maps, essence }: { readonly maps: MapDTO[]; readonly essen
         «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. Средний кэф. — среднее по
         выбранным командам, одна архивная цена до старта на карту. На решающих картах при отсутствии
         цены карты используется рынок серии при 1:1.
-        {essence &&
+        {weighted &&
           " Каждый сценарий начинает со $100. Ставка всегда $20, выигрыш округляется до цента на каждой карте."}
       </p>
     </section>
@@ -159,6 +159,7 @@ export function TrackedReport({
   const all = data?.series.flatMap((series) => series.maps.map((map) => ({ map, series }))) ?? []
   const playable = all.filter(({ map }) => map.play_status !== "unplayed")
   const played = playable.filter(({ map }) => map.result && !map.result_conflict)
+  const weighted = tournament === "1win-essence-3" || tournament === "blast-slam-ix"
   const livePhases = new Map(data?.event?.slots.map((slot) => [slot.series_id, slot.phase]))
   const phaseFor = (series: (typeof all)[number]["series"]) =>
     tournamentPhase(
@@ -194,12 +195,7 @@ export function TrackedReport({
               <span>карт отпали по счёту</span>
             </div>
           </div>
-          {stats && (
-            <StageStats
-              essence={tournament === "1win-essence-3"}
-              maps={played.map((item) => item.map)}
-            />
-          )}
+          {stats && <StageStats weighted={weighted} maps={played.map((item) => item.map)} />}
           <section className="panel history-panel">
             <div className="panel-heading">
               <h2>Карты турнира</h2>
@@ -222,7 +218,7 @@ export function TrackedReport({
                       <th>Стадия</th>
                       <th>Победитель</th>
                       <th>PRE</th>
-                      <th>{tournament === "1win-essence-3" ? "POST · 0,25" : "POST"}</th>
+                      <th>{weighted ? "POST · 0,25" : "POST"}</th>
                     </tr>
                   </thead>
                   <tbody className="tracked-map-rows">

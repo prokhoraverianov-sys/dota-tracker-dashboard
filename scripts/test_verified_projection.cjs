@@ -27,14 +27,23 @@ async function main() {
   for (const [key, tournament] of Object.entries(facts.tournaments)) {
     const url = "/schedule?tournament=" + encodeURIComponent(key)
     const all = scheduleSchema.parse(await view(url))
-    const ids = all.series.flatMap(s => s.maps.map(m => m.result?.steam_match_id).filter(Boolean))
-    const expected = Object.values(tournament.series)
-      .flatMap(series => series.maps.map(m => m.steam_match_id).filter(Boolean))
-    assert.deepEqual(ids.toSorted(), expected.toSorted(), key)
-    assert.equal(new Set(ids).size, ids.length, key)
+    const normalize = (team) => team.trim().toLowerCase()
+    const cards = all.series.flatMap(series => series.maps.filter(map => map.result))
+    const actual = cards.map(map => [
+      map.series_id, map.map_number, map.result.steam_match_id ?? null,
+      normalize(map.result.winner === "A" ? map.team_a : map.team_b), map.result.duration_seconds,
+    ])
+    const expected = Object.entries(tournament.series).flatMap(([id, series]) =>
+      series.maps.map(map => [
+        id, map.map_number, map.steam_match_id ?? null,
+        normalize(map.winner === "A" ? series.team_a : series.team_b), map.duration_seconds,
+      ]),
+    )
+    assert.deepEqual(actual.toSorted(), expected.toSorted(), key + " played slots and outcomes")
+    const ids = cards.map(map => map.result.steam_match_id).filter(Boolean)
+    assert.equal(new Set(ids).size, ids.length, key + " duplicate Steam Match ID")
     if (["1win-essence-3", "1win-essence-3-play-in", "pari-universe"].includes(key)) {
       for (const stage of ["pre","post"]) {
-        const cards = all.series.flatMap(s => s.maps).filter(m => m.result)
         const results = cards.map(m => evaluateMap(m, stage))
         assert(results.every(v => typeof v.comparison === "boolean"), key + "/" + stage)
         if (key === "1win-essence-3") {

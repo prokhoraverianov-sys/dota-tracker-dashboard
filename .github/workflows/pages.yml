@@ -48,10 +48,15 @@ jobs:
         if: steps.publish.outputs.required == 'true'
       - run: node scripts/test_verified_projection.cjs
         if: steps.publish.outputs.required == 'true'
+      - run: node scripts/test_blast_registry.cjs
+        if: steps.publish.outputs.required == 'true'
       - run: bunx biome check src vite.config.ts
         if: steps.publish.outputs.required == 'true'
       - run: bun run build
         if: steps.publish.outputs.required == 'true'
+      - name: Verify active odds and draft-to-POST flows before publishing
+        if: steps.publish.outputs.required == 'true'
+        run: node scripts/test_map_regressions.cjs
       - name: Reject secret material
         if: steps.publish.outputs.required == 'true'
         shell: bash

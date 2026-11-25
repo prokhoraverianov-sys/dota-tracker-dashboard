@@ -157,12 +157,16 @@ export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): Map
     )
   )
     post = { ...post, verified_steam_match_id: fact.steam_match_id }
+  const retrospectivePost = backup?.retrospective_post ?? card.retrospective_post
+  const replayId = retrospectivePost?.external_game_id
+  const verifiedReplay =
+    !replayId?.startsWith("steam:") || replayId === `steam:${fact.steam_match_id}`
   return {
     ...card,
     pre: card.pre ?? backup?.pre ?? null,
     post,
     retrospective_pre: backup?.retrospective_pre ?? card.retrospective_pre,
-    retrospective_post: backup?.retrospective_post ?? card.retrospective_post,
+    retrospective_post: verifiedReplay ? retrospectivePost : null,
     play_status: null,
     result: {
       ...previous,

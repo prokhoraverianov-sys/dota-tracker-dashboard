@@ -281,7 +281,9 @@ def stage_schedule(config, read, previous):
                 if brackets and (bracket.get("type") != "stage_bracket" or bracket.get("id") not in brackets):
                     continue
                 attrs = entry["attributes"]
-                best = {"bestOf1":1,"bestOf2":2,"bestOf3":3,"bestOf5":5}.get(attrs.get("format"))
+                best = config.get("best_of_overrides", {}).get(ref) or {
+                    "bestOf1":1,"bestOf2":2,"bestOf3":3,"bestOf5":5
+                }.get(attrs.get("format"))
                 if not best or attrs.get("isHidden") is not False or type(attrs.get("isFinished")) is not bool:
                     continue
                 names, scores = [], []
@@ -339,6 +341,8 @@ def registrations(path):
         if (not re.fullmatch("[a-z0-9]+(?:-[a-z0-9]+)*", row["key"]) or not row["name"].strip()
                 or not positive(row["league_id"]) or not positive(row["stage_id"])
                 or not all(positive(n) for n in row.get("bracket_ids", []))
+                or not all(k.isascii() and k.isdecimal() and type(v) is int and v in (1, 2, 3, 5)
+                           for k, v in row.get("best_of_overrides", {}).items())
                 or row["key"] in keys or str(row["stage_id"]) in stages):
             raise ValueError("invalid or duplicate registered tournament identity")
         keys.add(row["key"])

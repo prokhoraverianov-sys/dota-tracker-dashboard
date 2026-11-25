@@ -31,6 +31,8 @@ function phaseLabel(scope: string) {
   switch (scope) {
     case "series_at_1_1":
       return "Рынок серии при 1:1 · справочная цена до карты"
+    case "series_at_1_1_late":
+      return "Рынок серии при 1:1 · снимок после старта карты"
     case "map":
       return "Рынок карты · справочная цена до старта"
     case "before":

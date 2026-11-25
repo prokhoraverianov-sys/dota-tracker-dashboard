@@ -1,4 +1,932 @@
 {
+  "cs-10003480-10100664/1": {
+    "steam": "9097783398",
+    "team_a": "Team Yandex",
+    "team_b": "PlayTime",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1299435028248588",
+        "team_b": "8.695652173913043",
+        "at": "2026-11-20T10:59:14+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-playti-2026-11-20?marketSlug=dota2-ty-playti-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100664/2": {
+    "steam": "9097870389",
+    "team_a": "Team Yandex",
+    "team_b": "PlayTime",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1560693641618498",
+        "team_b": "7.4074074074074066",
+        "at": "2026-11-20T12:17:17+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-playti-2026-11-20?marketSlug=dota2-ty-playti-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100665/1": {
+    "steam": "9097940178",
+    "team_a": "Natus Vincere",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5037593984962405",
+        "team_b": "2.9850746268656714",
+        "at": "2026-11-20T13:11:17+00:00",
+        "url": "https://polymarket.com/event/dota2-navi-og-2026-11-20?marketSlug=dota2-navi-og-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100665/2": {
+    "steam": "9098054405",
+    "team_a": "Natus Vincere",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6",
+        "team_b": "2.6666666666666665",
+        "at": "2026-11-20T14:29:14+00:00",
+        "url": "https://polymarket.com/event/dota2-navi-og-2026-11-20?marketSlug=dota2-navi-og-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100665/3": {
+    "steam": "9098169261",
+    "team_a": "Natus Vincere",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "1.2738853503184713",
+        "team_b": "4.651162790697675",
+        "at": "2026-11-20T16:09:21+00:00",
+        "url": "https://polymarket.com/event/dota2-navi-og-2026-11-20?marketSlug=dota2-navi-og-2026-11-20",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100666/1": {
+    "steam": "9099625641",
+    "team_a": "Team Yandex",
+    "team_b": "Natus Vincere",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4492753623188408",
+        "team_b": "3.2258064516129035",
+        "at": "2026-11-21T14:45:23+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-navi-2026-11-21?marketSlug=dota2-ty-navi-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100666/2": {
+    "steam": "9099798925",
+    "team_a": "Team Yandex",
+    "team_b": "Natus Vincere",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.3986013986013988",
+        "team_b": "3.5087719298245617",
+        "at": "2026-11-21T16:34:30+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-navi-2026-11-21?marketSlug=dota2-ty-navi-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100667/1": {
+    "steam": "9099748911",
+    "team_a": "PlayTime",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.8985507246376816",
+        "team_b": "1.5267175572519083",
+        "at": "2026-11-21T16:08:22+00:00",
+        "url": "https://polymarket.com/event/dota2-playti-og-2026-11-21?marketSlug=dota2-playti-og-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100667/2": {
+    "steam": "9099903959",
+    "team_a": "PlayTime",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.8985507246376816",
+        "team_b": "1.5267175572519083",
+        "at": "2026-11-21T17:37:22+00:00",
+        "url": "https://polymarket.com/event/dota2-playti-og-2026-11-21?marketSlug=dota2-playti-og-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100667/3": {
+    "steam": "9100004430",
+    "team_a": "PlayTime",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "4.25531914893617",
+        "team_b": "1.3071895424836601",
+        "at": "2026-11-21T19:05:50+00:00",
+        "url": "https://polymarket.com/event/dota2-playti-og-2026-11-21?marketSlug=dota2-playti-og-2026-11-21",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100668/1": {
+    "steam": "9102538823",
+    "team_a": "Natus Vincere",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5503875968992247",
+        "team_b": "2.8169014084507045",
+        "at": "2026-11-23T13:56:14+00:00",
+        "url": "https://polymarket.com/event/dota2-navi-og-2026-11-23?marketSlug=dota2-navi-og-2026-11-23-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100668/2": {
+    "steam": "9102638098",
+    "team_a": "Natus Vincere",
+    "team_b": "OG",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.574803149606299",
+        "team_b": "2.73972602739726",
+        "at": "2026-11-23T15:07:12+00:00",
+        "url": "https://polymarket.com/event/dota2-navi-og-2026-11-23?marketSlug=dota2-navi-og-2026-11-23-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100669/1": {
+    "steam": "9097789980",
+    "team_a": "Team Spirit",
+    "team_b": "Team Nemesis",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.183431952662722",
+        "team_b": "6.451612903225807",
+        "at": "2026-11-20T10:57:11+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-nem-2026-11-20?marketSlug=dota2-ts8-nem-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100669/2": {
+    "steam": "9097868416",
+    "team_a": "Team Spirit",
+    "team_b": "Team Nemesis",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.2422360248447204",
+        "team_b": "5.128205128205128",
+        "at": "2026-11-20T12:22:11+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-nem-2026-11-20?marketSlug=dota2-ts8-nem-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100670/1": {
+    "steam": "9097973005",
+    "team_a": "GamerLegion",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.941747572815534",
+        "team_b": "2.061855670103093",
+        "at": "2026-11-20T13:38:16+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-xtreme-2026-11-20?marketSlug=dota2-gl-xtreme-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100670/2": {
+    "steam": "9098067582",
+    "team_a": "GamerLegion",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.7094017094017095",
+        "team_b": "2.4096385542168677",
+        "at": "2026-11-20T14:43:14+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-xtreme-2026-11-20?marketSlug=dota2-gl-xtreme-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100671/1": {
+    "steam": "9099515151",
+    "team_a": "Team Nemesis",
+    "team_b": "GamerLegion",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-21T13:41:32+00:00",
+        "url": "https://polymarket.com/event/dota2-nem-gl-2026-11-21?marketSlug=dota2-nem-gl-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100671/2": {
+    "steam": "9099614690",
+    "team_a": "Team Nemesis",
+    "team_b": "GamerLegion",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-21T14:49:53+00:00",
+        "url": "https://polymarket.com/event/dota2-nem-gl-2026-11-21?marketSlug=dota2-nem-gl-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100672/1": {
+    "steam": "9099951595",
+    "team_a": "Team Spirit",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.342281879194631",
+        "team_b": "3.9215686274509802",
+        "at": "2026-11-21T18:07:12+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-xtreme-2026-11-21?marketSlug=dota2-ts8-xtreme-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100672/2": {
+    "steam": "9100047324",
+    "team_a": "Team Spirit",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.3245033112582782",
+        "team_b": "4.081632653061225",
+        "at": "2026-11-21T19:14:48+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-xtreme-2026-11-21?marketSlug=dota2-ts8-xtreme-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100672/3": {
+    "steam": "9100301435",
+    "team_a": "Team Spirit",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1",
+        "team_a": "1.7559262510974538",
+        "team_b": "2.3228803716608595",
+        "at": "2026-11-21T22:34:22+00:00",
+        "url": "https://polymarket.com/event/dota2-ts8-xtreme-2026-11-21?marketSlug=dota2-ts8-xtreme-2026-11-21",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100673/1": {
+    "steam": "9102537211",
+    "team_a": "Team Nemesis",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-23T13:55:13+00:00",
+        "url": "https://polymarket.com/event/dota2-nem-xtreme-2026-11-23?marketSlug=dota2-nem-xtreme-2026-11-23-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100673/2": {
+    "steam": "9102662210",
+    "team_a": "Team Nemesis",
+    "team_b": "Xtreme Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-23T15:27:10+00:00",
+        "url": "https://polymarket.com/event/dota2-nem-xtreme-2026-11-23?marketSlug=dota2-nem-xtreme-2026-11-23-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100674/1": {
+    "steam": "9098185996",
+    "team_a": "PARIVISION",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.183431952662722",
+        "team_b": "6.451612903225807",
+        "at": "2026-11-20T15:55:23+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-legion1-2026-11-20?marketSlug=dota2-pari-legion1-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100674/2": {
+    "steam": "9098298585",
+    "team_a": "PARIVISION",
+    "team_b": "LEGION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.1976047904191618",
+        "team_b": "6.0606060606060606",
+        "at": "2026-11-20T17:12:16+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-legion1-2026-11-20?marketSlug=dota2-pari-legion1-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100675/1": {
+    "steam": "9098273104",
+    "team_a": "Team Liquid",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.6",
+        "team_b": "2.6666666666666665",
+        "at": "2026-11-20T16:51:16+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-konca-2026-11-20?marketSlug=dota2-liquid-konca-2026-11-20-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100675/2": {
+    "steam": "9098373280",
+    "team_a": "Team Liquid",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.574803149606299",
+        "team_b": "2.73972602739726",
+        "at": "2026-11-20T18:01:11+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-konca-2026-11-20?marketSlug=dota2-liquid-konca-2026-11-20-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100676/1": {
+    "steam": "9101190574",
+    "team_a": "PARIVISION",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-22T13:55:14+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-liquid-2026-11-22?marketSlug=dota2-pari-liquid-2026-11-22-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100676/2": {
+    "steam": "9101312905",
+    "team_a": "PARIVISION",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5037593984962405",
+        "team_b": "2.9850746268656714",
+        "at": "2026-11-22T15:09:14+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-liquid-2026-11-22?marketSlug=dota2-pari-liquid-2026-11-22-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100676/3": {
+    "steam": "9101479361",
+    "team_a": "PARIVISION",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "1.5503875968992247",
+        "team_b": "2.8169014084507045",
+        "at": "2026-11-22T17:10:21+00:00",
+        "url": "https://polymarket.com/event/dota2-pari-liquid-2026-11-22?marketSlug=dota2-pari-liquid-2026-11-22",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100677/1": {
+    "steam": "9101188899",
+    "team_a": "LEGION",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-22T13:55:16+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-konca-2026-11-22?marketSlug=dota2-legion1-konca-2026-11-22-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100677/2": {
+    "steam": "9101299342",
+    "team_a": "LEGION",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.247191011235955",
+        "team_b": "1.8018018018018016",
+        "at": "2026-11-22T15:04:16+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-konca-2026-11-22?marketSlug=dota2-legion1-konca-2026-11-22-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100677/3": {
+    "steam": "9101476409",
+    "team_a": "LEGION",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-22T17:09:13+00:00",
+        "url": "https://polymarket.com/event/dota2-legion1-konca-2026-11-22?marketSlug=dota2-legion1-konca-2026-11-22",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100678/1": {
+    "steam": "9102753849",
+    "team_a": "Team Liquid",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4814814814814814",
+        "team_b": "3.0769230769230766",
+        "at": "2026-11-23T16:30:14+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-konca-2026-11-23?marketSlug=dota2-liquid-konca-2026-11-23-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100678/2": {
+    "steam": "9102844753",
+    "team_a": "Team Liquid",
+    "team_b": "DO KONCA",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.4598540145985401",
+        "team_b": "3.1746031746031744",
+        "at": "2026-11-23T17:43:14+00:00",
+        "url": "https://polymarket.com/event/dota2-liquid-konca-2026-11-23?marketSlug=dota2-liquid-konca-2026-11-23-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100679/1": {
+    "steam": "9099278768",
+    "team_a": "Aurora Gaming",
+    "team_b": "Astra Invicta",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5384615384615383",
+        "team_b": "2.857142857142857",
+        "at": "2026-11-21T10:58:15+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-ai1-2026-11-21?marketSlug=dota2-aur1-ai1-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100679/2": {
+    "steam": "9099376074",
+    "team_a": "Aurora Gaming",
+    "team_b": "Astra Invicta",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5037593984962405",
+        "team_b": "2.9850746268656714",
+        "at": "2026-11-21T12:12:14+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-ai1-2026-11-21?marketSlug=dota2-aur1-ai1-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100679/3": {
+    "steam": "9099504624",
+    "team_a": "Aurora Gaming",
+    "team_b": "Astra Invicta",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "1.2903225806451613",
+        "team_b": "4.444444444444445",
+        "at": "2026-11-21T13:56:13+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-ai1-2026-11-21?marketSlug=dota2-aur1-ai1-2026-11-21",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100680/1": {
+    "steam": "9099277554",
+    "team_a": "LGD Gaming",
+    "team_b": "1w Team",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8348623853211008",
+        "team_b": "2.1978021978021975",
+        "at": "2026-11-21T10:55:24+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-1win-2026-11-21?marketSlug=dota2-lgd-1win-2026-11-21-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100680/2": {
+    "steam": "9099401953",
+    "team_a": "LGD Gaming",
+    "team_b": "1w Team",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.9801980198019802",
+        "team_b": "2.0202020202020203",
+        "at": "2026-11-21T12:36:15+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-1win-2026-11-21?marketSlug=dota2-lgd-1win-2026-11-21-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100681/1": {
+    "steam": "9101574910",
+    "team_a": "Astra Invicta",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.2222222222222223",
+        "team_b": "1.8181818181818181",
+        "at": "2026-11-22T17:55:09+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-ai1-2026-11-22?marketSlug=dota2-lgd-ai1-2026-11-22-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100681/2": {
+    "steam": "9101675886",
+    "team_a": "Astra Invicta",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.061855670103093",
+        "team_b": "1.941747572815534",
+        "at": "2026-11-22T18:59:13+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-ai1-2026-11-22?marketSlug=dota2-lgd-ai1-2026-11-22-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100681/3": {
+    "steam": "9101771071",
+    "team_a": "Astra Invicta",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "2.3529411764705883",
+        "team_b": "1.7391304347826089",
+        "at": "2026-11-22T20:43:25+00:00",
+        "url": "https://polymarket.com/event/dota2-lgd-ai1-2026-11-22?marketSlug=dota2-lgd-ai1-2026-11-22",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100682/1": {
+    "steam": "9101577619",
+    "team_a": "1w Team",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.1739130434782608",
+        "team_b": "1.8518518518518516",
+        "at": "2026-11-22T17:59:13+00:00",
+        "url": "https://polymarket.com/event/dota2-1win-aur1-2026-11-22?marketSlug=dota2-1win-aur1-2026-11-22-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100682/2": {
+    "steam": "9101661529",
+    "team_a": "1w Team",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.9047619047619047",
+        "team_b": "2.1052631578947367",
+        "at": "2026-11-22T18:59:14+00:00",
+        "url": "https://polymarket.com/event/dota2-1win-aur1-2026-11-22?marketSlug=dota2-1win-aur1-2026-11-22-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100683/1": {
+    "steam": "9102778505",
+    "team_a": "Aurora Gaming",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.7699115044247788",
+        "team_b": "2.2988505747126435",
+        "at": "2026-11-23T16:48:35+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-lgd-2026-11-23?marketSlug=dota2-aur1-lgd-2026-11-23-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100683/2": {
+    "steam": "9102872629",
+    "team_a": "Aurora Gaming",
+    "team_b": "LGD Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.8348623853211008",
+        "team_b": "2.1978021978021975",
+        "at": "2026-11-23T18:06:25+00:00",
+        "url": "https://polymarket.com/event/dota2-aur1-lgd-2026-11-23?marketSlug=dota2-aur1-lgd-2026-11-23-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100684/1": {
+    "steam": "9103792288",
+    "team_a": "Team Yandex",
+    "team_b": "1w Team",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.5625",
+        "team_b": "2.7777777777777777",
+        "at": "2026-11-24T13:57:13+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-1win-2026-11-24?marketSlug=dota2-ty-1win-2026-11-24-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100684/2": {
+    "steam": "9103887230",
+    "team_a": "Team Yandex",
+    "team_b": "1w Team",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "1.574803149606299",
+        "team_b": "2.73972602739726",
+        "at": "2026-11-24T15:06:25+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-1win-2026-11-24?marketSlug=dota2-ty-1win-2026-11-24-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100684/3": {
+    "steam": "9103988169",
+    "team_a": "Team Yandex",
+    "team_b": "1w Team",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "1.680672268907563",
+        "team_b": "2.4691358024691357",
+        "at": "2026-11-24T16:38:14+00:00",
+        "url": "https://polymarket.com/event/dota2-ty-1win-2026-11-24?marketSlug=dota2-ty-1win-2026-11-24",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100685/1": {
+    "steam": "9103792148",
+    "team_a": "GamerLegion",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "3.9215686274509802",
+        "team_b": "1.342281879194631",
+        "at": "2026-11-24T13:55:13+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-pari-2026-11-24?marketSlug=dota2-gl-pari-2026-11-24-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100685/2": {
+    "steam": "9103896435",
+    "team_a": "GamerLegion",
+    "team_b": "PARIVISION",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "3.9215686274509802",
+        "team_b": "1.342281879194631",
+        "at": "2026-11-24T15:04:14+00:00",
+        "url": "https://polymarket.com/event/dota2-gl-pari-2026-11-24?marketSlug=dota2-gl-pari-2026-11-24-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100686/1": {
+    "steam": "9104081844",
+    "team_a": "OG",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.5974025974025974",
+        "team_b": "1.6260162601626016",
+        "at": "2026-11-24T17:25:14+00:00",
+        "url": "https://polymarket.com/event/dota2-og-aur1-2026-11-24?marketSlug=dota2-og-aur1-2026-11-24-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100686/2": {
+    "steam": "9104185540",
+    "team_a": "OG",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.4691358024691357",
+        "team_b": "1.680672268907563",
+        "at": "2026-11-24T18:49:24+00:00",
+        "url": "https://polymarket.com/event/dota2-og-aur1-2026-11-24?marketSlug=dota2-og-aur1-2026-11-24-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100686/3": {
+    "steam": "9104260611",
+    "team_a": "OG",
+    "team_b": "Aurora Gaming",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "2.150537634408602",
+        "team_b": "1.8691588785046729",
+        "at": "2026-11-24T20:07:56+00:00",
+        "url": "https://polymarket.com/event/dota2-og-aur1-2026-11-24?marketSlug=dota2-og-aur1-2026-11-24",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100687/1": {
+    "steam": "9104002501",
+    "team_a": "Xtreme Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.6666666666666665",
+        "team_b": "1.6",
+        "at": "2026-11-24T16:26:16+00:00",
+        "url": "https://polymarket.com/event/dota2-xtreme-liquid-2026-11-24?marketSlug=dota2-xtreme-liquid-2026-11-24-game1",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100687/2": {
+    "steam": "9104082306",
+    "team_a": "Xtreme Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "map",
+        "team_a": "2.9850746268656714",
+        "team_b": "1.5037593984962405",
+        "at": "2026-11-24T17:35:16+00:00",
+        "url": "https://polymarket.com/event/dota2-xtreme-liquid-2026-11-24?marketSlug=dota2-xtreme-liquid-2026-11-24-game2",
+        "resolution": 60
+      }
+    ]
+  },
+  "cs-10003480-10100687/3": {
+    "steam": "9104215841",
+    "team_a": "Xtreme Gaming",
+    "team_b": "Team Liquid",
+    "quotes": [
+      {
+        "source": "polymarket",
+        "scope": "series_at_1_1_late",
+        "team_a": "3.2258064516129035",
+        "team_b": "1.4388489208633095",
+        "at": "2026-11-24T19:32:36+00:00",
+        "url": "https://polymarket.com/event/dota2-xtreme-liquid-2026-11-24?marketSlug=dota2-xtreme-liquid-2026-11-24",
+        "resolution": 60
+      }
+    ]
+  },
   "p26-g01/1": {
     "steam": "9056215433",
     "team_a": "Team Yandex",

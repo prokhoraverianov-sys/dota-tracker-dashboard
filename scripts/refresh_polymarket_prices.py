@@ -14,6 +14,10 @@ GAMMA = "https://gamma-api.polymarket.com"
 CLOB = "https://clob.polymarket.com"
 HISTORY_WINDOW = 3600
 FIDELITY = 1
+BLAST_STAGES = frozenset({
+    "BLAST Slam Group A", "BLAST Slam Group B", "BLAST Slam Group C", "BLAST Slam Group D",
+    "BLAST Slam Seeding Matches", "BLAST Slam Last Chance Qualifier", "BLAST Slam Playoffs",
+})
 
 
 def get(url, **params):
@@ -28,7 +32,8 @@ def timestamp(value):
 
 
 def team_key(value):
-    return re.sub(r"[\W_]+", "", value.casefold())
+    key = re.sub(r"[\W_]+", "", value.casefold())
+    return {"1wteam": "1win", "aurora": "auroragaming"}.get(key, key)
 
 
 def market_tokens(market, teams):
@@ -57,7 +62,7 @@ def discover(name):
     raise RuntimeError(f"Polymarket search for {name} exceeded its page limit")
 
 
-def bind_event(events, series, name):
+def bind_event(events, series, name, stages=None):
     teams = series["team_a"], series["team_b"]
     start = timestamp(series["starts_at_utc"])
     candidates = []
@@ -67,8 +72,10 @@ def bind_event(events, series, name):
         if (
             not sep
             or not prefix.startswith("Dota 2: ")
-            or not re.match(re.escape(name) + r"(?:\s|$)", competition, flags=re.I)
-            or "qualifier" in competition.casefold()
+            or not (competition in stages if stages is not None else (
+                re.match(re.escape(name) + r"(?:\s|$)", competition, flags=re.I)
+                and "qualifier" not in competition.casefold()
+            ))
             or not event.get("startTime")
             or abs(timestamp(event["startTime"]) - start) > 8 * 3600
         ):
@@ -80,6 +87,10 @@ def bind_event(events, series, name):
             for m in event.get("markets", [])
         ):
             candidates.append(event)
+    if len(candidates) > 1 and stages is not None:
+        nearest = sorted(candidates, key=lambda e: abs(timestamp(e["startTime"]) - start))
+        if abs(timestamp(nearest[1]["startTime"]) - start) - abs(timestamp(nearest[0]["startTime"]) - start) > 7200:
+            return nearest[0]
     return candidates[0] if len(candidates) == 1 else None
 
 
@@ -112,7 +123,7 @@ def market_for(event, teams, number):
     return found[0] if len(found) == 1 and found[0][1] else None
 
 
-def history_price(event, teams, fact, series):
+def history_price(event, teams, fact, series, *, include_late=False):
     if not event:
         return None, "серия не привязана"
     if not fact.get("started_at_utc") or not fact.get("steam_match_id"):
@@ -142,16 +153,27 @@ def history_price(event, teams, fact, series):
                 scope = "series_at_1_1"
     if not matched:
         return None, "нет рынка карты или подтверждённого рынка серии при 1:1"
-    if lower >= start:
-        return None, "рынок второй карты закрылся после старта третьей"
     market, tokens = matched
-    points = [
-        last_price(get(f"{CLOB}/prices-history", market=token, startTs=lower, endTs=start,
-                       fidelity=FIDELITY)["history"], lower, start)
-        for token in tokens
-    ]
+    if lower >= start:
+        if not include_late or scope != "series_at_1_1":
+            return None, "рынок второй карты закрылся после старта третьей"
+        scope = "series_at_1_1_late"
+        upper = min(lower + 300, start + fact["duration_seconds"],
+                    timestamp(market["closedTime"]) if market.get("closedTime") else float("inf"))
+        if lower >= upper:
+            return None, "нет подтверждённого окна счёта 1:1 до окончания третьей карты"
+    else:
+        upper = start
+    points = [last_price(get(f"{CLOB}/prices-history", market=token, startTs=lower, endTs=upper,
+                             fidelity=FIDELITY)["history"], lower, upper) for token in tokens]
+    if include_late and scope == "map" and (not all(points) or abs(points[0][0] - points[1][0]) > 120):
+        upper = min(start + 5 * 60, timestamp(market["closedTime"]) if market.get("closedTime") else float("inf"))
+        if upper > start:
+            points = [last_price(get(f"{CLOB}/prices-history", market=token, startTs=start, endTs=upper,
+                                     fidelity=FIDELITY)["history"], start, upper) for token in tokens]
+            scope = "during"
     if not all(points) or abs(points[0][0] - points[1][0]) > 120:
-        return None, "нет синхронной истории обеих сторон до старта"
+        return None, "нет синхронной истории обеих сторон в подтверждённом временном окне"
     return {
         "source": "polymarket",
         "scope": scope,
@@ -167,28 +189,42 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tournament", default="pari-universe")
     parser.add_argument("--output", type=Path, default=ROOT / "src/polymarket-api-prices.json")
+    parser.add_argument("--diagnostics", type=Path, help="Optional JSON of per-map coverage gaps")
+    parser.add_argument("--events-json", type=Path, help="Use a saved Gamma discovery response")
     args = parser.parse_args()
     registry = json.loads((ROOT / "public/data/verified-results.json").read_text(encoding="utf-8"))
     tournament = registry["tournaments"][args.tournament]
     name = tournament["name"]
-    events = discover(name)
+    blast = args.tournament == "blast-slam-ix"
+    if args.events_json:
+        events = json.loads(args.events_json.read_bytes())
+    elif blast:
+        events = get(f"{GAMMA}/events", series_id=10309, end_date_min="2026-11-20T00:00:00Z",
+                     end_date_max="2026-11-30T00:00:00Z", limit=100)
+    else:
+        events = discover(name)
 
     def recover(entry):
         series_id, series = entry
-        event = bind_event(events, series, name)
+        event = bind_event(events, series, name, BLAST_STAGES if blast else None)
         teams = series["team_a"], series["team_b"]
         for fact in series["maps"]:
             key = f"{series_id}/{fact['map_number']}"
-            quote, reason = history_price(event, teams, fact, series)
+            quote, reason = history_price(event, teams, fact, series, include_late=blast)
             if quote:
-                yield key, dict(steam=fact["steam_match_id"], team_a=teams[0], team_b=teams[1], quotes=[quote])
+                yield key, dict(steam=fact["steam_match_id"], team_a=teams[0], team_b=teams[1], quotes=[quote]), None
             else:
                 print(f"{key} · {teams[0]} / {teams[1]} · {reason}")
+                yield key, None, reason
 
     # Finish all API reads before touching the output. A failed refresh preserves the last archive.
     with ThreadPoolExecutor(max_workers=6) as executor:
-        recovered = dict(item for batch in executor.map(lambda item: list(recover(item)),
-                                                          tournament["series"].items()) for item in batch)
+        records = [item for batch in executor.map(lambda item: list(recover(item)),
+                                                   tournament["series"].items()) for item in batch]
+    recovered = {key: row for key, row, _ in records if row is not None}
+    if args.diagnostics:
+        args.diagnostics.write_text(json.dumps({key: reason for key, _, reason in records if reason},
+                                              ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     existing = json.loads(args.output.read_text(encoding="utf-8")) if args.output.exists() else {}
     existing.update(recovered)
     rows = dict(sorted(existing.items()))

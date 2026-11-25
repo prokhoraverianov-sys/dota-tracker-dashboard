@@ -35,14 +35,23 @@ for (const [key, entry] of Object.entries(recovered)) {
     const market = address.searchParams.get("marketSlug")
     assert.equal(address.hostname, "polymarket.com", key)
     assert.equal(quote.source, "polymarket", key)
-    assert(Date.parse(quote.at) < Date.parse(fact.started_at_utc), key)
+    const quotedAt = Date.parse(quote.at)
+    const start = Date.parse(fact.started_at_utc)
+    const late = quote.scope === "series_at_1_1_late" || quote.scope === "during"
+    if (late) {
+      assert(seriesId.startsWith("cs-10003480-"), key)
+      assert(quotedAt >= start && quotedAt < start + fact.duration_seconds * 1000, key)
+    } else {
+      assert(quotedAt < start, key)
+    }
     assert([quote.team_a, quote.team_b].every((value) => Number.isFinite(+value) && +value > 1), key)
-    if (quote.scope === "series_at_1_1") {
+    if (quote.scope === "series_at_1_1" || quote.scope === "series_at_1_1_late") {
       assert.equal(number, "3", key)
       assert.equal(series.best_of, 3, key)
       assert.notEqual(series.maps[0].winner, series.maps[1].winner, key)
+      assert.equal(market, address.pathname.split("/").at(-1), key)
     } else {
-      assert.equal(quote.scope, "map", key)
+      assert(["map", "during"].includes(quote.scope), key)
       assert(market?.endsWith(`-game${number}`), key)
     }
   }

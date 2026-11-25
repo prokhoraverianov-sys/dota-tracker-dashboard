@@ -131,8 +131,29 @@ async function main() {
     assert.equal(await futureGroup.getByText("сыграно 0", { exact: true }).count(), 2)
     await fresh.close()
 
+    home.hash = "/series/cs-10003480-10100672/maps/3?tournament=blast-slam-ix"
+    await page.goto(home.href)
+    const blastResult = page.getByRole("region", { name: "Результат и прогнозы" })
+    await blastResult.getByText("Xtreme Gaming · 26:54", { exact: true }).waitFor()
+    await blastResult.getByRole("link", { name: /Steam Match ID 9100301435/ }).waitFor()
+    assert.equal(await blastResult.getByText("Ретроспективный расчёт", { exact: true }).count(), 2)
+
+    home.hash = "/stats?tournament=blast-slam-ix"
+    await page.goto(home.href)
+    const blastStats = page.getByRole("table", { name: "Результаты прогнозов на сыгранных картах" })
+    await blastStats.getByRole("rowheader", { name: "POST · 1,25", exact: true }).waitFor()
+    assert.equal(await blastStats.getByRole("rowheader").count(), 5)
+    const blastCount = page.locator(".report-counts > div")
+      .filter({ has: page.getByText("карт с результатом", { exact: true }) })
+    assert(Number(await blastCount.locator("strong").textContent()) >= 58)
+
+    home.hash = "/schedule?tournament=blast-slam-ix&view=groups"
+    await page.goto(home.href)
+    await page.locator(".schedule-groups").getByRole("region", { name: "Группа D", exact: true }).waitFor()
+    assert.equal(await page.locator(".schedule-groups .playin-group").count(), 4)
+
     assert.deepEqual(errors, [], "Unhandled application error on the published site")
-    console.log("Dashboard passed: 66 results, exact map forecasts, group scores, CLOB odds and mobile layout.")
+    console.log("Dashboard passed: 1win and BLAST results, exact map forecasts, groups, CLOB odds and mobile layout.")
   } finally {
     await browser.close()
   }

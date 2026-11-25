@@ -105,6 +105,7 @@ const retrospectiveSchema = z.object({
   analysis: forecastSchema.shape.analysis,
   created_at_utc: z.string(),
   source_url: z.string(),
+  external_game_id: z.string().optional(),
   players_a: z.array(z.string()),
   players_b: z.array(z.string()),
   heroes_a: z.array(z.string()),
