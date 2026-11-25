@@ -1,4 +1,7 @@
 const assert = require("node:assert/strict")
+const Module = require("node:module")
+const path = require("node:path")
+const { buildSync } = require("esbuild")
 const registry = require("../public/data/verified-results.json")
 const archive = require("../public/data/completed-forecasts.json")
 const prices = require("../src/polymarket-api-prices.json")
@@ -72,3 +75,50 @@ const spirit = event.series["cs-10003480-10100672"].maps[2]
 assert.equal(spirit.duration_seconds, 1614)
 assert.equal(spirit.winner, "B")
 console.log("BLAST Slam IX: 58 exact result and retrospective forecast bindings verified")
+
+const bracketModule = new Module(__filename, module)
+bracketModule.paths = module.paths
+bracketModule._compile(buildSync({
+  absWorkingDir: path.resolve(__dirname, ".."),
+  entryPoints: ["src/playoff-bracket.ts"],
+  bundle: true, write: false, platform: "node", format: "cjs", packages: "external",
+}).outputFiles[0].text, __filename)
+const { blastPlayoffBracket } = bracketModule.exports
+const slot = (number) => `cs-10003480-${number}`
+const lookup = (bracket, number) => bracket.find((item) => item.id === slot(number))
+const startingBracket = blastPlayoffBracket([])
+assert.equal(startingBracket.length, 10)
+assert.deepEqual(lookup(startingBracket, 10100692).teams.map((team) => team.name), ["Team Yandex", null])
+assert.equal(lookup(startingBracket, 10100690).teams[0].source, "Проигравший · Полуфинал верхней сетки 2")
+assert.equal(lookup(startingBracket, 10100697).bestOf, 5)
+
+function fixture(number, team_a, team_b, winners) {
+  const series_id = slot(number)
+  return {
+    series_id, team_a, team_b, best_of: 3, starts_at_utc: "2026-11-26T10:00:00Z",
+    maps: winners.map((winner, position) => ({
+      series_id, map_id: null, map_number: position + 1,
+      team_a: position === 0 ? team_b : team_a,
+      team_b: position === 0 ? team_a : team_b,
+      play_status: winner === null ? "unplayed" : null,
+      result: winner === null ? null : {winner: (winner === team_a) === (position !== 0) ? "A" : "B"},
+    })),
+  }
+}
+
+const partial = fixture(10100688, "GamerLegion", "Aurora Gaming", ["Aurora Gaming"])
+const unfinished = blastPlayoffBracket([partial])
+assert.equal(lookup(unfinished, 10100688).status, "playing")
+assert.equal(lookup(unfinished, 10100692).teams[1].name, null)
+
+const played = blastPlayoffBracket([
+  fixture(10100688, "GamerLegion", "Aurora Gaming", ["Aurora Gaming", "Aurora Gaming", null]),
+  fixture(10100693, "PARIVISION", "Team Liquid", ["PARIVISION", "PARIVISION", null]),
+  fixture(10100697, "PARIVISION", "Aurora Gaming", ["Aurora Gaming", "Aurora Gaming", "PARIVISION"]),
+])
+assert.deepEqual(lookup(played, 10100688).teams.map(({ score, winner }) => [score, winner]), [[0, false], [2, true]])
+assert.deepEqual(lookup(played, 10100688).maps.map(({ number }) => number), [1, 2])
+assert.deepEqual(lookup(played, 10100692).teams.map((team) => team.name), ["Team Yandex", "Aurora Gaming"])
+assert.deepEqual(lookup(played, 10100690).teams.map((team) => team.name), ["Team Liquid", "GamerLegion"])
+assert.equal(lookup(played, 10100697).status, "playing", "a 2:1 BO5 is still in progress")
+console.log("BLAST playoff bracket: all slots, verified advances, cross-seeding and BO5 checked")

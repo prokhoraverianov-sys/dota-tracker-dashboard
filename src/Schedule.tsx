@@ -8,7 +8,10 @@ import { EventOverview } from "./EventOverview"
 import { type GroupStanding, type GroupStandingTable, GroupTables } from "./GroupTables"
 import { MarketBoard } from "./MarketBoard"
 import { PlayIn } from "./PlayIn"
+import { PlayoffBracket } from "./PlayoffBracket"
 import { PLAY_IN_KEY } from "./playin-data"
+import { BLAST_TOURNAMENT, blastPlayoffBracket } from "./playoff-bracket"
+import { type ScheduleSeries, seriesResult } from "./series-result"
 import { TournamentPicker } from "./TournamentPicker"
 import { tournamentPhase } from "./tournament-phase"
 import { Empty, Header, Notice } from "./ui"
@@ -20,21 +23,8 @@ const TournamentPrices = lazy(() =>
 )
 
 type ScheduleData = z.infer<typeof scheduleSchema>
-type Series = ScheduleData["series"][number]
+type Series = ScheduleSeries
 type Section = "all" | "groups" | "playoff" | "markets"
-
-function seriesResult(series: Series) {
-  const winners = series.maps.flatMap((map) =>
-    !map.result || map.result_conflict || map.play_status === "unplayed"
-      ? []
-      : [map.result.winner === "A" ? map.team_a : map.team_b],
-  )
-  const a = winners.filter((name) => name === series.team_a).length
-  const b = winners.filter((name) => name === series.team_b).length
-  const target = Math.floor(series.best_of / 2) + 1
-  const done = a >= target || b >= target || (series.best_of > 0 && a + b === series.best_of)
-  return { a, b, done }
-}
 
 function groupFor(series: Series, phase: string) {
   if (series.group) return series.group
@@ -284,6 +274,7 @@ function ScheduleContents({ api, tournament, navigate, view, archive }: Schedule
   const groupEntries = [...groups].sort(([, a], [, b]) => a.name.localeCompare(b.name, "ru"))
   const groupMatches = groupEntries.flatMap(([, item]) => item.matches)
   const playoff = series.filter((match) => phaseOf(match).startsWith("Плей-офф"))
+  const hasBracket = tournament === BLAST_TOURNAMENT
   const allComplete = series.length > 0 && series.every((item) => seriesResult(item).done)
   const active: Section =
     view === "all" || view === "groups" || view === "playoff" || view === "markets"
@@ -330,7 +321,7 @@ function ScheduleContents({ api, tournament, navigate, view, archive }: Schedule
             [
               ["all", "Все матчи", true],
               ["groups", "Группы", groups.size > 0],
-              ["playoff", "Плей-офф", playoff.length > 0],
+              ["playoff", "Плей-офф", hasBracket || playoff.length > 0],
               ["markets", "Котировки", true],
             ] as const
           )
@@ -368,6 +359,9 @@ function ScheduleContents({ api, tournament, navigate, view, archive }: Schedule
       ) : (
         <>
           {error && <Notice error>Не удалось обновить расписание. {error}</Notice>}
+          {active === "playoff" && hasBracket && (
+            <PlayoffBracket matches={blastPlayoffBracket(playoff)} />
+          )}
           {active === "groups" && groups.size > 0 && (
             <div className="schedule-groups">
               <div className="report-counts">

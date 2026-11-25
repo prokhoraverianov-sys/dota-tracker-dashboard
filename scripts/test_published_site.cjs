@@ -154,6 +154,21 @@ async function main() {
     await page.locator(".schedule-groups").getByRole("region", { name: "Группа D", exact: true }).waitFor()
     assert.equal(await page.locator(".schedule-groups .playin-group").count(), 4)
 
+    await page.getByRole("button", { name: "Плей-офф", exact: true }).click()
+    const bracket = page.locator(".playoff-bracket")
+    await bracket.getByRole("heading", { name: "Сетка плей-офф", exact: true }).waitFor()
+    assert.equal(await bracket.getByRole("article").count(), 10)
+    const grandFinal = bracket.getByRole("article", { name: "Гранд-финал", exact: true })
+    await grandFinal.getByText("BO5", { exact: true }).waitFor()
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1))
+    const opening = bracket.getByRole("article", { name: "Четвертьфинал верхней сетки 1", exact: true })
+    await opening.getByText("GamerLegion", { exact: true }).waitFor()
+    await opening.getByText("Aurora Gaming", { exact: true }).waitFor()
+    await opening.getByRole("link", { name: "Карта 1", exact: true }).click()
+    const openingHeading = page.getByRole("heading", { level: 1 })
+    await openingHeading.getByText("GamerLegion").waitFor()
+    await openingHeading.getByText("Aurora Gaming").waitFor()
+
     assert.deepEqual(errors, [], "Unhandled application error on the published site")
     console.log("Dashboard passed: 1win and BLAST results, exact map forecasts, groups, CLOB odds and mobile layout.")
   } finally {
