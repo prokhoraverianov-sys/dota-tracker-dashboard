@@ -52,8 +52,7 @@ async function main() {
           const prices = cards.map((m,i) => reportPrice(m, stage, results[i].selected))
           for (const [i, quote] of prices.entries()) {
             const proof = archivePrices[cards[i].result.steam_match_id]?.[stage]
-            const decider = stage === "pre" && cards[i].series_best_of === 3 && cards[i].map_number === 3
-            if (!proof || (decider && !proof.windowStart)) assert.equal(quote, null, "legacy archive has no draft-phase price proof")
+            if (!proof) assert.equal(quote, null, "legacy archive has no draft-phase price proof")
             else assert.equal(quote?.retrospective, true, "verified phase proof must be labelled")
           }
           console.log(key, stage, results.filter(v => v.comparison).length, "of", cards.length,
@@ -131,11 +130,34 @@ async function main() {
   assert.equal(evaluateMap(betweenMaps, "pre").hit, null)
   assert.match(evaluateMap(betweenMaps, "pre").note, /после подтверждённого окна/)
   assert.equal(reportPrice(betweenMaps, "pre", "B"), null)
-  const beforeTie = { ...card, series_best_of: 3, map_number: 3, pre_window_start_utc: stamp("11:58:30"), pre_window_end_utc: stamp("11:59:00") }
-  assert.equal(evaluateMap(beforeTie, "pre").hit, null)
-  assert.match(evaluateMap(beforeTie, "pre").note, /до подтверждённого счёта 1:1/)
-  assert.equal(reportPrice(beforeTie, "pre", "B"), null)
-  assert.equal(evaluateMap({ ...beforeTie, pre_window_start_utc: null }, "pre").note, "Окно PRE не подтверждено")
+  const deciderQuote = { ...preQuote, source_url: "https://polymarket.com/event/final-game3?marketSlug=final-game3" }
+  const archivedDeciderPre = {
+    ...card.pre, map_id: card.map_id, pre_decision_quotes: [deciderQuote],
+    analysis: { shadow_forecast: { winner_probability_team_a: 0.4 } },
+  }
+  const beforeTie = {
+    ...card, series_best_of: 3, map_number: 3, pre: null, archived_pre: archivedDeciderPre, retrospective_pre: null,
+    pre_window_start_utc: stamp("11:58:30"), pre_window_end_utc: stamp("11:59:00"),
+  }
+  assert.equal(evaluateMap(beforeTie, "pre").hit, true)
+  assert.equal(evaluateMap(beforeTie, "pre").forecast, archivedDeciderPre)
+  assert.equal(evaluateMap({ ...beforeTie, pre: archivedDeciderPre, archived_pre: null }, "pre").hit, true)
+  assert.equal(evaluateMap(beforeTie, "pre").note, "")
+  assert.equal(beforeTie.pre, null, "the raw archived record is not promoted into the live slot")
+  assert.equal(reportPrice(beforeTie, "pre", "B").value, 1.82)
+  assert.equal(reportPrice(beforeTie, "pre", "B").retrospective, true)
+  assert.equal(reportPrice({ ...beforeTie, archived_pre: { ...archivedDeciderPre, pre_decision_quotes: [preQuote] } }, "pre", "B"), null)
+  for (const unproven of [
+    { ...beforeTie, result: null }, { ...beforeTie, result_conflict: "mismatch" },
+    { ...beforeTie, result: { ...beforeTie.result, steam_match_id: null } },
+    { ...beforeTie, pre_status: "unplayed" }, { ...beforeTie, play_status: "unplayed" },
+    { ...beforeTie, draft_started_at_utc: null },
+    { ...beforeTie, draft_started_at_utc: stamp("11:57:59") },
+    { ...beforeTie, archived_pre: { ...archivedDeciderPre, map_id: -1 } },
+  ]) {
+    assert.equal(evaluateMap(unproven, "pre").forecast, null)
+    assert.equal(reportPrice(unproven, "pre", "B"), null)
+  }
   const livePair = {
     ...card, result: null,
     pre: { ...card.pre, pre_quote_status: "captured", pre_phase_checked_at_utc: stamp("11:58:00"), pre_phase_source_url: "https://cybersport.ru/fixture", pre_draft_quotes: [preQuote] },

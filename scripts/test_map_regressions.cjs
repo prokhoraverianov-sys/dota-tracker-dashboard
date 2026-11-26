@@ -305,6 +305,36 @@ async function verifyDeciderPreGate(browser, home) {
   }, true, map)
 }
 
+async function verifySettledDeciderHistory(browser, home) {
+  const mapId = 100046
+  const source = "https://polymarket.com/event/active-regression-game3"
+  const map = {
+    ...activeCard, map_id: mapId, map_number: 3, pre: null, pre_status: "draft_started",
+    pre_window_start_utc: "2026-11-12T13:06:00Z",
+    draft_started_at_utc: "2026-11-12T13:11:00Z",
+    archived_pre: {
+      ...activeCard.pre, map_id: mapId, created_at_utc: "2026-11-12T12:55:10Z",
+      pre_quote_status: null,
+      pre_decision_quotes: [{ ...activeCard.pre.pre_draft_quotes[0], source_url: source }],
+    },
+    result: {
+      winner: "A", duration_seconds: 1800, steam_match_id: "9106039999",
+      started_at_utc: "2026-11-12T13:09:00Z", settled_at_utc: "2026-11-12T13:42:00Z",
+    },
+  }
+  await openCard(browser, home, `/maps/${mapId}`, async (page, fixture) => {
+    const result = page.getByRole("region", { name: "Результат и прогнозы" })
+    const quote = result.getByText(/Ретроспективная котировка 1,80 · Polymarket/)
+    await quote.waitFor()
+    assert.equal(await quote.getByRole("link", { name: "Рынок ↗" }).getAttribute("href"), source)
+    const pre = page.locator(".forecast-card.pre")
+    await pre.getByText("Архивная запись", { exact: true }).waitFor()
+    await pre.getByText("До драфта", { exact: true }).waitFor()
+    assert.equal(await pre.count(), 1)
+    assert.deepEqual(fixture.writes, [])
+  }, false, map)
+}
+
 async function verifyExpiredPostQuote(browser, home) {
   await openCard(browser, home, "/maps/100043", async (page, fixture) => {
     const post = page.locator(".forecast-card.post")
@@ -376,6 +406,7 @@ async function main() {
       await verifyManualPost(browser, home)
       await verifyAutomaticPost(browser, home)
       await verifyDeciderPreGate(browser, home)
+      await verifySettledDeciderHistory(browser, home)
       await verifyLeonMapThree(browser, home)
       await verifyExpiredPostQuote(browser, home)
       await verifyPostQuoteAfterObservation(browser, home)

@@ -54,14 +54,22 @@ function ArchiveCard({ path }: { readonly path: string }) {
           <div className="two-columns forecasts">
             {mapStages.map((stage) => {
               const original = map[stage]
+              const verdict = evaluateMap(map, stage).forecast
+              const archivedPre =
+                stage === "pre" && map.archived_pre && verdict === map.archived_pre
+                  ? map.archived_pre
+                  : null
               const forecast =
-                evaluateMap(map, stage).forecast === original
-                  ? original
-                  : retrospectiveForecast(map, stage)
+                archivedPre ?? (verdict === original ? original : retrospectiveForecast(map, stage))
               return (
                 <div key={stage}>
-                  <ForecastCard forecast={forecast} stage={stageNames[stage]} map={map} />
-                  {stage === "pre" && map.archived_pre && (
+                  <ForecastCard
+                    forecast={forecast}
+                    stage={stageNames[stage]}
+                    map={map}
+                    archived={!!archivedPre}
+                  />
+                  {stage === "pre" && map.archived_pre && !archivedPre && (
                     <details>
                       <summary>Ранняя запись PRE до счёта 1:1</summary>
                       <ForecastCard forecast={map.archived_pre} stage="PRE" map={map} archived />

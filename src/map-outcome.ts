@@ -1,5 +1,5 @@
 import type { Forecast, MapDTO } from "./contracts"
-import { archivedPhaseQuote } from "./phase-quote-evidence"
+import { archivedPhaseQuote, isSettledDecider } from "./phase-quote-evidence"
 
 export type MapStage = "pre" | "post"
 export const stageNames = { pre: "PRE", post: "POST" } as const
@@ -57,6 +57,10 @@ export function hasVerifiedDraft(map: MapDTO) {
 
 export function preForecastWindow(map: MapDTO) {
   const archive = archivedPhaseQuote(map, "pre")
+  if (isSettledDecider(map)) {
+    const end = archive?.windowEnd ?? Date.parse(map.draft_started_at_utc ?? "")
+    return Number.isFinite(end) ? { start: Number.NEGATIVE_INFINITY, end } : null
+  }
   const startAt = Date.parse(map.pre_window_start_utc ?? map.pre?.pre_window_opened_at_utc ?? "")
   const endAt = Date.parse(map.pre_window_end_utc ?? "")
   const ownMapIsEnough =
@@ -72,6 +76,22 @@ export function preForecastWindow(map: MapDTO) {
   const decider = map.series_best_of === 3 && map.map_number === 3
   if (!Number.isFinite(end) || !(start < end) || (decider && !Number.isFinite(start))) return null
   return { start, end }
+}
+
+export function originalPreForecast(map: MapDTO) {
+  if (map.pre || !isSettledDecider(map)) return map.pre
+  const historic = map.archived_pre
+  if (
+    !historic ||
+    map.map_id == null ||
+    historic.map_id !== map.map_id ||
+    historic.stage !== "pre_match"
+  )
+    return null
+  const window = preForecastWindow(map)
+  const saved = Date.parse(historic.created_at_utc)
+  const decision = Date.parse(historic.pre_decision_at_utc ?? historic.created_at_utc)
+  return window && Math.max(saved, decision) < window.end ? historic : null
 }
 
 export function hasVerifiedPreCapture(map: MapDTO, forecast: Forecast) {
@@ -136,9 +156,10 @@ export function retrospectiveForecast(
 }
 
 export function evaluateMap(map: MapDTO, stage: MapStage) {
-  const original = map[stage]
+  const original = stage === "pre" ? originalPreForecast(map) : map.post
   const replay = stage === "post" ? map.retrospective_post : map.retrospective_pre
   const result = map.result
+  const unplayed = map.play_status === "unplayed" || map.pre_status === "unplayed"
   const draftId = original?.draft_external_game_id
   const steamId = result?.steam_match_id
   const explicitSteam = explicitSteamReference(draftId)
@@ -156,7 +177,7 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
     probability == null || probability === 0.5 ? null : probability > 0.5 ? "A" : "B"
   const pick = selected === null ? null : selected === "A" ? map.team_a : map.team_b
   let note = ""
-  if (map.play_status === "unplayed") note = "Карта не сыграна"
+  if (unplayed) note = "Карта не сыграна"
   else if (map.result_conflict) note = "Источники расходятся"
   else if (!forecast) note = "Нет сохранённого прогноза"
   else if (!selected) note = probability === 0.5 ? "Равные шансы" : "Модель воздержалась"
@@ -175,7 +196,7 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
   const comparison =
     result &&
     selected &&
-    map.play_status !== "unplayed" &&
+    !unplayed &&
     !map.result_conflict &&
     (stage === "pre" || verified || useReplay)
       ? selected === result.winner

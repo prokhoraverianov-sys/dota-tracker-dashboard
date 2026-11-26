@@ -3,10 +3,11 @@ import {
   hasVerifiedDraft,
   hasVerifiedPreCapture,
   type MapStage,
+  originalPreForecast,
   preForecastWindow,
 } from "./map-outcome"
 import { providerLabel, quoteSourceUrl } from "./odds"
-import { archivedPhaseQuote } from "./phase-quote-evidence"
+import { archivedPhaseQuote, isSettledDecider } from "./phase-quote-evidence"
 
 const formatter = new Intl.NumberFormat("ru-RU", {
   minimumFractionDigits: 2,
@@ -102,8 +103,26 @@ function capturedPreQuotes(map: MapDTO) {
 }
 
 function phaseQuotes(map: MapDTO, stage: MapStage) {
-  if (!map.result?.steam_match_id || map.result_conflict) return []
+  if (
+    !map.result?.steam_match_id ||
+    map.result_conflict ||
+    map.play_status === "unplayed" ||
+    map.pre_status === "unplayed"
+  )
+    return []
   if (stage === "pre") {
+    if (isSettledDecider(map)) {
+      const original = originalPreForecast(map)
+      const window = preForecastWindow(map)
+      if (!original || !window) return []
+      const saved = Date.parse(original.created_at_utc)
+      const decision = Date.parse(original.pre_decision_at_utc ?? original.created_at_utc)
+      if (!(Math.max(saved, decision) < window.end)) return []
+      return observedPreDecisionQuotes(original).filter(
+        (quote) =>
+          exactPolymarketMap(map.map_number, quote) && quoteTimes(quote).observed < window.end,
+      )
+    }
     if (
       map.pre?.pre_quote_status === "captured" ||
       map.pre?.pre_quote_status === "attached_before_series"
@@ -123,6 +142,11 @@ function phaseQuotes(map: MapDTO, stage: MapStage) {
   if (!hasVerifiedDraft(map) || !map.post?.draft_completed_at_utc) return []
   const gameplay = Date.parse(map.gameplay_started_at_utc ?? "")
   return observedPostDraftQuotes(map.post).filter((quote) => quoteTimes(quote).observed < gameplay)
+}
+
+function historicalDeciderPre(map: MapDTO) {
+  const original = originalPreForecast(map)
+  return isSettledDecider(map) && !!original && !hasVerifiedPreCapture(map, original)
 }
 
 export function originalPostAfterVerifiedWindow(map: MapDTO) {
@@ -149,13 +173,14 @@ export function reportPrice(map: MapDTO, stage: MapStage, side: "A" | "B") {
     value: Number(side === "A" ? quote.winner.team_a : quote.winner.team_b),
     provider: providerLabel(quote.provider),
     observedAt: quote.observed_at_utc,
-    retrospective: false,
+    retrospective: stage === "pre" && historicalDeciderPre(map),
     sourceUrl: quoteSourceUrl(quote.source_url, quote.provider),
   }
 }
 
 export function reportPriceChange(map: MapDTO) {
-  if (map.result_conflict || map.play_status === "unplayed") return null
+  if (map.result_conflict || map.play_status === "unplayed" || map.pre_status === "unplayed")
+    return null
   const pre = map.result ? phaseQuotes(map, "pre") : capturedPreQuotes(map)
   const post = map.result
     ? phaseQuotes(map, "post")
@@ -174,7 +199,7 @@ export function reportPriceChange(map: MapDTO) {
         provider: providerLabel(quote.provider),
         a: Number(second.winner.team_a) - Number(quote.winner.team_a),
         b: Number(second.winner.team_b) - Number(quote.winner.team_b),
-        retrospective: false,
+        retrospective: historicalDeciderPre(map),
       }
     }
   }

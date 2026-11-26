@@ -137,7 +137,9 @@ export function ForecastCard({
   const preWindow =
     map.series_best_of === 3
       ? map.map_number === 3
-        ? "При счёте 1:1, до драфта"
+        ? map.result || archived
+          ? "До драфта"
+          : "При счёте 1:1, до драфта"
         : "До начала серии"
       : "До драфта"
   return (

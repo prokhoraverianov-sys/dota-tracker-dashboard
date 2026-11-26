@@ -252,7 +252,9 @@ export function MapWorkspace({
   }
   const savedPre = retrospectiveForecast(map, "pre")
   const savedPost = retrospectiveForecast(map, "post")
-  const pre = evaluateMap(map, "pre").forecast === map.pre ? map.pre : savedPre
+  const preVerdict = evaluateMap(map, "pre").forecast
+  const archivedPre = map.archived_pre && preVerdict === map.archived_pre ? map.archived_pre : null
+  const pre = archivedPre ?? (preVerdict === map.pre ? map.pre : savedPre)
   const post =
     (evaluateMap(map, "post").forecast === map.post ? map.post : savedPost) ?? retrospective
   const forecastSection = (
@@ -263,8 +265,14 @@ export function MapWorkspace({
       <Delta team={map.team_a} pre={pre} post={post} />
       <div className="two-columns forecasts">
         <div>
-          <ForecastCard forecast={pre} stage="PRE" map={map} preProblem={preProblem} />
-          {map.archived_pre && (
+          <ForecastCard
+            forecast={pre}
+            stage="PRE"
+            map={map}
+            preProblem={preProblem}
+            archived={!!archivedPre}
+          />
+          {map.archived_pre && !archivedPre && (
             <details>
               <summary>Ранняя запись PRE до счёта 1:1</summary>
               <ForecastCard forecast={map.archived_pre} stage="PRE" map={map} archived />

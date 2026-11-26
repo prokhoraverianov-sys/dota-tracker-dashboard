@@ -30,9 +30,27 @@ function archiveTime(stamp: string | undefined) {
   return stamp && /(?:Z|\+00:00)$/.test(stamp) ? Date.parse(stamp) : Number.NaN
 }
 
+export function isSettledDecider(map: MapDTO) {
+  return (
+    map.series_best_of === 3 &&
+    map.map_number === 3 &&
+    !!map.series_id &&
+    /^\d+$/.test(map.result?.steam_match_id ?? "") &&
+    !map.result_conflict &&
+    map.play_status !== "unplayed" &&
+    map.pre_status !== "unplayed"
+  )
+}
+
 export function archivedPhaseQuote(map: MapDTO, stage: MapStage) {
   const steam = map.result?.steam_match_id
-  if (!steam || map.result_conflict || map.play_status === "unplayed") return null
+  if (
+    !steam ||
+    map.result_conflict ||
+    map.play_status === "unplayed" ||
+    map.pre_status === "unplayed"
+  )
+    return null
   const saved = archivedQuotes[steam]
   if (!saved || saved.seriesId !== map.series_id || saved.mapNumber !== map.map_number) return null
   const forward = saved.teamA === map.team_a && saved.teamB === map.team_b
@@ -50,11 +68,16 @@ export function archivedPhaseQuote(map: MapDTO, stage: MapStage) {
   if (![quote.teamA, quote.teamB].every((price) => Number.isFinite(price) && price > 1)) return null
   const a = archiveTime(quote.atA)
   const b = archiveTime(quote.atB)
-  const end = archiveTime(quote.windowEnd)
+  const historicalDecider = stage === "pre" && isSettledDecider(map)
+  const ownDraft = historicalDecider ? Date.parse(map.draft_started_at_utc ?? "") : Number.NaN
+  const archiveEnd = archiveTime(quote.windowEnd)
+  const end = Number.isFinite(ownDraft) ? Math.min(archiveEnd, ownDraft) : archiveEnd
   if (![a, b, end].every(Number.isFinite) || Math.max(a, b) >= end) return null
-  const start = archiveTime(quote.windowStart)
-  const decider = map.series_best_of === 3 && map.map_number === 3
-  if ((stage === "post" || decider || quote.windowStart != null) && !(Math.min(a, b) >= start))
+  const start = historicalDecider ? Number.NaN : archiveTime(quote.windowStart)
+  if (
+    (stage === "post" || (!historicalDecider && quote.windowStart != null)) &&
+    !(Math.min(a, b) >= start)
+  )
     return null
   return {
     provider: quote.provider,
