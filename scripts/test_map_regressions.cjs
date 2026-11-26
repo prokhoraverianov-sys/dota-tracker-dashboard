@@ -288,7 +288,7 @@ async function verifyFinishedCard(browser, home) {
     await outcome.waitFor()
     await page.getByRole("button", { name: "Загрузить драфт и рассчитать ретроспективный POST" }).click()
     const post = page.locator(".forecast-card.post")
-    await post.getByText("Расчёт после карты", { exact: true }).waitFor()
+    await post.getByText("Ретроспективный расчёт", { exact: true }).waitFor()
     const probability = Math.round(savedRetrospective.analysis.shadow_forecast.winner_probability_team_a * 1000) / 10
     const displayed = await post.locator(".probability-pair strong").first().innerText()
     assert.equal(Number(displayed.replace(",", ".").replace("%", "")), probability)

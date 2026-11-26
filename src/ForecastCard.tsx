@@ -137,7 +137,7 @@ export function ForecastCard({
           <span className="muted">{stage === "PRE" ? "До драфта" : "После драфта"}</span>
         </div>
         <span className="badge">
-          {retrospective ? "Расчёт после карты" : forecast ? "Сохранён" : "Нет прогноза"}
+          {retrospective ? "Ретроспективный расчёт" : forecast ? "Сохранён" : "Нет прогноза"}
         </span>
       </header>
       {forecast ? (
