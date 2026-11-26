@@ -16,7 +16,7 @@ function compile(file) {
   return mod.exports
 }
 const { mapSchema, scheduleSchema } = compile("contracts.ts")
-const { evaluateMap, preForecastBlock } = compile("map-outcome.ts")
+const { evaluateMap, originalPreForecast, preForecastBlock } = compile("map-outcome.ts")
 const { originalPostAfterVerifiedWindow, reportPrice, reportPriceChange } = compile("report-price.ts")
 const { postWeightScenario, weightedPost } = compile("weighted-post.ts")
 const { verifiedView } = compile("verified-results.ts")
@@ -151,13 +151,33 @@ async function main() {
     { ...beforeTie, result: null }, { ...beforeTie, result_conflict: "mismatch" },
     { ...beforeTie, result: { ...beforeTie.result, steam_match_id: null } },
     { ...beforeTie, pre_status: "unplayed" }, { ...beforeTie, play_status: "unplayed" },
-    { ...beforeTie, draft_started_at_utc: null },
+    { ...beforeTie, draft_started_at_utc: null, pre_window_end_utc: null },
     { ...beforeTie, draft_started_at_utc: stamp("11:57:59") },
     { ...beforeTie, archived_pre: { ...archivedDeciderPre, map_id: -1 } },
   ]) {
     assert.equal(evaluateMap(unproven, "pre").forecast, null)
     assert.equal(reportPrice(unproven, "pre", "B"), null)
   }
+  const oldOriginal = {
+    ...archivedDeciderPre, map_id: 49, snapshot_id: 72, pre_decision_quotes: [],
+    created_at_utc: "2026-11-13T15:22:53.867220Z", pre_decision_at_utc: null,
+  }
+  const historicalSlot = "/series/e3-g-c1/maps/3"
+  const oldCard = {
+    ...card, map_id: 49, map_number: 3, series_id: "e3-g-c1", tournament: "1win Essence III",
+    team_a: "LGD Gaming", team_b: "Team Liquid", result: null, pre: null, post: null,
+    archived_pre: oldOriginal, draft_started_at_utc: null, pre_window_end_utc: null,
+  }
+  const playedDecider = await view(historicalSlot, oldCard)
+  assert.equal(playedDecider.result.steam_match_id, "9088710443")
+  assert.equal(playedDecider.pre_window_end_utc, "2026-11-13T17:25:36Z")
+  assert.equal(originalPreForecast(playedDecider)?.snapshot_id, 72)
+  assert.equal(evaluateMap(playedDecider, "pre").hit, false)
+  const afterConservativeBound = {
+    ...playedDecider, archived_pre: { ...oldOriginal, created_at_utc: "2026-11-13T17:30:00Z" },
+  }
+  assert.equal(originalPreForecast(afterConservativeBound), null)
+  assert.equal(reportPrice(playedDecider, "pre", "B"), null)
   const livePair = {
     ...card, result: null,
     pre: { ...card.pre, pre_quote_status: "captured", pre_phase_checked_at_utc: stamp("11:58:00"), pre_phase_source_url: "https://cybersport.ru/fixture", pre_draft_quotes: [preQuote] },

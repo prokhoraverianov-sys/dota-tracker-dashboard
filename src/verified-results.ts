@@ -113,6 +113,24 @@ function preProjection(card: MapDTO, series: Series, backup?: MapDTO) {
   }
 }
 
+function archivedDeciderPreEnd(series: Series, fact: z.infer<typeof resultFact>) {
+  if (series.best_of !== 3 || fact.map_number !== 3 || !fact.steam_match_id) return null
+  const first = series.maps.find((map) => map.map_number === 1)
+  const second = series.maps.find((map) => map.map_number === 2)
+  if (
+    !first?.steam_match_id ||
+    !second?.steam_match_id ||
+    first.winner === second.winner ||
+    new Set([first.steam_match_id, second.steam_match_id, fact.steam_match_id]).size !== 3
+  )
+    return null
+  const start = Date.parse(first.started_at_utc ?? "")
+  const earlier = Date.parse(second.started_at_utc ?? "")
+  const later = Date.parse(fact.started_at_utc ?? "")
+  // The verified start of map 2 proves an earlier forecast predates the draft of map 3.
+  return start < earlier && earlier < later ? second.started_at_utc : null
+}
+
 export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): MapDTO {
   const number = card.map_number
   const order = matchingOrder(card, entry)
@@ -186,6 +204,7 @@ export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): Map
   return {
     ...card,
     series_best_of: entry.series.best_of,
+    pre_window_end_utc: card.pre_window_end_utc ?? archivedDeciderPreEnd(entry.series, fact),
     ...preProjection(card, entry.series, backup),
     post,
     retrospective_pre: backup?.retrospective_pre ?? card.retrospective_pre,

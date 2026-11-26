@@ -58,7 +58,10 @@ export function hasVerifiedDraft(map: MapDTO) {
 export function preForecastWindow(map: MapDTO) {
   const archive = archivedPhaseQuote(map, "pre")
   if (isSettledDecider(map)) {
-    const end = archive?.windowEnd ?? Date.parse(map.draft_started_at_utc ?? "")
+    const ownDraft = Date.parse(map.draft_started_at_utc ?? "")
+    const end =
+      archive?.windowEnd ??
+      (Number.isFinite(ownDraft) ? ownDraft : Date.parse(map.pre_window_end_utc ?? ""))
     return Number.isFinite(end) ? { start: Number.NEGATIVE_INFINITY, end } : null
   }
   const startAt = Date.parse(map.pre_window_start_utc ?? map.pre?.pre_window_opened_at_utc ?? "")
