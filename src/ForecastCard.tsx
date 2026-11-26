@@ -179,6 +179,12 @@ export function ForecastCard({
               <h3>Котировки POST · карта {map.map_number ?? "—"}</h3>
               {phaseQuotes.length ? (
                 <>
+                  {!hasDraftTime && (
+                    <p className="muted">
+                      Справочный снимок после получения драфта. Время последнего пика не
+                      подтверждено.
+                    </p>
+                  )}
                   {phaseQuotes.map((quote) => (
                     <QuoteObservation
                       key={`${quote.provider}-${quote.observed_at_utc}`}
@@ -187,12 +193,6 @@ export function ForecastCard({
                       completedAt={forecast.draft_completed_at_utc ?? null}
                     />
                   ))}
-                  {!hasDraftTime && (
-                    <p className="muted">
-                      Котировки POST зафиксированы после подтверждения полного драфта. Время
-                      последнего пика неизвестно.
-                    </p>
-                  )}
                 </>
               ) : (
                 <p className="muted">

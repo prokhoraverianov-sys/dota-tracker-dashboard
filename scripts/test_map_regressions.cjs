@@ -280,6 +280,23 @@ async function verifyExpiredPostQuote(browser, home) {
   })
 }
 
+async function verifyPostQuoteAfterObservation(browser, home) {
+  await openCard(browser, home, "/maps/100043", async (page, fixture) => {
+    const post = page.locator(".forecast-card.post")
+    await post.getByText("Прогноз ещё не сохранён", { exact: true }).waitFor()
+    fixture.receivePost({
+      ...forecast,
+      draft_completed_at_utc: null,
+      post_draft_quote_status: "after_observation",
+    })
+    await page.clock.fastForward(2_000)
+    const quotes = post.getByRole("region", { name: "Котировки POST", exact: true })
+    await quotes.getByText(/Справочный снимок после получения драфта/).waitFor()
+    await quotes.locator(`time[datetime="${postPriceAt}"]`).waitFor()
+    assert.doesNotMatch(await quotes.innerText(), /с после последнего пика/)
+  })
+}
+
 async function verifyFinishedCard(browser, home) {
   await openCard(browser, home, "/maps/43?tournament=1win-essence-3", async (page, fixture) => {
     const result = page.getByRole("region", { name: "Результат и прогнозы" })
@@ -313,6 +330,7 @@ async function main() {
       await verifyAutomaticPost(browser, home)
       await verifyLeonMapThree(browser, home)
       await verifyExpiredPostQuote(browser, home)
+      await verifyPostQuoteAfterObservation(browser, home)
       await verifyFinishedCard(browser, home)
       console.log("Active market refresh and exact POST quotes verified for live import, manual save, and automatic capture; retrospective map 43 verified")
     } finally {
