@@ -4,6 +4,7 @@ const { buildSync } = require("esbuild")
 const { resolve } = require("node:path")
 const facts = require("../public/data/verified-results.json")
 const saved = require("../public/data/completed-forecasts.json")
+const archivePrices = require("../src/verified-phase-quotes.json")
 
 function compile(file) {
   const result = buildSync({
@@ -16,7 +17,7 @@ function compile(file) {
 }
 const { mapSchema, scheduleSchema } = compile("contracts.ts")
 const { evaluateMap } = compile("map-outcome.ts")
-const { reportPrice, reportPriceChange } = compile("report-price.ts")
+const { originalPostAfterVerifiedWindow, reportPrice, reportPriceChange } = compile("report-price.ts")
 const { verifiedView } = compile("verified-results.ts")
 
 async function main() {
@@ -48,7 +49,11 @@ async function main() {
         assert(results.every(v => typeof v.comparison === "boolean"), key + "/" + stage)
         if (key === "1win-essence-3") {
           const prices = cards.map((m,i) => reportPrice(m, stage, results[i].selected))
-          assert(prices.every(q => q === null), "legacy archive has no draft-phase price proof")
+          for (const [i, quote] of prices.entries()) {
+            const proof = archivePrices[cards[i].result.steam_match_id]?.[stage]
+            if (!proof) assert.equal(quote, null, "legacy archive has no draft-phase price proof")
+            else assert.equal(quote?.retrospective, true, "verified phase proof must be labelled")
+          }
           console.log(key, stage, results.filter(v => v.comparison).length, "of", cards.length,
             "legacy prices excluded from financial calculations")
         }
@@ -83,6 +88,7 @@ async function main() {
   }
   const card = mapSchema.parse({
     ...final,
+    series_id: "phase-quote-check",
     draft_started_at_utc: stamp("11:59:00"),
     gameplay_started_at_utc: stamp("12:00:00"),
     pre: { ...final.pre, created_at_utc: stamp("11:58:00"), pre_decision_at_utc: stamp("11:58:00"), pre_decision_quotes: [preQuote] },
@@ -96,7 +102,7 @@ async function main() {
   assert.equal(reportPrice(card, "pre", "B").value, 1.82)
   assert.equal(reportPrice(card, "post", "A").value, 2.25)
   assert.equal(reportPrice(card, "post", "B").value, 1.57)
-  assert.deepEqual(reportPriceChange(card), { provider: "Polymarket", a: 0.25, b: -0.25 })
+  assert.deepEqual(reportPriceChange(card), { provider: "Polymarket", a: 0.25, b: -0.25, retrospective: false })
   assert.equal(evaluateMap(card, "post").hit, true)
   assert.equal(evaluateMap({ ...card, gameplay_started_at_utc: null }, "post").hit, null)
   assert.equal(reportPrice({ ...card, draft_started_at_utc: null }, "pre", "B"), null)
@@ -113,6 +119,37 @@ async function main() {
     assert.equal(reportPrice({ ...card, post: { ...card.post, post_draft_quotes: [rejected] } }, "post", "B"), null)
   }
   assert.equal(reportPriceChange({ ...card, post: { ...card.post, post_draft_quotes: [{ ...postQuote, event_id: "another-market" }] } }), null)
+  const current = mapSchema.parse({
+    ...final, map_id: 121, series_id: "cs-10003480-10100688", map_number: 1,
+    team_a: "GamerLegion", team_b: "Aurora Gaming", pre: null, post: null,
+    result: { winner: "A", steam_match_id: "9106031971", duration_seconds: 2822, started_at_utc: "2026-11-26T09:56:06Z", settled_at_utc: "2026-11-26T11:03:26Z" },
+  })
+  const proofPre = reportPrice(current, "pre", "A")
+  const proofPost = reportPrice(current, "post", "A")
+  assert.equal(proofPre.value, 1 / 0.415)
+  assert.equal(proofPost.value, 1 / 0.455)
+  assert.equal(proofPost.retrospective, true)
+  assert.equal(Date.parse(proofPost.observedAt), Date.parse("2026-11-26T10:10:07Z"))
+  assert.match(proofPost.sourceUrl, /dota2-gl-aur1-2026-11-26-game1$/)
+  const shift = reportPriceChange(current)
+  assert.equal(shift.retrospective, true)
+  assert.equal(shift.a, 1 / 0.455 - 1 / 0.415)
+  assert.equal(shift.b, 1 / 0.545 - 1 / 0.585)
+  assert.equal(originalPostAfterVerifiedWindow(current), false)
+  assert.equal(originalPostAfterVerifiedWindow({ ...current, post: { ...final.post, created_at_utc: "2026-11-26T10:29:13.748934Z" } }), true)
+  const reversed = { ...current, team_a: current.team_b, team_b: current.team_a }
+  assert.equal(reportPrice(reversed, "pre", "A").value, 1 / 0.585)
+  assert.equal(reportPrice(reversed, "pre", "A").observedAt, reportPrice(current, "pre", "B").observedAt)
+  assert.equal(reportPriceChange(reversed).a, shift.b)
+  for (const wrong of [
+    { ...current, map_number: 2 }, { ...current, series_id: "other-series" },
+    { ...current, team_b: "Other opponent" }, { ...current, result: null },
+    { ...current, result: { ...current.result, steam_match_id: "1234" } },
+    { ...current, result_conflict: "mismatch" },
+  ]) {
+    assert.equal(reportPrice(wrong, "post", "A"), null)
+    assert.equal(reportPriceChange(wrong), null)
+  }
   assert.equal((await view("/series/e3-p-r05-m001/maps/5")).play_status, "unplayed")
   for (const mapId of [52, 64, 102, 103, 105]) assert.equal((await view("/maps/" + mapId)).post, null)
   const mismatch = await view(permalink, { ...final, result: { ...final.result, winner: "A" } })

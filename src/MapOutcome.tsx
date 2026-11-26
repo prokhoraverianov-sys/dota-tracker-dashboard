@@ -1,7 +1,13 @@
 import type { MapDTO } from "./contracts"
 import { time } from "./domain"
 import { evaluateMap, mapStages, stageNames } from "./map-outcome"
-import { decimalPrice, phasePriceLabels, reportPrice, reportPriceChange } from "./report-price"
+import {
+  decimalPrice,
+  originalPostAfterVerifiedWindow,
+  phasePriceLabels,
+  reportPrice,
+  reportPriceChange,
+} from "./report-price"
 import { minutes } from "./reporting"
 
 export function StageVerdict({
@@ -11,26 +17,45 @@ export function StageVerdict({
   readonly map: MapDTO
   readonly stage: "pre" | "post"
 }) {
-  const { selected, pick, note, comparison } = evaluateMap(map, stage)
+  const { selected, pick, note, comparison, forecast } = evaluateMap(map, stage)
+  const timingNote =
+    stage === "post" &&
+    forecast === map.post &&
+    !map.gameplay_started_at_utc &&
+    originalPostAfterVerifiedWindow(map)
+      ? "Прогноз записан после подтверждённого окна POST"
+      : note
   const price = comparison !== null && selected ? reportPrice(map, stage, selected) : null
   return (
     <div className="stage-verdict">
       <strong className={comparison === null ? "muted" : comparison ? "hit-text" : "miss-text"}>
-        {comparison === null ? note : comparison ? "Зашло" : "Не зашло"}
+        {comparison === null ? timingNote : comparison ? "Зашло" : "Не зашло"}
       </strong>
       {pick && <small className="verdict-pick">Выбор модели · {pick}</small>}
       {price && (
         <small>
-          Кэф. {decimalPrice(price.value)} · {price.provider} ·{" "}
+          {price.retrospective ? "Ретроспективная котировка" : "Котировка"}{" "}
+          {decimalPrice(price.value)} · {price.provider} ·{" "}
           <time dateTime={price.observedAt} title={price.observedAt}>
-            {time(price.observedAt)}
+            {price.retrospective
+              ? price.observedAt.replace("T", " ").replace(/(?:\.000)?(?:Z|\+00:00)$/, " UTC")
+              : time(price.observedAt)}
           </time>
+          {price.retrospective && price.sourceUrl && (
+            <>
+              {" "}
+              ·{" "}
+              <a href={price.sourceUrl} target="_blank" rel="noreferrer">
+                Рынок ↗
+              </a>
+            </>
+          )}
         </small>
       )}
       {comparison !== null && !price && (
         <small>Нет подтверждённой цены {phasePriceLabels[stage]}</small>
       )}
-      {note && comparison !== null && <small>{note}</small>}
+      {timingNote && comparison !== null && <small>{timingNote}</small>}
     </div>
   )
 }
@@ -73,7 +98,8 @@ export function MapOutcome({ map }: { readonly map: MapDTO }) {
       ))}
       {priceChange && (
         <p className="footnote outcome-price-change">
-          Изменение кэф. PRE → POST · {priceChange.provider} · {map.team_a}{" "}
+          Изменение котировок PRE → POST · {priceChange.provider}
+          {priceChange.retrospective && " · ретроспектива"} · {map.team_a}{" "}
           {priceChange.a > 0 ? "+" : ""}
           {decimalPrice(priceChange.a)} / {map.team_b} {priceChange.b > 0 ? "+" : ""}
           {decimalPrice(priceChange.b)}

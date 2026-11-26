@@ -24,7 +24,7 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
               <th>Прогноз</th>
               <th>Зашло</th>
               <th>Не зашло</th>
-              <th>Ср. кэф. в фазе прогноза</th>
+              <th>Ср. котировка PRE / POST</th>
               <th>Итоговый банк</th>
               <th>Точность оригиналов в фазе</th>
             </tr>
@@ -54,8 +54,9 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
                 const v = verdicts[index]
                 const quote =
                   v?.comparison != null && v.selected ? reportPrice(map, phase, v.selected) : null
-                return quote ? [{ value: quote.value, won: v?.comparison === true }] : []
+                return quote ? [{ ...quote, won: v?.comparison === true }] : []
               })
+              const restoredPrices = prices.filter((quote) => quote.retrospective).length
               const mean = prices.length
                 ? prices.reduce((sum, q) => sum + q.value, 0) / prices.length
                 : null
@@ -68,6 +69,7 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
                     {mean != null ? decimalPrice(mean) : "Нет подтверждённых цен"}
                     <small className="metric-note">
                       {prices.length} из {maps.length} карт
+                      {restoredPrices > 0 && ` · из истории рынка: ${restoredPrices}`}
                     </small>
                   </td>
                   <td>
@@ -101,9 +103,10 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
         </table>
       </div>
       <p className="footnote">
-        «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. В банке учитываются цены
-        выбранных команд на рынке карты до драфта для PRE и сразу после полного драфта для POST.
-        Начальный банк каждого сценария $100, условная ставка $20.
+        «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. Для банка используются
+        котировки PRE до драфта и котировки POST после полного драфта. Ретроспективные котировки
+        сверены с историей рынка и временем драфта. Начальный банк каждого сценария $100, условная
+        ставка $20.
       </p>
     </section>
   )

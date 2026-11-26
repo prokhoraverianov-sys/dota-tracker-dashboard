@@ -1,6 +1,30 @@
 import type { DraftQuote, Forecast, MapDTO } from "./contracts"
 import { hasVerifiedDraft, type MapStage } from "./map-outcome"
 import { providerLabel, quoteSourceUrl } from "./odds"
+import verifiedPhaseQuotes from "./verified-phase-quotes.json"
+
+interface ArchivedPhaseQuote {
+  provider: string
+  marketId: string
+  marketUrl: string
+  teamA: number
+  teamB: number
+  atA: string
+  atB: string
+  windowStart?: string
+  windowEnd: string
+}
+
+interface ArchivedMapQuotes {
+  seriesId: string
+  mapNumber: number
+  teamA: string
+  teamB: string
+  pre?: ArchivedPhaseQuote
+  post?: ArchivedPhaseQuote
+}
+
+const archivedQuotes: Readonly<Record<string, ArchivedMapQuotes | undefined>> = verifiedPhaseQuotes
 
 const formatter = new Intl.NumberFormat("ru-RU", {
   minimumFractionDigits: 2,
@@ -73,14 +97,71 @@ function phaseQuotes(map: MapDTO, stage: MapStage) {
 
 export const phasePriceLabels = { pre: "до драфта", post: "после драфта" } as const
 
+function archiveTime(stamp: string | undefined) {
+  return stamp && /(?:Z|\+00:00)$/.test(stamp) ? Date.parse(stamp) : Number.NaN
+}
+
+function archivedPhaseQuote(map: MapDTO, stage: MapStage) {
+  const steam = map.result?.steam_match_id
+  if (!steam || map.result_conflict || map.play_status === "unplayed") return null
+  const saved = archivedQuotes[steam]
+  if (!saved || saved.seriesId !== map.series_id || saved.mapNumber !== map.map_number) return null
+  const forward = saved.teamA === map.team_a && saved.teamB === map.team_b
+  const reverse = saved.teamA === map.team_b && saved.teamB === map.team_a
+  if (!forward && !reverse) return null
+  const quote = saved[stage]
+  if (!quote || quote.provider !== "Polymarket" || !/^0x[0-9a-f]{64}$/i.test(quote.marketId))
+    return null
+  const sourceUrl = quoteSourceUrl(quote.marketUrl, quote.provider)
+  if (
+    !sourceUrl ||
+    !new URL(sourceUrl).searchParams.get("marketSlug")?.endsWith(`-game${map.map_number}`)
+  )
+    return null
+  if (![quote.teamA, quote.teamB].every((price) => Number.isFinite(price) && price > 1)) return null
+  const a = archiveTime(quote.atA)
+  const b = archiveTime(quote.atB)
+  const end = archiveTime(quote.windowEnd)
+  if (![a, b, end].every(Number.isFinite) || Math.max(a, b) >= end) return null
+  if (stage === "post" && !(Math.min(a, b) >= archiveTime(quote.windowStart))) return null
+  return {
+    provider: quote.provider,
+    marketId: quote.marketId.toLowerCase(),
+    sourceUrl,
+    windowEnd: end,
+    a: forward ? quote.teamA : quote.teamB,
+    b: forward ? quote.teamB : quote.teamA,
+    atA: forward ? quote.atA : quote.atB,
+    atB: forward ? quote.atB : quote.atA,
+  }
+}
+
+export function originalPostAfterVerifiedWindow(map: MapDTO) {
+  const end = archivedPhaseQuote(map, "post")?.windowEnd
+  return end != null && Date.parse(map.post?.created_at_utc ?? "") >= end
+}
+
 export function reportPrice(map: MapDTO, stage: MapStage, side: "A" | "B") {
   const quotes = phaseQuotes(map, stage)
   const quote = quotes.find((q) => providerLabel(q.provider) === "Polymarket") ?? quotes[0]
-  if (!quote) return null
+  if (!quote) {
+    const saved = archivedPhaseQuote(map, stage)
+    return saved
+      ? {
+          value: side === "A" ? saved.a : saved.b,
+          provider: saved.provider,
+          observedAt: side === "A" ? saved.atA : saved.atB,
+          retrospective: true,
+          sourceUrl: saved.sourceUrl,
+        }
+      : null
+  }
   return {
     value: Number(side === "A" ? quote.winner.team_a : quote.winner.team_b),
     provider: providerLabel(quote.provider),
     observedAt: quote.observed_at_utc,
+    retrospective: false,
+    sourceUrl: quoteSourceUrl(quote.source_url, quote.provider),
   }
 }
 
@@ -101,8 +182,17 @@ export function reportPriceChange(map: MapDTO) {
         provider: providerLabel(quote.provider),
         a: Number(second.winner.team_a) - Number(quote.winner.team_a),
         b: Number(second.winner.team_b) - Number(quote.winner.team_b),
+        retrospective: false,
       }
     }
   }
-  return null
+  const archivedPre = archivedPhaseQuote(map, "pre")
+  const archivedPost = archivedPhaseQuote(map, "post")
+  if (!archivedPre || !archivedPost || archivedPre.marketId !== archivedPost.marketId) return null
+  return {
+    provider: archivedPre.provider,
+    a: archivedPost.a - archivedPre.a,
+    b: archivedPost.b - archivedPre.b,
+    retrospective: true,
+  }
 }
