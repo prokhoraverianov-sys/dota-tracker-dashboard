@@ -1,8 +1,9 @@
-import type { Forecast, MapDTO } from "./contracts"
+import type { DraftQuote, Forecast, MapDTO } from "./contracts"
 import { criterionLabels, readCriteria } from "./criteria"
 import { percent, time } from "./domain"
 import { OddsTable } from "./OddsTable"
-import { priceLabel, quoteSourceUrl } from "./odds"
+import { priceLabel, providerLabel, quoteSourceUrl } from "./odds"
+import { observedPostDraftQuotes, observedPreDecisionQuotes } from "./report-price"
 import { Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
 import "./analysis-presentation.css"
@@ -25,17 +26,78 @@ const marketDiagnosticLabels = {
   read_error: "Не удалось прочитать снимок котировки",
 }
 
+const quoteClock = new Intl.DateTimeFormat("ru-RU", {
+  timeZone: "UTC",
+  day: "2-digit",
+  month: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+})
+
+function QuoteObservation({
+  quote,
+  map,
+  completedAt,
+}: {
+  readonly quote: DraftQuote
+  readonly map: MapDTO
+  readonly completedAt?: string | null
+}) {
+  const source = quoteSourceUrl(quote.source_url, quote.provider)
+  const elapsed = (Date.parse(quote.observed_at_utc) - Date.parse(completedAt ?? "")) / 1_000
+  return (
+    <p className="quote-state">
+      <strong>{providerLabel(quote.provider)}</strong> · {map.team_a}{" "}
+      {priceLabel(quote.winner.team_a)}
+      {" / "}
+      {map.team_b} {priceLabel(quote.winner.team_b)} ·{" "}
+      <time dateTime={quote.observed_at_utc} title={quote.observed_at_utc}>
+        {quoteClock.format(new Date(quote.observed_at_utc))} UTC
+      </time>
+      {Number.isFinite(elapsed) && (
+        <>
+          {" "}
+          · через {elapsed.toLocaleString("ru-RU", { maximumFractionDigits: 1 })} с после последнего
+          пика
+        </>
+      )}
+      {source && (
+        <>
+          {" "}
+          ·{" "}
+          <a href={source} target="_blank" rel="noreferrer">
+            Рынок ↗
+          </a>
+        </>
+      )}
+    </p>
+  )
+}
+
 export function ForecastCard({
   forecast,
   stage,
   map,
+  capturing = false,
 }: {
   readonly forecast: Omit<Forecast, "map_id"> | null
   readonly stage: "PRE" | "POST"
   readonly map: MapDTO
+  readonly capturing?: boolean
 }) {
   const retrospective = forecast?.snapshot_id === "retrospective"
-  const polymarketQuotes = forecast?.polymarket_quotes ?? []
+  const phaseQuotes =
+    stage === "POST" ? observedPostDraftQuotes(forecast) : observedPreDecisionQuotes(forecast)
+  const polymarketQuotes = (forecast?.polymarket_quotes ?? []).filter(
+    (quote) =>
+      !phaseQuotes.some(
+        (phaseQuote) =>
+          providerLabel(phaseQuote.provider) === "Polymarket" &&
+          quote.market_scope === phaseQuote.market_scope &&
+          quote.observed_at_utc === phaseQuote.observed_at_utc,
+      ),
+  )
   const polymarketDiagnostics = forecast?.polymarket_diagnostics ?? []
   const shadow = forecast?.analysis.shadow_forecast
   const p = shadow?.winner_probability_team_a
@@ -65,6 +127,8 @@ export function ForecastCard({
     forecast?.model_team_b ?? map.team_b,
   )
   const largestContribution = Math.max(0, ...criteria.map((row) => Math.abs(row.signed_logit)))
+  const postQuoteStatus = forecast?.post_draft_quote_status
+  const hasDraftTime = Number.isFinite(Date.parse(forecast?.draft_completed_at_utc ?? ""))
   return (
     <article className={`forecast-card analysis-card ${stage.toLowerCase()}`}>
       <header>
@@ -106,30 +170,76 @@ export function ForecastCard({
               Модель воздержалась от оценки победителя. {abstentionMessages.join(" ")}
             </Notice>
           )}
-          <details className="forecast-section">
-            <summary>Коэффициенты при расчёте</summary>
-            <OddsTable candidates={forecast.candidates} teamA={map.team_a} teamB={map.team_b} />
-            <p className="quote-state">
-              {forecast.odds.provider ??
-                (forecast.candidates.length ? "Введены вручную" : "Нет котировок")}
-              {" · "}
-              {time(forecast.odds.observed_at_utc)}
-              {" · "}
-              {forecast.odds.phase === "pre_map"
-                ? "до карты"
-                : forecast.odds.phase === "live" || forecast.odds.phase === "in_play"
-                  ? "во время карты"
-                  : "фаза неизвестна"}
-              {forecast.odds.source_url?.startsWith("https://") && (
+          {stage === "POST" && !retrospective && (
+            <section
+              className="forecast-post-price forecast-section"
+              aria-live="polite"
+              aria-label="Котировки POST"
+            >
+              <h3>Котировки POST · карта {map.map_number ?? "—"}</h3>
+              {phaseQuotes.length ? (
                 <>
-                  {" "}
-                  ·{" "}
-                  <a href={forecast.odds.source_url} target="_blank" rel="noreferrer">
-                    Источник ↗
-                  </a>
+                  {phaseQuotes.map((quote) => (
+                    <QuoteObservation
+                      key={`${quote.provider}-${quote.observed_at_utc}`}
+                      quote={quote}
+                      map={map}
+                      completedAt={forecast.draft_completed_at_utc ?? null}
+                    />
+                  ))}
+                  {!hasDraftTime && (
+                    <p className="muted">
+                      Снимок после подтверждения полного драфта. Время последнего пика неизвестно.
+                    </p>
+                  )}
                 </>
+              ) : (
+                <p className="muted">
+                  {postQuoteStatus === "window_missed"
+                    ? "Доступная цена в течение 10 секунд не получена."
+                    : postQuoteStatus === "draft_unverified"
+                      ? "Live-источник не подтвердил полный драфт."
+                      : "Подтверждённого снимка цены POST нет."}
+                </p>
               )}
-            </p>
+            </section>
+          )}
+          <details className="forecast-section">
+            <summary>{stage === "PRE" ? "Котировки PRE" : "Снимки котировок"}</summary>
+            {(forecast.candidates.length > 0 || !phaseQuotes.length) && (
+              <OddsTable candidates={forecast.candidates} teamA={map.team_a} teamB={map.team_b} />
+            )}
+            {(forecast.odds.provider || forecast.candidates.length > 0 || !phaseQuotes.length) && (
+              <p className="quote-state">
+                {forecast.odds.provider ??
+                  (forecast.candidates.length ? "Введены вручную" : "Нет котировок")}
+                {" · "}
+                {time(forecast.odds.observed_at_utc)}
+                {" · "}
+                {forecast.odds.phase === "pre_map"
+                  ? "до карты"
+                  : forecast.odds.phase === "live" || forecast.odds.phase === "in_play"
+                    ? "во время карты"
+                    : "фаза неизвестна"}
+                {forecast.odds.source_url?.startsWith("https://") && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <a href={forecast.odds.source_url} target="_blank" rel="noreferrer">
+                      Источник ↗
+                    </a>
+                  </>
+                )}
+              </p>
+            )}
+            {stage === "PRE" &&
+              phaseQuotes.map((quote) => (
+                <QuoteObservation
+                  key={`${quote.provider}-${quote.observed_at_utc}`}
+                  quote={quote}
+                  map={map}
+                />
+              ))}
             {forecast.odds.observed_at_utc &&
               Date.parse(forecast.created_at_utc) - Date.parse(forecast.odds.observed_at_utc) >
                 300000 && (
@@ -140,7 +250,7 @@ export function ForecastCard({
               return (
                 <p key={quote.market_scope} className="quote-state">
                   <strong>
-                    Polymarket · {quote.market_scope === "series" ? "Серия" : "Карта"}
+                    Polymarket · {quote.market_scope === "series" ? "Серия" : "Карта"} · справочно
                   </strong>
                   {" · "}
                   {map.team_a} {priceLabel(quote.winner.team_a)} / {map.team_b}{" "}
@@ -253,13 +363,15 @@ export function ForecastCard({
         </>
       ) : (
         <div className="forecast-empty">
-          <strong>Прогноз ещё не сохранён</strong>
-          <p>
+          <strong>{capturing ? "Проверяем котировку POST" : "Прогноз ещё не сохранён"}</strong>
+          <p aria-live="polite">
             {stage === "PRE"
               ? "PRE рассчитывается после подтверждения пары."
-              : map.play_status === "unplayed"
-                ? "Карта не сыграна."
-                : "POST рассчитывается после подтверждения полного драфта."}
+              : capturing
+                ? "Ждём цену рынка этой карты после полного драфта."
+                : map.play_status === "unplayed"
+                  ? "Карта не сыграна."
+                  : "POST рассчитывается после подтверждения полного драфта."}
           </p>
         </div>
       )}

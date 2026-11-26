@@ -49,16 +49,15 @@ async function main() {
       .filter({ has: page.getByText("карт с результатом", { exact: true }) })
     await completed.getByText("66", { exact: true }).waitFor()
     const summary = page.getByRole("table", { name: "Результаты прогнозов на сыгранных картах" })
-    for (const [label, wins, losses, odds, bank] of [
-      ["PRE", 42, 24, "1,63", "75,12"], ["POST · 0,25", 45, 21, "1,58", "170,71"],
-      ["POST · 0,5", 45, 21, "1,58", "170,71"], ["POST · 1,0", 43, 23, "1,59", "96,52"],
-      ["POST · 1,25", 43, 23, "1,59", "96,52"]
+    for (const [label, wins, losses] of [
+      ["PRE", 42, 24], ["POST · 0,25", 45, 21], ["POST · 0,5", 45, 21],
+      ["POST · 1,0", 43, 23], ["POST · 1,25", 43, 23]
     ]) {
       const row = summary.getByRole("row").filter({has: page.getByRole("rowheader", {name: label, exact: true})})
       const cells = await row.locator("td").allTextContents()
       assert.deepEqual(cells.slice(0,2), [String(wins),String(losses)])
-      assert(cells[2].startsWith(odds))
-      assert.equal(cells[3], "$" + bank)
+      assert.match(cells[2], /^Нет подтверждённых цен\s*0 из 66 карт$/)
+      assert.equal(cells[3], "—")
     }
     const maps = page.locator(".history-panel tbody tr")
     assert.equal(await maps.count(), 66)
@@ -66,7 +65,7 @@ async function main() {
     assert.equal(await maps.getByText(/Групповой этап · Группа/).count(), 30)
     assert.equal(await maps.getByText(/^Плей-офф ·/).count(), 36)
     assert.equal(await maps.getByText("Плей-офф · Гранд-финал", { exact: true }).count(), 4)
-    assert.equal(await maps.getByText(/^Кэф\. /).count(), 132)
+    assert.equal(await maps.getByText(/^Нет подтверждённой цены (до|после) драфта$/).count(), 132)
 
     home.hash = "/schedule?tournament=1win-essence-3&view=groups"
     await page.goto(home.href)

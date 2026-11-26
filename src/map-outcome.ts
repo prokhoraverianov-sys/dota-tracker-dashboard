@@ -4,6 +4,40 @@ export type MapStage = "pre" | "post"
 export const stageNames = { pre: "PRE", post: "POST" } as const
 export const mapStages = ["pre", "post"] as const
 
+function explicitSteamReference(draftId: string | null | undefined) {
+  return !!draftId && (draftId.startsWith("steam:") || /^\d+$/.test(draftId))
+}
+
+export function hasVerifiedDraft(map: MapDTO) {
+  const draftId = map.post?.draft_external_game_id
+  const steamId = map.result?.steam_match_id
+  return (
+    !!steamId &&
+    (explicitSteamReference(draftId)
+      ? draftId === `steam:${steamId}` || draftId === steamId
+      : map.post?.verified_steam_match_id === steamId)
+  )
+}
+
+function forecastTimingNote(map: MapDTO, stage: MapStage, forecast: Forecast) {
+  const saved = Date.parse(forecast.created_at_utc)
+  if (!Number.isFinite(saved)) return "Время прогноза не подтверждено"
+  if (stage === "pre") {
+    const draftStart = Date.parse(map.draft_started_at_utc ?? "")
+    if (!Number.isFinite(draftStart)) return "Начало драфта не подтверждено"
+    return saved < draftStart ? "" : "После начала драфта"
+  }
+  const draft = Date.parse(forecast.draft_completed_at_utc ?? "")
+  const gameplay = Date.parse(map.gameplay_started_at_utc ?? "")
+  const end = Date.parse(map.result?.ended_at_utc ?? "")
+  if (saved >= end) return "После окончания карты"
+  if (saved >= gameplay) return "После начала игры"
+  if (saved < draft) return "До подтверждения полного драфта"
+  return Number.isFinite(draft) && Number.isFinite(gameplay)
+    ? ""
+    : "Окно сразу после драфта не подтверждено"
+}
+
 export function retrospectiveForecast(
   map: MapDTO,
   stage: MapStage,
@@ -26,10 +60,8 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
   const result = map.result
   const draftId = original?.draft_external_game_id
   const steamId = result?.steam_match_id
-  const steamMatch = !!steamId && (draftId === `steam:${steamId}` || draftId === steamId)
-  const explicitSteam = !!draftId && (draftId.startsWith("steam:") || /^\d+$/.test(draftId))
-  const verified =
-    !!steamId && (explicitSteam ? steamMatch : original?.verified_steam_match_id === steamId)
+  const explicitSteam = explicitSteamReference(draftId)
+  const verified = hasVerifiedDraft(map)
   const originalProbability = original?.analysis.shadow_forecast?.winner_probability_team_a
   const replayProbability = replay?.analysis.shadow_forecast?.winner_probability_team_a
   const needsReplay =
@@ -57,26 +89,7 @@ export function evaluateMap(map: MapDTO, stage: MapStage) {
   else if (!result) note = "Ожидается результат"
   else if (stage === "post" && !verified)
     note = explicitSteam && steamId ? "Драфт другой карты" : "Привязка драфта не подтверждена"
-  else {
-    const start = Date.parse(result.started_at_utc ?? "")
-    const end = result.ended_at_utc
-      ? Date.parse(result.ended_at_utc)
-      : start + result.duration_seconds * 1000
-    const cutoff = stage === "pre" ? start : end
-    const saved = Date.parse(original.created_at_utc)
-    const seen =
-      original.draft_observed_at_utc && stage === "post"
-        ? Date.parse(original.draft_observed_at_utc)
-        : saved
-    if (![cutoff, saved, seen].every(Number.isFinite)) note = "Время не подтверждено"
-    else if (Math.max(saved, seen) >= cutoff)
-      note =
-        stage === "pre"
-          ? "После начала карты"
-          : result.ended_at_utc
-            ? "После окончания карты"
-            : "Позже расчётного окончания"
-  }
+  else note = forecastTimingNote(map, stage, original)
   const hit = !note && result && selected !== null ? selected === result.winner : null
   const comparison =
     result &&

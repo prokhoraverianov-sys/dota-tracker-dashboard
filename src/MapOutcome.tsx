@@ -1,6 +1,7 @@
 import type { MapDTO } from "./contracts"
+import { time } from "./domain"
 import { evaluateMap, mapStages, stageNames } from "./map-outcome"
-import { decimalPrice, reportPrice } from "./report-price"
+import { decimalPrice, phasePriceLabels, reportPrice, reportPriceChange } from "./report-price"
 import { minutes } from "./reporting"
 
 export function StageVerdict({
@@ -11,7 +12,7 @@ export function StageVerdict({
   readonly stage: "pre" | "post"
 }) {
   const { selected, pick, note, comparison } = evaluateMap(map, stage)
-  const price = comparison !== null && selected ? reportPrice(map, selected) : null
+  const price = comparison !== null && selected ? reportPrice(map, stage, selected) : null
   return (
     <div className="stage-verdict">
       <strong className={comparison === null ? "muted" : comparison ? "hit-text" : "miss-text"}>
@@ -20,10 +21,15 @@ export function StageVerdict({
       {pick && <small className="verdict-pick">Выбор модели · {pick}</small>}
       {price && (
         <small>
-          Кэф. {decimalPrice(price.value)} · {price.label}
+          Кэф. {decimalPrice(price.value)} · {price.provider} ·{" "}
+          <time dateTime={price.observedAt} title={price.observedAt}>
+            {time(price.observedAt)}
+          </time>
         </small>
       )}
-      {comparison !== null && !price && <small>Нет подтверждённой цены до старта</small>}
+      {comparison !== null && !price && (
+        <small>Нет подтверждённой цены {phasePriceLabels[stage]}</small>
+      )}
       {note && comparison !== null && <small>{note}</small>}
     </div>
   )
@@ -33,6 +39,7 @@ export function MapOutcome({ map }: { readonly map: MapDTO }) {
   if (map.play_status === "unplayed") return null
   const result = map.result
   const winner = result?.winner === "A" ? map.team_a : map.team_b
+  const priceChange = reportPriceChange(map)
   return (
     <section className="panel outcome-panel" aria-label="Результат и прогнозы">
       <div>
@@ -64,6 +71,14 @@ export function MapOutcome({ map }: { readonly map: MapDTO }) {
           <StageVerdict map={map} stage={stage} />
         </div>
       ))}
+      {priceChange && (
+        <p className="footnote outcome-price-change">
+          Изменение кэф. PRE → POST · {priceChange.provider} · {map.team_a}{" "}
+          {priceChange.a > 0 ? "+" : ""}
+          {decimalPrice(priceChange.a)} / {map.team_b} {priceChange.b > 0 ? "+" : ""}
+          {decimalPrice(priceChange.b)}
+        </p>
+      )}
     </section>
   )
 }

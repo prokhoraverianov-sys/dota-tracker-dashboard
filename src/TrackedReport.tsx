@@ -24,9 +24,9 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
               <th>Прогноз</th>
               <th>Зашло</th>
               <th>Не зашло</th>
-              <th>Ср. кэф. до карты</th>
-              {weighted && <th>Итоговый банк</th>}
-              <th>Точность своевременных оригиналов</th>
+              <th>Ср. кэф. в фазе прогноза</th>
+              <th>Итоговый банк</th>
+              <th>Точность оригиналов в фазе</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +45,7 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
                   ? evaluateMap(map, stage)
                   : weightedPost(map, stage),
               )
+              const phase = stage === "pre" ? "pre" : "post"
               const scored = verdicts.filter((item) => item?.hit != null)
               const hits = scored.filter((item) => item?.hit).length
               const wins = verdicts.filter((v) => v?.comparison === true).length
@@ -52,8 +53,8 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
               const prices = maps.flatMap((map, index) => {
                 const v = verdicts[index]
                 const quote =
-                  v?.comparison != null && v.selected ? reportPrice(map, v.selected) : null
-                return quote ? [{ ...quote, won: v?.comparison === true }] : []
+                  v?.comparison != null && v.selected ? reportPrice(map, phase, v.selected) : null
+                return quote ? [{ value: quote.value, won: v?.comparison === true }] : []
               })
               const mean = prices.length
                 ? prices.reduce((sum, q) => sum + q.value, 0) / prices.length
@@ -66,23 +67,21 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
                   <td>
                     {mean != null ? decimalPrice(mean) : "Нет подтверждённых цен"}
                     <small className="metric-note">
-                      {prices.length} из {maps.length} карт ·{" "}
-                      {prices.filter((q) => q.series).length} по рынку серии при 1:1
+                      {prices.length} из {maps.length} карт
                     </small>
                   </td>
-                  {weighted && (
-                    <td>
-                      $
-                      {decimalPrice(
-                        100 +
-                          prices.reduce(
-                            (sum, q) => sum + (q.won ? Math.round(2000 * (q.value - 1)) : -2000),
-                            0,
-                          ) /
-                            100,
-                      )}
-                    </td>
-                  )}
+                  <td>
+                    {prices.length
+                      ? `$${decimalPrice(
+                          100 +
+                            prices.reduce(
+                              (sum, q) => sum + (q.won ? Math.round(2000 * (q.value - 1)) : -2000),
+                              0,
+                            ) /
+                              100,
+                        )}`
+                      : "—"}
+                  </td>
                   <td>
                     {original ? (
                       <>
@@ -102,11 +101,9 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
         </table>
       </div>
       <p className="footnote">
-        «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. Средний кэф. — среднее по
-        выбранным командам, одна архивная цена до старта на карту. На решающих картах при отсутствии
-        цены карты используется рынок серии при 1:1.
-        {weighted &&
-          " Каждый сценарий начинает со $100. Ставка всегда $20, выигрыш округляется до цента на каждой карте."}
+        «Зашло» и «Не зашло» включают поздние и восстановленные расчёты. В банке учитываются цены
+        выбранных команд на рынке карты до драфта для PRE и сразу после полного драфта для POST.
+        Начальный банк каждого сценария $100, условная ставка $20.
       </p>
     </section>
   )

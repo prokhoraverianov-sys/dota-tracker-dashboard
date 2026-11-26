@@ -21,14 +21,20 @@ const activeCard = {
   revision: 0,
   tournament: "Тестовый турнир",
   result: null,
-  pre: null,
+  pre: {
+    ...completed.pre,
+    map_id: 100043,
+    analysis: { shadow_forecast: { winner_probability_team_a: 0.61 } },
+  },
   retrospective_pre: null,
 }
-const activeOddsPath = "/series/active-regression/maps/2/odds"
 const marketUrl = "https://polymarket.com/event/active-regression-game2"
+const fullDraftAt = "2026-11-12T13:12:16Z"
+const postPriceAt = "2026-11-12T13:12:20Z"
 const forecast = {
   ...completed.pre,
   map_id: activeCard.map_id,
+  snapshot_id: "fixture-post-100043",
   stage: "post_draft",
   analysis: { shadow_forecast: { winner_probability_team_a: 0.61 } },
   heroes_a,
@@ -36,6 +42,20 @@ const forecast = {
   players_a,
   players_b,
   candidates: [],
+  draft_observed_at_utc: "2026-11-12T13:12:19Z",
+  draft_completed_at_utc: fullDraftAt,
+  post_draft_quote_status: "captured",
+  post_draft_quotes: [{
+    market_scope: "map",
+    provider: "polymarket",
+    observed_at_utc: postPriceAt,
+    provider_quote_at_utc: "2026-11-12T13:12:15Z",
+    observation_method: "polymarket_rest_book",
+    request_started_at_utc: "2026-11-12T13:12:19Z",
+    source_url: marketUrl,
+    quote_id: "post-quote-for-map-2",
+    winner: { team_a: "1.95", team_b: "1.99" },
+  }],
 }
 const missing = {
   status: "empty",
@@ -49,12 +69,17 @@ const missing = {
   notice: "",
 }
 
-async function mockApi(page, home) {
+async function mockApi(page, home, initialCard) {
   await page.route("**/config.json", (route) => route.fulfill({ json: { apiUrl: home.origin } }))
   // Reproduce map 43 before an archived retrospective could satisfy the UI.
   await page.route("**/data/completed-forecasts.json", (route) => route.fulfill({ json: {} }))
   const fixture = { odds: missing, oddsReads: 0, writes: [], unexpected: [] }
-  let active = activeCard
+  let active = initialCard
+  const activePath = `/maps/${initialCard.map_id}`
+  const oddsPath = `/series/${initialCard.series_id}/maps/${initialCard.map_number}/odds`
+  fixture.receivePost = (post = forecast) => { active = { ...active, revision: 1, post } }
+  fixture.delayCardProjection = false
+  fixture.postResponse = forecast
   await page.route("**/api/v1/**", async (route) => {
     const request = route.request()
     const path = new URL(request.url()).pathname.slice("/api/v1".length)
@@ -69,16 +94,16 @@ async function mockApi(page, home) {
       if (path === "/catalog")
         return route.fulfill({ json: { teams: [], heroes: [...heroes_a, ...heroes_b], timezone: "Asia/Bangkok" } })
       if (path === "/maps/43") return route.fulfill({ json: finishedCard })
-      if (path === "/maps/100043") return route.fulfill({ json: active })
+      if (path === activePath) return route.fulfill({ json: active })
       if (path === "/series/e3-g-b1/maps/1/odds") return route.fulfill({ json: missing })
-      if (path === activeOddsPath) {
+      if (path === oddsPath) {
         fixture.oddsReads++
         return route.fulfill({ json: fixture.odds })
       }
     }
     if (request.method() === "POST") {
       fixture.writes.push({ path, body: request.postDataJSON() })
-      if (path === "/maps/43/live" || path === "/maps/100043/live")
+      if (path === "/maps/43/live" || path === `${activePath}/live`)
         return route.fulfill({
           json: {
             status: "ok",
@@ -91,9 +116,10 @@ async function mockApi(page, home) {
         })
       if (path === "/maps/43/retrospective-post")
         return route.fulfill({ json: savedRetrospective.analysis })
-      if (path === "/maps/100043/forecasts/post_draft") {
-        active = { ...active, revision: 1, post: forecast }
-        return route.fulfill({ json: { map: active, forecast, replayed: false } })
+      if (path === `${activePath}/forecasts/post_draft`) {
+        const savedPost = fixture.postResponse
+        fixture.receivePost(fixture.delayCardProjection ? { ...savedPost, post_draft_quotes: [] } : savedPost)
+        return route.fulfill({ json: { map: active, forecast: savedPost, replayed: false } })
       }
     }
     fixture.unexpected.push(request.method() + " " + path)
@@ -102,11 +128,15 @@ async function mockApi(page, home) {
   return fixture
 }
 
-async function openCard(browser, home, path, run) {
+async function openCard(browser, home, path, run, withManualDraft = false, initialCard = activeCard) {
   const page = await browser.newPage()
   page.setDefaultTimeout(8_000)
   try {
-    const fixture = await mockApi(page, home)
+    const fixture = await mockApi(page, home, initialCard)
+    if (withManualDraft) {
+      const key = `dota-draft:${initialCard.series_id}:${initialCard.map_number}`
+      await page.addInitScript(({ key, saved }) => localStorage.setItem(key, JSON.stringify(saved)), { key, saved: draft })
+    }
     await page.clock.install()
     await page.goto(new URL("#" + path, home).href)
     await run(page, fixture)
@@ -114,6 +144,17 @@ async function openCard(browser, home, path, run) {
   } finally {
     await page.close()
   }
+}
+
+async function verifyVisiblePostPrice(page) {
+  const pre = page.locator(".forecast-card.pre")
+  const post = page.locator(".forecast-card.post")
+  await pre.getByText(/61[,.]0%/).waitFor()
+  await post.getByText(/61[,.]0%/).waitFor()
+  const visibleQuote = post.getByRole("region", { name: "Котировки POST", exact: true })
+  await visibleQuote.locator(`time[datetime="${postPriceAt}"]`).waitFor()
+  assert.match(await visibleQuote.innerText(), /1\.95.+1\.99.+13:12:20 UTC.+через 4 с после последнего пика/s)
+  assert.equal(await visibleQuote.getByRole("link", { name: "Рынок ↗" }).getAttribute("href"), marketUrl)
 }
 
 async function verifyActiveCard(browser, home) {
@@ -141,14 +182,101 @@ async function verifyActiveCard(browser, home) {
       assert.deepEqual(prices.map((value) => Number(value.replace(",", "."))), [Number(a), Number(b)])
     }
     await page.getByRole("button", { name: "Загрузить драфт и рассчитать POST", exact: true }).click()
-    const post = page.locator(".forecast-card.post")
-    await post.getByText("Сохранён", { exact: true }).waitFor()
-    await post.getByText(/61[,.]0%/).waitFor()
+    await verifyVisiblePostPrice(page)
     assert.deepEqual(fixture.writes.map((write) => write.path), [
       "/maps/100043/live",
       "/maps/100043/forecasts/post_draft",
     ])
     assert.deepEqual(fixture.writes[1].body, { expected_revision: 0, input: draft })
+  })
+}
+
+async function verifyManualPost(browser, home) {
+  await openCard(browser, home, "/maps/100043", async (page, fixture) => {
+    fixture.delayCardProjection = true
+    await page.getByRole("button", { name: "Рассчитать POST", exact: true }).click()
+    await verifyVisiblePostPrice(page)
+    assert.deepEqual(fixture.writes.map((write) => write.path), ["/maps/100043/forecasts/post_draft"])
+    const refreshed = page.waitForResponse((response) => response.url().endsWith("/api/v1/maps/100043"))
+    await page.clock.fastForward(15_000)
+    await refreshed
+    await page.evaluate(() => new Promise(requestAnimationFrame))
+    await verifyVisiblePostPrice(page)
+  }, true)
+}
+
+async function verifyAutomaticPost(browser, home) {
+  await openCard(browser, home, "/maps/100043", async (page, fixture) => {
+    await page.locator(".forecast-card.post").getByText("Прогноз ещё не сохранён", { exact: true }).waitFor()
+    fixture.receivePost()
+    const refreshed = page.waitForResponse((response) => response.url().endsWith("/api/v1/maps/100043"), { timeout: 1_500 })
+    await page.clock.fastForward(2_000)
+    await refreshed
+    await verifyVisiblePostPrice(page)
+    assert.deepEqual(fixture.writes, [])
+  })
+}
+
+async function verifyLeonMapThree(browser, home) {
+  const map = { ...activeCard, map_id: 100044, map_number: 3, pre: { ...activeCard.pre, map_id: 100044 } }
+  const source = "https://leon.bet/bets/esport/dota-2/blast-slam-ix/875421-active-regression"
+  await openCard(browser, home, "/maps/100044", async (page, fixture) => {
+    fixture.postResponse = {
+      ...forecast,
+      map_id: map.map_id,
+      snapshot_id: "fixture-leon-post-map3",
+      polymarket_quotes: [],
+      polymarket_diagnostics: [],
+      post_draft_quotes: [{
+        market_scope: "map",
+        provider: "LEON",
+        event_id: "875421",
+        observed_at_utc: postPriceAt,
+        provider_quote_at_utc: null,
+        request_started_at_utc: "2026-11-12T13:12:19Z",
+        observation_method: "leon_event_line",
+        source_url: source,
+        quote_id: "leon:875421:map3:2026-11-12T13:12:20Z",
+        winner: { team_a: "1.83", team_b: "2.12" },
+      }],
+    }
+    const identity = page.locator(".map-number")
+    await identity.filter({ hasText: /^Карта 3$/ }).waitFor()
+    await page.getByRole("button", { name: "Рассчитать POST", exact: true }).click()
+    const pre = page.locator(".forecast-card.pre")
+    const post = page.locator(".forecast-card.post")
+    await pre.getByText(/61[,.]0%/).waitFor()
+    await post.getByText(/61[,.]0%/).waitFor()
+    const quote = post.getByRole("region", { name: "Котировки POST", exact: true })
+    await quote.getByRole("heading", { name: "Котировки POST · карта 3", exact: true }).waitFor()
+    await quote.locator(`time[datetime="${postPriceAt}"]`).waitFor()
+    assert.match(await quote.innerText(), /LEON.+1\.83.+2\.12.+13:12:20 UTC.+через 4 с после последнего пика/s)
+    assert.equal(await quote.getByText("Polymarket", { exact: true }).count(), 0)
+    assert.equal(await quote.getByRole("link", { name: "Рынок ↗" }).getAttribute("href"), source)
+    assert.equal(await identity.innerText(), "Карта 3")
+    assert.deepEqual(fixture.writes.map((write) => write.path), ["/maps/100044/forecasts/post_draft"])
+  }, true, map)
+}
+
+async function verifyExpiredPostQuote(browser, home) {
+  await openCard(browser, home, "/maps/100043", async (page, fixture) => {
+    const post = page.locator(".forecast-card.post")
+    await post.getByText("Прогноз ещё не сохранён", { exact: true }).waitFor()
+    fixture.receivePost({
+      ...forecast, post_draft_quote_status: "window_missed", post_draft_quotes: [{
+        ...forecast.post_draft_quotes[0], request_started_at_utc: "2026-11-12T13:12:15Z",
+      }],
+      polymarket_quotes: [{
+        market_scope: "map", observed_at_utc: "2026-11-12T13:12:15Z", source_url: marketUrl,
+        winner: { team_a: "1.91", team_b: "2.03" },
+      }],
+    })
+    await page.clock.fastForward(2_000)
+    const postQuote = post.getByRole("region", { name: "Котировки POST", exact: true })
+    await postQuote.getByText("Доступная цена в течение 10 секунд не получена.", { exact: true }).waitFor()
+    assert.equal(await postQuote.locator("time").count(), 0)
+    await post.getByText("Снимки котировок", { exact: true }).click()
+    await post.getByText("Polymarket · Карта · справочно", { exact: true }).waitFor()
   })
 }
 
@@ -181,8 +309,12 @@ async function main() {
     })
     try {
       await verifyActiveCard(browser, home)
+      await verifyManualPost(browser, home)
+      await verifyAutomaticPost(browser, home)
+      await verifyLeonMapThree(browser, home)
+      await verifyExpiredPostQuote(browser, home)
       await verifyFinishedCard(browser, home)
-      console.log("Active price refresh and both POST paths verified against the release build")
+      console.log("Active market refresh and exact POST quotes verified for live import, manual save, and automatic capture; retrospective map 43 verified")
     } finally {
       await browser.close()
     }

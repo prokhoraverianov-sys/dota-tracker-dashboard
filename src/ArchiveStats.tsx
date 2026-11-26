@@ -58,8 +58,8 @@ export function ArchiveStats({
         <section className="panel section-card">
           <h2>Сравнение сценариев PARI Universe</h2>
           <p className="muted">
-            Пять сценариев со стартом $100 и фиксированными $20 на карту. Сводка показывает цены до
-            старта и все архивные цены в отдельных срезах.
+            Пять сценариев со стартом $100 и фиксированными $20 на карту. В сводке PRE использует
+            подтверждённую цену до драфта, POST — live-цену после полного драфта.
           </p>
           <a
             href="https://docs.google.com/spreadsheets/d/1MB3IqnQjt7GzjwRHnKq_kaAGbBpU6kNTPU_0veq8UG8/edit#gid=1204429685"

@@ -68,6 +68,7 @@ export function MapWorkspace({
   const dirty = editedDraft !== null && JSON.stringify(editedDraft) !== JSON.stringify(baseline)
   const pollPath = mapPath(map)
   const pollable = !unplayed && (!map.result || (!map.post && !recorded))
+  const pollInterval = !map.result && !map.post ? 2_000 : 15_000
   useEffect(() => {
     setDirty(dirty && !editorLocked)
     if (dirty) localStorage.setItem(key, JSON.stringify(editedDraft))
@@ -82,21 +83,32 @@ export function MapWorkspace({
       pending = true
       try {
         const latest = await api.request(pollPath, mapSchema)
-        if (active) setMap((current) => (latest.revision >= current.revision ? latest : current))
+        if (active)
+          setMap((current) => {
+            if (latest.revision < current.revision) return current
+            if (
+              !latest.result_conflict &&
+              current.post?.post_draft_quotes?.length &&
+              latest.post?.snapshot_id === current.post.snapshot_id &&
+              !latest.post.post_draft_quotes?.length
+            )
+              return { ...latest, post: current.post }
+            return latest
+          })
       } catch {
         // Keep the last confirmed card during a temporary refresh failure.
       } finally {
         pending = false
       }
     }
-    const timer = window.setInterval(refreshCard, 15_000)
+    const timer = window.setInterval(refreshCard, pollInterval)
     document.addEventListener("visibilitychange", refreshCard)
     return () => {
       active = false
       window.clearInterval(timer)
       document.removeEventListener("visibilitychange", refreshCard)
     }
-  }, [api, busy, pollPath, pollable])
+  }, [api, busy, pollInterval, pollPath, pollable])
   function edit(value: Draft) {
     setEditedDraft(value)
     setProposal(null)
@@ -154,7 +166,17 @@ export function MapWorkspace({
         body,
         requestKey,
       )
-      setMap(result.map)
+      const savedPost = result.map.post
+      setMap(
+        stage === "post_draft" &&
+          result.forecast.stage === stage &&
+          (!savedPost ||
+            (savedPost.snapshot_id === result.forecast.snapshot_id &&
+              !savedPost.post_draft_quotes?.length &&
+              result.forecast.post_draft_quotes?.length))
+          ? { ...result.map, post: result.forecast }
+          : result.map,
+      )
       if (stage === "post_draft") setEditedDraft(null)
       retry.current = null
       window.requestAnimationFrame(() => forecastSectionRef.current?.scrollIntoView())
@@ -238,7 +260,12 @@ export function MapWorkspace({
           )}
         </div>
         <div>
-          <ForecastCard forecast={post} stage="POST" map={map} />
+          <ForecastCard
+            forecast={post}
+            stage="POST"
+            map={map}
+            capturing={!locked && busy === "post_draft"}
+          />
           {post?.snapshot_id === "retrospective" && recorded?.source_url.startsWith("https://") && (
             <a
               className="forecast-source"

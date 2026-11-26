@@ -28,6 +28,8 @@ export function providerLabel(provider: string | null): string {
   switch (provider?.toLocaleLowerCase("en")) {
     case "pari":
       return "PARI"
+    case "leon":
+      return "LEON"
     case "betboom":
       return "BetBoom"
     case "polymarket":
@@ -82,6 +84,9 @@ export function quoteSourceUrl(value: string | null, provider?: string | null): 
     switch (provider?.toLowerCase()) {
       case "pari":
         if (url.hostname !== "pari.ru") return null
+        break
+      case "leon":
+        if (url.hostname !== "leon.bet" || !/^\/bets\/esport\//.test(url.pathname)) return null
         break
       case "betboom":
         if (url.hostname !== "betboom.ru") return null

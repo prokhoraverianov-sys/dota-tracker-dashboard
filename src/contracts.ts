@@ -37,6 +37,19 @@ export const candidateSchema = z.object({
     .transform((value) => (value === null ? null : Number(value))),
 })
 export type Candidate = z.infer<typeof candidateSchema>
+const draftQuoteSchema = z.object({
+  market_scope: z.literal("map"),
+  provider: z.string().min(1),
+  observed_at_utc: z.string(),
+  provider_quote_at_utc: z.string().nullish(),
+  source_url: z.string(),
+  quote_id: z.string().nullish(),
+  event_id: z.string().nullish(),
+  observation_method: z.string().nullish(),
+  request_started_at_utc: z.string().nullish(),
+  winner: z.object({ team_a: z.string(), team_b: z.string() }),
+})
+export type DraftQuote = z.infer<typeof draftQuoteSchema>
 export const forecastSchema = z.object({
   map_id: z.number(),
   snapshot_id: z.union([z.number(), z.string()]),
@@ -44,6 +57,7 @@ export const forecastSchema = z.object({
   created_at_utc: z.string(),
   draft_external_game_id: z.string().nullish(),
   draft_observed_at_utc: z.string().nullish(),
+  draft_completed_at_utc: z.string().nullish(),
   verified_steam_match_id: z.string().nullish(),
   model_team_a: z.string().nullish(),
   model_team_b: z.string().nullish(),
@@ -72,6 +86,12 @@ export const forecastSchema = z.object({
     phase: z.string().nullable(),
   }),
   candidates: z.array(candidateSchema),
+  pre_decision_at_utc: z.string().nullish(),
+  pre_decision_quotes: z.array(draftQuoteSchema).optional(),
+  post_draft_quotes: z.array(draftQuoteSchema).optional(),
+  post_draft_quote_status: z
+    .enum(["captured", "after_observation", "window_missed", "draft_unverified"])
+    .nullish(),
   polymarket_quotes: z
     .array(
       z.object({
@@ -121,6 +141,8 @@ export const mapSchema = z.object({
   team_b: z.string(),
   tournament: z.string().nullable(),
   analysis_context: z.enum(["manual", "retrospective"]).optional(),
+  draft_started_at_utc: z.string().nullish(),
+  gameplay_started_at_utc: z.string().nullish(),
   play_status: z.literal("unplayed").nullish(),
   result_conflict: z.string().nullish(),
   pre: forecastSchema.nullable(),
