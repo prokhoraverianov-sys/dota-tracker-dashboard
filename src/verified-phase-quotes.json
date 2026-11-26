@@ -227,25 +227,6 @@
       "sourceB": "https://clob.polymarket.com/prices-history?market=28924076004808319239638447531832342410121969529090791267349066741660557618186&startTs=1792518900&endTs=1792626900&fidelity=1"
     }
   },
-  "9057681759": {
-    "seriesId": "p26-g05",
-    "mapNumber": 2,
-    "teamA": "1win",
-    "teamB": "OG",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0xf545db4c8cae96ffce4d47c9018ceed403c39ae6f8ec396d8af7d415b3b39e8c",
-      "marketUrl": "https://polymarket.com/event/dota2-1win-og-2026-10-23?marketSlug=dota2-1win-og-2026-10-23-game2",
-      "teamA": 1.8018018018018016,
-      "teamB": 2.247191011235955,
-      "atA": "2026-10-22T23:54:21.000Z",
-      "atB": "2026-10-22T23:54:24.000Z",
-      "windowEnd": "2026-10-22T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9057627136",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=16244045131751795988624373580246008331444218353659266816291763073432632865253&startTs=1792605300&endTs=1792713300&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=7242977111068904232329403121471082751247581612170560763387934958332156519686&startTs=1792605300&endTs=1792713300&fidelity=1"
-    }
-  },
   "9057771854": {
     "seriesId": "p26-g06",
     "mapNumber": 1,
@@ -778,82 +759,6 @@
       "sourceB": "https://clob.polymarket.com/prices-history?market=39216045982885555551500215623544856858066604959346289673742818988972980740454&startTs=1792864500&endTs=1792972500&fidelity=1"
     }
   },
-  "9063430462": {
-    "seriesId": "p26-g20",
-    "mapNumber": 1,
-    "teamA": "BetBoom Team",
-    "teamB": "LEGION",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x1e973f3e03a61c98ac79d3a29d14aca02afa27f194b3b83d50304990337427aa",
-      "marketUrl": "https://polymarket.com/event/dota2-bb4-legion1-2026-10-26?marketSlug=dota2-bb4-legion1-2026-10-26-game1",
-      "teamA": 1.4598540145985401,
-      "teamB": 3.1746031746031744,
-      "atA": "2026-10-25T23:54:18.000Z",
-      "atB": "2026-10-25T23:54:19.000Z",
-      "windowEnd": "2026-10-25T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9063430462",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=27409140325174174708398919968148947299532728939860788302276421743818065291251&startTs=1792864500&endTs=1792972500&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=105012734179044426726157531798735663632350039594251545898004960431226333774458&startTs=1792864500&endTs=1792972500&fidelity=1"
-    }
-  },
-  "9063495955": {
-    "seriesId": "p26-g20",
-    "mapNumber": 2,
-    "teamA": "BetBoom Team",
-    "teamB": "LEGION",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0xa91a513864072552ff842f5557059b8101e638e925d31820d075bd35bac29c36",
-      "marketUrl": "https://polymarket.com/event/dota2-bb4-legion1-2026-10-26?marketSlug=dota2-bb4-legion1-2026-10-26-game2",
-      "teamA": 1.4705882352941175,
-      "teamB": 3.125,
-      "atA": "2026-10-25T23:54:19.000Z",
-      "atB": "2026-10-25T23:54:19.000Z",
-      "windowEnd": "2026-10-25T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9063430462",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=38370790494966881522113359069625339253167428161255959627729490239195924782021&startTs=1792864500&endTs=1792972500&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=102897395776097164997294363520648617230153360969437875580967896348764053876243&startTs=1792864500&endTs=1792972500&fidelity=1"
-    }
-  },
-  "9065380598": {
-    "seriesId": "p26-po01",
-    "mapNumber": 1,
-    "teamA": "PARIVISION",
-    "teamB": "Team Liquid",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x522764b5de94956e169e37da5676f35f391ea17a3e5bc9da9ae07e92220103e1",
-      "marketUrl": "https://polymarket.com/event/dota2-pari-liquid-2026-10-28?marketSlug=dota2-pari-liquid-2026-10-28-game1",
-      "teamA": 1.3605442176870748,
-      "teamB": 3.773584905660377,
-      "atA": "2026-10-27T23:54:22.000Z",
-      "atB": "2026-10-27T23:54:24.000Z",
-      "windowEnd": "2026-10-27T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9065380598",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=98888746871242523377427495058148350281487106000757198843017880666462303726361&startTs=1793037300&endTs=1793145300&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=40317376574385346455436809421906610960879556002443927443049260096383663878807&startTs=1793037300&endTs=1793145300&fidelity=1"
-    }
-  },
-  "9065451128": {
-    "seriesId": "p26-po01",
-    "mapNumber": 2,
-    "teamA": "PARIVISION",
-    "teamB": "Team Liquid",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x666bddf2d03508606972a69e687b49b3621e85e4d2c9be4b5f0a5480e847bbb8",
-      "marketUrl": "https://polymarket.com/event/dota2-pari-liquid-2026-10-28?marketSlug=dota2-pari-liquid-2026-10-28-game2",
-      "teamA": 1.3605442176870748,
-      "teamB": 3.773584905660377,
-      "atA": "2026-10-27T23:54:21.000Z",
-      "atB": "2026-10-27T23:54:24.000Z",
-      "windowEnd": "2026-10-27T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9065380598",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=6165307522685232661925140095906476254478824795353371070291172355078932706925&startTs=1793037300&endTs=1793145300&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=9160965839853605214108064338235334679980287609828864121094862543158184829720&startTs=1793037300&endTs=1793145300&fidelity=1"
-    }
-  },
   "9065986613": {
     "seriesId": "p26-po03",
     "mapNumber": 1,
@@ -1082,44 +987,6 @@
       "sourceB": "https://clob.polymarket.com/prices-history?market=14363728800530652698886865895599434493066486388707084519646843385942239359506&startTs=1793210100&endTs=1793318100&fidelity=1"
     }
   },
-  "9069952836": {
-    "seriesId": "p26-po11",
-    "mapNumber": 1,
-    "teamA": "Team Yandex",
-    "teamB": "GamerLegion",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x89781eae5fbf7bea8cdc305f6a92a7449b2c74bffe1fe34cf4c29f1a62f600d2",
-      "marketUrl": "https://polymarket.com/event/dota2-ty-gl-2026-10-31?marketSlug=dota2-ty-gl-2026-10-31-game1",
-      "teamA": 1.2903225806451613,
-      "teamB": 4.444444444444445,
-      "atA": "2026-10-30T23:54:25.000Z",
-      "atB": "2026-10-30T23:54:28.000Z",
-      "windowEnd": "2026-10-30T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9069952836",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=5346297048200426154288979921829880326863965643942398017291475807604694235080&startTs=1793296500&endTs=1793404500&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=76835857067089423367043040371190314191588364331239019721751651650491216592039&startTs=1793296500&endTs=1793404500&fidelity=1"
-    }
-  },
-  "9070062078": {
-    "seriesId": "p26-po11",
-    "mapNumber": 2,
-    "teamA": "Team Yandex",
-    "teamB": "GamerLegion",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0xd00b0c731f102152eff757260cacc5a5a76154bfceda2e82458f7b7ad5787954",
-      "marketUrl": "https://polymarket.com/event/dota2-ty-gl-2026-10-31?marketSlug=dota2-ty-gl-2026-10-31-game2",
-      "teamA": 1.282051282051282,
-      "teamB": 4.545454545454546,
-      "atA": "2026-10-30T23:54:24.000Z",
-      "atB": "2026-10-30T23:54:27.000Z",
-      "windowEnd": "2026-10-30T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9069952836",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=55731158790878541581987182070481789507922335963628958703126867349333735769380&startTs=1793296500&endTs=1793404500&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=82157096768002904045677119821142090185005633427390244252866881244498999870784&startTs=1793296500&endTs=1793404500&fidelity=1"
-    }
-  },
   "9071596005": {
     "seriesId": "p26-po14",
     "mapNumber": 1,
@@ -1137,6 +1004,173 @@
       "boundarySource": "PRE до драфта карты · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://www.opendota.com/matches/9071596005",
       "sourceA": "https://clob.polymarket.com/prices-history?market=16877917537506188354263087518924265867782089030078354632593793422342445698751&startTs=1793382900&endTs=1793490900&fidelity=1",
       "sourceB": "https://clob.polymarket.com/prices-history?market=31908354645954184520144812801965468531137747412046889837507804041768102574606&startTs=1793382900&endTs=1793490900&fidelity=1"
+    }
+  },
+  "9057627136": {
+    "seriesId": "p26-g05",
+    "mapNumber": 1,
+    "teamA": "1win",
+    "teamB": "OG",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0xc56b3c683da6f32b789cd3bef83e4ca185d99db0c99eb85aad64ab30bd681d8a",
+      "marketUrl": "https://polymarket.com/event/dota2-1win-og-2026-10-23?marketSlug=dota2-1win-og-2026-10-23-game1",
+      "teamA": 1.6260162601626016,
+      "teamB": 2.5974025974025974,
+      "atA": "2026-10-23T08:21:23.000Z",
+      "atB": "2026-10-23T08:21:19.000Z",
+      "windowEnd": "2026-10-23T08:21:52.533Z",
+      "boundarySource": "Последний снимок до первого доказанного бана карты 1 · http://replay189.valve.net/570/9057627136_1052133172.dem.bz2 · https://api.opendota.com/api/matches/9057627136 · SHA-256 2bfe840c8dcc9ea9af52df9baab455bfd612a7e5521673cca4437f74dff8df3e",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=34495958011271860931219398355988434958088243425802641457633485765947907600285&startTs=1792722112&endTs=1792743713&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=75123189477445709135571857307417562739366474254118191930287677278203491344646&startTs=1792722112&endTs=1792743713&fidelity=1"
+    }
+  },
+  "9057681759": {
+    "seriesId": "p26-g05",
+    "mapNumber": 2,
+    "teamA": "1win",
+    "teamB": "OG",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0xf545db4c8cae96ffce4d47c9018ceed403c39ae6f8ec396d8af7d415b3b39e8c",
+      "marketUrl": "https://polymarket.com/event/dota2-1win-og-2026-10-23?marketSlug=dota2-1win-og-2026-10-23-game2",
+      "teamA": 1.7391304347826089,
+      "teamB": 2.3255813953488373,
+      "atA": "2026-10-23T08:21:20.000Z",
+      "atB": "2026-10-23T08:21:23.000Z",
+      "windowEnd": "2026-10-23T08:21:52.533Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay189.valve.net/570/9057627136_1052133172.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=16244045131751795988624373580246008331444218353659266816291763073432632865253&startTs=1792736512&endTs=1792743713&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=7242977111068904232329403121471082751247581612170560763387934958332156519686&startTs=1792736512&endTs=1792743713&fidelity=1"
+    }
+  },
+  "9063430462": {
+    "seriesId": "p26-g20",
+    "mapNumber": 1,
+    "teamA": "BetBoom Team",
+    "teamB": "LEGION",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x1e973f3e03a61c98ac79d3a29d14aca02afa27f194b3b83d50304990337427aa",
+      "marketUrl": "https://polymarket.com/event/dota2-bb4-legion1-2026-10-26?marketSlug=dota2-bb4-legion1-2026-10-26-game1",
+      "teamA": 1.6260162601626016,
+      "teamB": 2.5974025974025974,
+      "atA": "2026-10-26T19:58:20.000Z",
+      "atB": "2026-10-26T19:58:21.000Z",
+      "windowEnd": "2026-10-26T19:58:42.833Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay272.valve.net/570/9063430462_520549241.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=27409140325174174708398919968148947299532728939860788302276421743818065291251&startTs=1793037522&endTs=1793044723&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=105012734179044426726157531798735663632350039594251545898004960431226333774458&startTs=1793037522&endTs=1793044723&fidelity=1"
+    }
+  },
+  "9063495955": {
+    "seriesId": "p26-g20",
+    "mapNumber": 2,
+    "teamA": "BetBoom Team",
+    "teamB": "LEGION",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0xa91a513864072552ff842f5557059b8101e638e925d31820d075bd35bac29c36",
+      "marketUrl": "https://polymarket.com/event/dota2-bb4-legion1-2026-10-26?marketSlug=dota2-bb4-legion1-2026-10-26-game2",
+      "teamA": 1.5625,
+      "teamB": 2.7777777777777777,
+      "atA": "2026-10-26T19:58:20.000Z",
+      "atB": "2026-10-26T19:58:20.000Z",
+      "windowEnd": "2026-10-26T19:58:42.833Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay272.valve.net/570/9063430462_520549241.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=38370790494966881522113359069625339253167428161255959627729490239195924782021&startTs=1793037522&endTs=1793044723&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=102897395776097164997294363520648617230153360969437875580967896348764053876243&startTs=1793037522&endTs=1793044723&fidelity=1"
+    }
+  },
+  "9065380598": {
+    "seriesId": "p26-po01",
+    "mapNumber": 1,
+    "teamA": "PARIVISION",
+    "teamB": "Team Liquid",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x522764b5de94956e169e37da5676f35f391ea17a3e5bc9da9ae07e92220103e1",
+      "marketUrl": "https://polymarket.com/event/dota2-pari-liquid-2026-10-28?marketSlug=dota2-pari-liquid-2026-10-28-game1",
+      "teamA": 1.342281879194631,
+      "teamB": 3.9215686274509802,
+      "atA": "2026-10-28T09:07:15.000Z",
+      "atB": "2026-10-28T09:07:17.000Z",
+      "windowEnd": "2026-10-28T09:07:36.166Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay181.valve.net/570/9065380598_600771721.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=98888746871242523377427495058148350281487106000757198843017880666462303726361&startTs=1793171256&endTs=1793178457&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=40317376574385346455436809421906610960879556002443927443049260096383663878807&startTs=1793171256&endTs=1793178457&fidelity=1"
+    }
+  },
+  "9065451128": {
+    "seriesId": "p26-po01",
+    "mapNumber": 2,
+    "teamA": "PARIVISION",
+    "teamB": "Team Liquid",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x666bddf2d03508606972a69e687b49b3621e85e4d2c9be4b5f0a5480e847bbb8",
+      "marketUrl": "https://polymarket.com/event/dota2-pari-liquid-2026-10-28?marketSlug=dota2-pari-liquid-2026-10-28-game2",
+      "teamA": 1.3513513513513513,
+      "teamB": 3.846153846153846,
+      "atA": "2026-10-28T09:07:14.000Z",
+      "atB": "2026-10-28T09:07:17.000Z",
+      "windowEnd": "2026-10-28T09:07:36.166Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay181.valve.net/570/9065380598_600771721.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=6165307522685232661925140095906476254478824795353371070291172355078932706925&startTs=1793171256&endTs=1793178457&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=9160965839853605214108064338235334679980287609828864121094862543158184829720&startTs=1793171256&endTs=1793178457&fidelity=1"
+    },
+    "post": {
+      "provider": "Polymarket",
+      "marketId": "0x666bddf2d03508606972a69e687b49b3621e85e4d2c9be4b5f0a5480e847bbb8",
+      "marketUrl": "https://polymarket.com/event/dota2-pari-liquid-2026-10-28?marketSlug=dota2-pari-liquid-2026-10-28-game2",
+      "teamA": 1.3793103448275863,
+      "teamB": 3.6363636363636362,
+      "atA": "2026-10-28T10:44:20.000Z",
+      "atB": "2026-10-28T10:44:23.000Z",
+      "windowStart": "2026-10-28T10:44:18.300Z",
+      "windowEnd": "2026-10-28T10:45:49.166Z",
+      "boundarySource": "Парный снимок после драфта · задержка 8.70 с · http://replay184.valve.net/570/9065451128_611071259.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=6165307522685232661925140095906476254478824795353371070291172355078932706925&startTs=1793184258&endTs=1793184350&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=9160965839853605214108064338235334679980287609828864121094862543158184829720&startTs=1793184258&endTs=1793184350&fidelity=1",
+      "lastPickUtc": "2026-10-28T10:44:16.300Z"
+    }
+  },
+  "9069952836": {
+    "seriesId": "p26-po11",
+    "mapNumber": 1,
+    "teamA": "Team Yandex",
+    "teamB": "GamerLegion",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x89781eae5fbf7bea8cdc305f6a92a7449b2c74bffe1fe34cf4c29f1a62f600d2",
+      "marketUrl": "https://polymarket.com/event/dota2-ty-gl-2026-10-31?marketSlug=dota2-ty-gl-2026-10-31-game1",
+      "teamA": 1.3071895424836601,
+      "teamB": 4.25531914893617,
+      "atA": "2026-10-31T13:00:31.000Z",
+      "atB": "2026-10-31T13:00:35.000Z",
+      "windowEnd": "2026-10-31T13:01:23.333Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay441.valve.net/570/9069952836_1718552385.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=5346297048200426154288979921829880326863965643942398017291475807604694235080&startTs=1793444483&endTs=1793451684&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=76835857067089423367043040371190314191588364331239019721751651650491216592039&startTs=1793444483&endTs=1793451684&fidelity=1"
+    }
+  },
+  "9070062078": {
+    "seriesId": "p26-po11",
+    "mapNumber": 2,
+    "teamA": "Team Yandex",
+    "teamB": "GamerLegion",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0xd00b0c731f102152eff757260cacc5a5a76154bfceda2e82458f7b7ad5787954",
+      "marketUrl": "https://polymarket.com/event/dota2-ty-gl-2026-10-31?marketSlug=dota2-ty-gl-2026-10-31-game2",
+      "teamA": 1.3071895424836601,
+      "teamB": 4.25531914893617,
+      "atA": "2026-10-31T13:00:29.000Z",
+      "atB": "2026-10-31T13:00:34.000Z",
+      "windowEnd": "2026-10-31T13:01:23.333Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay441.valve.net/570/9069952836_1718552385.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=55731158790878541581987182070481789507922335963628958703126867349333735769380&startTs=1793444483&endTs=1793451684&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=82157096768002904045677119821142090185005633427390244252866881244498999870784&startTs=1793444483&endTs=1793451684&fidelity=1"
     }
   },
   "9086875606": {
@@ -2337,6 +2371,21 @@
       "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://api.opendota.com/api/matches/9080751906",
       "sourceA": "https://clob.polymarket.com/prices-history?market=107257070691404410205989901242930753730664335256754729777521571171403527997085&startTs=1793901300&endTs=1794009300&fidelity=1",
       "sourceB": "https://clob.polymarket.com/prices-history?market=22367140480668926077981855980920220023899109713315543797577879641451966776857&startTs=1793901300&endTs=1794009300&fidelity=1"
+    },
+    "post": {
+      "provider": "Polymarket",
+      "marketId": "0xa0a3d27e62607ecc326739387c95d6d08e9a625daf2b461e5a0b982bc6c757e9",
+      "marketUrl": "https://polymarket.com/event/dota2-playti-huliga-2026-11-07?marketSlug=dota2-playti-huliga-2026-11-07-game2",
+      "teamA": 2.4390243902439024,
+      "teamB": 1.6949152542372883,
+      "atA": "2026-11-07T22:39:20.000Z",
+      "atB": "2026-11-07T22:39:19.000Z",
+      "windowStart": "2026-11-07T22:39:14.800Z",
+      "windowEnd": "2026-11-07T22:40:40.533Z",
+      "boundarySource": "Парный снимок после драфта · задержка 9.20 с · http://replay444.valve.net/570/9080827908_1050424007.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=107257070691404410205989901242930753730664335256754729777521571171403527997085&startTs=1794091154&endTs=1794091241&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=22367140480668926077981855980920220023899109713315543797577879641451966776857&startTs=1794091154&endTs=1794091241&fidelity=1",
+      "lastPickUtc": "2026-11-07T22:39:12.800Z"
     }
   },
   "9081380063": {
@@ -2375,44 +2424,6 @@
       "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://api.opendota.com/api/matches/9081380063",
       "sourceA": "https://clob.polymarket.com/prices-history?market=7378630127766498485605011154897153069443562790006751750218399588880523607591&startTs=1793987700&endTs=1794095700&fidelity=1",
       "sourceB": "https://clob.polymarket.com/prices-history?market=81318442048848422027071326378349077049284438177035371074133786848376997950459&startTs=1793987700&endTs=1794095700&fidelity=1"
-    }
-  },
-  "9081658571": {
-    "seriesId": "e3pi-RhxYgt3YxB-M2",
-    "mapNumber": 1,
-    "teamA": "HULIGANI",
-    "teamB": "Yellow Submarine",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x3cf6516a0cfbefdd7741ae4f767a0cce4677d70a0c958216af7bd61cd36aaa30",
-      "marketUrl": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game1",
-      "teamA": 2.4691358024691357,
-      "teamB": 1.680672268907563,
-      "atA": "2026-11-07T23:54:22.000Z",
-      "atB": "2026-11-07T23:54:22.000Z",
-      "windowEnd": "2026-11-07T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://api.opendota.com/api/matches/9081658571",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=6843468845503316100581471090749305305174976578112434343884830241608051955915&startTs=1793987700&endTs=1794095700&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=30977740101024935330550913592616745416836224298329472897927787353175242146793&startTs=1793987700&endTs=1794095700&fidelity=1"
-    }
-  },
-  "9081779066": {
-    "seriesId": "e3pi-RhxYgt3YxB-M2",
-    "mapNumber": 2,
-    "teamA": "HULIGANI",
-    "teamB": "Yellow Submarine",
-    "pre": {
-      "provider": "Polymarket",
-      "marketId": "0x329e275190683089aa4a3a6e57960cafae036d29d821d06bf382645670e27c42",
-      "marketUrl": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game2",
-      "teamA": 2.4096385542168677,
-      "teamB": 1.7094017094017095,
-      "atA": "2026-11-07T23:54:20.000Z",
-      "atB": "2026-11-07T23:54:21.000Z",
-      "windowEnd": "2026-11-07T23:55:00.000Z",
-      "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://api.opendota.com/api/matches/9081658571",
-      "sourceA": "https://clob.polymarket.com/prices-history?market=74312299620402159342064477122466788411853838272613164755451356015512710604648&startTs=1793987700&endTs=1794095700&fidelity=1",
-      "sourceB": "https://clob.polymarket.com/prices-history?market=64886299686566106376082072551243924381858835741589267779977391927986304107626&startTs=1793987700&endTs=1794095700&fidelity=1"
     }
   },
   "9081944953": {
@@ -2907,6 +2918,44 @@
       "boundarySource": "PRE до серии · исторические котировки предыдущего календарного дня UTC, заявка в момент прогноза не подтверждена · https://api.opendota.com/api/matches/9086164367",
       "sourceA": "https://clob.polymarket.com/prices-history?market=40546567546468049251746851289929532531218156803024037267775091595320292730972&startTs=1794246900&endTs=1794354900&fidelity=1",
       "sourceB": "https://clob.polymarket.com/prices-history?market=13509336518339028382123557278651871829625888765522246603022987645716729860296&startTs=1794246900&endTs=1794354900&fidelity=1"
+    }
+  },
+  "9081658571": {
+    "seriesId": "e3pi-RhxYgt3YxB-M2",
+    "mapNumber": 1,
+    "teamA": "HULIGANI",
+    "teamB": "Yellow Submarine",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x3cf6516a0cfbefdd7741ae4f767a0cce4677d70a0c958216af7bd61cd36aaa30",
+      "marketUrl": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game1",
+      "teamA": 2.4691358024691357,
+      "teamB": 1.680672268907563,
+      "atA": "2026-11-08T13:18:19.000Z",
+      "atB": "2026-11-08T13:18:19.000Z",
+      "windowEnd": "2026-11-08T13:19:16.400Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay444.valve.net/570/9081658571_237028295.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=6843468845503316100581471090749305305174976578112434343884830241608051955915&startTs=1794136756&endTs=1794143957&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=30977740101024935330550913592616745416836224298329472897927787353175242146793&startTs=1794136756&endTs=1794143957&fidelity=1"
+    }
+  },
+  "9081779066": {
+    "seriesId": "e3pi-RhxYgt3YxB-M2",
+    "mapNumber": 2,
+    "teamA": "HULIGANI",
+    "teamB": "Yellow Submarine",
+    "pre": {
+      "provider": "Polymarket",
+      "marketId": "0x329e275190683089aa4a3a6e57960cafae036d29d821d06bf382645670e27c42",
+      "marketUrl": "https://polymarket.com/event/dota2-huliga-yes-2026-11-07?marketSlug=dota2-huliga-yes-2026-11-07-game2",
+      "teamA": 2.4096385542168677,
+      "teamB": 1.7094017094017095,
+      "atA": "2026-11-08T13:18:17.000Z",
+      "atB": "2026-11-08T13:18:18.000Z",
+      "windowEnd": "2026-11-08T13:19:16.400Z",
+      "boundarySource": "PRE до серии · реплей Valve http://replay444.valve.net/570/9081658571_237028295.dem.bz2",
+      "sourceA": "https://clob.polymarket.com/prices-history?market=74312299620402159342064477122466788411853838272613164755451356015512710604648&startTs=1794136756&endTs=1794143957&fidelity=1",
+      "sourceB": "https://clob.polymarket.com/prices-history?market=64886299686566106376082072551243924381858835741589267779977391927986304107626&startTs=1794136756&endTs=1794143957&fidelity=1"
     }
   },
   "9106031971": {
@@ -3813,6 +3862,20 @@
       "boundarySource": "PRE до начала серии · первый бан сверили по Valve http://replay441.valve.net/570/9102753849_937436379.dem.bz2 · SHA-256 префикса ec26b32d03b9b5cb325a1b7ef0d79e8eae00dcabe12ed823ef86951a5e4d4a52.",
       "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=85178254789986282623718297437334134731489229226861521682114728175973648171796&as_of=1795451440",
       "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=3856237460319801679104903041273496895429487964141398815230543746092637903102&as_of=1795451440"
+    },
+    "post": {
+      "provider": "Polymarket",
+      "marketId": "0x72a8d656172fa1a742de897dd35eb0317667061549cdb6ce91defe6aa40083ab",
+      "marketUrl": "https://polymarket.com/event/dota2-liquid-konca-2026-11-23?marketSlug=dota2-liquid-konca-2026-11-23-game1",
+      "teamA": 1.6,
+      "teamB": 2.6666666666666665,
+      "atA": "2026-11-23T16:43:43Z",
+      "atB": "2026-11-23T16:43:43Z",
+      "windowStart": "2026-11-23T16:43:42.066667Z",
+      "windowEnd": "2026-11-23T16:45:34.533333Z",
+      "boundarySource": "Valve exact replay prefix (SHA256 7c7af1c7685f29465c1c46911698cf8b0f6264623cbefe4b14f05908cbd0d9f9) + exact OpenDota basis, conservative ±2 s: http://replay441.valve.net/570/9102753849_937436379.dem.bz2; https://api.opendota.com/api/matches/9102753849; Cybersport validated exact start and picks: https://www.cybersport.ru/api/v1/match-stats/dota2?filter%5BexternalApiIds%5D=9102753849%2C9102778505%2C9103792148%2C9103792288%2C9104002501%2C9104081844",
+      "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=85178254789986282623718297437334134731489229226861521682114728175973648171796&as_of=1795452223",
+      "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=3856237460319801679104903041273496895429487964141398815230543746092637903102&as_of=1795452223"
     }
   },
   "9102778505": {
@@ -3870,6 +3933,20 @@
       "boundarySource": "PRE до начала серии · первый бан сверили по Valve http://replay444.valve.net/570/9103792288_2083262239.dem.bz2 · SHA-256 префикса 361740f73b10e59e7be17dcd6e9210d4c397c1fe25108bdb4ff8b38e2c4a7435.",
       "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=109386789351434398871537464005901523252845165474929340844191974664638439611752&as_of=1795528649",
       "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=21435078814340696547935089425958417444381335398386438118594246215561596121685&as_of=1795528649"
+    },
+    "post": {
+      "provider": "Polymarket",
+      "marketId": "0x51f5d24ad76c6bc67e7aab0aee0c60aaea8b27f03e246101bfac81c61b201776",
+      "marketUrl": "https://polymarket.com/event/dota2-ty-1win-2026-11-24?marketSlug=dota2-ty-1win-2026-11-24-game1",
+      "teamA": 1.5873015873015872,
+      "teamB": 2.7027027027027026,
+      "atA": "2026-11-24T14:11:18Z",
+      "atB": "2026-11-24T14:11:18Z",
+      "windowStart": "2026-11-24T14:11:17.466667Z",
+      "windowEnd": "2026-11-24T14:13:29.533333Z",
+      "boundarySource": "Valve exact replay prefix (SHA256 6594c59aa5c8911091d5a27661bde1f1adf64c5f3c43d71dfe69ce5816266761) + exact OpenDota basis, conservative ±2 s: http://replay444.valve.net/570/9103792288_2083262239.dem.bz2; https://api.opendota.com/api/matches/9103792288; Cybersport validated exact start and picks: https://www.cybersport.ru/api/v1/match-stats/dota2?filter%5BexternalApiIds%5D=9102753849%2C9102778505%2C9103792148%2C9103792288%2C9104002501%2C9104081844",
+      "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=109386789351434398871537464005901523252845165474929340844191974664638439611752&as_of=1795529478",
+      "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=21435078814340696547935089425958417444381335398386438118594246215561596121685&as_of=1795529478"
     }
   },
   "9104002501": {
@@ -3908,6 +3985,20 @@
       "boundarySource": "PRE до начала серии · первый бан сверили по Valve http://replay444.valve.net/570/9104081844_998160494.dem.bz2 · SHA-256 префикса 314a9b1d1b48cdb018eb13ab9d1ef97145e3ecfc12fa7a84ab98c23c659340c4.",
       "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=12276046408782164628026248052131198260971697921119834895022221314133902137014&as_of=1795541141",
       "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=108196104663527400853724417270053743371290109580117211431390811135561672691891&as_of=1795541141"
+    },
+    "post": {
+      "provider": "Polymarket",
+      "marketId": "0x84302f397a2fecf6dcafb85623f50999445d2fedf45660f26a7f3783afeaf2a9",
+      "marketUrl": "https://polymarket.com/event/dota2-og-aur1-2026-11-24?marketSlug=dota2-og-aur1-2026-11-24-game1",
+      "teamA": 2.4096385542168677,
+      "teamB": 1.7094017094017095,
+      "atA": "2026-11-24T17:38:55Z",
+      "atB": "2026-11-24T17:38:55Z",
+      "windowStart": "2026-11-24T17:38:54.533333Z",
+      "windowEnd": "2026-11-24T17:41:06.600000Z",
+      "boundarySource": "Valve exact replay prefix (SHA256 4d46f38828ed381f2951261eb8b27b3b2ee31031b5105865e1a06020d08156f9) + exact OpenDota basis, conservative ±2 s: http://replay444.valve.net/570/9104081844_998160494.dem.bz2; https://api.opendota.com/api/matches/9104081844; Cybersport validated exact start and picks: https://www.cybersport.ru/api/v1/match-stats/dota2?filter%5BexternalApiIds%5D=9102753849%2C9102778505%2C9103792148%2C9103792288%2C9104002501%2C9104081844",
+      "sourceA": "https://data-api.polymarket.com/v2/prices-history?token_id=12276046408782164628026248052131198260971697921119834895022221314133902137014&as_of=1795541935",
+      "sourceB": "https://data-api.polymarket.com/v2/prices-history?token_id=108196104663527400853724417270053743371290109580117211431390811135561672691891&as_of=1795541935"
     }
   },
   "9106095670": {
