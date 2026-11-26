@@ -56,7 +56,7 @@ async function main() {
       const row = summary.getByRole("row").filter({has: page.getByRole("rowheader", {name: label, exact: true})})
       const cells = await row.locator("td").allTextContents()
       assert.deepEqual(cells.slice(0,2), [String(wins),String(losses)])
-      const coverage = cells[2].match(/(\d+) из 66 карт(?: · из истории рынка: (\d+))?$/)
+      const coverage = (await row.locator("td").nth(2).locator(".metric-note").innerText()).match(/^(\d+) из 66 карт(?: · из истории рынка: (\d+))?$/)
       assert(coverage)
       assert(Number(coverage[1]) > 0 && Number(coverage[1]) <= 66)
       assert(Number(coverage[2]) > 0 && Number(coverage[2]) <= Number(coverage[1]))
