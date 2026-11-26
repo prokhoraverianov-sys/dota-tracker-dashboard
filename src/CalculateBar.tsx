@@ -3,6 +3,7 @@ export function CalculateBar({
   pre,
   post,
   busy,
+  preProblem,
   postProblem,
   picked,
   onPre,
@@ -11,6 +12,7 @@ export function CalculateBar({
   readonly pre: boolean
   readonly post: boolean
   readonly busy: string
+  readonly preProblem: string | null
   readonly postProblem: string | null
   readonly picked: number
   readonly onPre: () => void
@@ -21,6 +23,11 @@ export function CalculateBar({
       <div>
         <strong>Сохранить прогноз</strong>
         <p className="muted">PRE не учитывает правки состава. POST требует 10 уникальных героев.</p>
+        {!pre && preProblem && (
+          <p className="muted" aria-live="polite">
+            {preProblem}
+          </p>
+        )}
         {!post && (
           <p className={postProblem ? "warning-text" : "muted"} aria-live="polite">
             Герои: {picked}/10. {postProblem ?? "Драфт готов к расчёту POST."}
@@ -28,7 +35,12 @@ export function CalculateBar({
         )}
       </div>
       <div className="actions">
-        <button type="button" className="secondary" disabled={pre || !!busy} onClick={onPre}>
+        <button
+          type="button"
+          className="secondary"
+          disabled={pre || !!busy || preProblem !== null}
+          onClick={onPre}
+        >
           <Save size={16} />
           {busy === "pre_match" ? "Рассчитываем…" : pre ? "PRE сохранён" : "Рассчитать PRE"}
         </button>

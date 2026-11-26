@@ -21,7 +21,7 @@ import { draftKey, initialDraft, loadDraft, mapPath, time, validatePost } from "
 import { Delta, ForecastCard } from "./ForecastCard"
 import { draftCompleteness, LiveReview } from "./LiveReview"
 import { MapOutcome } from "./MapOutcome"
-import { evaluateMap, retrospectiveForecast } from "./map-outcome"
+import { evaluateMap, preForecastBlock, retrospectiveForecast } from "./map-outcome"
 import { PLAY_IN_NAME, PLAY_IN_ROUTE } from "./playin-data"
 import { Quotes } from "./Quotes"
 import { tournamentPhase } from "./tournament-phase"
@@ -68,6 +68,7 @@ export function MapWorkspace({
   const dirty = editedDraft !== null && JSON.stringify(editedDraft) !== JSON.stringify(baseline)
   const pollPath = mapPath(map)
   const pollable = !unplayed && (!map.result || (!map.post && !recorded))
+  const preProblem = preForecastBlock(map)
   const pollInterval = !map.result && !map.post ? 2_000 : 15_000
   useEffect(() => {
     setDirty(dirty && !editorLocked)
@@ -120,6 +121,10 @@ export function MapWorkspace({
     return reserved
   }
   async function calculate(stage: Stage, input = draft, reserved?: MapDTO) {
+    if (stage === "pre_match" && preProblem) {
+      setError(preProblem)
+      return
+    }
     if (stage === "post_draft") {
       const problem = validatePost(input, catalog.heroes)
       if (problem) {
@@ -132,6 +137,13 @@ export function MapWorkspace({
     setNotice("")
     try {
       const current = reserved ?? (await reserve())
+      if (stage === "pre_match") {
+        const problem = preForecastBlock(current)
+        if (problem) {
+          setError(problem)
+          return
+        }
+      }
       const body = { expected_revision: current.revision, input }
       if (current.result && stage === "post_draft" && current.map_id !== null) {
         const analysis = await api.request(
@@ -251,7 +263,13 @@ export function MapWorkspace({
       <Delta team={map.team_a} pre={pre} post={post} />
       <div className="two-columns forecasts">
         <div>
-          <ForecastCard forecast={pre} stage="PRE" map={map} />
+          <ForecastCard forecast={pre} stage="PRE" map={map} preProblem={preProblem} />
+          {map.archived_pre && (
+            <details>
+              <summary>Ранняя запись PRE до счёта 1:1</summary>
+              <ForecastCard forecast={map.archived_pre} stage="PRE" map={map} archived />
+            </details>
+          )}
           {map.pre && pre !== map.pre && (
             <details>
               <summary>Исходная запись PRE</summary>
@@ -442,6 +460,7 @@ export function MapWorkspace({
                 pre={!!map.pre}
                 post={!!map.post}
                 busy={busy}
+                preProblem={preProblem}
                 postProblem={validatePost(draft, catalog.heroes)}
                 picked={draftCompleteness(draft)}
                 onPre={() => calculate("pre_match")}

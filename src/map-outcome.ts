@@ -1,8 +1,44 @@
 import type { Forecast, MapDTO } from "./contracts"
+import { archivedPhaseQuote } from "./phase-quote-evidence"
 
 export type MapStage = "pre" | "post"
 export const stageNames = { pre: "PRE", post: "POST" } as const
 export const mapStages = ["pre", "post"] as const
+
+export function preForecastBlock(map: MapDTO) {
+  if (map.play_status === "unplayed" || map.pre_status === "unplayed")
+    return "Карта отпала по счёту серии."
+  if (map.result_conflict) return "Источники расходятся. Окно PRE не подтверждено."
+  if (
+    map.result ||
+    map.draft_started_at_utc ||
+    map.post ||
+    map.analysis_context === "retrospective" ||
+    map.pre_status === "draft_started"
+  )
+    return "Драфт начался. Окно PRE закрыто."
+  if (!map.series_id) return null
+  switch (map.pre_status) {
+    case "before_series":
+      return map.series_best_of === 3 && map.map_number === 3
+        ? "PRE карты 3 открывается при подтверждённом счёте 1:1."
+        : null
+    case "before_decider_draft":
+      return map.map_number === 3 &&
+        map.verified_series_score?.[0] === 1 &&
+        map.verified_series_score?.[1] === 1
+        ? null
+        : "PRE карты 3 открывается при подтверждённом счёте 1:1."
+    case "waiting_for_decider":
+      return "PRE карты 3 открывается при подтверждённом счёте 1:1."
+    case "series_started":
+      return "Серия началась. Окно PRE закрыто."
+    case "phase_unverified":
+      return "Источник ещё не подтвердил, что драфт не начался."
+    default:
+      return "Окно PRE пока не подтверждено источником."
+  }
+}
 
 function explicitSteamReference(draftId: string | null | undefined) {
   return !!draftId && (draftId.startsWith("steam:") || /^\d+$/.test(draftId))
@@ -19,13 +55,58 @@ export function hasVerifiedDraft(map: MapDTO) {
   )
 }
 
+export function preForecastWindow(map: MapDTO) {
+  const archive = archivedPhaseQuote(map, "pre")
+  const startAt = Date.parse(map.pre_window_start_utc ?? map.pre?.pre_window_opened_at_utc ?? "")
+  const endAt = Date.parse(map.pre_window_end_utc ?? "")
+  const ownMapIsEnough =
+    !map.series_id ||
+    (map.series_best_of != null && map.series_best_of !== 2 && map.series_best_of !== 3)
+  const start = Number.isFinite(startAt)
+    ? startAt
+    : (archive?.windowStart ?? Number.NEGATIVE_INFINITY)
+  const end = Number.isFinite(endAt)
+    ? endAt
+    : (archive?.windowEnd ??
+      (ownMapIsEnough ? Date.parse(map.draft_started_at_utc ?? "") : Number.NaN))
+  const decider = map.series_best_of === 3 && map.map_number === 3
+  if (!Number.isFinite(end) || !(start < end) || (decider && !Number.isFinite(start))) return null
+  return { start, end }
+}
+
+export function hasVerifiedPreCapture(map: MapDTO, forecast: Forecast) {
+  if (
+    (forecast.pre_quote_status !== "captured" &&
+      forecast.pre_quote_status !== "attached_before_series") ||
+    !forecast.pre_phase_source_url ||
+    !Number.isFinite(Date.parse(forecast.pre_phase_checked_at_utc ?? ""))
+  )
+    return false
+  if (map.series_best_of !== 3 || map.map_number !== 3) return true
+  const [a, b] = forecast.pre_verified_series_score ?? []
+  const start = Date.parse(forecast.pre_window_opened_at_utc ?? "")
+  const decision = Date.parse(forecast.pre_decision_at_utc ?? "")
+  return (
+    forecast.pre_quote_status === "captured" &&
+    a === 1 &&
+    b === 1 &&
+    Math.min(Date.parse(forecast.created_at_utc), decision) >= start
+  )
+}
+
 function forecastTimingNote(map: MapDTO, stage: MapStage, forecast: Forecast) {
   const saved = Date.parse(forecast.created_at_utc)
   if (!Number.isFinite(saved)) return "Время прогноза не подтверждено"
   if (stage === "pre") {
-    const draftStart = Date.parse(map.draft_started_at_utc ?? "")
-    if (!Number.isFinite(draftStart)) return "Начало драфта не подтверждено"
-    return saved < draftStart ? "" : "После начала драфта"
+    const window = preForecastWindow(map)
+    const decision = Date.parse(forecast.pre_decision_at_utc ?? forecast.created_at_utc)
+    if (!Number.isFinite(decision)) return "Окно PRE не подтверждено"
+    if (!window) return hasVerifiedPreCapture(map, forecast) ? "" : "Окно PRE не подтверждено"
+    if (Math.min(saved, decision) < window.start)
+      return map.series_best_of === 3 && map.map_number === 3
+        ? "PRE записан до подтверждённого счёта 1:1"
+        : "PRE записан до подтверждённого окна"
+    return Math.max(saved, decision) < window.end ? "" : "PRE записан после подтверждённого окна"
   }
   const draft = Date.parse(forecast.draft_completed_at_utc ?? "")
   const gameplay = Date.parse(map.gameplay_started_at_utc ?? "")

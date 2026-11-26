@@ -1,30 +1,12 @@
 import type { DraftQuote, Forecast, MapDTO } from "./contracts"
-import { hasVerifiedDraft, type MapStage } from "./map-outcome"
+import {
+  hasVerifiedDraft,
+  hasVerifiedPreCapture,
+  type MapStage,
+  preForecastWindow,
+} from "./map-outcome"
 import { providerLabel, quoteSourceUrl } from "./odds"
-import verifiedPhaseQuotes from "./verified-phase-quotes.json"
-
-interface ArchivedPhaseQuote {
-  provider: string
-  marketId: string
-  marketUrl: string
-  teamA: number
-  teamB: number
-  atA: string
-  atB: string
-  windowStart?: string
-  windowEnd: string
-}
-
-interface ArchivedMapQuotes {
-  seriesId: string
-  mapNumber: number
-  teamA: string
-  teamB: string
-  pre?: ArchivedPhaseQuote
-  post?: ArchivedPhaseQuote
-}
-
-const archivedQuotes: Readonly<Record<string, ArchivedMapQuotes | undefined>> = verifiedPhaseQuotes
+import { archivedPhaseQuote } from "./phase-quote-evidence"
 
 const formatter = new Intl.NumberFormat("ru-RU", {
   minimumFractionDigits: 2,
@@ -76,62 +58,71 @@ export function observedPostDraftQuotes(forecast: Omit<Forecast, "map_id"> | nul
 }
 
 export function observedPreDecisionQuotes(forecast: Omit<Forecast, "map_id"> | null) {
-  const decision = Date.parse(forecast?.pre_decision_at_utc ?? "")
-  return (forecast?.pre_decision_quotes ?? []).filter(
+  const attached = forecast?.pre_quote_status === "attached_before_series"
+  const decision = Date.parse(
+    (attached ? forecast.pre_phase_checked_at_utc : forecast?.pre_decision_at_utc) ?? "",
+  )
+  const observations =
+    attached || forecast?.pre_quote_status === "captured"
+      ? forecast?.pre_draft_quotes
+      : forecast?.pre_decision_quotes
+  return (observations ?? []).filter(
     (quote) => validQuote(quote) && quoteTimes(quote).observed <= decision,
   )
+}
+
+function exactPolymarketMap(mapNumber: number | null, quote: DraftQuote) {
+  if (!mapNumber || providerLabel(quote.provider) !== "Polymarket") return null
+  const source = quoteSourceUrl(quote.source_url, quote.provider)
+  if (!source) return null
+  const url = new URL(source)
+  const slug = url.searchParams.get("marketSlug") ?? url.pathname.split("/").filter(Boolean).at(-1)
+  return slug?.endsWith(`-game${mapNumber}`) ? slug : null
+}
+
+function capturedPreQuotes(map: MapDTO) {
+  if (!map.pre || !hasVerifiedPreCapture(map, map.pre)) return []
+  const window = preForecastWindow(map)
+  const saved = Date.parse(map.pre.created_at_utc)
+  const decision = Date.parse(map.pre.pre_decision_at_utc ?? map.pre.created_at_utc)
+  const start = Date.parse(map.pre.pre_window_opened_at_utc ?? "")
+  if (
+    window &&
+    !(Math.max(saved, decision) < window.end && Math.min(saved, decision) >= window.start)
+  )
+    return []
+  return observedPreDecisionQuotes(map.pre).filter((quote) => {
+    const observed = quoteTimes(quote).observed
+    return (
+      !!exactPolymarketMap(map.map_number, quote) &&
+      (!Number.isFinite(start) || observed >= start) &&
+      (!window || (observed >= window.start && observed < window.end))
+    )
+  })
 }
 
 function phaseQuotes(map: MapDTO, stage: MapStage) {
   if (!map.result?.steam_match_id || map.result_conflict) return []
   if (stage === "pre") {
+    if (
+      map.pre?.pre_quote_status === "captured" ||
+      map.pre?.pre_quote_status === "attached_before_series"
+    )
+      return capturedPreQuotes(map)
+    const window = preForecastWindow(map)
+    if (!window) return []
     const saved = Date.parse(map.pre?.created_at_utc ?? "")
     const decision = Date.parse(map.pre?.pre_decision_at_utc ?? "")
-    if (!(Math.max(decision, saved) < Date.parse(map.draft_started_at_utc ?? ""))) return []
-    return observedPreDecisionQuotes(map.pre)
+    if (!(Math.max(decision, saved) < window.end && Math.min(decision, saved) >= window.start))
+      return []
+    return observedPreDecisionQuotes(map.pre).filter((quote) => {
+      const observed = quoteTimes(quote).observed
+      return observed >= window.start && observed < window.end
+    })
   }
   if (!hasVerifiedDraft(map) || !map.post?.draft_completed_at_utc) return []
   const gameplay = Date.parse(map.gameplay_started_at_utc ?? "")
   return observedPostDraftQuotes(map.post).filter((quote) => quoteTimes(quote).observed < gameplay)
-}
-
-function archiveTime(stamp: string | undefined) {
-  return stamp && /(?:Z|\+00:00)$/.test(stamp) ? Date.parse(stamp) : Number.NaN
-}
-
-function archivedPhaseQuote(map: MapDTO, stage: MapStage) {
-  const steam = map.result?.steam_match_id
-  if (!steam || map.result_conflict || map.play_status === "unplayed") return null
-  const saved = archivedQuotes[steam]
-  if (!saved || saved.seriesId !== map.series_id || saved.mapNumber !== map.map_number) return null
-  const forward = saved.teamA === map.team_a && saved.teamB === map.team_b
-  const reverse = saved.teamA === map.team_b && saved.teamB === map.team_a
-  if (!forward && !reverse) return null
-  const quote = saved[stage]
-  if (!quote || quote.provider !== "Polymarket" || !/^0x[0-9a-f]{64}$/i.test(quote.marketId))
-    return null
-  const sourceUrl = quoteSourceUrl(quote.marketUrl, quote.provider)
-  if (
-    !sourceUrl ||
-    !new URL(sourceUrl).searchParams.get("marketSlug")?.endsWith(`-game${map.map_number}`)
-  )
-    return null
-  if (![quote.teamA, quote.teamB].every((price) => Number.isFinite(price) && price > 1)) return null
-  const a = archiveTime(quote.atA)
-  const b = archiveTime(quote.atB)
-  const end = archiveTime(quote.windowEnd)
-  if (![a, b, end].every(Number.isFinite) || Math.max(a, b) >= end) return null
-  if (stage === "post" && !(Math.min(a, b) >= archiveTime(quote.windowStart))) return null
-  return {
-    provider: quote.provider,
-    marketId: quote.marketId.toLowerCase(),
-    sourceUrl,
-    windowEnd: end,
-    a: forward ? quote.teamA : quote.teamB,
-    b: forward ? quote.teamB : quote.teamA,
-    atA: forward ? quote.atA : quote.atB,
-    atB: forward ? quote.atB : quote.atA,
-  }
 }
 
 export function originalPostAfterVerifiedWindow(map: MapDTO) {
@@ -164,16 +155,19 @@ export function reportPrice(map: MapDTO, stage: MapStage, side: "A" | "B") {
 }
 
 export function reportPriceChange(map: MapDTO) {
-  const pre = phaseQuotes(map, "pre")
-  const post = phaseQuotes(map, "post")
+  if (map.result_conflict || map.play_status === "unplayed") return null
+  const pre = map.result ? phaseQuotes(map, "pre") : capturedPreQuotes(map)
+  const post = map.result
+    ? phaseQuotes(map, "post")
+    : map.post?.draft_completed_at_utc && map.post.post_draft_quote_status === "captured"
+      ? observedPostDraftQuotes(map.post)
+      : []
   for (const quote of pre) {
+    const market = exactPolymarketMap(map.map_number, quote)
+    if (!market) continue
     const second = post.find((candidate) => {
-      if (providerLabel(candidate.provider) !== providerLabel(quote.provider)) return false
-      if (candidate.event_id && quote.event_id) return candidate.event_id === quote.event_id
-      return (
-        quoteSourceUrl(candidate.source_url, candidate.provider) ===
-        quoteSourceUrl(quote.source_url, quote.provider)
-      )
+      if (exactPolymarketMap(map.map_number, candidate) !== market) return false
+      return !candidate.event_id || !quote.event_id || candidate.event_id === quote.event_id
     })
     if (second) {
       return {

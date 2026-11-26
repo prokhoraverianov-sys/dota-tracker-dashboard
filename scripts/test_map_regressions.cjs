@@ -13,11 +13,13 @@ const draft = {
   total_prices: "",
 }
 const finishedCard = { ...completed, retrospective_post: null }
+const marketUrl = "https://polymarket.com/event/active-regression-game2"
 const activeCard = {
   ...finishedCard,
   map_id: 100043,
   series_id: "active-regression",
   map_number: 2,
+  series_best_of: 3,
   revision: 0,
   tournament: "Тестовый турнир",
   result: null,
@@ -25,10 +27,17 @@ const activeCard = {
     ...completed.pre,
     map_id: 100043,
     analysis: { shadow_forecast: { winner_probability_team_a: 0.61 } },
+    pre_decision_at_utc: "2026-11-12T12:55:10Z",
+    pre_quote_status: "captured",
+    pre_phase_checked_at_utc: "2026-11-12T12:55:10Z",
+    pre_phase_source_url: "https://cybersport.ru/fixture",
+    pre_draft_quotes: [{
+      market_scope: "map", provider: "polymarket", source_url: marketUrl,
+      observed_at_utc: "2026-11-12T12:55:08Z", winner: { team_a: "1.80", team_b: "2.20" },
+    }],
   },
   retrospective_pre: null,
 }
-const marketUrl = "https://polymarket.com/event/active-regression-game2"
 const fullDraftAt = "2026-11-12T13:12:16Z"
 const postPriceAt = "2026-11-12T13:12:20Z"
 const forecast = {
@@ -36,7 +45,12 @@ const forecast = {
   map_id: activeCard.map_id,
   snapshot_id: "fixture-post-100043",
   stage: "post_draft",
-  analysis: { shadow_forecast: { winner_probability_team_a: 0.61 } },
+  analysis: { shadow_forecast: {
+    winner_probability_team_a: 0.61,
+    post_draft_scenarios: [[0.25, 0.61], [0.5, 0.57], [1, 0.48], [1.25, 0.42]].map(
+      ([draft_weight, winner_probability_team_a]) => ({ draft_weight, winner_probability_team_a }),
+    ),
+  } },
   heroes_a,
   heroes_b,
   players_a,
@@ -78,6 +92,9 @@ async function mockApi(page, home, initialCard) {
   const activePath = `/maps/${initialCard.map_id}`
   const oddsPath = `/series/${initialCard.series_id}/maps/${initialCard.map_number}/odds`
   fixture.receivePost = (post = forecast) => { active = { ...active, revision: 1, post } }
+  fixture.setPreWindow = (status, score) => {
+    active = { ...active, pre_status: status, verified_series_score: score }
+  }
   fixture.delayCardProjection = false
   fixture.postResponse = forecast
   await page.route("**/api/v1/**", async (route) => {
@@ -116,6 +133,11 @@ async function mockApi(page, home, initialCard) {
         })
       if (path === "/maps/43/retrospective-post")
         return route.fulfill({ json: savedRetrospective.analysis })
+      if (path === `${activePath}/forecasts/pre_match`) {
+        const pre = { ...initialCard.pre, ...completed.pre, map_id: initialCard.map_id }
+        active = { ...active, revision: 1, pre }
+        return route.fulfill({ json: { map: active, forecast: pre, replayed: false } })
+      }
       if (path === `${activePath}/forecasts/post_draft`) {
         const savedPost = fixture.postResponse
         fixture.receivePost(fixture.delayCardProjection ? { ...savedPost, post_draft_quotes: [] } : savedPost)
@@ -150,11 +172,16 @@ async function verifyVisiblePostPrice(page) {
   const pre = page.locator(".forecast-card.pre")
   const post = page.locator(".forecast-card.post")
   await pre.getByText(/61[,.]0%/).waitFor()
-  await post.getByText(/61[,.]0%/).waitFor()
+  await post.locator(".probability-pair").getByText(/61[,.]0%/).waitFor()
   const visibleQuote = post.getByRole("region", { name: "Котировки POST", exact: true })
   await visibleQuote.locator(`time[datetime="${postPriceAt}"]`).waitFor()
   assert.match(await visibleQuote.innerText(), /1\.95.+1\.99.+13:12:20 UTC.+через 4 с после последнего пика/s)
   assert.equal(await visibleQuote.getByRole("link", { name: "Рынок ↗" }).getAttribute("href"), marketUrl)
+  const weights = post.getByRole("table", { name: "Сценарии POST по весу драфта" })
+  assert.deepEqual(await weights.getByRole("rowheader").allTextContents(), ["0,25", "0,5", "1,0", "1,25"])
+  await weights.getByRole("row").filter({ has: page.getByRole("rowheader", { name: "1,25", exact: true }) })
+    .getByText("42.0%", { exact: true }).waitFor()
+  await page.getByText(/Изменение котировок PRE → POST · Polymarket.+\+0,15.+-0,21/).waitFor()
 }
 
 async function verifyActiveCard(browser, home) {
@@ -246,7 +273,7 @@ async function verifyLeonMapThree(browser, home) {
     const pre = page.locator(".forecast-card.pre")
     const post = page.locator(".forecast-card.post")
     await pre.getByText(/61[,.]0%/).waitFor()
-    await post.getByText(/61[,.]0%/).waitFor()
+    await post.locator(".probability-pair").getByText(/61[,.]0%/).waitFor()
     const quote = post.getByRole("region", { name: "Котировки POST", exact: true })
     await quote.getByRole("heading", { name: "Котировки POST · карта 3", exact: true }).waitFor()
     await quote.locator(`time[datetime="${postPriceAt}"]`).waitFor()
@@ -255,6 +282,26 @@ async function verifyLeonMapThree(browser, home) {
     assert.equal(await quote.getByRole("link", { name: "Рынок ↗" }).getAttribute("href"), source)
     assert.equal(await identity.innerText(), "Карта 3")
     assert.deepEqual(fixture.writes.map((write) => write.path), ["/maps/100044/forecasts/post_draft"])
+  }, true, map)
+}
+
+async function verifyDeciderPreGate(browser, home) {
+  const map = { ...activeCard, map_id: 100045, map_number: 3, pre: null, pre_status: "waiting_for_decider" }
+  await openCard(browser, home, "/maps/100045", async (page, fixture) => {
+    const form = page.locator(".calculate-bar")
+    const pre = form.getByRole("button", { name: "Рассчитать PRE", exact: true })
+    await form.getByText("PRE карты 3 открывается при подтверждённом счёте 1:1.", { exact: true }).waitFor()
+    assert(await pre.isDisabled())
+    fixture.setPreWindow("phase_unverified", [1, 1])
+    await page.clock.fastForward(2_000)
+    await form.getByText("Источник ещё не подтвердил, что драфт не начался.", { exact: true }).waitFor()
+    assert(await pre.isDisabled())
+    assert.deepEqual(fixture.writes, [])
+    fixture.setPreWindow("before_decider_draft", [1, 1])
+    await page.clock.fastForward(2_000)
+    await pre.click()
+    await form.getByRole("button", { name: "PRE сохранён", exact: true }).waitFor()
+    assert.deepEqual(fixture.writes.map((write) => write.path), ["/maps/100045/forecasts/pre_match"])
   }, true, map)
 }
 
@@ -328,6 +375,7 @@ async function main() {
       await verifyActiveCard(browser, home)
       await verifyManualPost(browser, home)
       await verifyAutomaticPost(browser, home)
+      await verifyDeciderPreGate(browser, home)
       await verifyLeonMapThree(browser, home)
       await verifyExpiredPostQuote(browser, home)
       await verifyPostQuoteAfterObservation(browser, home)

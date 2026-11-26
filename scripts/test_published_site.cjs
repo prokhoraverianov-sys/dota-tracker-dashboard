@@ -58,9 +58,10 @@ async function main() {
       assert.deepEqual(cells.slice(0,2), [String(wins),String(losses)])
       const coverage = (await row.locator("td").nth(2).locator(".metric-note").innerText()).match(/^(\d+) из 66 карт(?: · из истории рынка: (\d+))?$/)
       assert(coverage)
-      assert(Number(coverage[1]) > 0 && Number(coverage[1]) <= 66)
-      assert(Number(coverage[2]) > 0 && Number(coverage[2]) <= Number(coverage[1]))
-      assert.match(cells[3], /^\$-?[\d\s]+,\d{2}$/)
+      assert(Number(coverage[1]) <= 66)
+      if (coverage[2]) assert(Number(coverage[2]) <= Number(coverage[1]))
+      if (Number(coverage[1]) > 0) assert.match(cells[3], /^\$-?[\d\s]+,\d{2}$/)
+      else assert.equal(cells[3], "—")
     }
     const maps = page.locator(".history-panel tbody tr")
     assert.equal(await maps.count(), 66)

@@ -98,6 +98,21 @@ function matchingOrder(card: MapDTO, entry: Entry) {
   return 0
 }
 
+function preProjection(card: MapDTO, series: Series, backup?: MapDTO) {
+  const pre = card.pre ?? (card.archived_pre ? null : (backup?.pre ?? null))
+  const score = pre?.pre_verified_series_score
+  const premature =
+    series.best_of === 3 &&
+    card.map_number === 3 &&
+    pre &&
+    (score?.[0] !== 1 || score?.[1] !== 1) &&
+    Date.parse(pre.created_at_utc) < Date.parse(series.starts_at_utc)
+  return {
+    pre: premature ? null : pre,
+    archived_pre: card.archived_pre ?? (premature ? pre : null),
+  }
+}
+
 export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): MapDTO {
   const number = card.map_number
   const order = matchingOrder(card, entry)
@@ -111,8 +126,15 @@ export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): Map
   const fact = entry.series.maps.find((item) => item.map_number === number)
   if (!fact) {
     if (entry.series.finished && number > entry.series.maps.length && !card.result)
-      return { ...card, play_status: "unplayed", post: null, retrospective_post: null }
-    return card
+      return {
+        ...card,
+        ...preProjection(card, entry.series),
+        series_best_of: entry.series.best_of,
+        play_status: "unplayed",
+        post: null,
+        retrospective_post: null,
+      }
+    return { ...card, ...preProjection(card, entry.series), series_best_of: entry.series.best_of }
   }
   const winner = order === 1 ? fact.winner : fact.winner === "A" ? "B" : "A"
   const previous = card.result
@@ -163,7 +185,8 @@ export function projectResult(card: MapDTO, entry: Entry, archive?: MapDTO): Map
     !replayId?.startsWith("steam:") || replayId === `steam:${fact.steam_match_id}`
   return {
     ...card,
-    pre: card.pre ?? backup?.pre ?? null,
+    series_best_of: entry.series.best_of,
+    ...preProjection(card, entry.series, backup),
     post,
     retrospective_pre: backup?.retrospective_pre ?? card.retrospective_pre,
     retrospective_post: verifiedReplay ? retrospectivePost : null,

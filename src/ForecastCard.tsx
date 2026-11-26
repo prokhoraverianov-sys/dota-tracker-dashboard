@@ -1,4 +1,4 @@
-import type { DraftQuote, Forecast, MapDTO } from "./contracts"
+import { type DraftQuote, type Forecast, type MapDTO, postDraftWeights } from "./contracts"
 import { criterionLabels, readCriteria } from "./criteria"
 import { percent, time } from "./domain"
 import { OddsTable } from "./OddsTable"
@@ -6,6 +6,7 @@ import { priceLabel, providerLabel, quoteSourceUrl } from "./odds"
 import { observedPostDraftQuotes, observedPreDecisionQuotes } from "./report-price"
 import { Notice } from "./ui"
 import { TeamIdentity } from "./VisualIdentity"
+import { postWeightLabel, postWeightScenario } from "./weighted-post"
 import "./analysis-presentation.css"
 
 const abstentionLabels: Readonly<Record<string, string | undefined>> = {
@@ -80,11 +81,15 @@ export function ForecastCard({
   stage,
   map,
   capturing = false,
+  preProblem,
+  archived = false,
 }: {
   readonly forecast: Omit<Forecast, "map_id"> | null
   readonly stage: "PRE" | "POST"
   readonly map: MapDTO
   readonly capturing?: boolean
+  readonly preProblem?: string | null
+  readonly archived?: boolean
 }) {
   const retrospective = forecast?.snapshot_id === "retrospective"
   const phaseQuotes =
@@ -129,17 +134,65 @@ export function ForecastCard({
   const largestContribution = Math.max(0, ...criteria.map((row) => Math.abs(row.signed_logit)))
   const postQuoteStatus = forecast?.post_draft_quote_status
   const hasDraftTime = Number.isFinite(Date.parse(forecast?.draft_completed_at_utc ?? ""))
+  const preWindow =
+    map.series_best_of === 3
+      ? map.map_number === 3
+        ? "При счёте 1:1, до драфта"
+        : "До начала серии"
+      : "До драфта"
   return (
     <article className={`forecast-card analysis-card ${stage.toLowerCase()}`}>
       <header>
         <div className="forecast-stage-title">
           <span className="stage">{stage}</span>
-          <span className="muted">{stage === "PRE" ? "До драфта" : "После драфта"}</span>
+          <span className="muted">{stage === "PRE" ? preWindow : "После драфта"}</span>
         </div>
         <span className="badge">
-          {retrospective ? "Ретроспективный расчёт" : forecast ? "Сохранён" : "Нет прогноза"}
+          {archived
+            ? "Архивная запись"
+            : retrospective
+              ? "Ретроспективный расчёт"
+              : forecast
+                ? "Сохранён"
+                : "Нет прогноза"}
         </span>
       </header>
+      {stage === "POST" && (
+        <div className="forecast-section table-scroll">
+          <table className="compact-stats-table" aria-label="Сценарии POST по весу драфта">
+            <thead>
+              <tr>
+                <th>Вес драфта</th>
+                <th>{map.team_a}</th>
+                <th>{map.team_b}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {postDraftWeights.map((weight) => {
+                const scenario = postWeightScenario(map, forecast?.analysis, weight)
+                return (
+                  <tr key={weight}>
+                    <th scope="row">
+                      {postWeightLabel(weight)}
+                      {scenario && scenario.source !== "forecast" && (
+                        <small className="metric-note">Ретроспективно</small>
+                      )}
+                    </th>
+                    {scenario ? (
+                      <>
+                        <td>{percent(scenario.probability)}</td>
+                        <td>{percent(1 - scenario.probability)}</td>
+                      </>
+                    ) : (
+                      <td colSpan={2}>Нет сохранённого расчёта</td>
+                    )}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
       {forecast ? (
         <>
           <div className="probability-pair">
@@ -367,7 +420,7 @@ export function ForecastCard({
           <strong>{capturing ? "Проверяем котировку POST" : "Прогноз ещё не сохранён"}</strong>
           <p aria-live="polite">
             {stage === "PRE"
-              ? "PRE рассчитывается после подтверждения пары."
+              ? (preProblem ?? "PRE рассчитывается после подтверждения пары.")
               : capturing
                 ? "Ждём котировки POST на рынке этой карты."
                 : map.play_status === "unplayed"

@@ -15,6 +15,8 @@ export const draftSchema = z.object({
   total_prices: z.string(),
 })
 export type Draft = z.infer<typeof draftSchema>
+export const postDraftWeights = [0.25, 0.5, 1, 1.25] as const
+export type PostDraftWeight = (typeof postDraftWeights)[number]
 const shadowSchema = z
   .object({
     winner_probability_team_a: z.number().min(0).max(1).nullable().optional(),
@@ -22,6 +24,14 @@ const shadowSchema = z
     duration_over_probability: z.number().nullable().optional(),
     duration_line_seconds: z.number().nullable().optional(),
     reasons: z.array(z.string()).optional(),
+    post_draft_scenarios: z
+      .array(
+        z.object({
+          draft_weight: z.literal(postDraftWeights),
+          winner_probability_team_a: z.number().min(0).max(1),
+        }),
+      )
+      .optional(),
   })
   .passthrough()
 export const candidateSchema = z.object({
@@ -88,6 +98,14 @@ export const forecastSchema = z.object({
   candidates: z.array(candidateSchema),
   pre_decision_at_utc: z.string().nullish(),
   pre_decision_quotes: z.array(draftQuoteSchema).optional(),
+  pre_quote_status: z.string().nullish(),
+  pre_draft_quotes: z.array(draftQuoteSchema).optional(),
+  pre_phase_checked_at_utc: z.string().nullish(),
+  pre_phase_source_url: z.string().nullish(),
+  pre_verified_series_score: z
+    .tuple([z.number().int().nonnegative(), z.number().int().nonnegative()])
+    .nullish(),
+  pre_window_opened_at_utc: z.string().nullish(),
   post_draft_quotes: z.array(draftQuoteSchema).optional(),
   post_draft_quote_status: z
     .enum(["captured", "after_observation", "window_missed", "draft_unverified"])
@@ -135,6 +153,13 @@ export const mapSchema = z.object({
   map_id: z.number().nullable(),
   series_id: z.string().nullable(),
   map_number: z.number().nullable(),
+  series_best_of: z.number().int().positive().nullish(),
+  verified_series_score: z
+    .tuple([z.number().int().nonnegative(), z.number().int().nonnegative()])
+    .nullish(),
+  pre_status: z.string().nullish(),
+  pre_window_start_utc: z.string().nullish(),
+  pre_window_end_utc: z.string().nullish(),
   revision: z.number(),
   label: z.string(),
   team_a: z.string(),
@@ -146,6 +171,7 @@ export const mapSchema = z.object({
   play_status: z.literal("unplayed").nullish(),
   result_conflict: z.string().nullish(),
   pre: forecastSchema.nullable(),
+  archived_pre: forecastSchema.nullish(),
   post: forecastSchema.nullable(),
   retrospective_pre: retrospectiveSchema.nullish(),
   retrospective_post: retrospectiveSchema.nullish(),

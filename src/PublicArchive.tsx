@@ -61,6 +61,12 @@ function ArchiveCard({ path }: { readonly path: string }) {
               return (
                 <div key={stage}>
                   <ForecastCard forecast={forecast} stage={stageNames[stage]} map={map} />
+                  {stage === "pre" && map.archived_pre && (
+                    <details>
+                      <summary>Ранняя запись PRE до счёта 1:1</summary>
+                      <ForecastCard forecast={map.archived_pre} stage="PRE" map={map} archived />
+                    </details>
+                  )}
                   {original && forecast !== original && (
                     <details>
                       <summary>Исходная запись {stageNames[stage]}</summary>
