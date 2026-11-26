@@ -273,7 +273,7 @@ async function verifyExpiredPostQuote(browser, home) {
     })
     await page.clock.fastForward(2_000)
     const postQuote = post.getByRole("region", { name: "Котировки POST", exact: true })
-    await postQuote.getByText("Доступная цена в течение 10 секунд не получена.", { exact: true }).waitFor()
+    await postQuote.getByText("Котировки POST не получены в течение 10 секунд.", { exact: true }).waitFor()
     assert.equal(await postQuote.locator("time").count(), 0)
     await post.getByText("Снимки котировок", { exact: true }).click()
     await post.getByText("Polymarket · Карта · справочно", { exact: true }).waitFor()
