@@ -4,7 +4,7 @@ import type { Api } from "./api"
 import { type MapDTO, message, scheduleSchema } from "./contracts"
 import { mapPath, percent, query, time } from "./domain"
 import { StageVerdict } from "./MapOutcome"
-import { evaluateMap, mapStages } from "./map-outcome"
+import { evaluateMap, mapStages, stageNames } from "./map-outcome"
 import { decimalPrice, reportPrice } from "./report-price"
 import { minutes } from "./reporting"
 import { tournamentPhase } from "./tournament-phase"
@@ -66,7 +66,9 @@ function StageStats({ maps, weighted }: { readonly maps: MapDTO[]; readonly weig
                   <td>{wins}</td>
                   <td>{losses}</td>
                   <td>
-                    {mean != null ? decimalPrice(mean) : "Нет подтверждённых цен"}
+                    {mean != null
+                      ? decimalPrice(mean)
+                      : `Котировки ${stageNames[phase]} не подтверждены`}
                     <small className="metric-note">
                       {prices.length} из {maps.length} карт
                       {restoredPrices > 0 && ` · из истории рынка: ${restoredPrices}`}

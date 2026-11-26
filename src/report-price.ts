@@ -95,8 +95,6 @@ function phaseQuotes(map: MapDTO, stage: MapStage) {
   return observedPostDraftQuotes(map.post).filter((quote) => quoteTimes(quote).observed < gameplay)
 }
 
-export const phasePriceLabels = { pre: "до драфта", post: "после драфта" } as const
-
 function archiveTime(stamp: string | undefined) {
   return stamp && /(?:Z|\+00:00)$/.test(stamp) ? Date.parse(stamp) : Number.NaN
 }

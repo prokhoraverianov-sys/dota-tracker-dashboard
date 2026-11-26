@@ -69,7 +69,7 @@ async function main() {
     assert.equal(await maps.getByText(/^Плей-офф ·/).count(), 36)
     assert.equal(await maps.getByText("Плей-офф · Гранд-финал", { exact: true }).count(), 4)
     const withPrice = await maps.getByText(/^(Ретроспективная котировка|Котировка) /).count()
-    const withoutPrice = await maps.getByText(/^Нет подтверждённой цены (до|после) драфта$/).count()
+    const withoutPrice = await maps.getByText(/^Котировки (PRE|POST) не подтверждены$/).count()
     assert(withPrice > 0)
     assert.equal(withPrice + withoutPrice, 132)
 

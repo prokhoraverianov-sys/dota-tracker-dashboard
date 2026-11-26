@@ -4,7 +4,6 @@ import { evaluateMap, mapStages, stageNames } from "./map-outcome"
 import {
   decimalPrice,
   originalPostAfterVerifiedWindow,
-  phasePriceLabels,
   reportPrice,
   reportPriceChange,
 } from "./report-price"
@@ -53,7 +52,7 @@ export function StageVerdict({
         </small>
       )}
       {comparison !== null && !price && (
-        <small>Нет подтверждённой цены {phasePriceLabels[stage]}</small>
+        <small>Котировки {stageNames[stage]} не подтверждены</small>
       )}
       {timingNote && comparison !== null && <small>{timingNote}</small>}
     </div>
